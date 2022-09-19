@@ -107,9 +107,38 @@ let deletePatient = (patientId) => {
   });
 };
 
+let getPatient = (patientId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let patient = "";
+      if (patientId && patientId !== "ALL") {
+        patient = await db.Patient.findOne({
+          where: { id: patientId },
+          include: [
+            {
+              model: db.Parent,
+              as: "parentDataToPatient",
+              attributes: ["name", "email", "phone", "id"],
+            },
+            {
+              model: db.Gender,
+              as: "genderDataToPatient",
+              attributes: ["gender", "id"],
+            },
+          ],
+        });
+      }
+      resolve(patient);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewPatient: createNewPatient,
   getAllPatient: getAllPatient,
   updatePatientData: updatePatientData,
   deletePatient: deletePatient,
+  getPatient: getPatient,
 };

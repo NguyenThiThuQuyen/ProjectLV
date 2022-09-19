@@ -35,9 +35,27 @@ let handleDeletePatient = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleGetPatient = async (req, res) => {
+  let id = req.query.id;
+  if (!id) {
+    return res.status(200).json({
+      errCode: 1,
+      errMessage: "Missing required parmeters",
+      patient: [],
+    });
+  }
+  let patient = await patientService.getPatient(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    patient,
+  });
+};
+
 module.exports = {
   handleCreateNewPatient: handleCreateNewPatient,
   handleGetAllPatients: handleGetAllPatients,
   handleEditPatient: handleEditPatient,
   handleDeletePatient: handleDeletePatient,
+  handleGetPatient: handleGetPatient,
 };

@@ -3,9 +3,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { addPatientAPI } from "../../../../redux/patientRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { ImUpload3 } from "react-icons/im";
+
 import Sidebar from "../../Sidebar";
 import Navbar from "../../Navbar";
 import NavbarUser from "../../NavbarUser";
+import { getBase64 } from "../../../../utils/CommonUtils";
 import { Link, useParams, useLocation } from "react-router-dom";
 import {
   getAllGendersAPI,
@@ -45,6 +48,12 @@ export default function PatientModal(props) {
   const handleSave = () => {
     dispatch(addPatientAPI(params));
     setShowModal(false);
+  };
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await getBase64(file);
+    setImage(base64);
   };
   return (
     <>
@@ -134,18 +143,11 @@ export default function PatientModal(props) {
                               <label htmlFor="" className="text-slate-600 ml-2">
                                 Ngày sinh
                               </label>
-                              {/* <input
-                                type="text"
-                                placeholder="..."
-                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                                onChange={(event) =>
-                                  setBirthday(event.target.value)
-                                }
-                              /> */}
                               <DatePicker
+                                className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
                                 selected={birthday}
                                 onChange={(date) => setBirthday(date)}
-                                dateFormat="Pp"
+                                dateFormat="dd/mm/yyyy"
                                 maxDate={new Date()}
                                 isClearable
                                 showYearDropdown
@@ -165,12 +167,34 @@ export default function PatientModal(props) {
                                 }
                               />
                             </div>
+                            <div className="col-span-1 mx-3 my-4 relative">
+                              {/* <label
+                                htmlFor=""
+                                className="text-slate-600 ml-2 flex"
+                              >
+                                Tải ảnh
+                                <ImUpload3 className="mt-1 ml-2" />
+                              </label> */}
+                              <input
+                                type="file"
+                                placeholder="..."
+                                className="mt-2"
+                                onChange={(event) => uploadImage(event)}
+                              />
+                              <div className="absolute">
+                                <img
+                                  src={image}
+                                  width={"100px"}
+                                  height={"100px"}
+                                />
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </form>
                     </div>
                     {/*footer*/}
-                    <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                    <div className="flex mt-14 items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                       <button
                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"

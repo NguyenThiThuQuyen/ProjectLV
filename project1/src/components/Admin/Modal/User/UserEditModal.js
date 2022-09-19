@@ -16,7 +16,7 @@ export default function UserModalEdit(props) {
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [genderId, setGenderId] = useState("1");
+  const [genderId, setGenderId] = useState();
   const [roleId, setRoleId] = useState();
   const [id, setId] = useState();
 

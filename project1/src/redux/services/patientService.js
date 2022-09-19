@@ -4,7 +4,16 @@ const getAllPatient = async () => {
   const response = await axios.get(
     `http://localhost:8081/api/get-all-patients`
   );
+  // console.log("object", response);
   return response.data;
+};
+
+const getPatient = async (id) => {
+  const patient = await axios.get(
+    `http://localhost:8081/api/get-patient?id=${id}`
+  );
+  // console.log("123:", patient);
+  return patient.data;
 };
 
 const getAllParents = async () => {
@@ -42,6 +51,7 @@ const deletePatient = async (id) => {
 
 export {
   getAllPatient,
+  getPatient,
   getAllParents,
   createPatient,
   editPatient,

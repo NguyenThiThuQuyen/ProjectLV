@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import NavbarUser from "../../components/Admin/NavbarUser";
+import { useNavigate } from "react-router-dom";
 // import PatientModal from "../../components/Admin/Modal/Patient/PatientModal";
 import ParentModal from "../../components/Admin/Modal/Parent/ParentModal";
 // import ParentModalEdit from "../../components/Admin/Modal/Parent/ParentEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
+import { Buffer } from "buffer";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getPatientAPI,
   getAllPatientsAPI,
   dataGetAllPatient,
   dataCheck,
@@ -19,12 +22,16 @@ import {
 const PatientManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllPatient);
-  console.log("data patient:", data);
   const check = useSelector(dataCheck);
 
   useEffect(() => {
     dispatch(getAllPatientsAPI());
   }, [check]);
+  const navigate = useNavigate();
+  const handleDetail = (patientId) => {
+    navigate(`/admin/patient-detail-manager/${patientId}`);
+    dispatch(getPatientAPI(patientId));
+  };
 
   // const handleDeleteParent = (id) => {
   //   dispatch(deleteParentAPI(id));
@@ -74,10 +81,12 @@ const PatientManager = () => {
                 {data.patients &&
                   data.patients.length > 0 &&
                   data.patients.map((item, index) => {
-                    console.log(
-                      "item.parentDataToPatient:",
-                      item.parentDataToPatient
-                    );
+                    let imageBase64 = "";
+                    if (item.image) {
+                      imageBase64 = new Buffer(item.image, "base64").toString(
+                        "binary"
+                      );
+                    }
                     return (
                       <tr key={item.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -90,7 +99,12 @@ const PatientManager = () => {
                           {item.genderDataToPatient.gender}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {/* {item.image} */}
+                          <img
+                            src={imageBase64}
+                            alt=""
+                            className=""
+                            style={{ height: "80px", width: "80px" }}
+                          />
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.parentDataToPatient.name}
@@ -103,7 +117,10 @@ const PatientManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div className="mr-3">
+                            <div
+                              className="mr-3"
+                              onClick={() => handleDetail(item.id)}
+                            >
                               <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
                             </div>
                             <div className="mr-3"></div>

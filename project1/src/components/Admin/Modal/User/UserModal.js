@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
-import { ImDownload3 } from "react-icons/im";
+import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { addUserAPI } from "../../../../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { getBase64 } from "../../../../utils/CommonUtils";
 import {
   getAllRolesAPI,
   getAllGendersAPI,
@@ -12,10 +13,11 @@ import {
 } from "../../../../redux/userRedux";
 export default function UserModal() {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
+  const [name, setName] = useState([]);
+  const [email, setEmail] = useState([]);
+  const [phone, setPhone] = useState([]);
+  const [image, setImage] = useState([]);
+  const [address, setAddress] = useState([]);
   const [genderId, setGenderId] = useState("1");
   const [roleId, setRoleId] = useState("1");
   const dataRole = useSelector(dataGetAllRole);
@@ -25,6 +27,7 @@ export default function UserModal() {
   const params = {
     name: name,
     email: email,
+    image: image,
     address: address,
     phone: phone,
     genderId: genderId,
@@ -42,6 +45,13 @@ export default function UserModal() {
     dispatch(getAllRolesAPI());
     dispatch(getAllGendersAPI());
   }, [check]);
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await getBase64(file);
+    // console.log("base64 :", base64;
+    setImage(base64);
+  };
 
   return (
     <>
@@ -195,15 +205,23 @@ export default function UserModal() {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Hình ảnh
+                        <div className="col-span-1 mx-3 my-4 relative">
+                          <label
+                            htmlFor=""
+                            className="text-slate-600 ml-2 flex"
+                          >
+                            Tải ảnh
+                            <ImUpload3 className="mt-1 ml-2" />
                           </label>
                           <input
                             type="file"
                             placeholder="..."
                             className="mt-2"
+                            onChange={(event) => uploadImage(event)}
                           />
+                          <div className="absolute">
+                            <img src={image} width={"100px"} height={"100px"} />
+                          </div>
                         </div>
                       </div>
                     </div>

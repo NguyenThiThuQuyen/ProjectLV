@@ -6,6 +6,7 @@ import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
+import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsersAPI,
@@ -60,6 +61,9 @@ const UserManager = () => {
                     Điện Thoại
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
+                    Hình ảnh
+                  </th>
+                  <th className="border border-slate-200 p-3 text-white font-medium">
                     Giới Tính
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
@@ -74,6 +78,12 @@ const UserManager = () => {
                 {data.users &&
                   data.users.length > 0 &&
                   data.users.map((item, index) => {
+                    let imageBase64 = "";
+                    if (item.image) {
+                      imageBase64 = new Buffer(item.image, "base64").toString(
+                        "binary"
+                      );
+                    }
                     return (
                       <tr key={item.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -84,6 +94,14 @@ const UserManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.phone}
+                        </td>
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                          <img
+                            src={imageBase64}
+                            alt=""
+                            className="rounded-full"
+                            style={{ height: "70px", width: "70px" }}
+                          />
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.genderDataToUser.gender}

@@ -8,6 +8,7 @@ import LoaiThuocManager from "../pages/Admin/LoaiThuocManager";
 import ThuocManager from "../pages/Admin/ThuocManager";
 import ParentManager from "../pages/Admin/ParentManager";
 import PatientManager from "../pages/Admin/PatientManager";
+import PatientSingle from "../pages/Admin/PatientSingle";
 import PatientModal from "../../src/components/Admin/Modal/Patient/PatientModal";
 function admin() {
   return (
@@ -16,6 +17,10 @@ function admin() {
         <Route path="/" index element={<HomeAdmin />} />
         <Route path="/users-manager" element={<UserManager />} />
         <Route path="/user-detail-manager/:userId" element={<UserSingle />} />
+        <Route
+          path="/patient-detail-manager/:patientId"
+          element={<PatientSingle />}
+        />
         <Route path="/medical-package-manager" element={<GoiKhamManager />} />
         <Route path="/medical-type-manager" element={<LoaiThuocManager />} />
         <Route path="/medical-manager" element={<ThuocManager />} />

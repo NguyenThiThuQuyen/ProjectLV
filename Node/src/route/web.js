@@ -35,6 +35,7 @@ let initWebRoutes = (app) => {
   router.delete("/api/delete-user", userController.handleDeleteUser);
 
   // patient
+  router.get("/api/get-patient", patientController.handleGetPatient);
   router.get("/api/get-all-patients", patientController.handleGetAllPatients);
   router.post(
     "/api/create-new-patient",

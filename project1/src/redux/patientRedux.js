@@ -6,6 +6,7 @@ import {
   deletePatient,
   getAllGenders,
   getAllParents,
+  getPatient,
 } from "./services/patientService";
 import { toast } from "react-toastify";
 
@@ -31,6 +32,15 @@ export const getAllPatientsAPI = createAsyncThunk(
   async () => {
     const getAll = await getAllPatient();
     return getAll;
+  }
+);
+
+export const getPatientAPI = createAsyncThunk(
+  "patient/Getpatient",
+  async (params) => {
+    const getpatient = await getPatient(params);
+    // console.log("object11:", getpatient);
+    return getpatient;
   }
 );
 
@@ -61,6 +71,7 @@ export const PatientRedux = createSlice({
     getAllPatient: {},
     allGenders: {},
     getAllParents: {},
+    getAPatient: {},
     check: false,
   },
   reducers: {},
@@ -79,6 +90,12 @@ export const PatientRedux = createSlice({
       state.getAllPatient = action.payload;
       state.check = false;
     });
+
+    builder.addCase(getPatientAPI.fulfilled, (state, action) => {
+      state.getAPatient = action.payload;
+      state.check = false;
+    });
+
     builder.addCase(addPatientAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code == "0") {
@@ -98,6 +115,7 @@ export const PatientRedux = createSlice({
   },
 });
 export const dataGetAllPatient = (state) => state.patient.getAllPatient;
+export const dataGetPatient = (state) => state.patient.getAPatient;
 export const dataGetAllParent = (state) => state.patient.getAllParents;
 export const dataGetAllGender = (state) => state.patient.allGenders;
 export const dataCheck = (state) => state.patient.check;

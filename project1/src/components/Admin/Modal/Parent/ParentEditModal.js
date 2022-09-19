@@ -13,7 +13,6 @@ export default function ParentModalEdit(props) {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
   const [genderId, setGenderId] = useState("1");
   const dataGender = useSelector(dataGetAllGender);
   const check = useSelector(dataCheck);
@@ -22,7 +21,6 @@ export default function ParentModalEdit(props) {
   const params = {
     name: name,
     email: email,
-    address: address,
     phone: phone,
     genderId: genderId,
     id: id,
@@ -33,7 +31,6 @@ export default function ParentModalEdit(props) {
     setName(props.item.name);
     setEmail(props.item.email);
     setPhone(props.item.phone);
-    setAddress(props.item.address);
     setGenderId(props.item.genderId);
     setId(props.item.id);
   }, [props.item]);
@@ -139,19 +136,6 @@ export default function ParentModalEdit(props) {
                           className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                           value={phone}
                           onChange={(event) => setPhone(event.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-2 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
-                          Điạ chỉ
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="..."
-                          required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                          value={address}
-                          onChange={(event) => setAddress(event.target.value)}
                         />
                       </div>
                     </div>
