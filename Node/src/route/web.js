@@ -5,13 +5,13 @@ const medicalpackageController = require("../controllers/medicalpackageControlle
 const medicaltypeController = require("../controllers/medicaltypeController");
 const medicalController = require("../controllers/medicalController");
 const patientController = require("../controllers/patientController");
-const roleController = require("../controllers/roleController");
-const genderController = require("../controllers/genderController");
 const donvitinhController = require("../controllers/donvitinhController");
 const nhacungcapController = require("../controllers/nhacungcapController");
 const parentController = require("../controllers/parentController");
 const dishController = require("../controllers/dishController");
 const prescriptionController = require("../controllers/prescriptionController");
+const packagePriceController = require("../controllers/packagePriceController");
+const doctorController = require("../controllers/doctorController");
 
 const { Router } = require("express");
 
@@ -20,12 +20,11 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
   router.post("/api/login", userController.handleLogin);
+  router.get("/api/allcode", userController.getAllCode);
 
-  // role
-  router.get("/api/get-all-roles", roleController.handleGetAllRoles);
-
-  // gender
-  router.get("/api/get-all-genders", genderController.handleGetAllGenders);
+  // homepage
+  // get doctor
+  router.get("/api/all-doctor-home", doctorController.handleGetAllDoctorHome);
 
   // user
   router.get("/api/get-user", userController.handleGetUser);
@@ -37,6 +36,10 @@ let initWebRoutes = (app) => {
   // patient
   router.get("/api/get-patient", patientController.handleGetPatient);
   router.get("/api/get-all-patients", patientController.handleGetAllPatients);
+  router.get(
+    "/api/search-parentid-to-patient",
+    patientController.handleSearchParent
+  );
   router.post(
     "/api/create-new-patient",
     patientController.handleCreateNewPatient
@@ -49,6 +52,15 @@ let initWebRoutes = (app) => {
   router.post("/api/create-new-parent", parentController.handleCreateParent);
   router.put("/api/edit-parent", parentController.handleEditParent);
   router.delete("/api/delete-parent", parentController.handleDeleteParent);
+
+  // gia goi kham
+  router.get("/api/get-all-prices", packagePriceController.handleGetAllPrices);
+  router.post(
+    "/api/create-new-price",
+    packagePriceController.handleCreatePrice
+  );
+  // router.put("/api/edit-price", packagePriceController.handleEditPrice);
+  // router.delete("/api/delete-price", packagePriceController.handleDeletePrice);
 
   // goi kham
   router.get(

@@ -1,82 +1,4 @@
 const db = require("../models/index");
-// const argon2 = require("argon2");
-
-let getAllUsers = () => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let user = {};
-      user = await db.User.findAll({
-        include: [
-          {
-            model: db.Role,
-            as: "roleDataToUser",
-            attributes: ["role", "id"],
-          },
-          {
-            model: db.Gender,
-            as: "genderDataToUser",
-            attributes: ["gender", "id"],
-          },
-        ],
-      });
-
-      resolve(user);
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
-// let getAllUsers = (userId) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       let users = "";
-//       if (userId === "ALL") {
-//         users = await db.User.findAll({
-//           // attributes:{
-//           //     exclude: ['password']
-//           // }
-
-//           include: [
-//             {
-//               model: db.Role,
-//               as: "roleDataToUser",
-//               attributes: ["role", "id"],
-//             },
-//             {
-//               model: db.Gender,
-//               as: "genderDataToUser",
-//               attributes: ["gender", "id"],
-//             },
-//           ],
-//         });
-//       }
-//       if (userId && userId !== "ALL") {
-//         users = await db.User.findOne({
-//           where: { id: userId },
-//           // attributes:{
-//           //     exclude: ['password']
-//           // }
-//           include: [
-//             {
-//               model: db.Role,
-//               as: "roleDataToUser",
-//               attributes: ["role", "id"],
-//             },
-//             {
-//               model: db.Gender,
-//               as: "genderDataToUser",
-//               attributes: ["gender", "id"],
-//             },
-//           ],
-//         });
-//       }
-//       resolve(users);
-//     } catch (e) {
-//       reject(e);
-//     }
-//   });
-// };
 
 let checkUserEmail = (userEmail) => {
   return new Promise(async (resolve, reject) => {
@@ -109,7 +31,7 @@ let handleUserLogin = (email, password) => {
             "name",
             "address",
             "phone",
-            "genderId",
+            "gender",
           ],
           where: { email: email },
           raw: true,
@@ -155,11 +77,11 @@ let createNewUser = (data) => {
       } else {
         await db.User.create({
           email: data.email,
-          password: data.password,
+          password: "123",
           name: data.name,
           address: data.address,
           phone: data.phone,
-          genderId: data.genderId,
+          gender: data.gender,
           roleId: data.roleId,
           image: data.image,
         });
@@ -191,9 +113,10 @@ let updateUserData = (data) => {
         });
         if (user) {
           user.name = data.name;
+          user.password = data.password;
           user.address = data.address;
           user.phone = data.phone;
-          user.genderId = data.genderId;
+          user.gender = data.gender;
           user.roleId = data.roleId;
           await user.save();
           resolve({
@@ -243,19 +166,68 @@ let getUser = (userId) => {
           where: { id: userId },
           include: [
             {
-              model: db.Role,
-              as: "roleDataToUser",
-              attributes: ["role", "id"],
+              model: db.Allcode,
+              as: "genderDataToUser",
+              attributes: ["value", "keyMap", "type"],
             },
             {
-              model: db.Gender,
-              as: "genderDataToUser",
-              attributes: ["gender", "id"],
+              model: db.Allcode,
+              as: "roleDataToUser",
+              attributes: ["value", "keyMap", "type"],
             },
           ],
         });
       }
       resolve(user);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getAllUsers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let user = {};
+      user = await db.User.findAll({
+        include: [
+          {
+            model: db.Allcode,
+            as: "genderDataToUser",
+            attributes: ["value", "keyMap", "type"],
+          },
+          {
+            model: db.Allcode,
+            as: "roleDataToUser",
+            attributes: ["value", "keyMap", "type"],
+          },
+        ],
+      });
+
+      resolve(user);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getAllCodeService = (typeInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!typeInput) {
+        resolve({
+          code: 1,
+          message: "Missing required parameters",
+        });
+      } else {
+        let res = {};
+        let allcode = await db.Allcode.findAll({
+          where: { type: typeInput },
+        });
+        res.code = 0;
+        res.data = allcode;
+        resolve(res);
+      }
     } catch (e) {
       reject(e);
     }
@@ -269,4 +241,5 @@ module.exports = {
   updateUserData: updateUserData,
   getUser: getUser,
   handleUserLogin: handleUserLogin,
+  getAllCodeService: getAllCodeService,
 };

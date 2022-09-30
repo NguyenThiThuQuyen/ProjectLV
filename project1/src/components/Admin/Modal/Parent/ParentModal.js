@@ -6,16 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 // import PatientModal from "../Patient/PatientModal";
 import { Link } from "react-router-dom";
 import {
-  getAllGendersAPI,
+  getAllGenderAPI,
   dataGetAllGender,
   dataCheck,
-} from "../../../../redux/parentRedux";
+} from "../../../../redux/userRedux";
 export default function ParentModal() {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
-  const [genderId, setGenderId] = useState("1");
+  const [gender, setgender] = useState("M");
   const [id, setId] = useState();
   const dataGender = useSelector(dataGetAllGender);
   const check = useSelector(dataCheck);
@@ -24,14 +24,14 @@ export default function ParentModal() {
     name: name,
     email: email,
     phone: phone,
-    genderId: genderId,
+    gender: gender,
     // id: id,
   };
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllGendersAPI());
+    dispatch(getAllGenderAPI());
   }, [check]);
 
   const idParent = localStorage.getItem("id")
@@ -40,7 +40,6 @@ export default function ParentModal() {
 
   const handleSave = async () => {
     dispatch(addParentAPI(params));
-
     setShowModal(false);
   };
 
@@ -148,16 +147,14 @@ export default function ParentModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onChange={(event) =>
-                              setGenderId(event.target.value)
-                            }
+                            onChange={(event) => setgender(event.target.value)}
                           >
-                            {dataGender.genders &&
-                              dataGender.genders.length > 0 &&
-                              dataGender.genders.map((item, index) => {
+                            {dataGender.data &&
+                              dataGender.data.length > 0 &&
+                              dataGender.data.map((item, index) => {
                                 return (
-                                  <option key={index} value={item.id}>
-                                    {item.gender}
+                                  <option key={index} value={item.keyMap}>
+                                    {item.value}
                                   </option>
                                 );
                               })}
@@ -196,7 +193,7 @@ export default function ParentModal() {
                       type="button"
                       onClick={() => handleSave()}
                     >
-                      Tiếp tục
+                      TIẾP TỤC
                     </button>
                   </Link>
                 </div>

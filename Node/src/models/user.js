@@ -8,16 +8,16 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.Role, {
-        foreignKey: "roleId",
-        targetKey: "id",
-        as: "roleDataToUser",
+      User.belongsTo(models.Allcode, {
+        foreignKey: "gender",
+        targetKey: "keyMap",
+        as: "genderDataToUser",
       });
 
-      User.belongsTo(models.Gender, {
-        foreignKey: "genderId",
-        targetKey: "id",
-        as: "genderDataToUser",
+      User.belongsTo(models.Allcode, {
+        foreignKey: "roleId",
+        targetKey: "keyMap",
+        as: "roleDataToUser",
       });
     }
   }
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       phone: DataTypes.STRING,
       image: DataTypes.STRING,
-      genderId: DataTypes.STRING,
+      gender: DataTypes.STRING,
       roleId: DataTypes.STRING,
     },
     {

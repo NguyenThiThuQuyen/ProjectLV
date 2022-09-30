@@ -61,12 +61,12 @@ function Header() {
                 </Link>
               </div>
               <div className="link_style">
-                <div
+                {/* <div
                   className="underline underline-offset-8"
                   onClick={() => handleLogout()}
                 >
                   Logout
-                </div>
+                </div> */}
               </div>
             </li>
             {/* <li className="flex mx-8">

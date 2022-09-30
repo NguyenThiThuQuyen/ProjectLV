@@ -9,16 +9,15 @@ let getAllPatient = () => {
           {
             model: db.Parent,
             as: "parentDataToPatient",
-            attributes: ["name", "email", "phone", "id"],
+            attributes: ["name", "email", "phone", "gender", "id"],
           },
           {
-            model: db.Gender,
+            model: db.Allcode,
             as: "genderDataToPatient",
-            attributes: ["gender", "id"],
+            attributes: ["value", "keyMap", "type"],
           },
         ],
       });
-
       resolve(patients);
     } catch (e) {
       reject(e);
@@ -31,7 +30,7 @@ let createNewPatient = (data) => {
     try {
       await db.Patient.create({
         childrentName: data.childrentName,
-        genderId: data.genderId,
+        gender: data.gender,
         birthday: data.birthday,
         address: data.address,
         image: data.image,
@@ -48,6 +47,7 @@ let createNewPatient = (data) => {
 };
 
 let updatePatientData = (data) => {
+  // console.log("===================object", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
@@ -57,18 +57,19 @@ let updatePatientData = (data) => {
           message: "err",
         });
       } else {
-        let patient = await db.Patient.findOne({
+        let patient1 = await db.Patient.findOne({
           where: { id: data.id },
           raw: false,
         });
-        if (patient) {
-          patient.childrentName = data.childrentName;
-          patient.address = data.address;
-          patient.birthday = data.birthday;
-          patient.image = data.image;
-          patient.genderId = data.genderId;
-          patient.parentId = data.parentId;
-          await patient.save();
+        if (patient1) {
+          let day = new Date(data.birthday);
+          patient1.childrentName = data.childrentName;
+          patient1.address = data.address;
+          patient1.birthday = day;
+          // patient1.image = data.image;
+          patient1.gender = data.gender;
+          patient1.parentId = data.parentId;
+          await patient1.save();
           resolve({
             code: 0,
             message: "Cập nhật thông tin người dùng thành công!",
@@ -87,6 +88,7 @@ let updatePatientData = (data) => {
 };
 
 let deletePatient = (patientId) => {
+  // console.log("1233:", patientId);
   return new Promise(async (resolve, reject) => {
     let found = await db.Patient.findOne({
       where: { id: patientId },
@@ -97,13 +99,23 @@ let deletePatient = (patientId) => {
         message: `Người dùng không tồn tại`,
       });
     }
-    await db.Patient.destroy({
-      where: { id: patientId },
-    });
-    resolve({
-      code: 0,
-      message: `Đã xóa người dùng`,
-    });
+    //  else {
+    let searchParentId = await getSearchParentById(patientId);
+    if (searchParentId === true) {
+      await db.Patient.destroy({
+        where: { id: patientId },
+      });
+      resolve({
+        code: 0,
+        message: `Đã xóa`,
+      });
+    } else {
+      resolve({
+        code: 1,
+        message: `Error nè`,
+      });
+    }
+    // }
   });
 };
 
@@ -118,17 +130,47 @@ let getPatient = (patientId) => {
             {
               model: db.Parent,
               as: "parentDataToPatient",
-              attributes: ["name", "email", "phone", "id"],
+              attributes: ["name", "email", "phone", "gender", "id"],
             },
             {
-              model: db.Gender,
+              model: db.Allcode,
               as: "genderDataToPatient",
-              attributes: ["gender", "id"],
+              attributes: ["value", "keyMap", "type"],
             },
           ],
         });
       }
       resolve(patient);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getSearchParentById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let search = await db.Patient.findAll({
+        where: { parentId: id },
+        include: [
+          {
+            model: db.Parent,
+            as: "parentDataToPatient",
+            attributes: ["id", "email", "name", "phone"],
+          },
+        ],
+        raw: true,
+        nest: true,
+      });
+      if (search) {
+        resolve(search);
+      } else {
+        resolve({
+          code: 1,
+          message: `Error không `,
+        });
+      }
+      console.log("check search", search);
     } catch (e) {
       reject(e);
     }
@@ -141,4 +183,5 @@ module.exports = {
   updatePatientData: updatePatientData,
   deletePatient: deletePatient,
   getPatient: getPatient,
+  getSearchParentById: getSearchParentById,
 };

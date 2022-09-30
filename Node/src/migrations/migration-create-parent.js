@@ -20,7 +20,7 @@ module.exports = {
       phone: {
         type: Sequelize.STRING,
       },
-      genderId: {
+      gender: {
         type: Sequelize.STRING,
       },
       createdAt: {

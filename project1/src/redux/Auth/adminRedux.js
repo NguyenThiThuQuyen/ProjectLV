@@ -25,7 +25,6 @@ export const AdminRedux = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getLoginAPI.fulfilled, (state, action) => {
-      // console.log("ádasd", action.payload.user);
       localStorage.setItem(
         "user",
         JSON.stringify(action.payload.user ? action.payload.user : false)

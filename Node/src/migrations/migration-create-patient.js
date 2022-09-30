@@ -11,11 +11,11 @@ module.exports = {
       childrentName: {
         type: Sequelize.STRING,
       },
-      genderId: {
+      gender: {
         type: Sequelize.STRING,
       },
       birthday: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       address: {
         type: Sequelize.STRING,

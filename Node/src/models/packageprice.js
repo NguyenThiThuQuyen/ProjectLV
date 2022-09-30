@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       //   targetKey: "id",
       //   as: "applyDateDataToPackagePrice",
       // });
-      // PackagePrice.belongsTo(models.MedicalPackage, {
-      //   foreignKey: "medicalpackageId",
-      //   targetKey: "id",
-      //   as: "medicalPackageDataToPackagePrice",
-      // });
+      PackagePrice.belongsTo(models.MedicalPackage, {
+        foreignKey: "medicalpackageId",
+        targetKey: "id",
+        as: "medicalPackageDataToPackagePrice",
+      });
     }
   }
   PackagePrice.init(

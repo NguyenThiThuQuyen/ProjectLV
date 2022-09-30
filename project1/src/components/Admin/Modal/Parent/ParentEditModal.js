@@ -3,46 +3,37 @@ import { BsPlusLg } from "react-icons/bs";
 import { editParentAPI } from "../../../../redux/parentRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
-import {
-  getAllGendersAPI,
-  dataGetAllGender,
-  dataCheck,
-} from "../../../../redux/userRedux";
+import { dataGetAllGender } from "../../../../redux/userRedux";
 export default function ParentModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
-  const [genderId, setGenderId] = useState("1");
-  const dataGender = useSelector(dataGetAllGender);
-  const check = useSelector(dataCheck);
+  const [gender, setgender] = useState("M");
   const [id, setId] = useState();
+  const dataGender = useSelector(dataGetAllGender);
 
   const params = {
     name: name,
     email: email,
     phone: phone,
-    genderId: genderId,
+    gender: gender,
     id: id,
   };
 
   const dispatch = useDispatch();
   useEffect(() => {
-    setName(props.item.name);
-    setEmail(props.item.email);
-    setPhone(props.item.phone);
-    setGenderId(props.item.genderId);
-    setId(props.item.id);
+    setName(props?.item?.name);
+    setEmail(props?.item?.email);
+    setPhone(props?.item?.phone);
+    setgender(props?.item?.gender);
+    setId(props?.item?.id);
   }, [props.item]);
 
   const handleSaveEdit = () => {
     dispatch(editParentAPI(params));
     setShowModalEdit(false);
   };
-
-  useEffect(() => {
-    dispatch(getAllGendersAPI());
-  }, [check]);
   return (
     <>
       <div className="ml-5">
@@ -59,7 +50,7 @@ export default function ParentModalEdit(props) {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    SỬA THÔNG TIN NGƯỜI ĐẠI DIỆN
+                    CẬP NHẬT THÔNG TIN NGƯỜI ĐẠI DIỆN
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -109,15 +100,15 @@ export default function ParentModalEdit(props) {
                         <select
                           className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                           id=""
-                          value={genderId}
-                          onChange={(event) => setGenderId(event.target.value)}
+                          value={gender}
+                          onChange={(event) => setgender(event.target.value)}
                         >
-                          {dataGender.genders &&
-                            dataGender.genders.length > 0 &&
-                            dataGender.genders.map((item, index) => {
+                          {dataGender.data &&
+                            dataGender.data.length > 0 &&
+                            dataGender.data.map((item, index) => {
                               return (
-                                <option key={index} value={item.id}>
-                                  {item.gender}
+                                <option key={index} value={item.keyMap}>
+                                  {item.value}
                                 </option>
                               );
                             })}
@@ -140,9 +131,7 @@ export default function ParentModalEdit(props) {
                       </div>
                     </div>
                   </div>
-                  {/* </form> */}
                 </div>
-                {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

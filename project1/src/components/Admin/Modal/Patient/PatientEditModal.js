@@ -1,50 +1,56 @@
 import { useEffect, useState } from "react";
-import { editParentAPI } from "../../../../redux/parentRedux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { editPatientAPI } from "../../../../redux/patientRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
-import {
-  getAllGendersAPI,
-  dataGetAllGender,
-  dataCheck,
-} from "../../../../redux/userRedux";
+import { dataGetAllGender } from "../../../../redux/userRedux";
+import { getBase64 } from "../../../../utils/CommonUtils";
+import { ImUpload3 } from "react-icons/im";
 export default function PatientModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
+  const [childrentName, setChildrentName] = useState();
+  const [gender, setgender] = useState("M");
+  const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState();
-  const [genderId, setGenderId] = useState("1");
+  const [image, setImage] = useState();
+  const [parentId, setParentId] = useState();
   const [id, setId] = useState();
-  const check = useSelector(dataCheck);
   const dataGender = useSelector(dataGetAllGender);
-
   const params = {
-    name: name,
-    email: email,
+    childrentName: childrentName,
+    image: image,
     address: address,
-    phone: phone,
-    genderId: genderId,
+    birthday: birthday,
+    gender: gender,
+    parentId: parentId,
     id: id,
   };
 
   const dispatch = useDispatch();
+
   useEffect(() => {
-    setName(props.item.name);
-    setEmail(props.item.email);
-    setPhone(props.item.phone);
-    setAddress(props.item.address);
-    setGenderId(props.item.genderId);
-    setId(props.item.id);
+    let date = new Date(props?.item?.birthday);
+    setChildrentName(props?.item?.childrentName);
+    setImage(props?.item?.image);
+    setBirthday(date);
+    setAddress(props?.item?.address);
+    setgender(props?.item?.gender);
+    setParentId(props?.item?.parentId);
+    setId(props?.item?.id);
   }, [props.item]);
 
   const handleSaveEdit = () => {
-    dispatch(editParentAPI(params));
+    dispatch(editPatientAPI(params));
     setShowModalEdit(false);
   };
 
-  useEffect(() => {
-    dispatch(getAllGendersAPI());
-  }, [check]);
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await getBase64(file);
+    setImage(base64);
+  };
+
   return (
     <>
       <div className="ml-5">
@@ -56,52 +62,29 @@ export default function PatientModalEdit(props) {
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    SỬA THÔNG TIN NGƯỜI ĐẠI DIỆN
+                    CẬP NHẬT THÔNG TIN BỆNH NHÂN
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
                 </div>
-                {/*body*/}
+
                 <div className="relative p-6 flex-auto">
-                  {/* <form className=""> */}
                   <div className="grid grid-rows-2">
                     <div className="grid row-span-1 grid-cols-3">
                       <div className="col-span-1 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">
-                          Họ tên
+                          Họ tên trẻ
                         </label>
                         <input
                           type="text"
                           placeholder="..."
                           required
                           className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                          value={name}
-                          onChange={(event) => setName(event.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
-                          Email
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="..."
-                          disabled
-                          required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                          value={email}
-                          onChange={(event) => setEmail(event.target.value)}
+                          value={childrentName}
+                          onChange={(event) =>
+                            setChildrentName(event.target.value)
+                          }
                         />
                       </div>
                       <div className="col-span-1 mx-3 my-4">
@@ -111,38 +94,43 @@ export default function PatientModalEdit(props) {
                         <select
                           className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                           id=""
-                          value={genderId}
-                          onChange={(event) => setGenderId(event.target.value)}
+                          required
+                          value={gender}
+                          onChange={(event) => setgender(event.target.value)}
                         >
-                          {dataGender.genders &&
-                            dataGender.genders.length > 0 &&
-                            dataGender.genders.map((item, index) => {
+                          {dataGender.data &&
+                            dataGender.data.length > 0 &&
+                            dataGender.data.map((item, index) => {
                               return (
-                                <option key={index} value={item.id}>
-                                  {item.gender}
+                                <option key={index} value={item.keyMap}>
+                                  {item.value}
                                 </option>
                               );
                             })}
                         </select>
                       </div>
+                      <div className="col-span-1 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-600 ml-2">
+                          Ngày sinh
+                        </label>
+                        <DatePicker
+                          className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                          selected={birthday}
+                          required
+                          value={birthday}
+                          onChange={(date) => setBirthday(date)}
+                          dateFormat="yyyy/MM/dd"
+                          maxDate={new Date()}
+                          isClearable
+                          showYearDropdown
+                          scrollableMonthYearDropdown
+                        />
+                      </div>
                     </div>
                     <div className="grid row-span-1 grid-cols-3">
                       <div className="col-span-1 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">
-                          Điện thoại
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="..."
-                          required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                          value={phone}
-                          onChange={(event) => setPhone(event.target.value)}
-                        />
-                      </div>
-                      <div className="col-span-2 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
-                          Điạ chỉ
+                          Địa chỉ
                         </label>
                         <input
                           type="text"
@@ -153,11 +141,48 @@ export default function PatientModalEdit(props) {
                           onChange={(event) => setAddress(event.target.value)}
                         />
                       </div>
+                      <div className="col-span-1 mx-3 my-4 relative">
+                        <label htmlFor="" className="text-slate-600 ml-2 flex">
+                          Tải ảnh
+                          <ImUpload3 className="mt-1 ml-2" />
+                        </label>
+                        <input
+                          type="file"
+                          placeholder="..."
+                          className="mt-2"
+                          onChange={(event) => uploadImage(event)}
+                        />
+                        <div className="absolute">
+                          <img src={image} width={"100px"} height={"100px"} />
+                        </div>
+                      </div>
+
+                      <div className="col-span-1 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-600 ml-2">
+                          Người đại diện
+                        </label>
+                        {/* <select
+                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          id=""
+                          required
+                          value={parentId}
+                          onChange={(event) => setParentId(event.target.value)}
+                        >
+                          {data.patients &&
+                            data.patients.length > 0 &&
+                            data.patients.map((item, index) => {
+                              return (
+                                <option key={index} value={item.id}>
+                                  {item.parentDataToPatient.email}
+                                </option>
+                              );
+                            })}
+                        </select> */}
+                      </div>
                     </div>
                   </div>
-                  {/* </form> */}
                 </div>
-                {/*footer*/}
+
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

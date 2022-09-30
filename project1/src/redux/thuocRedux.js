@@ -11,7 +11,6 @@ import {
 
 export const getAllThuocAPI = createAsyncThunk("thuoc/GetAll", async () => {
   const getThuoc = await getAllThuoc();
-  // console.log("getThuoc:", getThuoc);
   return getThuoc;
 });
 

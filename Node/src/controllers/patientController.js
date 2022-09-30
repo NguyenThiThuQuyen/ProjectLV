@@ -39,8 +39,8 @@ let handleGetPatient = async (req, res) => {
   let id = req.query.id;
   if (!id) {
     return res.status(200).json({
-      errCode: 1,
-      errMessage: "Missing required parmeters",
+      code: 1,
+      message: "Missing required parmeters",
       patient: [],
     });
   }
@@ -52,10 +52,28 @@ let handleGetPatient = async (req, res) => {
   });
 };
 
+let handleSearchParent = async (req, res) => {
+  let id = req.query.id;
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Error",
+      searchParentId: [],
+    });
+  }
+  let searchParentId = await patientService.getSearchParentById(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    searchParentId,
+  });
+};
+
 module.exports = {
   handleCreateNewPatient: handleCreateNewPatient,
   handleGetAllPatients: handleGetAllPatients,
   handleEditPatient: handleEditPatient,
   handleDeletePatient: handleDeletePatient,
   handleGetPatient: handleGetPatient,
+  handleSearchParent: handleSearchParent,
 };

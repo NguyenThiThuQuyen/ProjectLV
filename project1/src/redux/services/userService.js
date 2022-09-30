@@ -1,15 +1,5 @@
 import axios from "axios";
 
-const getAllRoles = async () => {
-  const role = await axios.get(`http://localhost:8081/api/get-all-roles`);
-  return role.data;
-};
-
-const getAllGenders = async () => {
-  const gender = await axios.get(`http://localhost:8081/api/get-all-genders`);
-  return gender.data;
-};
-
 const getAllUsers = async () => {
   const user = await axios.get(`http://localhost:8081/api/get-all-users`);
   return user.data;
@@ -40,12 +30,24 @@ const deleteUser = async (id) => {
   return userDelete.data;
 };
 
+const getAllAllcodes = async (inputType) => {
+  const res = await axios.get(
+    `http://localhost:8081/api/allcode?type=${inputType}`
+  );
+  return res.data;
+};
+
+const getAllDoctorHome = async () => {
+  const res = await axios.get(`http://localhost:8081/api/all-doctor-home`);
+  return res.data;
+};
+
 export {
   getAllUsers,
   createUser,
   editUser,
   deleteUser,
-  getAllGenders,
-  getAllRoles,
   getAUser,
+  getAllAllcodes,
+  getAllDoctorHome,
 };

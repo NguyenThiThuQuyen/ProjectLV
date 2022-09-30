@@ -5,51 +5,49 @@ import { addUserAPI } from "../../../../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import {
-  getAllRolesAPI,
-  getAllGendersAPI,
-  dataGetAllRole,
+  getAllRoleAPI,
+  getAllGenderAPI,
   dataGetAllGender,
+  dataGetAllRole,
   dataCheck,
 } from "../../../../redux/userRedux";
 export default function UserModal() {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState([]);
-  const [email, setEmail] = useState([]);
-  const [phone, setPhone] = useState([]);
-  const [image, setImage] = useState([]);
-  const [address, setAddress] = useState([]);
-  const [genderId, setGenderId] = useState("1");
-  const [roleId, setRoleId] = useState("1");
-  const dataRole = useSelector(dataGetAllRole);
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [image, setImage] = useState();
+  const [address, setAddress] = useState();
+  const [gender, setgender] = useState("M");
+  const [roleId, setRoleId] = useState("R1");
   const dataGender = useSelector(dataGetAllGender);
+  const dataRole = useSelector(dataGetAllRole);
   const check = useSelector(dataCheck);
-
   const params = {
     name: name,
     email: email,
     image: image,
     address: address,
     phone: phone,
-    genderId: genderId,
+    gender: gender,
     roleId: roleId,
   };
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllGenderAPI());
+    dispatch(getAllRoleAPI());
+  }, [check]);
 
   const handleSave = () => {
     dispatch(addUserAPI(params));
     setShowModal(false);
   };
 
-  useEffect(() => {
-    dispatch(getAllRolesAPI());
-    dispatch(getAllGendersAPI());
-  }, [check]);
-
   const uploadImage = async (event) => {
     const file = event.target.files[0];
     const base64 = await getBase64(file);
-    // console.log("base64 :", base64;
     setImage(base64);
   };
 
@@ -92,23 +90,12 @@ export default function UserModal() {
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM NGƯỜI DÙNG
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
                 </div>
-                {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <form className="">
                     <div className="grid grid-rows-3">
@@ -142,16 +129,14 @@ export default function UserModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onChange={(event) =>
-                              setGenderId(event.target.value)
-                            }
+                            onChange={(event) => setgender(event.target.value)}
                           >
-                            {dataGender.genders &&
-                              dataGender.genders.length > 0 &&
-                              dataGender.genders.map((item, index) => {
+                            {dataGender.data &&
+                              dataGender.data.length > 0 &&
+                              dataGender.data.map((item, index) => {
                                 return (
-                                  <option key={index} value={item.id}>
-                                    {item.gender}
+                                  <option key={index} value={item.keyMap}>
+                                    {item.value}
                                   </option>
                                 );
                               })}
@@ -194,12 +179,12 @@ export default function UserModal() {
                             id=""
                             onChange={(event) => setRoleId(event.target.value)}
                           >
-                            {dataRole.roles &&
-                              dataRole.roles.length > 0 &&
-                              dataRole.roles.map((item, index) => {
+                            {dataRole.data &&
+                              dataRole.data.length > 0 &&
+                              dataRole.data.map((item, index) => {
                                 return (
-                                  <option key={index} value={item.id}>
-                                    {item.role}
+                                  <option key={index} value={item.keyMap}>
+                                    {item.value}
                                   </option>
                                 );
                               })}
@@ -227,7 +212,6 @@ export default function UserModal() {
                     </div>
                   </form>
                 </div>
-                {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

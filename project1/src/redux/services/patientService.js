@@ -4,7 +4,6 @@ const getAllPatient = async () => {
   const response = await axios.get(
     `http://localhost:8081/api/get-all-patients`
   );
-  // console.log("object", response);
   return response.data;
 };
 
@@ -12,18 +11,7 @@ const getPatient = async (id) => {
   const patient = await axios.get(
     `http://localhost:8081/api/get-patient?id=${id}`
   );
-  // console.log("123:", patient);
   return patient.data;
-};
-
-const getAllParents = async () => {
-  const parent = await axios.get(`http://localhost:8081/api/get-all-parents`);
-  return parent.data;
-};
-
-const getAllGenders = async () => {
-  const gender = await axios.get(`http://localhost:8081/api/get-all-genders`);
-  return gender.data;
 };
 
 const createPatient = async (body) => {
@@ -49,12 +37,4 @@ const deletePatient = async (id) => {
   return response.data;
 };
 
-export {
-  getAllPatient,
-  getPatient,
-  getAllParents,
-  createPatient,
-  editPatient,
-  deletePatient,
-  getAllGenders,
-};
+export { getAllPatient, getPatient, createPatient, editPatient, deletePatient };

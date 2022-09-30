@@ -4,6 +4,7 @@ import Sidebar from "../../components/Admin/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import ParentModalEdit from "../../components/Admin/Modal/Parent/ParentEditModal";
+import PatientModalEdit from "../../components/Admin/Modal/Patient/PatientEditModal";
 import { Buffer } from "buffer";
 
 import {
@@ -12,20 +13,19 @@ import {
   dataCheck,
 } from "../../redux/patientRedux";
 import NavbarUser from "../../components/Admin/NavbarUser";
+// import { MenuItem } from "@mui/material";
 // import { email } from "react-admin";
 const PatientSingle = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  console.log(params);
   // const location = useLocation();
   // const id = location.search.split("=")[1];
   const check = useSelector(dataCheck);
   const patient = useSelector(dataGetPatient);
-  console.log("patient:", patient);
+  console.log("first:", patient);
 
   useEffect(() => {
     dispatch(getPatientAPI(params.patientId));
-    // console.log("id", params.patientId);
   }, [check]);
 
   let imageBase64 = "";
@@ -46,8 +46,8 @@ const PatientSingle = () => {
         <div className="grid grid-cols-2 p-5">
           <div className="col-span-1 shadow-xl border-[1px] p-5 mx-5 relative">
             {/* editButton */}
-            <div className="pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
-              {/* <ParentModalEdit item={patient?.patient?.id} /> */}
+            <div className="flex pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
+              <PatientModalEdit item={patient?.patient} />
               Edit
             </div>
             <h1 className="mb-3 font-medium text-sm text-slate-600">
@@ -73,7 +73,7 @@ const PatientSingle = () => {
                 <div className="mb-2 text-sm">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
-                    {patient?.patient?.genderDataToPatient.gender}
+                    {patient?.patient?.genderDataToPatient.value}
                   </span>
                 </div>
                 <div className="mb-2 text-sm">
@@ -93,7 +93,8 @@ const PatientSingle = () => {
 
           <div className="col-span-1 shadow-xl border-[1px] p-5 mx-5 relative">
             {/* editButton */}
-            <div className="pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
+            <div className="flex pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
+              <ParentModalEdit item={patient?.patient?.parentDataToPatient} />
               Edit
             </div>
             <h1 className="mb-3 font-medium text-sm text-slate-600">
@@ -115,6 +116,12 @@ const PatientSingle = () => {
                     {patient?.patient?.parentDataToPatient.email}
                   </span>
                 </div>
+                {/* <div className="mb-2 text-sm">
+                  <span className="font-bold text-slate-500">Giới tính:</span>
+                  <span className="font-normal ml-2">
+                    {patient?.patient?.parentDataToPatient.email}
+                  </span>
+                </div> */}
                 <div className="mb-2 text-sm">
                   <span className="font-bold text-slate-500">Điện thoại:</span>
                   <span className="font-normal ml-2">

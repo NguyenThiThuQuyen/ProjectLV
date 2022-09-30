@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       //     foreignKey: "medicalpackageId",
       //     as: "medicalPackageDataToTreatment",
       //   });
-      //   MedicalPackage.hasMany(models.PackagePrice, {
-      //     foreignKey: "medicalpackageId",
-      //     as: "medicalPackageDataToPackagePrice",
-      //   });
+      MedicalPackage.hasMany(models.PackagePrice, {
+        foreignKey: "medicalpackageId",
+        as: "medicalPackageDataToPackagePrice",
+      });
       //   MedicalPackage.hasMany(models.Schedule, {
       //     foreignKey: "medicalpackageId",
       //     as: "medicalPackageDataToSchedule",

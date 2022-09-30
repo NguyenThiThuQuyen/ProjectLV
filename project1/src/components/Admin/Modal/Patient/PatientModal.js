@@ -4,21 +4,21 @@ import "react-datepicker/dist/react-datepicker.css";
 import { addPatientAPI } from "../../../../redux/patientRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { ImUpload3 } from "react-icons/im";
-
+import moment from "moment";
 import Sidebar from "../../Sidebar";
 import Navbar from "../../Navbar";
 import NavbarUser from "../../NavbarUser";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import { Link, useParams, useLocation } from "react-router-dom";
 import {
-  getAllGendersAPI,
+  getAllGenderAPI,
   dataGetAllGender,
   dataCheck,
-} from "../../../../redux/patientRedux";
+} from "../../../../redux/userRedux";
 export default function PatientModal(props) {
   const [showModal, setShowModal] = useState(true);
   const [childrentName, setChildrentName] = useState();
-  const [genderId, setGenderId] = useState("1");
+  const [gender, setgender] = useState("M");
   const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState();
   const [image, setImage] = useState();
@@ -35,14 +35,14 @@ export default function PatientModal(props) {
     address: address,
     image: image,
     parentId: parentId,
-    genderId: genderId,
+    gender: gender,
     // idParent: idParent,
   };
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllGendersAPI());
+    dispatch(getAllGenderAPI());
   }, [check]);
 
   const handleSave = () => {
@@ -122,15 +122,15 @@ export default function PatientModal(props) {
                                 className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                                 id=""
                                 onChange={(event) =>
-                                  setGenderId(event.target.value)
+                                  setgender(event.target.value)
                                 }
                               >
-                                {dataGender.genders &&
-                                  dataGender.genders.length > 0 &&
-                                  dataGender.genders.map((item, index) => {
+                                {dataGender.data &&
+                                  dataGender.data.length > 0 &&
+                                  dataGender.data.map((item, index) => {
                                     return (
-                                      <option key={index} value={item.id}>
-                                        {item.gender}
+                                      <option key={index} value={item.keyMap}>
+                                        {item.value}
                                       </option>
                                     );
                                   })}
@@ -147,7 +147,8 @@ export default function PatientModal(props) {
                                 className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
                                 selected={birthday}
                                 onChange={(date) => setBirthday(date)}
-                                dateFormat="dd/mm/yyyy"
+                                dateFormat="yyyy/MM/dd"
+                                minDate={moment()}
                                 maxDate={new Date()}
                                 isClearable
                                 showYearDropdown
@@ -168,13 +169,13 @@ export default function PatientModal(props) {
                               />
                             </div>
                             <div className="col-span-1 mx-3 my-4 relative">
-                              {/* <label
+                              <label
                                 htmlFor=""
                                 className="text-slate-600 ml-2 flex"
                               >
                                 Tải ảnh
                                 <ImUpload3 className="mt-1 ml-2" />
-                              </label> */}
+                              </label>
                               <input
                                 type="file"
                                 placeholder="..."

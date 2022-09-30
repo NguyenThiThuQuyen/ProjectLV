@@ -5,11 +5,11 @@ import NavbarUser from "../../components/Admin/NavbarUser";
 import { useNavigate } from "react-router-dom";
 // import PatientModal from "../../components/Admin/Modal/Patient/PatientModal";
 import ParentModal from "../../components/Admin/Modal/Parent/ParentModal";
-// import ParentModalEdit from "../../components/Admin/Modal/Parent/ParentEditModal";
+import PatientModalEdit from "../../components/Admin/Modal/Patient/PatientEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { Buffer } from "buffer";
-
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPatientAPI,
@@ -23,11 +23,11 @@ const PatientManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllPatient);
   const check = useSelector(dataCheck);
-
   useEffect(() => {
     dispatch(getAllPatientsAPI());
   }, [check]);
   const navigate = useNavigate();
+
   const handleDetail = (patientId) => {
     navigate(`/admin/patient-detail-manager/${patientId}`);
     dispatch(getPatientAPI(patientId));
@@ -79,24 +79,29 @@ const PatientManager = () => {
               </thead>
               <tbody>
                 {data.patients &&
-                  data.patients.length > 0 &&
-                  data.patients.map((item, index) => {
+                  data.patients?.length > 0 &&
+                  data.patients?.map((item, index) => {
                     let imageBase64 = "";
                     if (item.image) {
                       imageBase64 = new Buffer(item.image, "base64").toString(
                         "binary"
                       );
                     }
+                    // let day = "";
+                    // day = item.birthday;
+                    // console.log("=====>day 1", typeof day);
+                    // day = moment().format("YYYY-MM-DD");
+                    // console.log("=====>day 2", day);
                     return (
                       <tr key={item.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.childrentName}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.birthday}
+                          {item.birthday.slice(0, 10)}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.genderDataToPatient.gender}
+                          {item.genderDataToPatient.value}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <img
@@ -107,13 +112,13 @@ const PatientManager = () => {
                           />
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.parentDataToPatient.name}
+                          {item.parentDataToPatient?.name}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.parentDataToPatient.email}
+                          {item.parentDataToPatient?.email}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.parentDataToPatient.phone}
+                          {item.parentDataToPatient?.phone}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
@@ -123,7 +128,9 @@ const PatientManager = () => {
                             >
                               <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
                             </div>
-                            <div className="mr-3"></div>
+                            <div className="mr-5">
+                              <PatientModalEdit item={item} />
+                            </div>
                             <div className="">
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />
                             </div>

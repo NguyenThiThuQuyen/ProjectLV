@@ -4,31 +4,36 @@ import {
   createUser,
   editUser,
   deleteUser,
-  getAllGenders,
-  getAllRoles,
   getAUser,
+  getAllAllcodes,
+  getAllDoctorHome,
 } from "./services/userService";
 import { toast } from "react-toastify";
 
-export const getAllRolesAPI = createAsyncThunk(
-  "datten/GetAllRoles",
+export const getAllDoctorHomeAPI = createAsyncThunk(
+  "datten/GetAllHome",
   async () => {
-    const getRole = await getAllRoles();
-    return getRole;
-  }
-);
-
-export const getAllGendersAPI = createAsyncThunk(
-  "datten/GetAllGenders",
-  async () => {
-    const getGender = await getAllGenders();
-    return getGender;
+    const getHome = await getAllDoctorHome();
+    return getHome;
   }
 );
 
 export const getAllUsersAPI = createAsyncThunk("datten/GetAll", async () => {
   const getAllCV = await getAllUsers();
   return getAllCV;
+});
+
+export const getAllGenderAPI = createAsyncThunk(
+  "datten/Getgender",
+  async () => {
+    const getgender = await getAllAllcodes("GENDER");
+    return getgender;
+  }
+);
+
+export const getAllRoleAPI = createAsyncThunk("datten/Getrole", async () => {
+  const getrole = await getAllAllcodes("ROLE");
+  return getrole;
 });
 
 export const getAUserAPI = createAsyncThunk(
@@ -61,25 +66,31 @@ export const UserRedux = createSlice({
   name: "datten",
   initialState: {
     getAllUser: {},
+    getDoctorHome: {},
+    getAllRole: {},
+    getAllGender: {},
     getAUser: {},
-    allRoles: {},
-    allGenders: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllRolesAPI.fulfilled, (state, action) => {
-      state.allRoles = action.payload;
-      state.check = false;
-    });
-
-    builder.addCase(getAllGendersAPI.fulfilled, (state, action) => {
-      state.allGenders = action.payload;
+    builder.addCase(getAllDoctorHomeAPI.fulfilled, (state, action) => {
+      state.getDoctorHome = action.payload;
       state.check = false;
     });
 
     builder.addCase(getAllUsersAPI.fulfilled, (state, action) => {
       state.getAllUser = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getAllRoleAPI.fulfilled, (state, action) => {
+      state.getAllRole = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getAllGenderAPI.fulfilled, (state, action) => {
+      state.getAllGender = action.payload;
       state.check = false;
     });
 
@@ -115,9 +126,10 @@ export const UserRedux = createSlice({
   },
 });
 export const dataGetAllUser = (state) => state.datten.getAllUser;
+export const dataGetAllRole = (state) => state.datten.getAllRole;
+export const dataGetAllGender = (state) => state.datten.getAllGender;
 export const dataGetAUser = (state) => state.datten.getAUser;
-export const dataGetAllRole = (state) => state.datten.allRoles;
-export const dataGetAllGender = (state) => state.datten.allGenders;
+export const dataGetDoctorHome = (state) => state.datten.getDoctorHome;
 export const dataCheck = (state) => state.datten.check;
 
 export default UserRedux.reducer;

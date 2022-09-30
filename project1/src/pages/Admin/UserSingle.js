@@ -6,12 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Buffer } from "buffer";
 
-import {
-  getAUserAPI,
-  dataGetAUser,
-  dataCheck,
-  deleteUserAPI,
-} from "../../redux/userRedux";
+import { getAUserAPI, dataGetAUser, dataCheck } from "../../redux/userRedux";
 import NavbarUser from "../../components/Admin/NavbarUser";
 const Single = () => {
   const dispatch = useDispatch();
@@ -21,7 +16,6 @@ const Single = () => {
   // const id = location.search.split("=")[1];
   const check = useSelector(dataCheck);
   const user = useSelector(dataGetAUser);
-  console.log("user:", user);
   useEffect(() => {
     dispatch(getAUserAPI(params.userId));
   }, [check]);
@@ -61,7 +55,7 @@ const Single = () => {
                 <div className="mb-2 text-sm">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
-                    {user?.user?.genderDataToUser.gender}
+                    {user?.user?.genderDataToUser.value}
                   </span>
                 </div>
                 <div className="mb-2 text-sm">
@@ -69,7 +63,7 @@ const Single = () => {
                     Phân quyền hệ thống:
                   </span>
                   <span className="font-normal ml-2">
-                    {user?.user?.roleDataToUser.role}
+                    {user?.user?.roleDataToUser.value}
                   </span>
                 </div>
                 <div className="mb-2 text-sm">

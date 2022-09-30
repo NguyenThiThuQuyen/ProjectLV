@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { BsPlusLg } from "react-icons/bs";
 import { editGoiKhamAPI } from "../../../../redux/goiKhamRedux";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,11 +10,15 @@ export default function GoiKhamModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [packageName, setPackageName] = useState();
   const [packageDecs, setPackageDecs] = useState();
+  const [price, setPrice] = useState();
+  const [applydateId, setApplydateId] = useState();
   const [reservationticketId, setReservationticketId] = useState();
   const [id, setId] = useState();
   const params = {
     packageName: packageName,
     packageDecs: packageDecs,
+    price: price,
+    applydateId: applydateId,
     reservationticketId: reservationticketId,
     id: id,
   };
@@ -45,21 +51,13 @@ export default function GoiKhamModalEdit(props) {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    SỬA GÓI KHÁM TƯ VẤN
+                    CẬP NHẬT THÔNG TIN GÓI KHÁM TƯ VẤN
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <div className="grid grid-rows-2">
-                    <div className="grid row-span-1 grid-cols-2">
+                    <div className="grid row-span-1 grid-cols-3">
                       <div className="col-span-1 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">
                           Tên gói tư vấn
@@ -73,6 +71,19 @@ export default function GoiKhamModalEdit(props) {
                           onChange={(event) =>
                             setPackageName(event.target.value)
                           }
+                        />
+                      </div>
+                      <div className="col-span-1 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-600 ml-2">
+                          Giá tiền (VND)
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="..."
+                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          required
+                          value={price}
+                          onChange={(event) => setPrice(event.target.value)}
                         />
                       </div>
                       <div className="col-span-1 mx-3 my-4">
@@ -93,7 +104,22 @@ export default function GoiKhamModalEdit(props) {
                     </div>
 
                     <div className="grid row-span-1 grid-cols-3">
-                      <div className="col-span-3 mx-3 my-4">
+                      {/* <div className="col-span-1 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-600 ml-2">
+                          Ngày sinh
+                        </label>
+                        <DatePicker
+                          className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                          selected={applydateId}
+                          onChange={(date) => setApplydateId(date)}
+                          dateFormat="yyyy/MM/dd"
+                          maxDate={new Date()}
+                          isClearable
+                          showYearDropdown
+                          scrollableMonthYearDropdown
+                        />
+                      </div> */}
+                      <div className="col-span-2 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">
                           Mô tả
                         </label>

@@ -53,43 +53,38 @@ let handleGetUser = async (req, res) => {
   let id = req.query.id; //all, id
   if (!id) {
     return res.status(200).json({
-      errCode: 1,
-      errMessage: "Missing required parmeters",
+      code: 1,
+      message: "Missing required parmeters",
       users: [],
     });
   }
   let user = await userService.getUser(id);
   return res.status(200).json({
-    errCode: 0,
-    errMessage: "Ok",
+    code: 0,
+    message: "Ok",
     user,
   });
 };
 
-// let test = async (req, res) => {
-//   let id = req.query.id; //all, id
-//   if (!id) {
-//     return res.status(200).json({
-//       errCode: 1,
-//       errMessage: "Missing required parmeters",
-//       users: [],
-//     });
-//   }
-
-//   let users = await userService.getAllUsers(id);
-//   return res.status(200).json({
-//     errCode: 0,
-//     errMessage: "Ok",
-//     users,
-//   });
-// };
+let getAllCode = async (req, res) => {
+  try {
+    let data = await userService.getAllCodeService(req.query.type);
+    return res.status(200).json(data);
+  } catch (e) {
+    console.log("Get all code error:", e);
+    return res.status(200).json({
+      code: -1,
+      message: "Error from server",
+    });
+  }
+};
 
 module.exports = {
-  // handleLogin: handleLogin,
   handleGetAllUsers: handleGetAllUsers,
   handleCreateNewUser: handleCreateNewUser,
   handleDeleteUser: handleDeleteUser,
   handleEditUser: handleEditUser,
   handleLogin: handleLogin,
   handleGetUser: handleGetUser,
+  getAllCode: getAllCode,
 };

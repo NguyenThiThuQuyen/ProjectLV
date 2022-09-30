@@ -40,10 +40,16 @@ let createNewMedicalpackage = (data) => {
           message: `Tên gói khám đã tồn tại, vui lòng nhập lại!`,
         });
       } else {
-        await db.MedicalPackage.create({
+        let goikham = await db.MedicalPackage.create({
           packageName: data.packageName,
           packageDecs: data.packageDecs,
           reservationticketId: data.reservationticketId,
+        });
+
+        let giagoikham = await db.PackagePrice.create({
+          price: data.price,
+          applydateId: data.applydateId,
+          medicalpackageId: goikham.id,
         });
       }
       resolve({
@@ -60,7 +66,6 @@ let updateGoiKham = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "Lỗi!",
@@ -70,12 +75,12 @@ let updateGoiKham = (data) => {
           where: { id: data.id },
           raw: false,
         });
+        let giagoikham = await db.PackagePrice.findOne({
+          where: { medicalpackageId: data.id },
+          raw: false,
+        });
 
         if (goiKham) {
-          goiKham.packageName = data.packageName;
-          goiKham.packageDecs = data.packageDecs;
-          goiKham.reservationticketId = "1";
-
           let check = await checkNamePackage(data.packageName);
           if (check === true) {
             resolve({
@@ -83,18 +88,28 @@ let updateGoiKham = (data) => {
               message: `Tên gói khám đã tồn tại, vui lòng nhập lại!`,
             });
           } else {
+            goiKham.packageName = data.packageName;
+            goiKham.packageDecs = data.packageDecs;
+            goiKham.reservationticketId = data.reservationticketId;
             await goiKham.save();
           }
-          resolve({
-            code: 0,
-            message: "Cập nhật gói khám thành công!",
-          });
         } else {
           resolve({
             code: 1,
             message: `Không tìm thấy gói khám!`,
           });
         }
+
+        if (giagoikham) {
+          giagoikham.price = data.price;
+          giagoikham.applydateId = data.applydateId;
+          giagoikham.medicalpackageId = data.medicalpackageId;
+          await giagoikham.save();
+        }
+        resolve({
+          errCode: 0,
+          message: "Update succeeds!",
+        });
       }
     } catch (e) {
       reject(e);

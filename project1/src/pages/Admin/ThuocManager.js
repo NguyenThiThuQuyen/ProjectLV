@@ -15,14 +15,11 @@ import {
 const ThuocManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllThuoc);
-  // console.log("data123:", data);
   const check = useSelector(dataCheckThuoc);
 
-  // console.log("first,", check);
   useEffect(() => {
     dispatch(getAllThuocAPI());
   }, [check]);
-  // console.log(data);
   const handleDeleteThuoc = (id) => {
     dispatch(deleteThuocAPI(id));
   };
@@ -67,14 +64,12 @@ const ThuocManager = () => {
                   data.medicals &&
                   data.medicals.length > 0 &&
                   data.medicals.map((item, index) => {
-                    // console.log("item:", item);
                     let imageBase64 = "";
                     if (item.image) {
                       imageBase64 = new Buffer(item.image, "base64").toString(
                         "binary"
                       );
                     }
-                    // console.log(item.image);
                     return (
                       <tr key={item.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">

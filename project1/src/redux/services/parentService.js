@@ -1,10 +1,5 @@
 import axios from "axios";
 
-const getAllGenders = async () => {
-  const gender = await axios.get(`http://localhost:8081/api/get-all-genders`);
-  return gender.data;
-};
-
 const getAllParents = async () => {
   const parent = await axios.get(`http://localhost:8081/api/get-all-parents`);
   return parent.data;
@@ -33,4 +28,4 @@ const deleteParent = async (id) => {
   return parentDelete.data;
 };
 
-export { getAllParents, createParent, editParent, deleteParent, getAllGenders };
+export { getAllParents, createParent, editParent, deleteParent };

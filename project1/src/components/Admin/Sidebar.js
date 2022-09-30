@@ -46,8 +46,10 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-            <GiMedicalPackAlt className="mx-2 mt-1 text-xl text-teal-700" />
-            <span className="text-slate-800">Gói khám</span>
+            <Link to="/admin/package-price-manager" className="flex">
+              <GiMedicalPackAlt className="mx-2 mt-1 text-xl text-teal-700" />
+              <span className="text-slate-800">Gói khám</span>
+            </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
             <RiBillLine className="mx-2 mt-1 text-xl text-teal-700" />

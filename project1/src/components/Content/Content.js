@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Content.css";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
@@ -17,7 +17,24 @@ import hinh1 from "../../assets/upload/hinh1.jpg";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { TbBellRinging } from "react-icons/tb";
 import { AiOutlineSchedule } from "react-icons/ai";
-function Content() {
+import { FaArrowDown } from "react-icons/fa";
+import { Buffer } from "buffer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  dataGetDoctorHome,
+  getAllDoctorHomeAPI,
+  dataCheck,
+} from "../../redux/userRedux";
+
+const Content = () => {
+  const dispatch = useDispatch();
+  const data = useSelector(dataGetDoctorHome);
+  console.log("data", data);
+  const check = useSelector(dataCheck);
+
+  useEffect(() => {
+    dispatch(getAllDoctorHomeAPI());
+  }, [check]);
   const settings = {
     dots: true,
     infinite: true,
@@ -199,6 +216,13 @@ function Content() {
               </div>
             </div>
           </div>
+
+          <div className="justify-center items-center mt-10">
+            <FaArrowDown className="animate-bounce cursor-pointer mx-auto text-slate-700" />
+          </div>
+          <div className="cursor-pointer text-center text-slate-500">
+            Xem thêm ...
+          </div>
         </div>
       </div>
 
@@ -311,77 +335,50 @@ function Content() {
         <div className="text-center font-medium text-sky-700 text-3xl">
           Meet The Team
         </div>
-        <div className="w-full">
-          <div className="w-9/12 mx-auto">
-            <div className="grid grid-cols-3">
-              <div className="col-span-1 mx-5">
-                <div className=" bg-slate-200">
-                  <div className="w-full mt-5">
-                    <img
-                      className="h-52 w-52 pt-5 rounded-full mx-auto"
-                      src={bacsi1}
-                      alt=""
-                    />
-                    <div className="text-center mt-3 text-xl font-medium">
-                      Dr. Adam Jonson
-                    </div>
-                    <div className="text-center mt-2 text-lg font-light">
-                      CHIEF OPERATING OFFICER
-                    </div>
-                    <div className="text-center mt-2 px-4 py-4">
-                      Sample text. Click to select the text box. Click again or
-                      double click to start editing the text.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-span-1 mx-5">
-                <div className=" bg-slate-200">
-                  <div className="w-full mt-5">
-                    <img
-                      className="h-52 w-52 pt-5 rounded-full mx-auto"
-                      src={bacsi2}
-                      alt=""
-                    />
-                    <div className="text-center mt-3 text-xl font-medium">
-                      Dr. Adam Jonson
-                    </div>
-                    <div className="text-center mt-2 text-lg font-light">
-                      CHIEF OPERATING OFFICER
-                    </div>
-                    <div className="text-center mt-2 px-4 py-4">
-                      Sample text. Click to select the text box. Click again or
-                      double click to start editing the text.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-span-1 mx-5">
-                <div className=" bg-slate-200">
-                  <div className="w-full mt-5">
-                    <img
-                      className="h-52 w-52 pt-5 rounded-full mx-auto"
-                      src={bacsi3}
-                      alt=""
-                    />
-                    <div className="text-center mt-3 text-xl font-medium">
-                      Dr. Adam Jonson
-                    </div>
-                    <div className="text-center mt-2 text-lg font-light">
-                      CHIEF OPERATING OFFICER
-                    </div>
-                    <div className="text-center mt-2 px-4 py-4">
-                      Sample text. Click to select the text box. Click again or
-                      double click to start editing the text.
-                    </div>
-                  </div>
-                </div>
+        <Slider {...settings}>
+          <div className="w-full">
+            <div className="w-9/12 mx-auto">
+              <div className="grid grid-cols-3">
+                {data.data &&
+                  data.data.length > 0 &&
+                  data.data.map((item, index) => {
+                    let imageBase64 = "";
+                    if (item.image) {
+                      imageBase64 = new Buffer(item.image, "base64").toString(
+                        "binary"
+                      );
+                    }
+                    console.log("imageBase64", imageBase64);
+                    return (
+                      <>
+                        <div className="col-span-1 mx-5" key={item.id}>
+                          <div className=" bg-slate-200">
+                            <div className="w-full mt-5">
+                              <img
+                                src={imageBase64}
+                                alt=""
+                                className="h-52 w-52 pt-5 rounded-full mx-auto"
+                              />
+                              <div className="text-center mt-3 text-xl font-medium">
+                                {item.name}
+                              </div>
+                              <div className="text-center mt-2 text-lg font-light">
+                                CHIEF OPERATING OFFICER
+                              </div>
+                              <div className="text-center mt-2 px-4 py-4">
+                                Sức khỏe, sự an toàn của bạn là sứ mệnh và nguồn
+                                cảm hứng của chúng tôi
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
               </div>
             </div>
           </div>
-        </div>
+        </Slider>
       </div>
 
       <div className="mt-20">
@@ -452,6 +449,6 @@ function Content() {
       </div>
     </>
   );
-}
+};
 
 export default Content;

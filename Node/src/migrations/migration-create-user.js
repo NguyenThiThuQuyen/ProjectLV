@@ -26,7 +26,7 @@ module.exports = {
       image: {
         type: Sequelize.BLOB("long"),
       },
-      genderId: {
+      gender: {
         type: Sequelize.STRING,
       },
       roleId: {

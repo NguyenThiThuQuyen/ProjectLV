@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Patient.belongsTo(models.Gender, {
-        foreignKey: "genderId",
-        targetKey: "id",
+      Patient.belongsTo(models.Allcode, {
+        foreignKey: "gender",
+        targetKey: "keyMap",
         as: "genderDataToPatient",
       });
 
@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
   Patient.init(
     {
       childrentName: DataTypes.STRING,
-      genderId: DataTypes.STRING,
-      birthday: DataTypes.STRING,
+      gender: DataTypes.STRING,
+      birthday: DataTypes.DATE,
       address: DataTypes.STRING,
       image: DataTypes.STRING,
       parentId: DataTypes.STRING,

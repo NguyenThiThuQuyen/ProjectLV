@@ -1,4 +1,5 @@
 const db = require("../models/index");
+const { getSearchParentById } = require("./patientService");
 
 let getAllParents = () => {
   return new Promise(async (resolve, reject) => {
@@ -7,13 +8,12 @@ let getAllParents = () => {
       parents = await db.Parent.findAll({
         include: [
           {
-            model: db.Gender,
+            model: db.Allcode,
             as: "genderDataToParent",
-            attributes: ["gender", "id"],
+            attributes: ["value", "keyMap", "type"],
           },
         ],
       });
-
       resolve(parents);
     } catch (e) {
       reject(e);
@@ -54,7 +54,7 @@ let createNewParent = (data) => {
           email: data.email,
           password: data.password,
           phone: data.phone,
-          genderId: data.genderId,
+          gender: data.gender,
         });
         resolve({
           code: 0,
@@ -87,7 +87,7 @@ let updateParentData = (data) => {
           parent.email = data.email;
           parent.password = data.password;
           parent.phone = data.phone;
-          parent.genderId = data.genderId;
+          parent.gender = data.gender;
           await parent.save();
           resolve({
             code: 0,

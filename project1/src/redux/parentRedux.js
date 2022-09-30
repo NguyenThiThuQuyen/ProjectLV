@@ -5,16 +5,7 @@ import {
   createParent,
   editParent,
   deleteParent,
-  getAllGenders,
 } from "./services/parentService";
-
-export const getAllGendersAPI = createAsyncThunk(
-  "parent/GetAllGenders",
-  async () => {
-    const getGender = await getAllGenders();
-    return getGender;
-  }
-);
 
 export const getAllParentsAPI = createAsyncThunk("parent/GetAll", async () => {
   const getParent = await getAllParents();
@@ -43,18 +34,12 @@ export const ParentRedux = createSlice({
   name: "thuoc",
   initialState: {
     allParent: {},
-    allGenders: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllParentsAPI.fulfilled, (state, action) => {
       state.allParent = action.payload;
-      state.check = false;
-    });
-
-    builder.addCase(getAllGendersAPI.fulfilled, (state, action) => {
-      state.allGenders = action.payload;
       state.check = false;
     });
 
@@ -94,6 +79,5 @@ export const ParentRedux = createSlice({
 });
 
 export const dataGetAllParent = (state) => state.parent.allParent;
-export const dataGetAllGender = (state) => state.parent.allGenders;
 export const dataCheck = (state) => state.parent.check;
 export default ParentRedux.reducer;

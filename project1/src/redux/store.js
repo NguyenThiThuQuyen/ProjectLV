@@ -5,7 +5,9 @@ import LoaiThuocRedux from "./loaiThuocRedux";
 import ThuocRedux from "./thuocRedux";
 import ParentRedux from "./parentRedux";
 import PatientRedux from "./patientRedux";
+import GiaGoiKhamRedux from "./giaGoiKhamRedux";
 import AdminRedux from "./Auth/adminRedux";
+// import AllCodeRedux from "./allCodeRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -15,5 +17,6 @@ export const store = configureStore({
     login: AdminRedux,
     parent: ParentRedux,
     patient: PatientRedux,
+    giagoikham: GiaGoiKhamRedux,
   },
 });

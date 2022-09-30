@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import UserModal from "../../components/Admin/Modal/User/UserModal";
+// dispatch(getAllAllcodesAPI());
 import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -21,7 +22,7 @@ const UserManager = () => {
   const [userId, setUserId] = useState();
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllUser);
-  // console.log("data user:", data);
+  console.log("first", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
@@ -79,10 +80,12 @@ const UserManager = () => {
                   data.users.length > 0 &&
                   data.users.map((item, index) => {
                     let imageBase64 = "";
-                    if (item.image) {
+                    if (item?.image) {
                       imageBase64 = new Buffer(item.image, "base64").toString(
                         "binary"
                       );
+                      // imageBase64 = new Blob([Buffer], { type: "text/html" });
+                      console.log("base64: ", item?.image);
                     }
                     return (
                       <tr key={item.id}>
@@ -104,10 +107,10 @@ const UserManager = () => {
                           />
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.genderDataToUser.gender}
+                          {item.genderDataToUser.value}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.roleDataToUser.role}
+                          {item.roleDataToUser.value}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">

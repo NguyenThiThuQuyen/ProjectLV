@@ -21,7 +21,6 @@ const Login = () => {
     email: email,
     password: password,
   };
-  // console.log("last", params);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {

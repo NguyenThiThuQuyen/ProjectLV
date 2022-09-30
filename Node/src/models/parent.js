@@ -13,9 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         as: "parentDataToPatient",
       });
 
-      Parent.belongsTo(models.Gender, {
-        foreignKey: "genderId",
-        targetKey: "id",
+      Parent.belongsTo(models.Allcode, {
+        foreignKey: "gender",
+        targetKey: "keyMap",
         as: "genderDataToParent",
       });
     }
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       phone: DataTypes.STRING,
-      genderId: DataTypes.STRING,
+      gender: DataTypes.STRING,
     },
     {
       sequelize,
