@@ -26,14 +26,20 @@ import {
   dataCheck,
 } from "../../redux/userRedux";
 
+import {
+  getAllMedicalPackaheHomeAPI,
+  dataGetAllGoiKhamHome,
+} from "../../redux/goiKhamRedux";
+
 const Content = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetDoctorHome);
-  console.log("data", data);
+  const dataPackage = useSelector(dataGetAllGoiKhamHome);
   const check = useSelector(dataCheck);
 
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI());
+    dispatch(getAllMedicalPackaheHomeAPI());
   }, [check]);
   const settings = {
     dots: true,
@@ -143,10 +149,43 @@ const Content = () => {
         </h1>
         <div className="border-solid border-2 border-slate-200 shadow-lg shadow-slate-300 items-center justify-items-center h-auto mx-auto w-9/12 p-4">
           <div className="grid grid-cols-2 justify-items-center">
-            <div className="col-span-1">
+            {dataPackage.data &&
+              dataPackage.data.length > 0 &&
+              dataPackage.data.map((item, index) => {
+                let imageBase64 = "";
+                if (item.image) {
+                  imageBase64 = new Buffer(item.image, "base64").toString(
+                    "binary"
+                  );
+                }
+                return (
+                  <>
+                    <div className="col-span-1 mt-10">
+                      <div className="grid grid-cols-2 justify-items-center">
+                        <div className="col-span-1 px-5">
+                          <img
+                            src={imageBase64}
+                            alt=""
+                            className="w-full h-[200px]"
+                          />
+                        </div>
+                        <div className="col-span-1 w-full">
+                          <div className="font-medium">{item.packageName}</div>
+                          <div className="text-sm">{item.packageDecs}</div>
+                          <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
+                            LEARN MORE
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            {/* 
+            <div className="col-span-1 mt-10">
               <div className="grid grid-cols-2 justify-items-center">
                 <div className="col-span-1">
-                  <img className="w-[220px] h-[230px]" src={service1} alt="" />
+                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
                 </div>
                 <div className="col-span-1 mr-5">
                   <div className="">Hopitalist</div>
@@ -161,29 +200,10 @@ const Content = () => {
               </div>
             </div>
 
-            <div className="col-span-1">
-              <div className="grid grid-cols-5 justify-items-center">
-                <div className="col-span-2 mr-auto">
-                  <img className="w-[220px] h-[230px]" src={banner} alt="" />
-                </div>
-                <div className="col-span-3 ml-5">
-                  <div className="">Hopitalist</div>
-                  <div className="">
-                    Sample text. Click to select the text box. Click again or
-                    double click to start editing the text.
-                  </div>
-                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
-                    LEARN MORE
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 mt-10 justify-items-center">
-            <div className="col-span-1">
+            <div className="col-span-1 mt-10">
               <div className="grid grid-cols-2 justify-items-center">
                 <div className="col-span-1">
-                  <img className="w-[220px] h-[230px]" src={service3} alt="" />
+                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
                 </div>
                 <div className="col-span-1 mr-5">
                   <div className="">Hopitalist</div>
@@ -198,12 +218,12 @@ const Content = () => {
               </div>
             </div>
 
-            <div className="col-span-1">
-              <div className="grid grid-cols-5 justify-items-center">
-                <div className="col-span-2 ml-auto">
-                  <img className="w-[220px] h-[230px]" src={service2} alt="" />
+            <div className="col-span-1 mt-10">
+              <div className="grid grid-cols-2 justify-items-center">
+                <div className="col-span-1">
+                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
                 </div>
-                <div className="col-span-3 ml-5">
+                <div className="col-span-1 mr-5">
                   <div className="">Hopitalist</div>
                   <div className="">
                     Sample text. Click to select the text box. Click again or
@@ -215,6 +235,24 @@ const Content = () => {
                 </div>
               </div>
             </div>
+
+            <div className="col-span-1 mt-10">
+              <div className="grid grid-cols-2 justify-items-center">
+                <div className="col-span-1">
+                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
+                </div>
+                <div className="col-span-1 mr-5">
+                  <div className="">Hopitalist</div>
+                  <div className="">
+                    Sample text. Click to select the text box. Click again or
+                    double click to start editing the text.
+                  </div>
+                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
+                    LEARN MORE
+                  </div>
+                </div>
+              </div>
+            </div> */}
           </div>
 
           <div className="justify-center items-center mt-10">
@@ -348,7 +386,6 @@ const Content = () => {
                         "binary"
                       );
                     }
-                    console.log("imageBase64", imageBase64);
                     return (
                       <>
                         <div className="col-span-1 mx-5" key={item.id}>
@@ -375,6 +412,12 @@ const Content = () => {
                       </>
                     );
                   })}
+              </div>
+              <div className="justify-center items-center mt-10">
+                <FaArrowDown className="animate-bounce cursor-pointer mx-auto text-slate-700" />
+              </div>
+              <div className="cursor-pointer text-center text-slate-500">
+                Xem thêm ...
               </div>
             </div>
           </div>

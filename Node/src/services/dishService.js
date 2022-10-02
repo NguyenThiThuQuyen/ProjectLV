@@ -35,7 +35,6 @@ let createNewDish = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkName(data.name);
-      console.log("check email:", check);
       // const hashPassword = await argon2.hash(data.password);
       if (check === true) {
         resolve({
@@ -63,7 +62,6 @@ let updateDishData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "err",

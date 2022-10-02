@@ -13,16 +13,15 @@ module.exports = (sequelize, DataTypes) => {
       //   targetKey: "id",
       //   as: "dayOfWeekDataToTimeSlot",
       // });
-      // TimeSlot.hasMany(models.Schedule, {
-      //   foreignKey: "timeslotId",
-      //   as: "timeSlotDataToSchedule",
-      // });
+      TimeSlot.hasMany(models.Schedule, {
+        foreignKey: "timeslotId",
+        as: "timeSlotDataToSchedule",
+      });
     }
   }
   TimeSlot.init(
     {
-      timeSlot: DataTypes.STRING,
-      dayofweekId: DataTypes.STRING,
+      timeslot: DataTypes.STRING,
     },
     {
       sequelize,

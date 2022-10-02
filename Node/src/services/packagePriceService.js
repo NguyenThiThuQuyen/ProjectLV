@@ -28,7 +28,7 @@ let getAllPrices = () => {
           {
             model: db.MedicalPackage,
             as: "medicalPackageDataToPackagePrice",
-            attributes: ["packageName", "packageDecs", "id"],
+            attributes: ["packageName", "packageDecs", "image", "id"],
           },
         ],
       });

@@ -8,27 +8,22 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Schedule.belongsTo(models.TimeSlot, {
-      //   foreignKey: "timeslotId",
-      //   targetKey: "id",
-      //   as: "timeSlotDataToSchedule",
-      // });
-      // Schedule.belongsTo(models.MedicalPackage, {
-      //   foreignKey: "medicalpackageId",
-      //   targetKey: "id",
-      //   as: "medicalPackageDataToSchedule",
-      // });
-      // Schedule.belongsTo(models.User, {
-      //   foreignKey: "userId",
-      //   targetKey: "id",
-      //   as: "userDataToSchedule",
-      // });
+      Schedule.belongsTo(models.TimeSlot, {
+        foreignKey: "timeslotId",
+        targetKey: "id",
+        as: "timeSlotDataToSchedule",
+      });
+      Schedule.belongsTo(models.User, {
+        foreignKey: "userId",
+        targetKey: "id",
+        as: "userDataToSchedule",
+      });
     }
   }
   Schedule.init(
     {
+      registerDate: DataTypes.DATE,
       timeslotId: DataTypes.STRING,
-      medicalpackageId: DataTypes.STRING,
       userId: DataTypes.STRING,
     },
     {

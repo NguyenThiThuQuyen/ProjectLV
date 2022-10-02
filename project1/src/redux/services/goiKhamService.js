@@ -7,6 +7,13 @@ const getAllGoiKham = async () => {
   return response.data;
 };
 
+const getGoiKham = async (id) => {
+  const user = await axios.get(
+    `http://localhost:8081/api/get-medicalpackage?id=${id}`
+  );
+  return user.data;
+};
+
 const createGoiKham = async (body) => {
   const create = await axios.post(
     `http://localhost:8081/api/create-new-medicalpackage`,
@@ -30,4 +37,18 @@ const deleteGoiKham = async (id) => {
   return userDelete.data;
 };
 
-export { getAllGoiKham, createGoiKham, editGoiKham, deleteGoiKham };
+const getAllMedicalPackaheHome = async () => {
+  const res = await axios.get(
+    `http://localhost:8081/api/all-medicalpackage-home`
+  );
+  return res.data;
+};
+
+export {
+  getAllGoiKham,
+  createGoiKham,
+  editGoiKham,
+  deleteGoiKham,
+  getAllMedicalPackaheHome,
+  getGoiKham,
+};

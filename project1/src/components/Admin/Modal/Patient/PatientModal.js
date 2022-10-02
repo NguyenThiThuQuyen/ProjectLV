@@ -26,9 +26,6 @@ export default function PatientModal(props) {
   const check = useSelector(dataCheck);
   const id = useLocation();
   const [parentId, setParentId] = useState(id.search.split("=")[1]);
-  // const idParent = id.search.split("=")[1];
-  // console.log("idParent:", idParent);
-  // console.log("id1234: ", id.search.split("=")[1]);
   const params = {
     childrentName: childrentName,
     birthday: birthday,
@@ -148,7 +145,6 @@ export default function PatientModal(props) {
                                 selected={birthday}
                                 onChange={(date) => setBirthday(date)}
                                 dateFormat="yyyy/MM/dd"
-                                minDate={moment()}
                                 maxDate={new Date()}
                                 isClearable
                                 showYearDropdown

@@ -8,10 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      timeSlot: {
-        type: Sequelize.STRING,
-      },
-      dayofweekId: {
+      timeslot: {
         type: Sequelize.STRING,
       },
       createdAt: {

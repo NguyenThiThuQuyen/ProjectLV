@@ -67,7 +67,6 @@ let createNewUser = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkUserEmail(data.email);
-      console.log("check email:", check);
       // const hashPassword = await argon2.hash(data.password);
       if (check === true) {
         resolve({
@@ -89,7 +88,7 @@ let createNewUser = (data) => {
 
       resolve({
         code: 0,
-        message: "success",
+        message: "Thêm thành công!",
       });
     } catch (e) {
       reject(e);
@@ -101,7 +100,6 @@ let updateUserData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "err",
@@ -115,18 +113,19 @@ let updateUserData = (data) => {
           user.name = data.name;
           user.password = data.password;
           user.address = data.address;
+          user.image = data.image;
           user.phone = data.phone;
           user.gender = data.gender;
           user.roleId = data.roleId;
           await user.save();
           resolve({
             code: 0,
-            message: "Update the user succeeds!",
+            message: "Cập nhật thành công!",
           });
         } else {
           resolve({
             code: 1,
-            message: `User not found!`,
+            message: `Không tìm thấy người dùng!`,
           });
         }
       }
@@ -144,7 +143,7 @@ let deleteUser = (userId) => {
     if (!foundUser) {
       resolve({
         code: 2,
-        message: `The user isn't exist`,
+        message: `Người dùng không tồn tại`,
       });
     }
     await db.User.destroy({
@@ -152,7 +151,7 @@ let deleteUser = (userId) => {
     });
     resolve({
       code: 0,
-      message: `The user is deleted`,
+      message: `Đã xóa thành công`,
     });
   });
 };

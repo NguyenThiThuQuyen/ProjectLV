@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       applydateId: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       medicalpackageId: {
         type: Sequelize.STRING,

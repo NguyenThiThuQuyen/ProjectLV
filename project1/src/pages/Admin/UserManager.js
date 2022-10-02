@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import UserModal from "../../components/Admin/Modal/User/UserModal";
-// dispatch(getAllAllcodesAPI());
 import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getAllUsersAPI,
   getAUserAPI,
@@ -22,7 +23,6 @@ const UserManager = () => {
   const [userId, setUserId] = useState();
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllUser);
-  console.log("first", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
@@ -46,6 +46,7 @@ const UserManager = () => {
         <div className="flex-initial w-5/6">
           <Navbar />
           <NavbarUser />
+          <ToastContainer />
           <UserModal />
           {/* <TableUser /> */}
           <div className="w-full px-10 py-4">
@@ -84,8 +85,6 @@ const UserManager = () => {
                       imageBase64 = new Buffer(item.image, "base64").toString(
                         "binary"
                       );
-                      // imageBase64 = new Blob([Buffer], { type: "text/html" });
-                      console.log("base64: ", item?.image);
                     }
                     return (
                       <tr key={item.id}>

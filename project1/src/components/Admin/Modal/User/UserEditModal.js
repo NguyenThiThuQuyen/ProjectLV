@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
+import { getBase64 } from "../../../../utils/CommonUtils";
 import { editUserAPI } from "../../../../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
+import { ImUpload3 } from "react-icons/im";
 import {
   dataGetAllGender,
   dataGetAllRole,
@@ -12,6 +14,7 @@ export default function UserModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
+  const [image, setImage] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
   const [gender, setgender] = useState("M");
@@ -25,6 +28,7 @@ export default function UserModalEdit(props) {
   const params = {
     name: name,
     email: email,
+    image: image,
     phone: phone,
     address: address,
     gender: gender,
@@ -36,6 +40,7 @@ export default function UserModalEdit(props) {
   useEffect(() => {
     setName(props.item.name);
     setEmail(props.item.email);
+    setImage(props.item.image);
     setPhone(props.item.phone);
     setAddress(props.item.address);
     setgender(props.item.gender);
@@ -52,6 +57,13 @@ export default function UserModalEdit(props) {
   //   dispatch(getAllRoleAPI());
   //   dispatch(getAllGenderAPI());
   // }, [check]);
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await getBase64(file);
+    setImage(base64);
+  };
+
   return (
     <>
       <div className="ml-5">
@@ -173,11 +185,20 @@ export default function UserModalEdit(props) {
                             })}
                         </select>
                       </div>
-                      <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
-                          Hình ảnh
+                      <div className="col-span-1 mx-3 my-4 relative">
+                        <label htmlFor="" className="text-slate-600 ml-2 flex">
+                          Tải ảnh
+                          <ImUpload3 className="mt-1 ml-2" />
                         </label>
-                        <input type="file" placeholder="..." className="mt-2" />
+                        <input
+                          type="file"
+                          placeholder="..."
+                          className="mt-2"
+                          onChange={(event) => uploadImage(event)}
+                        />
+                        <div className="absolute">
+                          <img src={image} width={"100px"} height={"100px"} />
+                        </div>
                       </div>
                       <div className="col-span-1 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">

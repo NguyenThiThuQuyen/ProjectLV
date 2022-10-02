@@ -4,7 +4,42 @@ let getAllGoiKham = () => {
   return new Promise(async (resolve, reject) => {
     try {
       let goikham = {};
-      goikham = await db.MedicalPackage.findAll();
+      goikham = await db.MedicalPackage.findAll({
+        include: [
+          {
+            model: db.PackagePrice,
+            as: "medicalPackageDataToPackagePrice",
+            attributes: ["price", "applydateId", "id"],
+          },
+        ],
+        raw: true,
+        nest: true,
+      });
+      resolve(goikham);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getMedicalPackage = (goikhamId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let goikham = "";
+      if (goikhamId && goikhamId !== "ALL") {
+        goikham = await db.MedicalPackage.findOne({
+          where: { id: goikhamId },
+          include: [
+            {
+              model: db.PackagePrice,
+              as: "medicalPackageDataToPackagePrice",
+              attributes: ["price", "applydateId", "id"],
+            },
+          ],
+          raw: true,
+          nest: true,
+        });
+      }
       resolve(goikham);
     } catch (e) {
       reject(e);
@@ -37,13 +72,13 @@ let createNewMedicalpackage = (data) => {
       if (check === true) {
         resolve({
           code: 1,
-          message: `Tên gói khám đã tồn tại, vui lòng nhập lại!`,
+          message: `Tên đã tồn tại, vui lòng nhập lại!`,
         });
       } else {
         let goikham = await db.MedicalPackage.create({
           packageName: data.packageName,
           packageDecs: data.packageDecs,
-          reservationticketId: data.reservationticketId,
+          image: data.image,
         });
 
         let giagoikham = await db.PackagePrice.create({
@@ -85,12 +120,12 @@ let updateGoiKham = (data) => {
           if (check === true) {
             resolve({
               code: 1,
-              message: `Tên gói khám đã tồn tại, vui lòng nhập lại!`,
+              message: `Tên đã tồn tại, vui lòng nhập lại!`,
             });
           } else {
             goiKham.packageName = data.packageName;
             goiKham.packageDecs = data.packageDecs;
-            goiKham.reservationticketId = data.reservationticketId;
+            image = data.image;
             await goiKham.save();
           }
         } else {
@@ -122,7 +157,6 @@ let deleteGoiKham = (goiKhamId) => {
     let timGoiKham = await db.MedicalPackage.findOne({
       where: { id: goiKhamId },
     });
-    console.log("object", timGoiKham);
     if (!timGoiKham) {
       resolve({
         code: 2,
@@ -139,9 +173,27 @@ let deleteGoiKham = (goiKhamId) => {
   });
 };
 
+let getAllMedicalPackageHome = (limitInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let goikham = await db.MedicalPackage.findAll({
+        limit: limitInput,
+      });
+      resolve({
+        code: 0,
+        data: goikham,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewMedicalpackage: createNewMedicalpackage,
   updateGoiKham: updateGoiKham,
   deleteGoiKham: deleteGoiKham,
   getAllGoiKham: getAllGoiKham,
+  getAllMedicalPackageHome: getAllMedicalPackageHome,
+  getMedicalPackage: getMedicalPackage,
 };

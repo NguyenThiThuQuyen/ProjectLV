@@ -22,7 +22,6 @@ const PatientSingle = () => {
   // const id = location.search.split("=")[1];
   const check = useSelector(dataCheck);
   const patient = useSelector(dataGetPatient);
-  console.log("first:", patient);
 
   useEffect(() => {
     dispatch(getPatientAPI(params.patientId));
@@ -67,7 +66,7 @@ const PatientSingle = () => {
                 <div className="mb-2 text-sm">
                   <span className="font-bold text-slate-500">Ngày sinh:</span>
                   <span className="font-normal ml-2">
-                    {patient?.patient?.birthday}
+                    {patient?.patient?.birthday.slice(0, 10)}
                   </span>
                 </div>
                 <div className="mb-2 text-sm">

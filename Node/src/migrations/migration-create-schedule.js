@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      timeslotId: {
-        type: Sequelize.STRING,
+      registerDate: {
+        type: Sequelize.DATE,
       },
-      medicalpackageId: {
+      timeslotId: {
         type: Sequelize.STRING,
       },
       userId: {

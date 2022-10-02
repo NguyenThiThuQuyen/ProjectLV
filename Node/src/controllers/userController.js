@@ -10,7 +10,6 @@ let handleLogin = async (req, res) => {
     });
   }
   let userData = await userService.handleUserLogin(email, password);
-  console.log(userData);
   return res.status(200).json({
     code: userData.code,
     message: userData.message,
@@ -71,7 +70,6 @@ let getAllCode = async (req, res) => {
     let data = await userService.getAllCodeService(req.query.type);
     return res.status(200).json(data);
   } catch (e) {
-    console.log("Get all code error:", e);
     return res.status(200).json({
       code: -1,
       message: "Error from server",

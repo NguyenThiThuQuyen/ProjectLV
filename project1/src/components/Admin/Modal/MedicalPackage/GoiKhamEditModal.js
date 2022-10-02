@@ -10,26 +10,31 @@ export default function GoiKhamModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [packageName, setPackageName] = useState();
   const [packageDecs, setPackageDecs] = useState();
+  const [image, setImage] = useState();
   const [price, setPrice] = useState();
-  const [applydateId, setApplydateId] = useState();
-  const [reservationticketId, setReservationticketId] = useState();
+  const [applydateId, setApplydateId] = useState(new Date());
   const [id, setId] = useState();
   const params = {
     packageName: packageName,
     packageDecs: packageDecs,
+    image: image,
     price: price,
     applydateId: applydateId,
-    reservationticketId: reservationticketId,
     id: id,
   };
 
   const dispatch = useDispatch();
   useEffect(() => {
-    setPackageName(props.item.packageName);
-    setPackageDecs(props.item.packageDecs);
-    setReservationticketId(props.item.reservationticketId);
-    setId(props.item.id);
-  }, [props.item]);
+    let date = new Date(
+      props?.item?.medicalPackageDataToPackagePrice.applydateId
+    );
+    setPackageName(props?.item?.packageName);
+    setPackageDecs(props?.item?.packageDecs);
+    setApplydateId(date);
+    setPrice(props?.item?.medicalPackageDataToPackagePrice?.price);
+    setImage(props?.item?.image);
+    setId(props?.item?.id);
+  }, [props?.item]);
 
   const handleSaveEdit = () => {
     dispatch(editGoiKhamAPI(params));
@@ -88,17 +93,19 @@ export default function GoiKhamModalEdit(props) {
                       </div>
                       <div className="col-span-1 mx-3 my-4">
                         <label htmlFor="" className="text-slate-600 ml-2">
-                          Phiếu đặt chỗ
+                          Ngày áp dụng
                         </label>
-                        <input
-                          type="text"
-                          placeholder="..."
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                        <DatePicker
+                          className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                          selected={applydateId}
+                          value={applydateId}
                           required
-                          value={reservationticketId}
-                          onChange={(event) =>
-                            setReservationticketId(event.target.value)
-                          }
+                          onChange={(date) => setApplydateId(date)}
+                          dateFormat="yyyy/MM/dd"
+                          minDate={new Date()}
+                          isClearable
+                          showYearDropdown
+                          scrollableMonthYearDropdown
                         />
                       </div>
                     </div>

@@ -11,7 +11,6 @@ import NavbarUser from "../../components/Admin/NavbarUser";
 const Single = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  // console.log(params);
   // const location = useLocation();
   // const id = location.search.split("=")[1];
   const check = useSelector(dataCheck);

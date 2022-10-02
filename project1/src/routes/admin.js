@@ -4,12 +4,15 @@ import HomeAdmin from "../pages/Admin/HomeAdmin";
 import UserManager from "../pages/Admin/UserManager";
 import UserSingle from "../pages/Admin/UserSingle";
 import GoiKhamManager from "../pages/Admin/GoiKhamManager";
-import GiaGoiKhamManager from "../pages/Admin/GiaGoiKhamManager";
+// import GiaGoiKhamManager from "../pages/Admin/GiaGoiKhamManager";
+import ScheduleManager from "../pages/Admin/ScheduleManager";
 import LoaiThuocManager from "../pages/Admin/LoaiThuocManager";
 import ThuocManager from "../pages/Admin/ThuocManager";
 import ParentManager from "../pages/Admin/ParentManager";
 import PatientManager from "../pages/Admin/PatientManager";
 import PatientSingle from "../pages/Admin/PatientSingle";
+import GoiKhamSingle from "../pages/Admin/GoiKhamSingle";
+import TimeslotManager from "../pages/Admin/TimeslotManager";
 import PatientModal from "../../src/components/Admin/Modal/Patient/PatientModal";
 function admin() {
   return (
@@ -22,13 +25,19 @@ function admin() {
           path="/patient-detail-manager/:patientId"
           element={<PatientSingle />}
         />
+        <Route
+          path="/medical-package-detail/:medicalpackageId"
+          element={<GoiKhamSingle />}
+        />
         <Route path="/medical-package-manager" element={<GoiKhamManager />} />
-        <Route path="/package-price-manager" element={<GiaGoiKhamManager />} />
+        {/* <Route path="/package-price-manager" element={<GiaGoiKhamManager />} /> */}
         <Route path="/medical-type-manager" element={<LoaiThuocManager />} />
         <Route path="/medical-manager" element={<ThuocManager />} />
         <Route path="/parent-manager" element={<ParentManager />} />
         <Route path="/patient-manager" element={<PatientManager />} />
         <Route path="/patient-modal-manager" element={<PatientModal />} />
+        <Route path="/timeslot-manager" element={<TimeslotManager />} />
+        <Route path="/schedule-manager" element={<ScheduleManager />} />
       </Routes>
     </div>
   );

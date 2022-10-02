@@ -9,6 +9,23 @@ let handleGetAllGoiKham = async (req, res) => {
   });
 };
 
+let handleGetGoiKham = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      goikhams: [],
+    });
+  }
+  let goikham = await goiKhamService.getMedicalPackage(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    goikham,
+  });
+};
+
 let handleGoiKham = (req, res) => {
   let data = goiKhamService.createNewMedicalpackage(req.body);
   return res.status(200).json(data);
@@ -31,9 +48,25 @@ let handleDeleteGoiKham = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleGetAllMedicalPackageHome = async (req, res) => {
+  let limit = req.query.limit;
+  if (!limit) limit = 4;
+  try {
+    let response = await goiKhamService.getAllMedicalPackageHome(limit);
+    return res.status(200).json(response);
+  } catch (e) {
+    return res.status(200).json({
+      code: -1,
+      message: "Error",
+    });
+  }
+};
+
 module.exports = {
   handleGoiKham: handleGoiKham,
   handleEditGoiKham: handleEditGoiKham,
   handleDeleteGoiKham: handleDeleteGoiKham,
   handleGetAllGoiKham: handleGetAllGoiKham,
+  handleGetAllMedicalPackageHome: handleGetAllMedicalPackageHome,
+  handleGetGoiKham: handleGetGoiKham,
 };

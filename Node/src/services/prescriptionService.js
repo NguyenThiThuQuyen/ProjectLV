@@ -23,7 +23,6 @@ let updatePrescriptionData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "err",

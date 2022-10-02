@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   PackagePrice.init(
     {
       price: DataTypes.STRING,
-      applydateId: DataTypes.STRING,
+      applydateId: DataTypes.DATE,
       medicalpackageId: DataTypes.STRING,
     },
     {

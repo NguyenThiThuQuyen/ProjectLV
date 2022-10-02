@@ -1,4 +1,3 @@
-const { limits } = require("argon2");
 const db = require("../models/index");
 
 let getAllDoctorHome = (limitInput) => {

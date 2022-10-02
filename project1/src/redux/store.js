@@ -5,7 +5,9 @@ import LoaiThuocRedux from "./loaiThuocRedux";
 import ThuocRedux from "./thuocRedux";
 import ParentRedux from "./parentRedux";
 import PatientRedux from "./patientRedux";
-import GiaGoiKhamRedux from "./giaGoiKhamRedux";
+import TimeslotRedux from "./timeslotRedux";
+import ScheduleRedux from "./scheduleRedux";
+// import GiaGoiKhamRedux from "./giaGoiKhamRedux";
 import AdminRedux from "./Auth/adminRedux";
 // import AllCodeRedux from "./allCodeRedux";
 export const store = configureStore({
@@ -17,6 +19,8 @@ export const store = configureStore({
     login: AdminRedux,
     parent: ParentRedux,
     patient: PatientRedux,
-    giagoikham: GiaGoiKhamRedux,
+    // giagoikham: GiaGoiKhamRedux,
+    khunggio: TimeslotRedux,
+    lichtuvan: ScheduleRedux,
   },
 });

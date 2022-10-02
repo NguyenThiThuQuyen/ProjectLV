@@ -46,9 +46,9 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-            <Link to="/admin/package-price-manager" className="flex">
+            <Link to="/admin/medical-package-manager" className="flex">
               <GiMedicalPackAlt className="mx-2 mt-1 text-xl text-teal-700" />
-              <span className="text-slate-800">Gói khám</span>
+              <span className="text-slate-800">Gói tư vấn</span>
             </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
@@ -58,8 +58,10 @@ const Sidebar = () => {
 
           <p className="text-sm font-bold text-slate-500 my-3.5">DỊCH VỤ</p>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-            <AiOutlineSchedule className="mx-2 mt-1 text-xl text-teal-700" />
-            <span className="text-slate-800">Lịch tư vấn</span>
+            <Link to="/admin/schedule-manager" className="flex">
+              <AiOutlineSchedule className="mx-2 mt-1 text-xl text-teal-700" />
+              <span className="text-slate-800">Lịch tư vấn</span>
+            </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
             <BsFillJournalBookmarkFill className="mx-2 mt-1 text-xl text-teal-700" />

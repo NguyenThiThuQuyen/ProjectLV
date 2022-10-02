@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       packageName: DataTypes.STRING,
       packageDecs: DataTypes.STRING,
-      reservationticketId: DataTypes.STRING,
+      image: DataTypes.STRING,
     },
     {
       sequelize,

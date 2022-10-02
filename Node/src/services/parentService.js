@@ -42,7 +42,6 @@ let createNewParent = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkParentEmail(data.email);
-      console.log("check email:", check);
       if (check === true) {
         resolve({
           code: 1,
@@ -72,7 +71,6 @@ let updateParentData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "err",

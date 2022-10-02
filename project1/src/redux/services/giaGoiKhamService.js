@@ -1,17 +1,17 @@
-import axios from "axios";
+// import axios from "axios";
 
-const getAllGiaGoiKham = async () => {
-  const response = await axios.get(`http://localhost:8081/api/get-all-prices`);
-  return response.data;
-};
+// const getAllGiaGoiKham = async () => {
+//   const response = await axios.get(`http://localhost:8081/api/get-all-prices`);
+//   return response.data;
+// };
 
-const createGiaGoiKham = async (body) => {
-  const create = await axios.post(
-    `http://localhost:8081/api/create-new-price`,
-    body
-  );
-  return create.data;
-};
+// const createGiaGoiKham = async (body) => {
+//   const create = await axios.post(
+//     `http://localhost:8081/api/create-new-price`,
+//     body
+//   );
+//   return create.data;
+// };
 
 // const editGiaGoiKham = async (body) => {
 //   const userEdit = await axios.put(
@@ -28,4 +28,4 @@ const createGiaGoiKham = async (body) => {
 //   return userDelete.data;
 // };
 
-export { getAllGiaGoiKham, createGiaGoiKham };
+// export { getAllGiaGoiKham, createGiaGoiKham };

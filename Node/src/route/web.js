@@ -12,6 +12,8 @@ const dishController = require("../controllers/dishController");
 const prescriptionController = require("../controllers/prescriptionController");
 const packagePriceController = require("../controllers/packagePriceController");
 const doctorController = require("../controllers/doctorController");
+const timeSlotController = require("../controllers/timeSlotController");
+const scheduleController = require("../controllers/scheduleController");
 
 const { Router } = require("express");
 
@@ -25,6 +27,11 @@ let initWebRoutes = (app) => {
   // homepage
   // get doctor
   router.get("/api/all-doctor-home", doctorController.handleGetAllDoctorHome);
+  // get medical package
+  router.get(
+    "/api/all-medicalpackage-home",
+    medicalpackageController.handleGetAllMedicalPackageHome
+  );
 
   // user
   router.get("/api/get-user", userController.handleGetUser);
@@ -53,16 +60,50 @@ let initWebRoutes = (app) => {
   router.put("/api/edit-parent", parentController.handleEditParent);
   router.delete("/api/delete-parent", parentController.handleDeleteParent);
 
+  // lich tu van
+  router.get("/api/get-doctor", scheduleController.handleTest);
+  router.get(
+    "/api/get-all-schedules",
+    scheduleController.handleGetAllSchedules
+  );
+  router.get("/api/get-schedule", scheduleController.handleGetSchedules);
+  router.post(
+    "/api/create-new-schedule",
+    scheduleController.handleCreateSchedule
+  );
+  router.put("/api/edit-schedule", scheduleController.handleEditSchedule);
+  router.delete(
+    "/api/delete-schedule",
+    scheduleController.handleDeleteSchedule
+  );
+
+  // khung gio
+  router.get(
+    "/api/get-all-timeslots",
+    timeSlotController.handleGetAllTimeslots
+  );
+  router.post(
+    "/api/create-new-timeslot",
+    timeSlotController.handleCreateTimeslot
+  );
+  router.put("/api/edit-timeslot", timeSlotController.handleEditTimeslot);
+  router.delete(
+    "/api/delete-timeslot",
+    timeSlotController.handleDeleteTimeslot
+  );
+
   // gia goi kham
   router.get("/api/get-all-prices", packagePriceController.handleGetAllPrices);
   router.post(
     "/api/create-new-price",
     packagePriceController.handleCreatePrice
   );
-  // router.put("/api/edit-price", packagePriceController.handleEditPrice);
-  // router.delete("/api/delete-price", packagePriceController.handleDeletePrice);
 
   // goi kham
+  router.get(
+    "/api/get-medicalpackage",
+    medicalpackageController.handleGetGoiKham
+  );
   router.get(
     "/api/get-all-medicalpackages",
     medicalpackageController.handleGetAllGoiKham

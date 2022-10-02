@@ -47,11 +47,9 @@ let createNewPatient = (data) => {
 };
 
 let updatePatientData = (data) => {
-  // console.log("===================object", data);
   return new Promise(async (resolve, reject) => {
     try {
       if (!data.id) {
-        console.log("check ", data);
         resolve({
           code: 2,
           message: "err",
@@ -72,7 +70,7 @@ let updatePatientData = (data) => {
           await patient1.save();
           resolve({
             code: 0,
-            message: "Cập nhật thông tin người dùng thành công!",
+            message: "Cập nhật thành công!",
           });
         } else {
           resolve({
@@ -88,7 +86,6 @@ let updatePatientData = (data) => {
 };
 
 let deletePatient = (patientId) => {
-  // console.log("1233:", patientId);
   return new Promise(async (resolve, reject) => {
     let found = await db.Patient.findOne({
       where: { id: patientId },
@@ -170,7 +167,6 @@ let getSearchParentById = (id) => {
           message: `Error không `,
         });
       }
-      console.log("check search", search);
     } catch (e) {
       reject(e);
     }

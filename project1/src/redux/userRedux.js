@@ -9,6 +9,7 @@ import {
   getAllDoctorHome,
 } from "./services/userService";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const getAllDoctorHomeAPI = createAsyncThunk(
   "datten/GetAllHome",
@@ -117,7 +118,7 @@ export const UserRedux = createSlice({
     });
     builder.addCase(editUserAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code == "0") {
+      if (action.payload.code === 0) {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);

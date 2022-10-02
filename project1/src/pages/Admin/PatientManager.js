@@ -9,6 +9,8 @@ import PatientModalEdit from "../../components/Admin/Modal/Patient/PatientEditMo
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { Buffer } from "buffer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -44,6 +46,7 @@ const PatientManager = () => {
         <div className="flex-initial w-5/6">
           <Navbar />
           <NavbarUser />
+          <ToastContainer />
           <ParentModal />
           {/* <PatientModal /> */}
 
@@ -87,18 +90,15 @@ const PatientManager = () => {
                         "binary"
                       );
                     }
-                    // let day = "";
-                    // day = item.birthday;
-                    // console.log("=====>day 1", typeof day);
-                    // day = moment().format("YYYY-MM-DD");
-                    // console.log("=====>day 2", day);
+                    let day = "";
+                    day = moment(item.birthday).format("YYYY-MM-DD");
                     return (
                       <tr key={item.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.childrentName}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.birthday.slice(0, 10)}
+                          {day}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.genderDataToPatient.value}
