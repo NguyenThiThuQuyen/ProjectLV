@@ -5,6 +5,13 @@ const getAllDoctor = async () => {
   return response.data;
 };
 
+const getASchedule = async (id) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/get-schedule?id=${id}`
+  );
+  return response.data;
+};
+
 const getAllSchedule = async () => {
   const response = await axios.get(
     `http://localhost:8081/api/get-all-schedules`
@@ -28,9 +35,24 @@ const editSchedule = async (body) => {
   return response.data;
 };
 
+const getFindTimeslot = async (body) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/find-timeslot-to-date`,
+    body
+  );
+  return response.data;
+};
+
 const deleteSchedule = async (id) => {
   const response = await axios.delete(
     `http://localhost:8081/api/delete-schedule?id=${id}`
+  );
+  return response.data;
+};
+
+const getFindScheduleToDoctor = async (id) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/find-schedule-to-doctor?id=${id}`
   );
   return response.data;
 };
@@ -41,4 +63,7 @@ export {
   editSchedule,
   deleteSchedule,
   getAllDoctor,
+  getASchedule,
+  getFindScheduleToDoctor,
+  getFindTimeslot,
 };

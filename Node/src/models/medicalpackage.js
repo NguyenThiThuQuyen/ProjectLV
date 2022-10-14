@@ -16,6 +16,12 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "medicalpackageId",
         as: "medicalPackageDataToPackagePrice",
       });
+
+      MedicalPackage.hasMany(models.ReservationTicket, {
+        foreignKey: "medicalpackageId",
+        as: "goituvanDataToPhieudatcho",
+      });
+
       //   MedicalPackage.hasMany(models.Schedule, {
       //     foreignKey: "medicalpackageId",
       //     as: "medicalPackageDataToSchedule",
@@ -31,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       packageName: DataTypes.STRING,
       packageDecs: DataTypes.STRING,
+      detailDecs: DataTypes.STRING,
       image: DataTypes.STRING,
     },
     {

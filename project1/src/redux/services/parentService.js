@@ -28,4 +28,9 @@ const deleteParent = async (id) => {
   return parentDelete.data;
 };
 
-export { getAllParents, createParent, editParent, deleteParent };
+const getAParent = async (id) => {
+  const user = await axios.get(`http://localhost:8081/api/get-parent?id=${id}`);
+  return user.data;
+};
+
+export { getAllParents, createParent, editParent, deleteParent, getAParent };

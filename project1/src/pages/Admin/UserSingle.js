@@ -11,8 +11,6 @@ import NavbarUser from "../../components/Admin/NavbarUser";
 const Single = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  // const location = useLocation();
-  // const id = location.search.split("=")[1];
   const check = useSelector(dataCheck);
   const user = useSelector(dataGetAUser);
   useEffect(() => {
@@ -23,16 +21,12 @@ const Single = () => {
     imageBase64 = new Buffer(user?.user?.image, "base64").toString("binary");
   }
   return (
-    // single
     <div className="flex w-full">
       <Sidebar />
-      {/* singleContainer */}
       <div className="flex-initial w-5/6">
         <Navbar />
         <NavbarUser />
-        {/* top */}
         <div className="grid grid-cols-2 p-5">
-          {/* left */}
           <div className="col-span-1 shadow-xl border-[1px] p-5 relative">
             <div className="flex pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
               Edit
@@ -86,14 +80,7 @@ const Single = () => {
               </div>
             </div>
           </div>
-          {/* <div className="right">
-            <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div> */}
         </div>
-        {/* <div className="bottom">
-        <h1 className="title">Last Transactions</h1>
-        <List />
-      </div> */}
       </div>
     </div>
   );

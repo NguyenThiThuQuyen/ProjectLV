@@ -18,12 +18,35 @@ let handleCreateSchedule = async (req, res) => {
   });
 };
 
-let handleTest = async (req, res) => {
+let handleFindDoctor = async (req, res) => {
   let doctor = await scheduleService.finDoctor();
   return res.status(200).json({
     code: 0,
     message: "success",
     doctor,
+  });
+};
+
+let handleFindTimeslot = async (req, res) => {
+  let data = req.body;
+  let message = await scheduleService.findTimeslot(data);
+  return res.status(200).json(message);
+};
+
+let handleFindSchedule = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      finds: [],
+    });
+  }
+  let schedule = await scheduleService.findLichTVTheoBacSi(id);
+  return res.status(200).json({
+    code: 0,
+    message: "success",
+    schedule,
   });
 };
 
@@ -63,9 +86,11 @@ let handleGetSchedules = async (req, res) => {
 
 module.exports = {
   handleCreateSchedule: handleCreateSchedule,
-  handleTest: handleTest,
+  handleFindDoctor: handleFindDoctor,
   handleGetAllSchedules: handleGetAllSchedules,
   handleEditSchedule: handleEditSchedule,
   handleDeleteSchedule: handleDeleteSchedule,
   handleGetSchedules: handleGetSchedules,
+  handleFindSchedule: handleFindSchedule,
+  handleFindTimeslot: handleFindTimeslot,
 };

@@ -1,5 +1,28 @@
 const db = require("../models/index");
 
+let findLichTVTheoBacSi = (doctorId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let findSchedule = await db.Schedule.findAll({
+        where: { userId: doctorId },
+        include: [
+          {
+            model: db.TimeSlot,
+            as: "timeSlotDataToSchedule",
+            attributes: ["timeslot", "id"],
+          },
+        ],
+      });
+      resolve({
+        code: 0,
+        data: findSchedule,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 let finDoctor = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -19,6 +42,40 @@ let finDoctor = () => {
       resolve({
         code: 0,
         data: doctor,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let checkRegisterDate = (regDate) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let schedule = await db.Schedule.findOne({
+        where: { registerDate: regDate },
+      });
+      if (schedule) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let findTimeslot = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let find = await db.Schedule.findAll({
+        where: { registerDate: data.registerDate },
+        raw: false,
+      });
+      resolve({
+        code: 0,
+        data: find,
       });
     } catch (e) {
       reject(e);
@@ -142,7 +199,7 @@ let getSchedule = (scheduleId) => {
             {
               model: db.User,
               as: "userDataToSchedule",
-              attributes: ["name", "id"],
+              attributes: ["name", "email", "phone", "image", "id"],
             },
           ],
         });
@@ -161,4 +218,6 @@ module.exports = {
   updateSchedule: updateSchedule,
   deleteSchedule: deleteSchedule,
   getSchedule: getSchedule,
+  findLichTVTheoBacSi: findLichTVTheoBacSi,
+  findTimeslot: findTimeslot,
 };

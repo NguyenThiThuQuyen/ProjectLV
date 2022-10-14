@@ -71,7 +71,7 @@ const ThuocManager = () => {
                       );
                     }
                     return (
-                      <tr key={item.id}>
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.id}
                         </td>
@@ -96,11 +96,12 @@ const ThuocManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div className="mr-3">
+                            <div className="mr-3" title="Sửa">
                               <ThuocModalEdit item={item} />
                             </div>
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDeleteThuoc(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

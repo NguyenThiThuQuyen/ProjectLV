@@ -50,12 +50,15 @@ export const PatientRedux = createSlice({
   initialState: {
     getAllPatient: {},
     getAPatient: {},
+    patients: [],
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllPatientsAPI.fulfilled, (state, action) => {
       state.getAllPatient = action.payload;
+      console.log("object", action.payload);
+      state.patients = action.payload.patients;
       state.check = false;
     });
 
@@ -92,6 +95,7 @@ export const PatientRedux = createSlice({
   },
 });
 export const dataGetAllPatient = (state) => state.patient.getAllPatient;
+export const ArrayPatient = (state) => state.patient.patients;
 export const dataGetPatient = (state) => state.patient.getAPatient;
 export const dataCheck = (state) => state.patient.check;
 export default PatientRedux.reducer;

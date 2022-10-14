@@ -5,6 +5,9 @@ import {
   editSchedule,
   deleteSchedule,
   getAllDoctor,
+  getASchedule,
+  getFindScheduleToDoctor,
+  getFindTimeslot,
 } from "./services/scheduleService";
 import { toast } from "react-toastify";
 export const getAllSchedulesAPI = createAsyncThunk(
@@ -12,6 +15,14 @@ export const getAllSchedulesAPI = createAsyncThunk(
   async () => {
     const getAll = await getAllSchedule();
     return getAll;
+  }
+);
+
+export const getAScheduleAPI = createAsyncThunk(
+  "lichtuvan/GetLTV",
+  async (params) => {
+    const getltv = await getASchedule(params);
+    return getltv;
   }
 );
 
@@ -39,6 +50,22 @@ export const deleteScheduleAPI = createAsyncThunk(
   }
 );
 
+export const getFindScheduleToDoctorAPI = createAsyncThunk(
+  "lichtuvan/GetScheduleToDoctor",
+  async (params) => {
+    const getschedule = await getFindScheduleToDoctor(params);
+    return getschedule;
+  }
+);
+
+export const getFindTimeslotAPI = createAsyncThunk(
+  "lichtuvan/Find",
+  async (params) => {
+    const find = await editSchedule(params);
+    return find;
+  }
+);
+
 export const editScheduleAPI = createAsyncThunk(
   "lichtuvan/Edit",
   async (params) => {
@@ -51,7 +78,10 @@ export const ScheduleRedux = createSlice({
   name: "lichtuvan",
   initialState: {
     getAllSchedule: {},
+    getSchedule: {},
     getDoctor: {},
+    getFindSchedule: {},
+    getFindTimeslotToDate: {},
     check: false,
   },
   reducers: {},
@@ -61,8 +91,23 @@ export const ScheduleRedux = createSlice({
       state.check = false;
     });
 
+    builder.addCase(getAScheduleAPI.fulfilled, (state, action) => {
+      state.getSchedule = action.payload;
+      state.check = false;
+    });
+
     builder.addCase(getAllDoctorAPI.fulfilled, (state, action) => {
       state.getDoctor = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getFindScheduleToDoctorAPI.fulfilled, (state, action) => {
+      state.getFindSchedule = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getFindTimeslotAPI.fulfilled, (state, action) => {
+      state.getFindTimeslotToDate = action.payload;
       state.check = false;
     });
 
@@ -95,5 +140,9 @@ export const ScheduleRedux = createSlice({
 });
 export const dataGetAllSchedule = (state) => state.lichtuvan.getAllSchedule;
 export const dataGetDoctor = (state) => state.lichtuvan.getDoctor;
+export const dataGetFindSchedule = (state) => state.lichtuvan.getFindSchedule;
+export const dataGetFindTimeslot = (state) =>
+  state.lichtuvan.getFindTimeslotToDate;
+export const dataGetSchedule = (state) => state.lichtuvan.getSchedule;
 export const dataCheck = (state) => state.lichtuvan.check;
 export default ScheduleRedux.reducer;

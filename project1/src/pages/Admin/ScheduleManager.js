@@ -4,7 +4,9 @@ import Navbar from "../../components/Admin/Navbar";
 import ScheduleModal from "../../components/Admin/Modal/Schedule/ScheduleModal";
 import ScheduleModalEdit from "../../components/Admin/Modal/Schedule/ScheduleEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { AiOutlineEye } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +15,12 @@ import {
   dataGetAllSchedule,
   dataCheck,
   deleteScheduleAPI,
+  getAScheduleAPI,
 } from "../../redux/scheduleRedux";
 
 const ScheduleManager = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector(dataGetAllSchedule);
   const check = useSelector(dataCheck);
 
@@ -26,6 +30,11 @@ const ScheduleManager = () => {
 
   const handleDelete = (id) => {
     dispatch(deleteScheduleAPI(id));
+  };
+
+  const handleDetail = (scheduleId) => {
+    navigate(`/admin/schedule-detail/${scheduleId}`);
+    dispatch(getAScheduleAPI(scheduleId));
   };
 
   return (
@@ -74,11 +83,18 @@ const ScheduleManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div className="mr-3">
+                            <div
+                              className=""
+                              onClick={() => handleDetail(item.id)}
+                            >
+                              <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
+                            </div>
+                            <div className="mr-3" title="Sửa">
                               <ScheduleModalEdit item={item} />
                             </div>
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDelete(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

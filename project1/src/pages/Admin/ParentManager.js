@@ -3,18 +3,26 @@ import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import NavbarUser from "../../components/Admin/NavbarUser";
 import ParentModal from "../../components/Admin/Modal/Parent/ParentModal";
+import PatientModal2 from "../../components/Admin/Modal/Patient/PatientModal2";
 import ParentModalEdit from "../../components/Admin/Modal/Parent/ParentEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { BsPlusLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllParentsAPI,
   dataGetAllParent,
   dataCheck,
   deleteParentAPI,
+  getAParentAPI,
 } from "../../redux/parentRedux";
 
+import { addPatientAPI } from "../../redux/patientRedux";
+
 const ParentManager = () => {
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const data = useSelector(dataGetAllParent);
   const check = useSelector(dataCheck);
 
@@ -24,6 +32,11 @@ const ParentManager = () => {
 
   const handleDeleteParent = (id) => {
     dispatch(deleteParentAPI(id));
+  };
+
+  const handleDetail = (parentId) => {
+    navigate(`/admin/parent-detail/${parentId}`);
+    dispatch(getAParentAPI(parentId));
   };
 
   return (
@@ -60,7 +73,11 @@ const ParentManager = () => {
                   data.parents.length > 0 &&
                   data.parents.map((item, index) => {
                     return (
-                      <tr key={item.id}>
+                      <tr
+                        key={item.id}
+                        className="hover:bg-slate-200"
+                        onClick={() => handleDetail(item.id)}
+                      >
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
                         </td>
@@ -75,11 +92,15 @@ const ParentManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div className="mr-3">
+                            <div className="" title="Thêm con">
+                              <PatientModal2 item={item} />
+                            </div>
+                            <div className="mr-3" title="Sửa">
                               <ParentModalEdit item={item} />
                             </div>
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDeleteParent(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

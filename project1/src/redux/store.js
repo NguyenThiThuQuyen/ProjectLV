@@ -9,7 +9,7 @@ import TimeslotRedux from "./timeslotRedux";
 import ScheduleRedux from "./scheduleRedux";
 // import GiaGoiKhamRedux from "./giaGoiKhamRedux";
 import AdminRedux from "./Auth/adminRedux";
-// import AllCodeRedux from "./allCodeRedux";
+import PhieudatchoRedux from "./phieudatchoRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -22,5 +22,6 @@ export const store = configureStore({
     // giagoikham: GiaGoiKhamRedux,
     khunggio: TimeslotRedux,
     lichtuvan: ScheduleRedux,
+    phieudatcho: PhieudatchoRedux,
   },
 });

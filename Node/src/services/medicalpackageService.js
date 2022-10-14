@@ -78,6 +78,7 @@ let createNewMedicalpackage = (data) => {
         let goikham = await db.MedicalPackage.create({
           packageName: data.packageName,
           packageDecs: data.packageDecs,
+          detailDecs: data.detailDecs,
           image: data.image,
         });
 
@@ -125,6 +126,7 @@ let updateGoiKham = (data) => {
           } else {
             goiKham.packageName = data.packageName;
             goiKham.packageDecs = data.packageDecs;
+            goiKham.detailDecs = data.detailDecs;
             image = data.image;
             await goiKham.save();
           }

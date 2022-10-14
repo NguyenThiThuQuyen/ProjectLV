@@ -5,11 +5,17 @@ import {
   createParent,
   editParent,
   deleteParent,
+  getAParent,
 } from "./services/parentService";
 
 export const getAllParentsAPI = createAsyncThunk("parent/GetAll", async () => {
   const getParent = await getAllParents();
   return getParent;
+});
+
+export const getAParentAPI = createAsyncThunk("parent/GetA", async (params) => {
+  const geta = await getAParent(params);
+  return geta;
 });
 
 export const addParentAPI = createAsyncThunk("parent/Add", async (params) => {
@@ -34,12 +40,18 @@ export const ParentRedux = createSlice({
   name: "thuoc",
   initialState: {
     allParent: {},
+    aParent: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllParentsAPI.fulfilled, (state, action) => {
       state.allParent = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getAParentAPI.fulfilled, (state, action) => {
+      state.aParent = action.payload;
       state.check = false;
     });
 
@@ -79,5 +91,6 @@ export const ParentRedux = createSlice({
 });
 
 export const dataGetAllParent = (state) => state.parent.allParent;
+export const dataGetAParent = (state) => state.parent.aParent;
 export const dataCheck = (state) => state.parent.check;
 export default ParentRedux.reducer;

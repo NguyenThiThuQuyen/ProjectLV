@@ -32,7 +32,7 @@ const editPatient = async (body) => {
 
 const deletePatient = async (id) => {
   const response = await axios.delete(
-    `http://localhost:8081/api/delete-patients?id=${id}`
+    `http://localhost:8081/api/delete-patient?id=${id}`
   );
   return response.data;
 };

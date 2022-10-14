@@ -25,14 +25,43 @@ let handleEditParent = async (req, res) => {
 };
 
 let handleDeleteParent = async (req, res) => {
-  if (!req.query.id) {
+  let data = req.body;
+  let message = await parentService.deleteParent(data);
+  return res.status(200).json(message);
+};
+
+let handleGetParent = async (req, res) => {
+  let id = req.query.id;
+  if (!id) {
     return res.status(200).json({
       code: 1,
-      message: "Error",
+      message: "Missing required parmeters",
+      parents: [],
     });
   }
-  let message = await parentService.deleteParent(req.query.id);
-  return res.status(200).json(message);
+  let parent = await parentService.getParent(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    parent,
+  });
+};
+
+let handleFindPatient = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      finds: [],
+    });
+  }
+  let parent = await parentService.findPatient(id);
+  return res.status(200).json({
+    code: 0,
+    message: "success",
+    parent,
+  });
 };
 
 module.exports = {
@@ -40,4 +69,6 @@ module.exports = {
   handleGetAllParents: handleGetAllParents,
   handleEditParent: handleEditParent,
   handleDeleteParent: handleDeleteParent,
+  handleGetParent: handleGetParent,
+  handleFindPatient: handleFindPatient,
 };

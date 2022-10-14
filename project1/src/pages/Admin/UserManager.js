@@ -20,7 +20,6 @@ import {
 import NavbarUser from "../../components/Admin/NavbarUser";
 
 const UserManager = () => {
-  const [userId, setUserId] = useState();
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllUser);
   const navigate = useNavigate();
@@ -48,7 +47,6 @@ const UserManager = () => {
           <NavbarUser />
           <ToastContainer />
           <UserModal />
-          {/* <TableUser /> */}
           <div className="w-full px-10 py-4">
             <table className="border border-slate-200">
               <thead>
@@ -62,9 +60,9 @@ const UserManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Điện Thoại
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Hình ảnh
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Giới Tính
                   </th>
@@ -87,7 +85,11 @@ const UserManager = () => {
                       );
                     }
                     return (
-                      <tr key={item.id}>
+                      <tr
+                        key={item.id}
+                        className="hover:bg-slate-200"
+                        onClick={() => handleDetailUser(item.id)}
+                      >
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
                         </td>
@@ -97,14 +99,14 @@ const UserManager = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.phone}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <img
                             src={imageBase64}
                             alt=""
                             className="rounded-full"
                             style={{ height: "70px", width: "70px" }}
                           />
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.genderDataToUser.value}
                         </td>
@@ -113,19 +115,13 @@ const UserManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div
-                              className=""
-                              onClick={() => handleDetailUser(item.id)}
-                            >
-                              <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
-                            </div>
-
-                            <div className="mr-5">
+                            <div className="mr-5" title="Sửa">
                               <UserModalEdit item={item} />
                             </div>
 
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDeleteUser(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

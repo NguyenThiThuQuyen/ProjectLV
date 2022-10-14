@@ -63,39 +63,6 @@ let handleUserLogin = (email, password) => {
   });
 };
 
-let createNewUser = (data) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let check = await checkUserEmail(data.email);
-      // const hashPassword = await argon2.hash(data.password);
-      if (check === true) {
-        resolve({
-          code: 1,
-          message: "Email đã tồn tại, vui lòng nhập lại!",
-        });
-      } else {
-        await db.User.create({
-          email: data.email,
-          password: "123",
-          name: data.name,
-          address: data.address,
-          phone: data.phone,
-          gender: data.gender,
-          roleId: data.roleId,
-          image: data.image,
-        });
-      }
-
-      resolve({
-        code: 0,
-        message: "Thêm thành công!",
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
 let updateUserData = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -129,6 +96,38 @@ let updateUserData = (data) => {
           });
         }
       }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let createNewUser = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await checkUserEmail(data.email);
+      // const hashPassword = await argon2.hash(data.password);
+      if (check === true) {
+        resolve({
+          code: 1,
+          message: "Email đã tồn tại, vui lòng nhập lại!",
+        });
+      } else {
+        await db.User.create({
+          email: data.email,
+          password: "123",
+          name: data.name,
+          address: data.address,
+          phone: data.phone,
+          gender: data.gender,
+          roleId: data.roleId,
+          image: data.image,
+        });
+      }
+      resolve({
+        code: 0,
+        message: "Thêm thành công!",
+      });
     } catch (e) {
       reject(e);
     }

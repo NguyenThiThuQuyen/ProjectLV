@@ -34,6 +34,37 @@ let getAllDoctorHome = (limitInput) => {
   });
 };
 
+let saveDetailInforDoctor = (inputData) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (
+        !inputData.doctorId ||
+        !inputData.contentHTML ||
+        !inputData.contentMarkdown
+      ) {
+        resolve({
+          code: 1,
+          message: "Error",
+        });
+      } else {
+        await db.Markdown.create({
+          contentHTML: inputData.contentHTML,
+          contentMarkdown: inputData.contentMarkdown,
+          description: inputData.description,
+          doctorId: inputData.doctorId,
+        });
+        resolve({
+          code: 0,
+          message: "Lưu thành công!",
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getAllDoctorHome: getAllDoctorHome,
+  saveDetailInforDoctor: saveDetailInforDoctor,
 };

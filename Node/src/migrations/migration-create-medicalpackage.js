@@ -14,6 +14,9 @@ module.exports = {
       packageDecs: {
         type: Sequelize.STRING,
       },
+      detailDecs: {
+        type: Sequelize.STRING,
+      },
       image: {
         type: Sequelize.BLOB("long"),
       },

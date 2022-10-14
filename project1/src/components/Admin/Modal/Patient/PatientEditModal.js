@@ -7,6 +7,7 @@ import { BiEdit } from "react-icons/bi";
 import { dataGetAllGender } from "../../../../redux/userRedux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import { ImUpload3 } from "react-icons/im";
+import { Buffer } from "buffer";
 export default function PatientModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [childrentName, setChildrentName] = useState();
@@ -14,6 +15,7 @@ export default function PatientModalEdit(props) {
   const [birthday, setBirthday] = useState(new Date());
   const [address, setAddress] = useState();
   const [image, setImage] = useState();
+  const [preImg, setPreImg] = useState();
   const [parentId, setParentId] = useState();
   const [id, setId] = useState();
   const dataGender = useSelector(dataGetAllGender);
@@ -39,6 +41,15 @@ export default function PatientModalEdit(props) {
     setParentId(props?.item?.parentId);
     setId(props?.item?.id);
   }, [props.item]);
+
+  useEffect(() => {
+    let imageBase64 = "";
+    if (props?.item?.image) {
+      imageBase64 = new Buffer(props?.item?.image, "base64").toString("binary");
+    }
+    setImage(imageBase64);
+    setPreImg(imageBase64);
+  }, [showModalEdit]);
 
   const handleSaveEdit = () => {
     dispatch(editPatientAPI(params));
@@ -153,7 +164,7 @@ export default function PatientModalEdit(props) {
                           onChange={(event) => uploadImage(event)}
                         />
                         <div className="absolute">
-                          <img src={image} width={"100px"} height={"100px"} />
+                          <img src={preImg} width={"100px"} height={"100px"} />
                         </div>
                       </div>
 

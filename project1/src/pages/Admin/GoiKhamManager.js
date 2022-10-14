@@ -28,6 +28,7 @@ const GoiKhamManager = () => {
   }, [check]);
 
   const handleDeleteGoiKham = (id) => {
+    console.log("id", id);
     dispatch(deleteGoiKhamAPI(id));
   };
 
@@ -80,7 +81,7 @@ const GoiKhamManager = () => {
                       item.medicalPackageDataToPackagePrice.applydateId
                     ).format("YYYY-MM-DD");
                     return (
-                      <tr key={item.id}>
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.packageName}
                         </td>
@@ -106,11 +107,12 @@ const GoiKhamManager = () => {
                             >
                               <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
                             </div>
-                            <div className="mr-3">
+                            <div className="mr-3" title="Sửa">
                               <GoiKhamModalEdit item={item} />
                             </div>
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDeleteGoiKham(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

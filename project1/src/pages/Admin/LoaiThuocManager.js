@@ -54,7 +54,7 @@ const LoaiThuocManager = () => {
                   data.medicaltypes.length > 0 &&
                   data.medicaltypes.map((item, index) => {
                     return (
-                      <tr key={item.id}>
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.id}
                         </td>
@@ -63,11 +63,12 @@ const LoaiThuocManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
-                            <div className="mr-3">
+                            <div className="mr-3" title="Sửa">
                               <LoaiThuocModalEdit item={item} />
                             </div>
                             <div
                               className=""
+                              title="Xóa"
                               onClick={() => handleDeleteLoaiThuoc(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

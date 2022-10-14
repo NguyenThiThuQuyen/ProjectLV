@@ -31,7 +31,7 @@ export default function ScheduleModalEdit(props) {
     let date = new Date(props?.item?.registerDate);
     setRegisterDate(date);
     setTimeslotId(props?.item?.timeSlotDataToSchedule?.id);
-    setUserId(props?.item?.userDataToSchedule.id);
+    setUserId(props?.item?.userDataToSchedule?.id);
     setId(props?.item?.id);
   }, [props?.item]);
 
@@ -72,12 +72,12 @@ export default function ScheduleModalEdit(props) {
                             value={userId}
                             onChange={(event) => setUserId(event.target.value)}
                           >
-                            {dataDoctor.doctor.data &&
-                              dataDoctor.doctor.data.length > 0 &&
-                              dataDoctor.doctor.data.map((item, index) => {
+                            {dataDoctor?.doctor?.data &&
+                              dataDoctor?.doctor?.data?.length > 0 &&
+                              dataDoctor?.doctor?.data?.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>
-                                    {item.name}
+                                    {item?.name}
                                   </option>
                                 );
                               })}
@@ -96,12 +96,12 @@ export default function ScheduleModalEdit(props) {
                               setTimeslotId(event.target.value)
                             }
                           >
-                            {dataTimeslot.timeslot &&
-                              dataTimeslot.timeslot.length > 0 &&
-                              dataTimeslot.timeslot.map((item, index) => {
+                            {dataTimeslot?.timeslot &&
+                              dataTimeslot?.timeslot?.length > 0 &&
+                              dataTimeslot?.timeslot?.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>
-                                    {item.timeslot}
+                                    {item?.timeslot}
                                   </option>
                                 );
                               })}

@@ -64,8 +64,10 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-            <BsFillJournalBookmarkFill className="mx-2 mt-1 text-xl text-teal-700" />
-            <span className="text-slate-800">Đặt chỗ</span>
+            <Link to="/admin/reservation-ticket-manager" className="flex">
+              <BsFillJournalBookmarkFill className="mx-2 mt-1 text-xl text-teal-700" />
+              <span className="text-slate-800">Đặt chỗ</span>
+            </Link>
           </li>
 
           <p className="text-sm font-bold text-slate-500 my-3.5">HỮU ÍCH</p>

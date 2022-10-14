@@ -14,6 +14,7 @@ const packagePriceController = require("../controllers/packagePriceController");
 const doctorController = require("../controllers/doctorController");
 const timeSlotController = require("../controllers/timeSlotController");
 const scheduleController = require("../controllers/scheduleController");
+const phieudatchoController = require("../controllers/phieudatchoController");
 
 const { Router } = require("express");
 
@@ -31,6 +32,23 @@ let initWebRoutes = (app) => {
   router.get(
     "/api/all-medicalpackage-home",
     medicalpackageController.handleGetAllMedicalPackageHome
+  );
+
+  router.post("/api/save-infor-doctor", doctorController.postInforDoctor);
+
+  // tìm
+  router.get("/api/find-patient", parentController.handleFindPatient);
+  // tìm all bac si
+  router.get("/api/get-doctor", scheduleController.handleFindDoctor);
+  // tìm lịch theo báo sĩ
+  router.get(
+    "/api/find-schedule-to-doctor",
+    scheduleController.handleFindSchedule
+  );
+  // tìm khung giờ theo ngày
+  router.get(
+    "/api/find-timeslot-to-date",
+    scheduleController.handleFindTimeslot
   );
 
   // user
@@ -56,12 +74,31 @@ let initWebRoutes = (app) => {
 
   // phu huynh
   router.get("/api/get-all-parents", parentController.handleGetAllParents);
+  router.get("/api/get-parent", parentController.handleGetParent);
   router.post("/api/create-new-parent", parentController.handleCreateParent);
   router.put("/api/edit-parent", parentController.handleEditParent);
   router.delete("/api/delete-parent", parentController.handleDeleteParent);
 
+  // phieu dat cho
+  router.get(
+    "/api/get-all-phieudatcho",
+    phieudatchoController.handleGetAllPhieudatcho
+  );
+  router.get(
+    "/api/get-phieudatcho",
+    phieudatchoController.handleGetPhieudatcho
+  );
+  router.post(
+    "/api/create-new-phieudatcho",
+    phieudatchoController.handleCreatePhieudatcho
+  );
+  router.put(
+    "/api/edit-phieudatcho",
+    phieudatchoController.handleEditPhieudatcho
+  );
+  // router.delete("/api/delete-phieudatcho", phieudatchoController.handleDeletePhieudatcho);
+
   // lich tu van
-  router.get("/api/get-doctor", scheduleController.handleTest);
   router.get(
     "/api/get-all-schedules",
     scheduleController.handleGetAllSchedules

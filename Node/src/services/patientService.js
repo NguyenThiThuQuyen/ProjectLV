@@ -96,23 +96,13 @@ let deletePatient = (patientId) => {
         message: `Người dùng không tồn tại`,
       });
     }
-    //  else {
-    let searchParentId = await getSearchParentById(patientId);
-    if (searchParentId === true) {
-      await db.Patient.destroy({
-        where: { id: patientId },
-      });
-      resolve({
-        code: 0,
-        message: `Đã xóa`,
-      });
-    } else {
-      resolve({
-        code: 1,
-        message: `Error nè`,
-      });
-    }
-    // }
+    await db.Patient.destroy({
+      where: { id: patientId },
+    });
+    resolve({
+      code: 0,
+      message: `Đã xóa thành công`,
+    });
   });
 };
 
