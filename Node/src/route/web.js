@@ -35,6 +35,10 @@ let initWebRoutes = (app) => {
   );
 
   router.post("/api/save-infor-doctor", doctorController.postInforDoctor);
+  router.post(
+    "/api/get-schedule-doctor-by-date",
+    doctorController.getScheduleByDate
+  );
 
   // tìm
   router.get("/api/find-patient", parentController.handleFindPatient);

@@ -86,8 +86,9 @@ let findTimeslot = (data) => {
 let createNewSchedule = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let date = new Date(data.registerDate * 1);
       await db.Schedule.create({
-        registerDate: data.registerDate,
+        registerDate: date,
         timeslotId: data.timeslotId,
         userId: data.userId,
       });

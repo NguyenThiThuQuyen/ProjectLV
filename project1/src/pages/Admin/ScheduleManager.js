@@ -69,7 +69,9 @@ const ScheduleManager = () => {
                   data?.schedules?.length > 0 &&
                   data?.schedules?.map((item, index) => {
                     let day = "";
-                    day = moment(item?.registerDate).format("YYYY-MM-DD");
+                    day = moment(item?.registerDate).format(
+                      "dddd - DD/MM/YYYY"
+                    );
                     return (
                       <tr key={item?.id}>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">

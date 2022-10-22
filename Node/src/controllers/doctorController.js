@@ -28,7 +28,24 @@ let postInforDoctor = async (req, res) => {
   }
 };
 
+let getScheduleByDate = async (req, res) => {
+  try {
+    let infor = await doctorService.scheduleByDate(
+      req.query.doctorId,
+      req.query.date
+    );
+    return res.status(200).json();
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      code: -1,
+      message: "Error ne",
+    });
+  }
+};
+
 module.exports = {
   handleGetAllDoctorHome: handleGetAllDoctorHome,
   postInforDoctor: postInforDoctor,
+  getScheduleByDate: getScheduleByDate,
 };

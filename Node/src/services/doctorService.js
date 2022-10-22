@@ -64,7 +64,32 @@ let saveDetailInforDoctor = (inputData) => {
   });
 };
 
+let scheduleByDate = (doctorId, date) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!doctorId || !date) {
+        resolve({
+          code: 1,
+          message: "Missing",
+        });
+      } else {
+        let dataSchedule = await db.Schedule.findAll({
+          where: { userId: doctorId, registerDate: date },
+        });
+        if (!dataSchedule) dataSchedule = [];
+        resolve({
+          code: 0,
+          data: dataSchedule,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getAllDoctorHome: getAllDoctorHome,
   saveDetailInforDoctor: saveDetailInforDoctor,
+  scheduleByDate: scheduleByDate,
 };

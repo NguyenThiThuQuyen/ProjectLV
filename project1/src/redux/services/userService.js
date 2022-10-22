@@ -42,6 +42,13 @@ const getAllDoctorHome = async () => {
   return res.data;
 };
 
+const getScheduleDoctorByDate = async (doctorId, date) => {
+  const res = await axios.get(
+    `http://localhost:8081/api/get-schedule-doctor-by-date?doctorId=${doctorId}&date=${date}`
+  );
+  return res.data;
+};
+
 export {
   getAllUsers,
   createUser,
@@ -50,4 +57,5 @@ export {
   getAUser,
   getAllAllcodes,
   getAllDoctorHome,
+  getScheduleDoctorByDate,
 };
