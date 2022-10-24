@@ -70,30 +70,14 @@ export default function PhieudatchoModal() {
     dispatch(getAllSchedulesAPI());
     dispatch(getFindScheduleToDoctorAPI());
   }, [showModal]);
-  // useEffect(() => {
-  //   if (array1) {
-  //     array1.map((item, index) => {
-  //       selectedOption.push({ value: item.id, label: item.childrentName });
-  //       // selectedOption.filter(dataPatient);
-  //     });
-  //   }
-  // }, [array1]);
-  // console.log("selectedOption", selectedOption);
-  // const unique = selectedOption.filter(
-  //   (value, index, self) =>
-  //     self.findIndex((m) => m.value === value.value) === index
-  // );
 
-  // console.log(unique);
   const handleSave = () => {
     dispatch(createPhieudatchoAPI(params));
     setShowModal(false);
   };
 
   const handleFindSchedule = (id) => {
-    // alert("audsad");
     console.log("id", id);
-    // alert("id:", id);
     dispatch(getFindScheduleToDoctorAPI(id));
   };
 
@@ -101,6 +85,17 @@ export default function PhieudatchoModal() {
     console.log("id timeslot", id);
     dispatch(getFindTimeslotAPI(id));
   };
+
+  // const handleUnique = (arr) => {
+  //   let newArr = [];
+  //   for (var i = 0; i < arr.dataFindSchedule.schedule.data.length; i++) {
+  //     if (newArr.indexOf(arr[i]) === -1) {
+  //       newArr.push(arr[i]);
+  //     }
+  //   }
+  //   return newArr;
+  // };
+  // console.log("handle unique:", handleUnique);
 
   return (
     <>
@@ -245,11 +240,12 @@ export default function PhieudatchoModal() {
                               dataFindSchedule.schedule.data.length > 0 &&
                               dataFindSchedule.schedule.data.map(
                                 (item, index) => {
-                                  let day = "";
+                                  let day = [];
                                   day = moment(item.registerDate).format(
                                     "YYYY-MM-DD"
                                   );
-                                  console.log("item", item);
+                                  let newArr1111111 = [...day];
+                                  console.log("newArr1111111", newArr1111111);
                                   return (
                                     <option key={index} value={item.id}>
                                       {day}

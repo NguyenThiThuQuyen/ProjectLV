@@ -49,6 +49,14 @@ const getScheduleDoctorByDate = async (doctorId, date) => {
   return res.data;
 };
 
+const saveBulkScheduleDoctor = async (data) => {
+  const res = await axios.post(
+    `http://localhost:8081/api/bulk-create-schedule`,
+    data
+  );
+  return res.data;
+};
+
 export {
   getAllUsers,
   createUser,
@@ -58,4 +66,5 @@ export {
   getAllAllcodes,
   getAllDoctorHome,
   getScheduleDoctorByDate,
+  saveBulkScheduleDoctor,
 };

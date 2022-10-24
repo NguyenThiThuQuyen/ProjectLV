@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import _ from "lodash";
+import { saveBulkScheduleDoctor } from "../../../../redux/services/userService";
+
 import localization from "moment/locale/vi";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
@@ -89,13 +91,13 @@ export default function ScheduleModal() {
   };
 
   const dispatch = useDispatch();
-  const handleSave = () => {
+  const handleSave = async () => {
     dispatch(createScheduleAPI(params));
     let result = [];
     console.log("params", params);
 
     let data = params.timeslotId;
-
+    // let formatDate = new Date(params.registerDate).getTime();
     if (data && data.length > 0) {
       let selectTime = data.filter((item) => item.isSelected === true);
       console.log("selectTime:", selectTime);
@@ -104,14 +106,21 @@ export default function ScheduleModal() {
           console.log("check schedule:", schedule, index);
           let object = {};
           object.userId = params.userId;
-          object.registerDate = params.registerDate;
-          object.time = schedule.id;
+          object.registerDate = params.registerDate * 1;
+          object.timeslotId = schedule.id;
           result.push(object);
         });
       }
     }
+
+    let res = await saveBulkScheduleDoctor({
+      arrSchedule: result,
+      userId: params.userId,
+      registerDate: params.registerDate * 1,
+    });
+    console.log("check saveBulkScheduleDoctor:", res);
     console.log("check result:", result);
-    // setShowModal(false);
+    setShowModal(false);
   };
 
   return (
