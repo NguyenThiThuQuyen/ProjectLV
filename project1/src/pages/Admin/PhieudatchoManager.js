@@ -110,7 +110,7 @@ const PhieudatchoManager = () => {
                           }
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.doctorDataToPhieudatcho.name}
+                          {item?.doctorDataToPhieudatcho?.name}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">

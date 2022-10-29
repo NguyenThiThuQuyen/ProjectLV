@@ -3,9 +3,11 @@ import Header from "../components/Header/Header";
 import hinh1 from "../assets/upload/Cover02-5939-1559712582.jpg";
 import { Buffer } from "buffer";
 import moment from "moment";
+import { TbBellRinging } from "react-icons/tb";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-
 import Footer from "../components/Footer/Footer";
 import {
   getGoiKhamAPI,
@@ -50,16 +52,29 @@ const DetailService = () => {
                 />
               </div>
               <div className="col-span-3 ml-5">
+                <div className="text-sm font-semibold text-sky-700">
+                  <button className="mx-2 rounded py-3 px-2 box-border border-1 bg-rose-600 hover:bg-rose-500 text-white">
+                    <Link to="/schedule">
+                      <div className="flex animate-pulse">
+                        <TbBellRinging
+                          className="animate-bounce mr-1"
+                          size={22}
+                        />
+                        ĐẶT LỊCH NGAY
+                      </div>
+                    </Link>
+                  </button>
+                </div>
                 <div className="flex">
-                  <span className="mr-2 mt-1 text-green-500 font-semibold text-md">
+                  <span className="mx-2 mt-5 text-green-500 font-semibold text-md">
                     GIÁ TƯ VẤN:
                   </span>
-                  <div className="text-red-600 text-xl font-semibold">
+                  <div className="text-red-600 mt-4 text-xl font-semibold">
                     {data?.goikham?.medicalPackageDataToPackagePrice?.price}
                   </div>
                 </div>
                 <div className="mt-5">
-                  <span className="mr-2 ">Mô tả:</span>
+                  <span className="mr-2">Mô tả:</span>
                   <div className="text-stone-700">
                     {data?.goikham?.packageDecs}
                   </div>
@@ -69,9 +84,7 @@ const DetailService = () => {
             <div
               className="mt-10"
               dangerouslySetInnerHTML={{ __html: data?.goikham?.contentHTML }}
-            >
-              {/* {data?.goikham?.contentHTML} */}
-            </div>
+            ></div>
           </div>
         </div>
       </div>

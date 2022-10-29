@@ -28,15 +28,15 @@ export default function GoiKhamModalEdit(props) {
     image: image,
     price: price,
     applydateId: applydateId,
+    id: id,
     contentMarkdown: contentMarkdown,
     contentHTML: contentHTML,
-    id: id,
   };
 
   const dispatch = useDispatch();
   useEffect(() => {
     let date = new Date(
-      props?.item?.medicalPackageDataToPackagePrice.applydateId
+      props?.item?.medicalPackageDataToPackagePrice?.applydateId
     );
     setPackageName(props?.item?.packageName);
     setPackageDecs(props?.item?.packageDecs);
@@ -101,7 +101,6 @@ export default function GoiKhamModalEdit(props) {
                     </span>
                   </button>
                 </div>
-                {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <form className="w-full">
                     <div className="grid grid-rows-2 w-[80%] mx-auto">
@@ -198,7 +197,6 @@ export default function GoiKhamModalEdit(props) {
                     />
                   </form>
                 </div>
-                {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

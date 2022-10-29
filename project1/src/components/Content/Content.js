@@ -100,8 +100,8 @@ const Content = () => {
               </div>
 
               <div className="mt-5 grid justify-items-center">
-                <button className=" mx-5 rounded py-3 px-5 box-border border-1 bg-rose-600  hover:bg-rose-500 text-white">
-                  <Link to="/schedule">
+                <button className="mx-5 rounded py-3 px-5 box-border border-1 bg-rose-600  hover:bg-rose-500 text-white">
+                  <Link to="/dang-ky-tu-van">
                     <div className="flex animate-pulse">
                       <TbBellRinging
                         className="animate-bounce mr-1"
@@ -138,9 +138,11 @@ const Content = () => {
               color={"white"}
             />
           </div>
-          <div className="mt-1 ml-2 text-sky-600 text-2xl font-medium">
-            Đặt lịch tư vấn
-          </div>
+          <Link to="/dang-ky-tu-van">
+            <div className="mt-1 ml-2 text-sky-600 text-2xl font-medium">
+              Đặt lịch tư vấn
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -302,9 +304,11 @@ const Content = () => {
               <div className="justify-center items-center mt-10">
                 <FaArrowDown className="animate-bounce cursor-pointer mx-auto text-slate-700" />
               </div>
-              <div className="cursor-pointer text-center text-slate-500">
-                Xem thêm ...
-              </div>
+              <Link to="/all-doctor" className="">
+                <div className="cursor-pointer text-center text-slate-500">
+                  <span className="">Xem thêm ...</span>
+                </div>
+              </Link>
             </div>
           </div>
         </Slider>

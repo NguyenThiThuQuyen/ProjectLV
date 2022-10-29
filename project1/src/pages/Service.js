@@ -3,7 +3,9 @@ import Header from "../components/Header/Header";
 import hinh1 from "../assets/upload/Cover02-5939-1559712582.jpg";
 import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
+import PhieudatchoModal from "../components/Guest/PhieudatchoModal";
 import {
   getAllMedicalPackageHomeAllAPI,
   dataGetAllGoiKhamHomeAll,
@@ -56,9 +58,12 @@ const Service = () => {
                         {item.packageName}
                       </div>
                       <div className="text-sm">{item.packageDecs}</div>
-                      <button className="font-medium mt-5 hover:text-sky-500 border-2 p-2 rounded-md bg-sky-400 hover:bg-white hover:border-sky-500">
-                        TƯ VẤN NGAY
-                      </button>
+                      <div className=""></div>
+                      <Link to="/dang-ky-tu-van">
+                        <button className="font-medium mt-5 hover:text-sky-500 border-2 p-2 rounded-md bg-sky-400 hover:bg-white hover:border-sky-500">
+                          TƯ VẤN NGAY
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

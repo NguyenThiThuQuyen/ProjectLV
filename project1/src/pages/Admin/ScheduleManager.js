@@ -43,9 +43,7 @@ const ScheduleManager = () => {
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
-          {/* <ToastContainer /> */}
           <ScheduleModal />
-          {/* <TableUser /> */}
           <div className="w-full px-10 py-3">
             <table className="border border-slate-200">
               <thead>

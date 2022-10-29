@@ -48,10 +48,7 @@ export default function PhieudatchoModal() {
     medicalpackageId: medicalpackageId,
     scheduleId: scheduleId,
     patientId: patientId,
-    // userId: userId,
     doctorId: doctorId,
-    // registerDate: registerDate,
-    // timeslotId: timeslotId,
     userId: doctorId,
     timeslotId: timeslotId,
     registerDate: registerDate,
@@ -113,14 +110,15 @@ export default function PhieudatchoModal() {
   const handleFindSchedule = (id) => {
     setMang([]);
     dispatch(getFindScheduleToDoctorAPI(id));
+    setDoctorId(id);
   };
 
-  
   const handleFindTimeslot = (item) => {
     const params = {
       registerDate: item,
     };
     dispatch(getFindTimeslotAPI(params));
+    setRegisterDate(item);
   };
   const handleSearchIdSchedule = () => {
     const params = {
@@ -266,9 +264,9 @@ export default function PhieudatchoModal() {
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             // value={doctorId}
-                            onChange={(event) =>
-                              setDoctorId(event.target.value)
-                            }
+                            // onChange={(event) =>
+                            //   setDoctorId(event.target.value)
+                            // }
                             onClick={(e) => handleFindSchedule(e.target.value)}
                           >
                             {dataDoctor.doctor.data &&
@@ -289,9 +287,9 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onChange={(event) =>
-                              setRegisterDate(event.target.value)
-                            }
+                            // onChange={(event) =>
+                            //   setRegisterDate(event.target.value)
+                            // }
                             onClick={(e) => handleFindTimeslot(e.target.value)}
                           >
                             {mang &&
@@ -314,7 +312,7 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onChange={(event) =>
+                            onClick={(event) =>
                               setTimeslotId(event.target.value)
                             }
                           >
