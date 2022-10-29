@@ -10,6 +10,7 @@ let handleGetAllPhieudatcho = async (req, res) => {
 };
 
 let handleCreatePhieudatcho = async (req, res) => {
+  console.log("req.body: " + req.body);
   let phieudatcho = await phieudatchoService.createPhieudatcho(req.body);
   return res.status(200).json(phieudatcho);
 };
@@ -20,16 +21,16 @@ let handleEditPhieudatcho = async (req, res) => {
   return res.status(200).json(message);
 };
 
-// let handleDeleteUser = async (req, res) => {
-//   if (!req.query.id) {
-//     return res.status(200).json({
-//       code: 1,
-//       message: "Error",
-//     });
-//   }
-//   let message = await phieudatchoService.deleteUser(req.query.id);
-//   return res.status(200).json(message);
-// };
+let handleDeletePhieudatcho = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Error",
+    });
+  }
+  let message = await phieudatchoService.deletePhieudatcho(req.query.id);
+  return res.status(200).json(message);
+};
 
 let handleGetPhieudatcho = async (req, res) => {
   let id = req.query.id; //all, id
@@ -53,4 +54,5 @@ module.exports = {
   handleEditPhieudatcho: handleEditPhieudatcho,
   handleGetAllPhieudatcho: handleGetAllPhieudatcho,
   handleGetPhieudatcho: handleGetPhieudatcho,
+  handleDeletePhieudatcho: handleDeletePhieudatcho,
 };

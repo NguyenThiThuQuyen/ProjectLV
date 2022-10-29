@@ -186,7 +186,7 @@ let deleteParent = (data) => {
         if (check) {
           resolve({
             code: 1,
-            message: "Đã tồn tại ",
+            message: "Đã tồn tại ... ",
           });
         } else {
           await db.Parent.destroy({ where: { id: data.id } });

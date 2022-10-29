@@ -80,6 +80,8 @@ let createNewMedicalpackage = (data) => {
           packageDecs: data.packageDecs,
           detailDecs: data.detailDecs,
           image: data.image,
+          contentHTML: data.contentHTML,
+          contentMarkdown: data.contentMarkdown,
         });
 
         let giagoikham = await db.PackagePrice.create({
@@ -127,7 +129,9 @@ let updateGoiKham = (data) => {
             goiKham.packageName = data.packageName;
             goiKham.packageDecs = data.packageDecs;
             goiKham.detailDecs = data.detailDecs;
-            image = data.image;
+            goiKham.image = data.image;
+            goiKham.contentHTML = data.contentHTML;
+            goiKham.contentMarkdown = data.contentMarkdown;
             await goiKham.save();
           }
         } else {
@@ -191,6 +195,22 @@ let getAllMedicalPackageHome = (limitInput) => {
   });
 };
 
+let getAllMedicalPackageHomeAll = (limitInput) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let goikham = await db.MedicalPackage.findAll({
+        limit: limitInput,
+      });
+      resolve({
+        code: 0,
+        data: goikham,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewMedicalpackage: createNewMedicalpackage,
   updateGoiKham: updateGoiKham,
@@ -198,4 +218,5 @@ module.exports = {
   getAllGoiKham: getAllGoiKham,
   getAllMedicalPackageHome: getAllMedicalPackageHome,
   getMedicalPackage: getMedicalPackage,
+  getAllMedicalPackageHomeAll: getAllMedicalPackageHomeAll,
 };

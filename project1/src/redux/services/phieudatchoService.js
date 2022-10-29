@@ -15,6 +15,7 @@ const getPhieudatcho = async (id) => {
 };
 
 const createPhieudatcho = async (body) => {
+  console.log("object,", body);
   const create = await axios.post(
     `http://localhost:8081/api/create-new-phieudatcho`,
     body
@@ -30,17 +31,17 @@ const editPhieudatcho = async (body) => {
   return edit.data;
 };
 
-// const deleteUser = async (id) => {
-//   const userDelete = await axios.delete(
-//     `http://localhost:8081/api/delete-user?id=${id}`
-//   );
-//   return userDelete.data;
-// };
+const deletePhieudatcho = async (id) => {
+  const phieudatchoDelete = await axios.delete(
+    `http://localhost:8081/api/delete-phieudatcho?id=${id}`
+  );
+  return phieudatchoDelete.data;
+};
 
 export {
   getAllPhieudatcho,
   createPhieudatcho,
   editPhieudatcho,
-  //   deletePhieudatcho,
+  deletePhieudatcho,
   getPhieudatcho,
 };

@@ -77,6 +77,12 @@ let getAllCode = async (req, res) => {
   }
 };
 
+let handleGetUserMarkdown = async (req, res) => {
+  let data = req.body;
+  let message = await userService.getUserMarkdown(data);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleGetAllUsers: handleGetAllUsers,
   handleCreateNewUser: handleCreateNewUser,
@@ -85,4 +91,5 @@ module.exports = {
   handleLogin: handleLogin,
   handleGetUser: handleGetUser,
   getAllCode: getAllCode,
+  handleGetUserMarkdown: handleGetUserMarkdown,
 };

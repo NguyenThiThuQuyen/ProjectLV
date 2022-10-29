@@ -3,7 +3,7 @@ import {
   getAllPhieudatcho,
   createPhieudatcho,
   editPhieudatcho,
-  //   deletePhieudatcho,
+  deletePhieudatcho,
   getPhieudatcho,
 } from "./services/phieudatchoService";
 import { toast } from "react-toastify";
@@ -33,13 +33,13 @@ export const createPhieudatchoAPI = createAsyncThunk(
   }
 );
 
-// export const deleteUserAPI = createAsyncThunk(
-//   "phieudatcho/Delete",
-//   async (params) => {
-//     const XoaCV = await deleteUser(params);
-//     return XoaCV;
-//   }
-// );
+export const deletePhieudatchoAPI = createAsyncThunk(
+  "phieudatcho/Delete",
+  async (params) => {
+    const XoaCV = await deletePhieudatcho(params);
+    return XoaCV;
+  }
+);
 
 export const editPhieudatchoAPI = createAsyncThunk(
   "phieudatcho/Edit",
@@ -76,14 +76,14 @@ export const phieudatchoRedux = createSlice({
         toast.error(action.payload.message);
       }
     });
-    // builder.addCase(deleteUserAPI.fulfilled, (state, action) => {
-    //   state.check = true;
-    //   if (action.payload.code == "0") {
-    //     toast.success(action.payload.message);
-    //   } else {
-    //     toast.error(action.payload.message);
-    //   }
-    // });
+    builder.addCase(deletePhieudatchoAPI.fulfilled, (state, action) => {
+      state.check = true;
+      if (action.payload.code == "0") {
+        toast.success(action.payload.message);
+      } else {
+        toast.error(action.payload.message);
+      }
+    });
     builder.addCase(editPhieudatchoAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code === 0) {

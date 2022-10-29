@@ -76,7 +76,7 @@ let updateUserData = (data) => {
           where: { id: data.id },
           raw: false,
         });
-        if (user) {
+        if (user && data.roleId === "R1") {
           user.name = data.name;
           user.password = data.password;
           user.address = data.address;
@@ -87,14 +87,30 @@ let updateUserData = (data) => {
           await user.save();
           resolve({
             code: 0,
-            message: "Cập nhật thành công!",
+            message: "Cập nhật thành công admin!",
           });
         } else {
+          if (user && data.roleId === "R2") {
+            user.name = data.name;
+            user.password = data.password;
+            user.address = data.address;
+            user.image = data.image;
+            user.phone = data.phone;
+            user.gender = data.gender;
+            user.roleId = data.roleId;
+            user.contentHTML = data.contentHTML;
+            user.contentMarkdown = data.contentMarkdown;
+            await user.save();
+          }
           resolve({
-            code: 1,
-            message: `Không tìm thấy người dùng!`,
+            code: 0,
+            message: "Cập nhật thành công bác sĩ!",
           });
         }
+        resolve({
+          code: 1,
+          message: `Không tìm thấy người dùng!`,
+        });
       }
     } catch (e) {
       reject(e);
@@ -103,6 +119,7 @@ let updateUserData = (data) => {
 };
 
 let createNewUser = (data) => {
+  console.log("data:", data);
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkUserEmail(data.email);
@@ -113,21 +130,40 @@ let createNewUser = (data) => {
           message: "Email đã tồn tại, vui lòng nhập lại!",
         });
       } else {
-        await db.User.create({
-          email: data.email,
-          password: "123",
-          name: data.name,
-          address: data.address,
-          phone: data.phone,
-          gender: data.gender,
-          roleId: data.roleId,
-          image: data.image,
-        });
+        if (data.roleId === "R1") {
+          await db.User.create({
+            email: data.email,
+            password: "123",
+            name: data.name,
+            address: data.address,
+            phone: data.phone,
+            gender: data.gender,
+            roleId: data.roleId,
+            image: data.image,
+          });
+          resolve({
+            code: 0,
+            message: "Thêm admin thành công!",
+          });
+        } else {
+          await db.User.create({
+            email: data.email,
+            password: "123",
+            name: data.name,
+            address: data.address,
+            phone: data.phone,
+            gender: data.gender,
+            roleId: data.roleId,
+            image: data.image,
+            contentHTML: data.contentHTML,
+            contentMarkdown: data.contentMarkdown,
+          });
+          resolve({
+            code: 0,
+            message: "Thêm bác sĩ thành công!",
+          });
+        }
       }
-      resolve({
-        code: 0,
-        message: "Thêm thành công!",
-      });
     } catch (e) {
       reject(e);
     }
@@ -232,6 +268,21 @@ let getAllCodeService = (typeInput) => {
   });
 };
 
+let getUserMarkdown = (data) => {
+  console.log("data:", data);
+  return new Promise(async (resolve, reject) => {
+    if (data.roleId === "R2") {
+      let findDoctor = await db.Markdown.findOne({
+        where: { doctorId: data.userId },
+      });
+      resolve({
+        code: 0,
+        data: findDoctor,
+      });
+    }
+  });
+};
+
 module.exports = {
   getAllUsers: getAllUsers,
   createNewUser: createNewUser,
@@ -240,4 +291,5 @@ module.exports = {
   getUser: getUser,
   handleUserLogin: handleUserLogin,
   getAllCodeService: getAllCodeService,
+  getUserMarkdown: getUserMarkdown,
 };

@@ -36,10 +36,19 @@ const editSchedule = async (body) => {
 };
 
 const getFindTimeslot = async (body) => {
-  const response = await axios.get(
+  const response = await axios.post(
     `http://localhost:8081/api/find-timeslot-to-date`,
     body
   );
+  return response.data;
+};
+
+const getFindIdSchedule = async (body) => {
+  const response = await axios.post(
+    `http://localhost:8081/api/find-id-schedule`,
+    body
+  );
+  console.log("respose ne he:", response.data);
   return response.data;
 };
 
@@ -66,4 +75,5 @@ export {
   getASchedule,
   getFindScheduleToDoctor,
   getFindTimeslot,
+  getFindIdSchedule,
 };

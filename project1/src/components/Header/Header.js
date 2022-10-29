@@ -44,7 +44,11 @@ function Header() {
         </div>
         <div className="mx-auto my-auto">
           <ul className="flex">
-            <li className="flex mx-8">TRANG CHỦ</li>
+            <li className="flex mx-8">
+              <Link to="/" className="">
+                <span className="">TRANG CHỦ</span>
+              </Link>
+            </li>
             <li className="flex mx-8">VỀ CHÚNG TÔI</li>
             <li className="flex mx-8">TRỊ LIỆU</li>
             <li className="flex mx-8">LIÊN HỆ</li>

@@ -44,6 +44,13 @@ const getAllMedicalPackaheHome = async () => {
   return res.data;
 };
 
+const getAllMedicalPackaheHomeAll = async () => {
+  const res = await axios.get(
+    `http://localhost:8081/api/all-medicalpackage-home-all`
+  );
+  return res.data;
+};
+
 export {
   getAllGoiKham,
   createGoiKham,
@@ -51,4 +58,5 @@ export {
   deleteGoiKham,
   getAllMedicalPackaheHome,
   getGoiKham,
+  getAllMedicalPackaheHomeAll,
 };

@@ -16,17 +16,25 @@ export default function GoiKhamModal() {
   const [image, setImage] = useState();
   const [price, setPrice] = useState();
   const [applydateId, setApplydateId] = useState();
+
+  const [contentMarkdown, setContentMarkdown] = useState();
+  const [contentHTML, setContentHTML] = useState();
+
   const params = {
     packageName: packageName,
     packageDecs: packageDecs,
     image: image,
     price: price,
     applydateId: applydateId,
+    contentMarkdown: contentMarkdown,
+    contentHTML: contentHTML,
   };
 
-  const mdParser = new MarkdownIt(/* Markdown-it options */);
+  const mdParser = new MarkdownIt();
   function handleEditorChange({ html, text }) {
     console.log("handleEditorChange", html, text);
+    setContentHTML(html);
+    setContentMarkdown(text);
   }
 
   const dispatch = useDispatch();
@@ -79,11 +87,9 @@ export default function GoiKhamModal() {
       </div>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex fixed overflow-x-hidden overflow-y-auto inset-0 z-50">
-            <div className="relative w-full h-screen mx-auto max-w-8xl">
-              {/*content*/}
-              <div className="border-0 shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
+          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-w-5xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM GÓI TƯ VẤN
@@ -98,11 +104,11 @@ export default function GoiKhamModal() {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 pb-20 flex-auto">
+                <div className="relative p-6 flex-auto">
                   <form className="w-full">
-                    <div className="grid grid-rows-2 w-[80%] mb-10 mx-auto">
+                    <div className="grid grid-rows-2 w-[80%] mx-auto">
                       <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên gói tư vấn
                           </label>
@@ -115,7 +121,7 @@ export default function GoiKhamModal() {
                             }
                           />
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Giá tiền (VND)
                           </label>
@@ -126,7 +132,7 @@ export default function GoiKhamModal() {
                             onChange={(event) => setPrice(event.target.value)}
                           />
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Ngày áp dụng
                           </label>
@@ -151,7 +157,7 @@ export default function GoiKhamModal() {
                           <textarea
                             type="text"
                             placeholder="..."
-                            className="w-full h-24 border rounded-lg p-2 mt-1  outline-slate-300"
+                            className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
                             onChange={(event) =>
                               setPackageDecs(event.target.value)
                             }
@@ -178,7 +184,7 @@ export default function GoiKhamModal() {
                       </div>
                     </div>
                     <MdEditor
-                      style={{ height: "500px" }}
+                      style={{ height: "200px", marginTop: "70px" }}
                       renderHTML={(text) => mdParser.render(text)}
                       onChange={handleEditorChange}
                     />

@@ -1,21 +1,41 @@
 const db = require("../models/index");
 
 let createPhieudatcho = (data) => {
+  console.log("data: " + data);
   return new Promise(async (resolve, reject) => {
     try {
-      await db.ReservationTicket.create({
-        bookingDate: data.bookingDate,
-        arrivalDate: data.arrivalDate,
-        status: data.status,
-        medicalpackageId: data.medicalpackageId,
-        scheduleId: data.scheduleId,
-        patientId: data.patientId,
-        doctorId: data.doctorId,
-      });
-      resolve({
-        code: 0,
-        message: "Tạo phiếu đặt thành công!",
-      });
+      if (!data.userId || !data.timeslotId || !data.registerDate) {
+        resolve({
+          errCode: 2,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        let find = await db.Schedule.findOne({
+          where: {
+            userId: data.userId,
+            timeslotId: data.timeslotId,
+            registerDate: new Date(data.registerDate),
+          },
+          // raw: false,
+        });
+        // console.log("find 123:", find.id);
+        // resolve(find.id);
+        if (find) {
+          await db.ReservationTicket.create({
+            bookingDate: data.bookingDate,
+            arrivalDate: data.arrivalDate,
+            status: data.status,
+            medicalpackageId: data.medicalpackageId,
+            scheduleId: find.id,
+            patientId: data.patientId,
+            doctorId: data.doctorId,
+          });
+          resolve({
+            code: 0,
+            message: "Tạo phiếu đặt thành công!",
+          });
+        }
+      }
     } catch (e) {
       reject(e);
     }
@@ -170,9 +190,31 @@ let getPhieudatcho = (phieudatchoId) => {
   });
 };
 
+let deletePhieudatcho = (phieudatchoId) => {
+  return new Promise(async (resolve, reject) => {
+    let found = await db.ReservationTicket.findOne({
+      where: { id: phieudatchoId },
+    });
+    if (!found) {
+      resolve({
+        code: 2,
+        message: `Phiếu tư vấn không tồn tại`,
+      });
+    }
+    await db.ReservationTicket.destroy({
+      where: { id: phieudatchoId },
+    });
+    resolve({
+      code: 0,
+      message: `Đã xóa thành công`,
+    });
+  });
+};
+
 module.exports = {
   createPhieudatcho: createPhieudatcho,
   updatePhieudatcho: updatePhieudatcho,
   getAllPhieudatcho: getAllPhieudatcho,
   getPhieudatcho: getPhieudatcho,
+  deletePhieudatcho: deletePhieudatcho,
 };

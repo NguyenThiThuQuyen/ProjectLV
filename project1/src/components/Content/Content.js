@@ -4,21 +4,16 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import banner from "../../assets/upload/banner.jpg";
 import banner1 from "../../assets/upload/banner1.jpg";
-import bacsi1 from "../../assets/upload/bacsi1.jpg";
-import bacsi2 from "../../assets/upload/bacsi2.jpg";
-import bacsi3 from "../../assets/upload/bacsi3.jpg";
 import bacsi4 from "../../assets/upload/bacsi4.jpg";
-import service1 from "../../assets/upload/banner3.jpeg";
-import service2 from "../../assets/upload/login.jpg";
-import service3 from "../../assets/upload/service3.jpg";
 import hinh1 from "../../assets/upload/hinh1.jpg";
+import capture from "../../assets/upload/Capture.JPG";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { TbBellRinging } from "react-icons/tb";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaArrowDown } from "react-icons/fa";
 import { Buffer } from "buffer";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   dataGetDoctorHome,
@@ -29,6 +24,7 @@ import {
 import {
   getAllMedicalPackaheHomeAPI,
   dataGetAllGoiKhamHome,
+  getGoiKhamAPI,
 } from "../../redux/goiKhamRedux";
 
 const Content = () => {
@@ -36,7 +32,7 @@ const Content = () => {
   const data = useSelector(dataGetDoctorHome);
   const dataPackage = useSelector(dataGetAllGoiKhamHome);
   const check = useSelector(dataCheck);
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI());
     dispatch(getAllMedicalPackaheHomeAPI());
@@ -56,6 +52,11 @@ const Content = () => {
         <ul style={{ margin: "45px" }}> {dots} </ul>
       </div>
     ),
+  };
+
+  const handleDetail = (medicalpackageId) => {
+    navigate(`/detail-service/${medicalpackageId}`);
+    dispatch(getGoiKhamAPI(medicalpackageId));
   };
 
   return (
@@ -148,7 +149,7 @@ const Content = () => {
           Dịch Vụ
         </h1>
         <div className="border-solid border-2 border-slate-200 shadow-lg shadow-slate-300 items-center justify-items-center h-auto mx-auto w-9/12 p-4">
-          <div className="grid grid-cols-2 justify-items-center">
+          <div className="grid grid-cols-2 justify-items-center bg-white">
             {dataPackage.data &&
               dataPackage.data.length > 0 &&
               dataPackage.data.map((item, index) => {
@@ -170,9 +171,14 @@ const Content = () => {
                           />
                         </div>
                         <div className="col-span-1 w-full">
-                          <div className="font-medium">{item.packageName}</div>
+                          <div className="font-medium text-sky-700 cursor-pointer">
+                            {item.packageName}
+                          </div>
                           <div className="text-sm">{item.packageDecs}</div>
-                          <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
+                          <div
+                            className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500 cursor-pointer"
+                            onClick={() => handleDetail(item.id)}
+                          >
                             LEARN MORE
                           </div>
                         </div>
@@ -181,86 +187,16 @@ const Content = () => {
                   </>
                 );
               })}
-            {/* 
-            <div className="col-span-1 mt-10">
-              <div className="grid grid-cols-2 justify-items-center">
-                <div className="col-span-1">
-                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
-                </div>
-                <div className="col-span-1 mr-5">
-                  <div className="">Hopitalist</div>
-                  <div className="">
-                    Sample text. Click to select the text box. Click again or
-                    double click to start editing the text.
-                  </div>
-                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
-                    LEARN MORE
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-1 mt-10">
-              <div className="grid grid-cols-2 justify-items-center">
-                <div className="col-span-1">
-                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
-                </div>
-                <div className="col-span-1 mr-5">
-                  <div className="">Hopitalist</div>
-                  <div className="">
-                    Sample text. Click to select the text box. Click again or
-                    double click to start editing the text.
-                  </div>
-                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
-                    LEARN MORE
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-1 mt-10">
-              <div className="grid grid-cols-2 justify-items-center">
-                <div className="col-span-1">
-                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
-                </div>
-                <div className="col-span-1 mr-5">
-                  <div className="">Hopitalist</div>
-                  <div className="">
-                    Sample text. Click to select the text box. Click again or
-                    double click to start editing the text.
-                  </div>
-                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
-                    LEARN MORE
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-1 mt-10">
-              <div className="grid grid-cols-2 justify-items-center">
-                <div className="col-span-1">
-                  <img className="w-[210px] h-[200px]" src={service1} alt="" />
-                </div>
-                <div className="col-span-1 mr-5">
-                  <div className="">Hopitalist</div>
-                  <div className="">
-                    Sample text. Click to select the text box. Click again or
-                    double click to start editing the text.
-                  </div>
-                  <div className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500">
-                    LEARN MORE
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
 
           <div className="justify-center items-center mt-10">
             <FaArrowDown className="animate-bounce cursor-pointer mx-auto text-slate-700" />
           </div>
-          <div className="cursor-pointer text-center text-slate-500">
-            Xem thêm ...
-          </div>
+          <Link to="/service" className="">
+            <div className="cursor-pointer text-center text-slate-500">
+              <span className="">Xem thêm ...</span>
+            </div>
+          </Link>
         </div>
       </div>
 
@@ -309,67 +245,17 @@ const Content = () => {
             <div
               data-aos="fade-up"
               data-aos-duration="1000"
-              className="h-[350px] w-9/12 p-5 border-4 border-slate-200 shadow-lg shadow-slate-300 bg-white mx-auto"
+              className="h-full w-full border border-slate-200 shadow-lg shadow-slate-300 bg-white mx-auto"
             >
-              <div className="grid grid-cols-3">
-                <div className="col-span-1 px-6">
-                  <div className="text-5xl text-center text-sky-700 font-medium">
-                    A
-                  </div>
-                  <div className="text-sky-700 text-3xl text-center mt-3">
-                    Goals and Mission
-                  </div>
-                  <div className="text-center italic text-center mt-3">
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                  <div className="mt-5 text-center font-medium hover:text-sky-400 underline underline-offset-8">
-                    LEARN MORE
-                  </div>
-                </div>
-                <div className="col-span-1 px-6">
-                  <div className="text-5xl text-center text-sky-700 font-medium">
-                    B
-                  </div>
-                  <h1 className="text-sky-700 text-3xl text-center mt-3">
-                    About Clinic
-                  </h1>
-                  <div className="text-center italic text-center mt-3">
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                  <div className="mt-5 text-center font-medium hover:text-sky-400 underline underline-offset-8">
-                    LEARN MORE
-                  </div>
-                </div>
-                <div className="col-span-1 px-6">
-                  <div className="text-5xl text-center text-sky-700 font-medium">
-                    A
-                  </div>
-                  <h1 className="text-sky-700 text-3xl text-center mt-3">
-                    Work with Us
-                  </h1>
-                  <div className="text-center italic text-center mt-3">
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum.
-                  </div>
-                  <div className="mt-5 text-center font-medium hover:text-sky-400 underline underline-offset-8">
-                    LEARN MORE
-                  </div>
-                </div>
+              <div className="w-full">
+                <img className="h-full w-full mx-auto " src={capture} alt="" />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-52">
+      <div className="mt-96">
         <div className="text-center font-medium text-sky-700 text-3xl">
           Meet The Team
         </div>

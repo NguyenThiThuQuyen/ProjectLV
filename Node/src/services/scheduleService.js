@@ -69,8 +69,16 @@ let checkRegisterDate = (regDate) => {
 let findTimeslot = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      console.log("data.registerDate:", data.registerDate);
       let find = await db.Schedule.findAll({
-        where: { registerDate: data.registerDate },
+        where: { registerDate: new Date(data.registerDate) },
+        include: [
+          {
+            model: db.TimeSlot,
+            as: "timeSlotDataToSchedule",
+            attributes: ["timeslot", "id"],
+          },
+        ],
         raw: false,
       });
       resolve({
@@ -212,6 +220,40 @@ let getSchedule = (scheduleId) => {
   });
 };
 
+let findIdSchedule = (data) => {
+  return new Promise(async (resolve, reject) => {
+    // let regisDate = new Date(data.regisDate);
+    var today = new Date(data.registerDate);
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    try {
+      if (!data.userId || !data.timeslotId || !data.registerDate) {
+        resolve({
+          errCode: 2,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        let find = await db.Schedule.findOne({
+          where: {
+            userId: data.userId,
+            timeslotId: data.timeslotId,
+            registerDate: new Date(data.registerDate),
+          },
+          // raw: false,
+        });
+        console.log("find 123:", find.id);
+        resolve(find.id);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewSchedule: createNewSchedule,
   finDoctor: finDoctor,
@@ -221,4 +263,5 @@ module.exports = {
   getSchedule: getSchedule,
   findLichTVTheoBacSi: findLichTVTheoBacSi,
   findTimeslot: findTimeslot,
+  findIdSchedule: findIdSchedule,
 };

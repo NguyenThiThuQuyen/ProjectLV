@@ -57,6 +57,22 @@ const saveBulkScheduleDoctor = async (data) => {
   return res.data;
 };
 
+const saveDetailDoctor = async (data) => {
+  const res = await axios.post(
+    `http://localhost:8081/api/save-infor-doctor`,
+    data
+  );
+  return res.data;
+};
+
+const userMarkdown = async (data) => {
+  const res = await axios.post(
+    `http://localhost:8081/api/get-user-markdown`,
+    data
+  );
+  return res.data;
+};
+
 export {
   getAllUsers,
   createUser,
@@ -67,4 +83,6 @@ export {
   getAllDoctorHome,
   getScheduleDoctorByDate,
   saveBulkScheduleDoctor,
+  saveDetailDoctor,
+  userMarkdown,
 };

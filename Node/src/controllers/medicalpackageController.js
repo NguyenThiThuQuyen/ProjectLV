@@ -62,11 +62,26 @@ let handleGetAllMedicalPackageHome = async (req, res) => {
   }
 };
 
+let handleGetAllMedicalPackageHomeAll = async (req, res) => {
+  let limit = req.query.limit;
+  if (!limit) limit = 50;
+  try {
+    let response = await goiKhamService.getAllMedicalPackageHomeAll(limit);
+    return res.status(200).json(response);
+  } catch (e) {
+    return res.status(200).json({
+      code: -1,
+      message: "Error",
+    });
+  }
+};
+
 module.exports = {
   handleGoiKham: handleGoiKham,
   handleEditGoiKham: handleEditGoiKham,
   handleDeleteGoiKham: handleDeleteGoiKham,
   handleGetAllGoiKham: handleGetAllGoiKham,
   handleGetAllMedicalPackageHome: handleGetAllMedicalPackageHome,
+  handleGetAllMedicalPackageHomeAll: handleGetAllMedicalPackageHomeAll,
   handleGetGoiKham: handleGetGoiKham,
 };

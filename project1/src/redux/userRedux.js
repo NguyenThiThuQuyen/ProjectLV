@@ -7,6 +7,8 @@ import {
   getAUser,
   getAllAllcodes,
   getAllDoctorHome,
+  saveDetailDoctor,
+  userMarkdown,
 } from "./services/userService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,6 +25,22 @@ export const getAllUsersAPI = createAsyncThunk("datten/GetAll", async () => {
   const getAllCV = await getAllUsers();
   return getAllCV;
 });
+
+export const userMarkdownAPI = createAsyncThunk(
+  "datten/User",
+  async (params) => {
+    const getAllCV = await userMarkdown(params);
+    return getAllCV;
+  }
+);
+
+export const saveDetailDoctorAPI = createAsyncThunk(
+  "datten/SaveDetail",
+  async () => {
+    const saveDetail = await saveDetailDoctor();
+    return saveDetail;
+  }
+);
 
 export const getAllGenderAPI = createAsyncThunk(
   "datten/Getgender",
@@ -71,6 +89,7 @@ export const UserRedux = createSlice({
     getAllRole: {},
     getAllGender: {},
     getAUser: {},
+    getUserMarkdown: {},
     check: false,
   },
   reducers: {},
@@ -95,9 +114,23 @@ export const UserRedux = createSlice({
       state.check = false;
     });
 
+    builder.addCase(userMarkdownAPI.fulfilled, (state, action) => {
+      state.getUserMarkdown = action.payload;
+      state.check = false;
+    });
+
     builder.addCase(getAUserAPI.fulfilled, (state, action) => {
       state.getAUser = action.payload;
       state.check = false;
+    });
+
+    builder.addCase(saveDetailDoctorAPI.fulfilled, (state, action) => {
+      state.check = true;
+      if (action.payload.code == "0") {
+        toast.success(action.payload.message);
+      } else {
+        toast.error(action.payload.message);
+      }
     });
 
     builder.addCase(addUserAPI.fulfilled, (state, action) => {
@@ -108,6 +141,7 @@ export const UserRedux = createSlice({
         toast.error(action.payload.message);
       }
     });
+
     builder.addCase(deleteUserAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code == "0") {
@@ -131,6 +165,7 @@ export const dataGetAllRole = (state) => state.datten.getAllRole;
 export const dataGetAllGender = (state) => state.datten.getAllGender;
 export const dataGetAUser = (state) => state.datten.getAUser;
 export const dataGetDoctorHome = (state) => state.datten.getDoctorHome;
+export const dataGetUserMarkdown = (state) => state.datten.getUserMarkdown;
 export const dataCheck = (state) => state.datten.check;
 
 export default UserRedux.reducer;

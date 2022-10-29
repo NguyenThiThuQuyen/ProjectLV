@@ -34,6 +34,11 @@ let initWebRoutes = (app) => {
     medicalpackageController.handleGetAllMedicalPackageHome
   );
 
+  router.get(
+    "/api/all-medicalpackage-home-all",
+    medicalpackageController.handleGetAllMedicalPackageHomeAll
+  );
+
   router.post("/api/save-infor-doctor", doctorController.postInforDoctor);
   router.post("/api/bulk-create-schedule", doctorController.bulkCreateSchedule);
   router.post(
@@ -51,13 +56,16 @@ let initWebRoutes = (app) => {
     scheduleController.handleFindSchedule
   );
   // tìm khung giờ theo ngày
-  router.get(
+  router.post(
     "/api/find-timeslot-to-date",
     scheduleController.handleFindTimeslot
   );
+  // tìm id lịch tư vấn theo ngày, khung giờ, bác sĩ
+  router.post("/api/find-id-schedule", scheduleController.handleFindIdSchedule);
 
   // user
   router.get("/api/get-user", userController.handleGetUser);
+  router.post("/api/get-user-markdown", userController.handleGetUserMarkdown);
   router.get("/api/get-all-users", userController.handleGetAllUsers);
   router.post("/api/create-new-user", userController.handleCreateNewUser);
   router.put("/api/edit-user", userController.handleEditUser);
@@ -101,7 +109,10 @@ let initWebRoutes = (app) => {
     "/api/edit-phieudatcho",
     phieudatchoController.handleEditPhieudatcho
   );
-  // router.delete("/api/delete-phieudatcho", phieudatchoController.handleDeletePhieudatcho);
+  router.delete(
+    "/api/delete-phieudatcho",
+    phieudatchoController.handleDeletePhieudatcho
+  );
 
   // lich tu van
   router.get(

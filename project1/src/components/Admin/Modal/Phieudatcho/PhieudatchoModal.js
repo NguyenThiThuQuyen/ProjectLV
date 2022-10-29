@@ -20,48 +20,55 @@ import {
   getAllSchedulesAPI,
   getFindScheduleToDoctorAPI,
   dataGetFindSchedule,
-  dataGetAllSchedule,
+  // dataGetAllSchedule,
   getFindTimeslotAPI,
   dataGetFindTimeslot,
+  dataFindIdSchedule,
+  getFindIdScheduleAPI,
 } from "../../../../redux/scheduleRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { data } from "autoprefixer";
 export default function PhieudatchoModal() {
   const [showModal, setShowModal] = useState(false);
-  const [bookingDate, setBookingDate] = useState();
+  const [bookingDate, setBookingDate] = useState(new Date());
   const [arrivalDate, setArrivalDate] = useState();
+  const [registerDate, setRegisterDate] = useState();
   const [status, setStatus] = useState();
   const [medicalpackageId, setMedicalpackageId] = useState();
   const [scheduleId, setScheduleId] = useState();
+  const [timeslotId, setTimeslotId] = useState();
   const [patientId, setPatientId] = useState();
+  // const [userId, setUserId] = useState();
   const [doctorId, setDoctorId] = useState();
-  const [array, setArray] = useState([]);
-  const [selectedOption, setSelectedOption] = useState([]);
   const params = {
     bookingDate: bookingDate,
-    arrivalDate: arrivalDate,
+    arrivalDate: registerDate,
     status: status,
     medicalpackageId: medicalpackageId,
     scheduleId: scheduleId,
     patientId: patientId,
+    // userId: userId,
     doctorId: doctorId,
+    // registerDate: registerDate,
+    // timeslotId: timeslotId,
+    userId: doctorId,
+    timeslotId: timeslotId,
+    registerDate: registerDate,
   };
 
   const dataDoctor = useSelector(dataGetDoctor);
   const dataGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
-
-  console.log("dataFindTimeslot", dataFindTimeslot);
-  console.log("dataFindSchedule", dataFindSchedule);
-  console.log("dataDoctor", dataDoctor);
-  // console.log("dataSchedule", dataSchedule);
+  const dataIdSchedule = useSelector(dataFindIdSchedule);
+  console.log("dataIdSchedule", dataIdSchedule);
 
   const dispatch = useDispatch();
   const dataPatient = useSelector(dataGetAllPatient);
   const array1 = useSelector(ArrayPatient);
-  // console.log(array1);
+  const [mang, setMang] = useState([]);
+
   useEffect(() => {
     dispatch(getAllPatientsAPI());
     dispatch(getAllDoctorAPI());
@@ -69,7 +76,34 @@ export default function PhieudatchoModal() {
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllSchedulesAPI());
     dispatch(getFindScheduleToDoctorAPI());
+    dispatch(getFindIdScheduleAPI());
   }, [showModal]);
+
+  useEffect(() => {
+    dataFindSchedule?.schedule?.data &&
+      dataFindSchedule?.schedule?.data?.length > 0 &&
+      dataFindSchedule?.schedule?.data?.map((item, index) => {
+        const kt = XoaTrungTrongMang(item?.registerDate);
+        if (kt) {
+          mang.push(item?.registerDate);
+        }
+      });
+  }, [dataFindSchedule]);
+
+  const XoaTrungTrongMang = (date) => {
+    for (var i = 0; i < mang.length; i++) {
+      if (mang[i].toString() == date.toString()) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleClose = () => {
+    setMang([]);
+    setShowModal(false);
+  };
+  console.log("kq params: ", params);
 
   const handleSave = () => {
     dispatch(createPhieudatchoAPI(params));
@@ -77,25 +111,36 @@ export default function PhieudatchoModal() {
   };
 
   const handleFindSchedule = (id) => {
-    console.log("id", id);
+    setMang([]);
     dispatch(getFindScheduleToDoctorAPI(id));
   };
 
-  const handleFindTimeslot = (id) => {
-    console.log("id timeslot", id);
-    dispatch(getFindTimeslotAPI(id));
+  
+  const handleFindTimeslot = (item) => {
+    const params = {
+      registerDate: item,
+    };
+    dispatch(getFindTimeslotAPI(params));
+  };
+  const handleSearchIdSchedule = () => {
+    const params = {
+      userId: doctorId,
+      timeslotId: timeslotId,
+      registerDate: registerDate,
+    };
+    console.log("params id schedule: ", params);
+
+    dispatch(getFindIdScheduleAPI(params));
   };
 
-  // const handleUnique = (arr) => {
-  //   let newArr = [];
-  //   for (var i = 0; i < arr.dataFindSchedule.schedule.data.length; i++) {
-  //     if (newArr.indexOf(arr[i]) === -1) {
-  //       newArr.push(arr[i]);
-  //     }
-  //   }
-  //   return newArr;
-  // };
-  // console.log("handle unique:", handleUnique);
+  const date =
+    bookingDate.getDate() +
+    "-" +
+    (bookingDate.getMonth() + 1) +
+    "-" +
+    bookingDate.getFullYear();
+
+  // console.log("date: " + date);
 
   return (
     <>
@@ -144,7 +189,17 @@ export default function PhieudatchoModal() {
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="">
-                    <div className="grid grid-rows-2">
+                    <div className="grid grid-rows-3">
+                      <div className="grid row-span-1 grid-cols-3">
+                        <div className="col-span-1 mx-3 my-4">
+                          <label htmlFor="" className="text-slate-600 ml-2">
+                            Ngày đặt
+                          </label>
+                          <div className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300">
+                            {date}
+                          </div>
+                        </div>
+                      </div>
                       <div className="grid row-span-1 grid-cols-3">
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
@@ -176,7 +231,7 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-2 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Gói tư vấn
                           </label>
@@ -198,6 +253,11 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
+                      </div>
+                      <div
+                        className="grid row-span-1 grid-cols-3"
+                        // onChange={(event) => setScheduleId(event.target.value)}
+                      >
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Bác sĩ tư vấn
@@ -222,8 +282,6 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                      </div>
-                      <div className="grid row-span-1 grid-cols-3">
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Ngày tư vấn
@@ -232,27 +290,43 @@ export default function PhieudatchoModal() {
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) =>
-                              setScheduleId(event.target.value)
+                              setRegisterDate(event.target.value)
                             }
                             onClick={(e) => handleFindTimeslot(e.target.value)}
                           >
-                            {dataFindSchedule.schedule.data &&
-                              dataFindSchedule.schedule.data.length > 0 &&
-                              dataFindSchedule.schedule.data.map(
-                                (item, index) => {
-                                  let day = [];
-                                  day = moment(item.registerDate).format(
-                                    "YYYY-MM-DD"
-                                  );
-                                  let newArr1111111 = [...day];
-                                  console.log("newArr1111111", newArr1111111);
-                                  return (
-                                    <option key={index} value={item.id}>
-                                      {day}
-                                    </option>
-                                  );
-                                }
-                              )}
+                            {mang &&
+                              mang?.length > 0 &&
+                              mang?.map((item, index) => {
+                                let day = "";
+                                day = moment(item).format("YYYY-MM-DD");
+                                return (
+                                  <option key={index} value={item}>
+                                    {day}
+                                  </option>
+                                );
+                              })}
+                          </select>
+                        </div>
+                        <div className="col-span-1 mx-3 my-4">
+                          <label htmlFor="" className="text-slate-600 ml-2">
+                            Khung giờ tư vấn
+                          </label>
+                          <select
+                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            id=""
+                            onChange={(event) =>
+                              setTimeslotId(event.target.value)
+                            }
+                          >
+                            {dataFindTimeslot?.data &&
+                              dataFindTimeslot?.data.length > 0 &&
+                              dataFindTimeslot?.data.map((item, index) => {
+                                return (
+                                  <option key={index} value={item.timeslotId}>
+                                    {item?.timeSlotDataToSchedule?.timeslot}
+                                  </option>
+                                );
+                              })}
                           </select>
                         </div>
                       </div>
@@ -263,7 +337,8 @@ export default function PhieudatchoModal() {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    // onClick={() => setShowModal(false)}
+                    onClick={() => handleClose(false)}
                   >
                     Close
                   </button>

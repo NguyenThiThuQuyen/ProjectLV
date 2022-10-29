@@ -72,7 +72,7 @@ export const ParentRedux = createSlice({
     });
     builder.addCase(editParentAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
@@ -81,7 +81,7 @@ export const ParentRedux = createSlice({
 
     builder.addCase(deleteParentAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);

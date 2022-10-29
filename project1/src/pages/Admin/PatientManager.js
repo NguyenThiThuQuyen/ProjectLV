@@ -65,9 +65,9 @@ const PatientManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Giới Tính
                   </th>
-                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
+                  <th className="border border-slate-200 p-3 text-white font-medium">
                     Hình ảnh
-                  </th> */}
+                  </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên người đại diện
                   </th>
@@ -109,14 +109,14 @@ const PatientManager = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.genderDataToPatient?.value}
                         </td>
-                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <img
                             src={imageBase64}
                             alt=""
                             className=""
                             style={{ height: "80px", width: "80px" }}
                           />
-                        </td> */}
+                        </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.parentDataToPatient?.name}
                         </td>

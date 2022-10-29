@@ -15,6 +15,7 @@ import {
   getAllPhieudatchoAPI,
   dataGetAllPhieudatcho,
   dataCheck,
+  deletePhieudatchoAPI,
 } from "../../redux/phieudatchoRedux";
 
 const PhieudatchoManager = () => {
@@ -30,9 +31,9 @@ const PhieudatchoManager = () => {
     dispatch(getAllPhieudatchoAPI());
   }, [check]);
 
-  //   const handleDeleteUser = (id) => {
-  //     dispatch(deleteUserAPI(id));
-  //   };
+  const handleDeletePhieudatcho = (id) => {
+    dispatch(deletePhieudatchoAPI(id));
+  };
 
   //   const handleDetailUser = (userId) => {
   //     navigate(`/admin/user-detail-manager/${userId}`);
@@ -120,7 +121,7 @@ const PhieudatchoManager = () => {
                             <div
                               className=""
                               title="Xóa"
-                              //   onClick={() => handleDeleteUser(item.id)}
+                              onClick={() => handleDeletePhieudatcho(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />
                             </div>

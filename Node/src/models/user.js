@@ -41,6 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       gender: DataTypes.STRING,
       roleId: DataTypes.STRING,
+      contentHTML: DataTypes.TEXT("long"),
+      contentMarkdown: DataTypes.TEXT("long"),
     },
     {
       sequelize,

@@ -20,6 +20,14 @@ module.exports = {
       image: {
         type: Sequelize.BLOB("long"),
       },
+      contentHTML: {
+        allowNull: false,
+        type: Sequelize.TEXT("long"),
+      },
+      contentMarkdown: {
+        allowNull: false,
+        type: Sequelize.TEXT("long"),
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -7,6 +7,7 @@ import {
   deleteGoiKham,
   getAllMedicalPackaheHome,
   getGoiKham,
+  getAllMedicalPackaheHomeAll,
 } from "./services/goiKhamService";
 
 export const getAllMedicalPackaheHomeAPI = createAsyncThunk(
@@ -14,6 +15,14 @@ export const getAllMedicalPackaheHomeAPI = createAsyncThunk(
   async () => {
     const getAllHome = await getAllMedicalPackaheHome();
     return getAllHome;
+  }
+);
+
+export const getAllMedicalPackageHomeAllAPI = createAsyncThunk(
+  "goikham/GetAllHomeAll",
+  async () => {
+    const getAllHomeAll = await getAllMedicalPackaheHomeAll();
+    return getAllHomeAll;
   }
 );
 
@@ -57,6 +66,7 @@ export const GoiKhamRedux = createSlice({
     allGoiKham: {},
     getAGoiKham: {},
     allGoiKhamHome: {},
+    allGoiKhamHomeAll: {},
     check: false,
   },
   reducers: {},
@@ -65,6 +75,13 @@ export const GoiKhamRedux = createSlice({
       state.allGoiKhamHome = action.payload;
       state.check = false;
     });
+    builder.addCase(
+      getAllMedicalPackageHomeAllAPI.fulfilled,
+      (state, action) => {
+        state.allGoiKhamHomeAll = action.payload;
+        state.check = false;
+      }
+    );
     builder.addCase(getGoiKhamAPI.fulfilled, (state, action) => {
       state.getAGoiKham = action.payload;
       state.check = false;
@@ -104,5 +121,7 @@ export const GoiKhamRedux = createSlice({
 export const dataGetAllGoiKham = (state) => state.goikham.allGoiKham;
 export const dataGetGoiKham = (state) => state.goikham.getAGoiKham;
 export const dataGetAllGoiKhamHome = (state) => state.goikham.allGoiKhamHome;
+export const dataGetAllGoiKhamHomeAll = (state) =>
+  state.goikham.allGoiKhamHomeAll;
 export const dataCheck = (state) => state.goikham.check;
 export default GoiKhamRedux.reducer;

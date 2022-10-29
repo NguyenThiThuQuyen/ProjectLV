@@ -33,7 +33,7 @@ const UserManager = () => {
     dispatch(deleteUserAPI(id));
   };
 
-  const handleDetailUser = (userId) => {
+  const handleDetail = (userId) => {
     navigate(`/admin/user-detail-manager/${userId}`);
     dispatch(getAUserAPI(userId));
   };
@@ -88,7 +88,7 @@ const UserManager = () => {
                       <tr
                         key={item.id}
                         className="hover:bg-slate-200"
-                        onClick={() => handleDetailUser(item.id)}
+                        // onClick={() => handleDetailUser(item.id)}
                       >
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
@@ -115,10 +115,15 @@ const UserManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
+                            <div
+                              className=""
+                              onClick={() => handleDetail(item.id)}
+                            >
+                              <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
+                            </div>
                             <div className="mr-5" title="Sửa">
                               <UserModalEdit item={item} />
                             </div>
-
                             <div
                               className=""
                               title="Xóa"

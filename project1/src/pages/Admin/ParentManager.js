@@ -31,6 +31,7 @@ const ParentManager = () => {
   }, [check]);
 
   const handleDeleteParent = (id) => {
+    console.log("id parent:", id);
     dispatch(deleteParentAPI(id));
   };
 
@@ -76,7 +77,7 @@ const ParentManager = () => {
                       <tr
                         key={item.id}
                         className="hover:bg-slate-200"
-                        onClick={() => handleDetail(item.id)}
+                        // onClick={() => handleDetail(item.id)}
                       >
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}

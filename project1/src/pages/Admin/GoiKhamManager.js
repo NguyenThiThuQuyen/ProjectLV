@@ -58,9 +58,9 @@ const GoiKhamManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Ngày áp dụng
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Hình ảnh
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Điều chỉnh
                   </th>
@@ -91,14 +91,14 @@ const GoiKhamManager = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {day}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <img
                             src={imageBase64}
                             alt=""
                             className=""
                             style={{ height: "70px", width: "70px" }}
                           />
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
                             <div

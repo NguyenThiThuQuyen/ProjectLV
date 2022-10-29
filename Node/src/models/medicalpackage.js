@@ -39,6 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       packageDecs: DataTypes.STRING,
       detailDecs: DataTypes.STRING,
       image: DataTypes.STRING,
+      contentHTML: DataTypes.TEXT("long"),
+      contentMarkdown: DataTypes.TEXT("long"),
     },
     {
       sequelize,
