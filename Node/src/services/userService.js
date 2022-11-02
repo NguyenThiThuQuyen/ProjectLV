@@ -18,6 +18,8 @@ let checkUserEmail = (userEmail) => {
 };
 
 let handleUserLogin = (email, password) => {
+  console.log("email", email);
+  console.log("password", password);
   return new Promise(async (resolve, reject) => {
     try {
       let userData = {};
@@ -45,16 +47,16 @@ let handleUserLogin = (email, password) => {
             userData.user = user;
           } else {
             userData.code = 3;
-            userData.message = "Wrong password";
+            userData.message = "Sai mật khẩu !";
           }
         } else {
           userData.code = 2;
-          userData.message = `User's not found`;
+          userData.message = `Không tìm người dùng !`;
         }
       } else {
         //return error
         userData.code = 1;
-        userData.message = `Your's Email isn't exist in your system. Please try other email`;
+        userData.message = `Tài khoản không tồn tại !`;
       }
       resolve(userData);
     } catch (e) {

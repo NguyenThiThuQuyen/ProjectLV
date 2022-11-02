@@ -113,6 +113,7 @@ export const ScheduleRedux = createSlice({
     });
 
     builder.addCase(getFindScheduleToDoctorAPI.fulfilled, (state, action) => {
+      console.log("action.payload getFindScheduleToDoctorAPI:", action.payload);
       state.getFindSchedule = action.payload;
       state.check = false;
     });

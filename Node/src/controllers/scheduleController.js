@@ -101,4 +101,5 @@ module.exports = {
   handleFindSchedule: handleFindSchedule,
   handleFindTimeslot: handleFindTimeslot,
   handleFindIdSchedule: handleFindIdSchedule,
+  // handleCountSchedule: handleCountSchedule,
 };

@@ -9,6 +9,7 @@ import TimeslotRedux from "./timeslotRedux";
 import ScheduleRedux from "./scheduleRedux";
 // import GiaGoiKhamRedux from "./giaGoiKhamRedux";
 import AdminRedux from "./Auth/adminRedux";
+import GuestRedux from "./Auth/guestRedux";
 import PhieudatchoRedux from "./phieudatchoRedux";
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     loaithuoc: LoaiThuocRedux,
     thuoc: ThuocRedux,
     login: AdminRedux,
+    loginguest: GuestRedux,
     parent: ParentRedux,
     patient: PatientRedux,
     // giagoikham: GiaGoiKhamRedux,

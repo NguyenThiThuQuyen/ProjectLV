@@ -1,5 +1,10 @@
 const parentService = require("../services/parentService");
 
+let handleCreateNewParentPatient = async (req, res) => {
+  let user = await parentService.createNewParentPatient(req.body);
+  return res.status(200).json(user);
+};
+
 let handleCreateParent = async (req, res) => {
   let parent = await parentService.createNewParent(req.body);
   return res.status(200).json({
@@ -64,6 +69,23 @@ let handleFindPatient = async (req, res) => {
   });
 };
 
+let handleLoginParent = async (req, res) => {
+  let email = req.body.email;
+  let password = req.body.password;
+  if (!email || !password) {
+    return res.status(500).json({
+      code: 1,
+      message: "Error",
+    });
+  }
+  let parentData = await parentService.loginParent(email, password);
+  return res.status(200).json({
+    code: parentData.code,
+    message: parentData.message,
+    parent: parentData.parent ? parentData.parent : {},
+  });
+};
+
 module.exports = {
   handleCreateParent: handleCreateParent,
   handleGetAllParents: handleGetAllParents,
@@ -71,4 +93,6 @@ module.exports = {
   handleDeleteParent: handleDeleteParent,
   handleGetParent: handleGetParent,
   handleFindPatient: handleFindPatient,
+  handleCreateNewParentPatient: handleCreateNewParentPatient,
+  handleLoginParent: handleLoginParent,
 };

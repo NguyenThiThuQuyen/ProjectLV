@@ -18,6 +18,14 @@ const createUser = async (body) => {
   return create.data;
 };
 
+const createParentPatient = async (body) => {
+  const create = await axios.post(
+    `http://localhost:8081/api/create-new-parent-patient`,
+    body
+  );
+  return create.data;
+};
+
 const editUser = async (body) => {
   const userEdit = await axios.put(`http://localhost:8081/api/edit-user`, body);
   return userEdit.data;
@@ -85,4 +93,5 @@ export {
   saveBulkScheduleDoctor,
   saveDetailDoctor,
   userMarkdown,
+  createParentPatient,
 };

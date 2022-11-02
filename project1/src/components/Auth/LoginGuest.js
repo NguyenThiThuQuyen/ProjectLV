@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
 import { AiOutlineGooglePlus } from "react-icons/ai";
 import bglogin from "../../assets/upload/bglogin.jpg";
-import { getLoginAPI, dataCheck } from "../../redux/Auth/adminRedux";
+import { getLoginGuestAPI, dataCheck } from "../../redux/Auth/guestRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const Login = () => {
+
+const LoginGuest = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigator = useNavigate();
   const check = useSelector(dataCheck);
 
-  const USER = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
+  const PARENT = localStorage.getItem("parent")
+    ? JSON.parse(localStorage.getItem("parent"))
     : false;
 
   const params = {
@@ -26,15 +27,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getLoginAPI(params));
+    dispatch(getLoginGuestAPI(params));
   };
 
   useEffect(() => {
-    if (USER && USER.roleId == "R1") {
-      navigator("/admin");
-    }
-    if (USER && USER.roleId == "R2") {
-      navigator("/admin/users-manager");
+    if (PARENT) {
+      navigator("/");
     }
   }, [check]);
 
@@ -52,7 +50,7 @@ const Login = () => {
             <div className="grid grid-cols-2">
               <div className="col-span-1">
                 <div className="font-HindMadurai text-3xl mt-14 font-bold text-center text-sky-700">
-                  ĐĂNG NHẬP ADMIN
+                  SIGN IN
                 </div>
                 <div className="flex w-full my-3">
                   <div className="flex mx-auto">
@@ -114,7 +112,7 @@ const Login = () => {
                         SIGN IN
                       </button>
                     </div>
-                    <Link to="/login-guest">
+                    <Link to="/login">
                       <div className="italic text-center text-sm hover:text-sky-700 hover:underline hover:underline-offset-2">
                         Đăng nhập với quyền khác
                       </div>
@@ -152,4 +150,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginGuest;

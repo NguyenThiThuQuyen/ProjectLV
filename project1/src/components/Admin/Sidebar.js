@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { RiBillLine } from "react-icons/ri";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
 import { GiMedicalPackAlt } from "react-icons/gi";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   AiOutlineSchedule,
   AiOutlineUserAdd,
@@ -14,8 +16,15 @@ import { BiUserCircle } from "react-icons/bi";
 import { FiSettings } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
+import { logout, dataCheckLogout } from "../../redux/Auth/adminRedux";
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     // sidebar
     <div className="flex-initial w-1/6 min-h-screen border-r-2 border-scale-700">
@@ -91,7 +100,9 @@ const Sidebar = () => {
           </li>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
             <IoIosLogOut className="mx-2 mt-1 text-xl text-teal-700" />
-            <span className="text-slate-800">Đăng xuất</span>
+            <span className="text-slate-800" onClick={() => handleLogout()}>
+              Đăng xuất
+            </span>
           </li>
         </ul>
       </div>

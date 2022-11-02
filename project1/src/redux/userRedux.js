@@ -9,6 +9,7 @@ import {
   getAllDoctorHome,
   saveDetailDoctor,
   userMarkdown,
+  createParentPatient,
 } from "./services/userService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -67,6 +68,14 @@ export const addUserAPI = createAsyncThunk("datten/Add", async (params) => {
   const addUser = await createUser(params);
   return addUser;
 });
+
+export const getCreateParentPatientAPI = createAsyncThunk(
+  "datten/GetParentPatient",
+  async (params) => {
+    const getParentPatient = await createParentPatient(params);
+    return getParentPatient;
+  }
+);
 
 export const deleteUserAPI = createAsyncThunk(
   "datten/Delete",
@@ -134,6 +143,15 @@ export const UserRedux = createSlice({
     });
 
     builder.addCase(addUserAPI.fulfilled, (state, action) => {
+      state.check = true;
+      if (action.payload.code == "0") {
+        toast.success(action.payload.message);
+      } else {
+        toast.error(action.payload.message);
+      }
+    });
+
+    builder.addCase(getCreateParentPatientAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code == "0") {
         toast.success(action.payload.message);

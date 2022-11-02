@@ -22,6 +22,59 @@ let getAllParents = () => {
   });
 };
 
+let loginParent = (email, password) => {
+  console.log("email", email);
+  console.log("password", password);
+  return new Promise(async (resolve, reject) => {
+    try {
+      let parentData = {};
+      let isExist = await checkParentEmail(email);
+      if (isExist) {
+        let parent = await db.Parent.findOne({
+          attributes: ["email", "password", "name", "gender", "phone", "id"],
+          where: { email: email },
+          include: [
+            {
+              model: db.Patient,
+              as: "parentDataToPatient",
+              attributes: [
+                "id",
+                "childrentName",
+                "gender",
+                "birthday",
+                "address",
+              ],
+            },
+          ],
+          // raw: true,
+        });
+        if (parent) {
+          //compare password
+          // let check = true;
+          if (password == parent.password) {
+            parentData.code = 0;
+            (parentData.message = "Ok"), delete parent.password;
+            parentData.parent = parent;
+          } else {
+            parentData.code = 3;
+            parentData.message = "Sai mật khẩu !";
+          }
+        } else {
+          parentData.code = 2;
+          parentData.message = `Không tìm người dùng !`;
+        }
+      } else {
+        //return error
+        parentData.code = 1;
+        parentData.message = `Tài khoản không tồn tại !`;
+      }
+      resolve(parentData);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 let checkParentEmail = (parentEmail) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -33,6 +86,53 @@ let checkParentEmail = (parentEmail) => {
       } else {
         resolve(false);
       }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let createNewParentPatient = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await checkParentEmail(data.email);
+      if (data.email === "") {
+        resolve({
+          code: 2,
+          message: "Vui lòng nhập email !",
+        });
+      } else {
+        if (check === true) {
+          resolve({
+            code: 1,
+            message: "Email đã tồn tại, vui lòng nhập lại!",
+          });
+        } else {
+          let parent = await db.Parent.create({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            phone: data.phone,
+            gender: data.genderparent,
+          });
+
+          let patient = await db.Patient.create({
+            childrentName: data.childrentName,
+            gender: data.genderpatient,
+            birthday: data.birthday,
+            address: data.address,
+            image: data.image,
+            parentId: parent.id,
+          });
+          if (patient) {
+            resolve(patient);
+          }
+        }
+      }
+      resolve({
+        code: 0,
+        message: "Tạo thành công !",
+      });
     } catch (e) {
       reject(e);
     }
@@ -241,4 +341,6 @@ module.exports = {
   deleteParent: deleteParent,
   getParent: getParent,
   findPatient: findPatient,
+  createNewParentPatient: createNewParentPatient,
+  loginParent: loginParent,
 };

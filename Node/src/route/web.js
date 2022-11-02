@@ -22,7 +22,13 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // dang nhap bac si, admin
   router.post("/api/login", userController.handleLogin);
+
+  // dang nhap benh nhan
+  router.post("/api/login-parent", parentController.handleLoginParent);
+
   router.get("/api/allcode", userController.getAllCode);
 
   // homepage
@@ -63,6 +69,9 @@ let initWebRoutes = (app) => {
   // tìm id lịch tư vấn theo ngày, khung giờ, bác sĩ
   router.post("/api/find-id-schedule", scheduleController.handleFindIdSchedule);
 
+  // dem so luong lich da dang ky
+  // router.get("/api/count-schedule", scheduleController.handleCountSchedule);
+
   // user
   router.get("/api/get-user", userController.handleGetUser);
   router.post("/api/get-user-markdown", userController.handleGetUserMarkdown);
@@ -86,6 +95,10 @@ let initWebRoutes = (app) => {
   router.delete("/api/delete-patient", patientController.handleDeletePatient);
 
   // phu huynh
+  router.post(
+    "/api/create-new-parent-patient",
+    parentController.handleCreateNewParentPatient
+  );
   router.get("/api/get-all-parents", parentController.handleGetAllParents);
   router.get("/api/get-parent", parentController.handleGetParent);
   router.post("/api/create-new-parent", parentController.handleCreateParent);
@@ -131,6 +144,7 @@ let initWebRoutes = (app) => {
   );
 
   // khung gio
+  router.get("/api/get-timeslot", timeSlotController.handleGetATimeslot);
   router.get(
     "/api/get-all-timeslots",
     timeSlotController.handleGetAllTimeslots

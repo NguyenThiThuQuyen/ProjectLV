@@ -16,10 +16,7 @@ let createPhieudatcho = (data) => {
             timeslotId: data.timeslotId,
             registerDate: new Date(data.registerDate),
           },
-          // raw: false,
         });
-        // console.log("find 123:", find.id);
-        // resolve(find.id);
         if (find) {
           await db.ReservationTicket.create({
             bookingDate: data.bookingDate,

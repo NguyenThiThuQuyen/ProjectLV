@@ -59,7 +59,7 @@ export default function PhieudatchoModal() {
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
   const dataIdSchedule = useSelector(dataFindIdSchedule);
-  console.log("dataIdSchedule", dataIdSchedule);
+  // console.log("dataIdSchedule", dataIdSchedule);
 
   const dispatch = useDispatch();
   const dataPatient = useSelector(dataGetAllPatient);
@@ -100,7 +100,6 @@ export default function PhieudatchoModal() {
     setMang([]);
     setShowModal(false);
   };
-  console.log("kq params: ", params);
 
   const handleSave = () => {
     dispatch(createPhieudatchoAPI(params));
@@ -120,16 +119,17 @@ export default function PhieudatchoModal() {
     dispatch(getFindTimeslotAPI(params));
     setRegisterDate(item);
   };
-  const handleSearchIdSchedule = () => {
-    const params = {
-      userId: doctorId,
-      timeslotId: timeslotId,
-      registerDate: registerDate,
-    };
-    console.log("params id schedule: ", params);
 
-    dispatch(getFindIdScheduleAPI(params));
-  };
+  // const handleSearchIdSchedule = () => {
+  //   const params = {
+  //     userId: doctorId,
+  //     timeslotId: timeslotId,
+  //     registerDate: registerDate,
+  //   };
+  //   console.log("params id schedule: ", params);
+
+  //   dispatch(getFindIdScheduleAPI(params));
+  // };
 
   const date =
     bookingDate.getDate() +
@@ -335,7 +335,6 @@ export default function PhieudatchoModal() {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    // onClick={() => setShowModal(false)}
                     onClick={() => handleClose(false)}
                   >
                     Close

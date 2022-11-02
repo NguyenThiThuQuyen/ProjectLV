@@ -31,9 +31,27 @@ let handleDeleteTimeslot = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleGetATimeslot = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      timeslots: [],
+    });
+  }
+  let timeslot = await timeslotService.getATimeslot(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    timeslot,
+  });
+};
+
 module.exports = {
   handleGetAllTimeslots: handleGetAllTimeslots,
   handleCreateTimeslot: handleCreateTimeslot,
   handleEditTimeslot: handleEditTimeslot,
   handleDeleteTimeslot: handleDeleteTimeslot,
+  handleGetATimeslot: handleGetATimeslot,
 };

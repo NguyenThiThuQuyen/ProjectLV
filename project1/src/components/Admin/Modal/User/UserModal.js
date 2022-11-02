@@ -55,7 +55,6 @@ export default function UserModal() {
 
   const handleSave = () => {
     dispatch(addUserAPI(params));
-
     setShowModal(false);
   };
 

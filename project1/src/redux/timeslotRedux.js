@@ -6,12 +6,21 @@ import {
   createTimeslot,
   editTimeslot,
   deleteTimeslot,
+  getATimeslot,
 } from "./services/timeslotService";
 export const getAllTimeslotAPI = createAsyncThunk(
   "khunggio/GetAll",
   async () => {
     const getkhunggio = await getAllTimeslot();
     return getkhunggio;
+  }
+);
+
+export const getATimeslotAPI = createAsyncThunk(
+  "khunggio/GetA",
+  async (params) => {
+    const getauser = await getATimeslot(params);
+    return getauser;
   }
 );
 
@@ -43,12 +52,17 @@ export const TimeslotRedux = createSlice({
   name: "khunggio",
   initialState: {
     allTimeslot: {},
+    aTimeslot: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllTimeslotAPI.fulfilled, (state, action) => {
       state.allTimeslot = action.payload;
+      state.check = false;
+    });
+    builder.addCase(getATimeslotAPI.fulfilled, (state, action) => {
+      state.aTimeslot = action.payload;
       state.check = false;
     });
     builder.addCase(createTimeslotAPI.fulfilled, (state, action) => {
@@ -80,5 +94,6 @@ export const TimeslotRedux = createSlice({
 });
 
 export const datagetAllTimeslot = (state) => state.khunggio.allTimeslot;
+export const dataGetATimeslot = (state) => state.khunggio.aTimeslot;
 export const dataCheck = (state) => state.khunggio.check;
 export default TimeslotRedux.reducer;

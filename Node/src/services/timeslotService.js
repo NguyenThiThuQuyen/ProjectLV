@@ -82,9 +82,26 @@ let getAllTimeslots = () => {
   });
 };
 
+let getATimeslot = (timeslotId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let timeslot = "";
+      if (timeslotId && timeslotId !== "ALL") {
+        timeslot = await db.TimeSlot.findOne({
+          where: { id: timeslotId },
+        });
+      }
+      resolve(timeslot);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   deleteMedical: deleteMedical,
   updateTimeslot: updateTimeslot,
   createNewTimeslot: createNewTimeslot,
   getAllTimeslots: getAllTimeslots,
+  getATimeslot: getATimeslot,
 };

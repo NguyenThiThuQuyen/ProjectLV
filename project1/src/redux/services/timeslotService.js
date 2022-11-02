@@ -30,4 +30,17 @@ const deleteTimeslot = async (id) => {
   return response.data;
 };
 
-export { getAllTimeslot, createTimeslot, editTimeslot, deleteTimeslot };
+const getATimeslot = async (id) => {
+  const timeslot = await axios.get(
+    `http://localhost:8081/api/get-timeslot?id=${id}`
+  );
+  return timeslot.data;
+};
+
+export {
+  getAllTimeslot,
+  createTimeslot,
+  editTimeslot,
+  deleteTimeslot,
+  getATimeslot,
+};

@@ -5,7 +5,6 @@ import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
-import PhieudatchoModal from "../components/Guest/PhieudatchoModal";
 import {
   getAllMedicalPackageHomeAllAPI,
   dataGetAllGoiKhamHomeAll,
