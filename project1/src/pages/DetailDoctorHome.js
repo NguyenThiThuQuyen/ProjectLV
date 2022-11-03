@@ -62,7 +62,9 @@ const DetailDoctorHome = (props) => {
   const doctorId = userId?.userId;
 
   const parent = JSON.parse(localStorage.getItem("parent"));
-  const patientId1 = parent?.parentDataToPatient;
+  console.log("parent:", parent);
+  const patientId1 = parent?.parentDataToPatient[0];
+  console.log("-----------patientId1:", patientId1);
 
   const params = {
     doctorId: doctorId,
@@ -75,7 +77,19 @@ const DetailDoctorHome = (props) => {
     arrivalDate: registerDate,
     newCreateParentId: newCreateParentId,
     scheduleId: scheduleId,
+    email: parent?.email,
+    name: parent?.name,
+    phone: parent?.phone,
+    childrentName: patientId1?.childrentName,
+    birthday: patientId1?.birthday,
+    gender: patientId1?.gender,
+    address: patientId1?.address,
+    testGoiKham: testGoiKham,
+    testTimeslot: testTimeslot,
+    testGiaGoiKham: testGiaGoiKham,
   };
+
+  console.log("params:", params);
 
   const check = useSelector(dataCheck);
   const user = useSelector(dataGetAUser);
@@ -100,6 +114,10 @@ const DetailDoctorHome = (props) => {
           mang.push(item?.registerDate);
         }
       });
+    const params = {
+      registerDate: mang[0],
+    };
+    dispatch(getFindTimeslotAPI(params));
   }, [dataFindSchedule]);
 
   const checkTest = useSelector(dataCheck);

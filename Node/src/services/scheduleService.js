@@ -222,7 +222,6 @@ let getSchedule = (scheduleId) => {
 
 let findIdSchedule = (data) => {
   return new Promise(async (resolve, reject) => {
-    // let regisDate = new Date(data.regisDate);
     var today = new Date(data.registerDate);
     var date =
       today.getFullYear() +
@@ -254,6 +253,23 @@ let findIdSchedule = (data) => {
   });
 };
 
+let getCountSchedule = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.ReservationTicket.count({
+        where: { scheduleId: id },
+        raw: false,
+      });
+      resolve({
+        code: 0,
+        data: count,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewSchedule: createNewSchedule,
   finDoctor: finDoctor,
@@ -264,4 +280,5 @@ module.exports = {
   findLichTVTheoBacSi: findLichTVTheoBacSi,
   findTimeslot: findTimeslot,
   findIdSchedule: findIdSchedule,
+  getCountSchedule: getCountSchedule,
 };

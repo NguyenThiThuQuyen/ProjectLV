@@ -10,7 +10,7 @@ let handleGetAllPhieudatcho = async (req, res) => {
 };
 
 let handleCreatePhieudatcho = async (req, res) => {
-  console.log("req.body: " + req.body);
+  console.log("req.body: ", req.body);
   let phieudatcho = await phieudatchoService.createPhieudatcho(req.body);
   return res.status(200).json(phieudatcho);
 };
@@ -49,10 +49,17 @@ let handleGetPhieudatcho = async (req, res) => {
   });
 };
 
+let handleEmail = async (req, res) => {
+  let data = req.body;
+  let message = await phieudatchoService.findEmail(data);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleCreatePhieudatcho: handleCreatePhieudatcho,
   handleEditPhieudatcho: handleEditPhieudatcho,
   handleGetAllPhieudatcho: handleGetAllPhieudatcho,
   handleGetPhieudatcho: handleGetPhieudatcho,
   handleDeletePhieudatcho: handleDeletePhieudatcho,
+  handleEmail: handleEmail,
 };

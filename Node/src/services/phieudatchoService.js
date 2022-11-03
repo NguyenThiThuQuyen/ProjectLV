@@ -1,10 +1,17 @@
 const db = require("../models/index");
+require("dotenv").config();
+const emailService = require("./emailService");
 
 let createPhieudatcho = (data) => {
-  console.log("data: " + data);
+  console.log("data: ", data);
   return new Promise(async (resolve, reject) => {
     try {
-      if (!data.userId || !data.timeslotId || !data.registerDate) {
+      if (
+        !data.userId ||
+        !data.timeslotId ||
+        !data.registerDate ||
+        !data.email
+      ) {
         resolve({
           errCode: 2,
           errMessage: "Missing required parameters",
@@ -27,9 +34,25 @@ let createPhieudatcho = (data) => {
             patientId: data.patientId,
             doctorId: data.doctorId,
           });
+
+          let findemail = await emailService.sendSimpleEmail({
+            reciverEmail: data.email,
+            name: data.name,
+            phone: data.phone,
+
+            childrentName: data.childrentName,
+            birthday: data.birthday,
+            gender: data.gender,
+
+            testGoiKham: data.testGoiKham,
+            testTimeslot: data.testTimeslot,
+            testGiaGoiKham: data.testGiaGoiKham,
+            arrivalDate: data.arrivalDate,
+          });
           resolve({
             code: 0,
             message: "Tạo phiếu đặt thành công!",
+            data: findemail,
           });
         }
       }

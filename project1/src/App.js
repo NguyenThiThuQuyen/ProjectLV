@@ -4,22 +4,30 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Guest from "./routes/guest";
 import Admin from "./routes/admin";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 // import {  } from "react-router-dom";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log("user: " + user);
+  console.log("user: " + user);
+
   const navigator = useNavigate();
 
   return (
     <>
       <Routes>
         <Route path="/*" element={<Guest />} index />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        {user !== null ? (
+          <>
+            <Route path="/admin/*" element={<Admin />} index />
+          </>
+        ) : (
+          // <>{(window.location.href = "/")}</>
+          <Route path="/login" element={<Login />} />
+        )}
 
-        <Route path="/admin/*" element={<Admin />} index />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );

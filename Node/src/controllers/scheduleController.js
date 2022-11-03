@@ -91,6 +91,23 @@ let handleFindIdSchedule = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleCountSchedule = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      countSchedules: [],
+    });
+  }
+  let countSchedule = await scheduleService.getCountSchedule(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    countSchedule,
+  });
+};
+
 module.exports = {
   handleCreateSchedule: handleCreateSchedule,
   handleFindDoctor: handleFindDoctor,
@@ -101,5 +118,5 @@ module.exports = {
   handleFindSchedule: handleFindSchedule,
   handleFindTimeslot: handleFindTimeslot,
   handleFindIdSchedule: handleFindIdSchedule,
-  // handleCountSchedule: handleCountSchedule,
+  handleCountSchedule: handleCountSchedule,
 };

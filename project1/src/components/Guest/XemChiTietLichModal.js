@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPhieudatchoAPI } from "../../redux/phieudatchoRedux";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
-
 export default function XemChiTietLichModal(props) {
   // console.log("props params 111:", props);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export default function XemChiTietLichModal(props) {
     props.hanldeCloseThongTin(false);
   };
 
-  const handleXacNhanThongTin = () => {
+  const handleXacNhanThongTin = async () => {
     if (
       !props?.params2?.testPhone ||
       !props?.params2?.testGoiKham ||
@@ -29,11 +29,16 @@ export default function XemChiTietLichModal(props) {
       setShowModal(true);
       alert("Vui lòng nhập đầy đủ thông tin !");
     } else {
-      dispatch(createPhieudatchoAPI(props.params));
+      let taothanhcong = await dispatch(createPhieudatchoAPI(props.params));
+      console.log("taothanhcong:", taothanhcong);
+      if (taothanhcong.payload.code == "0") {
+        setTimeout(function () {
+          window.location.reload(1);
+        }, 4000);
+      }
       setShowModal(false);
       props.hanldeCloseThongTin(false);
     }
-    // navigate(`/all-doctor`);
   };
 
   return (

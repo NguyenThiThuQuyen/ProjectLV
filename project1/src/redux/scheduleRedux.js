@@ -9,6 +9,7 @@ import {
   getFindScheduleToDoctor,
   getFindTimeslot,
   getFindIdSchedule,
+  getCountSchedule,
 } from "./services/scheduleService";
 import { toast } from "react-toastify";
 export const getAllSchedulesAPI = createAsyncThunk(
@@ -24,6 +25,14 @@ export const getAScheduleAPI = createAsyncThunk(
   async (params) => {
     const getltv = await getASchedule(params);
     return getltv;
+  }
+);
+
+export const getCountScheduleAPI = createAsyncThunk(
+  "lichtuvan/Getcount",
+  async (params) => {
+    const count = await getCountSchedule(params);
+    return count;
   }
 );
 
@@ -91,14 +100,20 @@ export const ScheduleRedux = createSlice({
     getSchedule: {},
     getDoctor: {},
     getFindSchedule: {},
-    getFindTimeslotToDate: {},
+    getFindTimeslotToDate: [],
     getFindIdScheduleToDetail: {},
+    countSchedule: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getAllSchedulesAPI.fulfilled, (state, action) => {
       state.getAllSchedule = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getCountScheduleAPI.fulfilled, (state, action) => {
+      state.countSchedule = action.payload;
       state.check = false;
     });
 
@@ -163,5 +178,6 @@ export const dataGetFindTimeslot = (state) =>
 export const dataFindIdSchedule = (state) =>
   state.lichtuvan.getFindIdScheduleToDetail;
 export const dataGetSchedule = (state) => state.lichtuvan.getSchedule;
+export const dataCountSchedule = (state) => state.lichtuvan.countSchedule;
 export const dataCheck = (state) => state.lichtuvan.check;
 export default ScheduleRedux.reducer;

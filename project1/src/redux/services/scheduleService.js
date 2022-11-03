@@ -12,6 +12,13 @@ const getASchedule = async (id) => {
   return response.data;
 };
 
+const getCountSchedule = async (id) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/count-schedule?id=${id}`
+  );
+  return response.data;
+};
+
 const getAllSchedule = async () => {
   const response = await axios.get(
     `http://localhost:8081/api/get-all-schedules`
@@ -76,4 +83,5 @@ export {
   getFindScheduleToDoctor,
   getFindTimeslot,
   getFindIdSchedule,
+  getCountSchedule,
 };

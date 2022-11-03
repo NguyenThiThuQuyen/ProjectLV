@@ -106,6 +106,13 @@ export default function TaoThongTinNguoiDungModal(props) {
     // console.log("data from 12345:", data2);
     setShowModalXemLai(data3);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getLoginGuestAPI(paramsparent));
+    setShowModal(false);
+  };
+
   return (
     <>
       {/* <div className="mt-10 w-full text-right">
@@ -201,16 +208,14 @@ export default function TaoThongTinNguoiDungModal(props) {
                       </div>
                       <form
                         className="xl:mx-24 md:mx-8 xs:mx-6"
-                        //   onSubmit={handleSubmit}
+                        onSubmit={handleSubmit}
                       >
                         <div className="grid grid-cols-1">
                           <div className="col-span-1 my-2">
                             <input
                               type="text"
                               placeholder="Email"
-                              // onChange={(event) =>
-                              //   setEmail(event.target.value)
-                              // }
+                              onChange={(event) => setEmail(event.target.value)}
                               className="border rounded-lg p-2 mt-1 w-full bg-slate-200"
                             />
                           </div>
@@ -222,9 +227,9 @@ export default function TaoThongTinNguoiDungModal(props) {
                               type="password"
                               placeholder="Password"
                               className="border rounded-lg p-2 mt-1 w-full bg-slate-200"
-                              // onChange={(event) =>
-                              //   setPassword(event.target.value)
-                              // }
+                              onChange={(event) =>
+                                setPassword(event.target.value)
+                              }
                             />
                           </div>
                         </div>

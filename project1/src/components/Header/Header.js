@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import { logout, dataCheckLogout } from "../../redux/Auth/adminRedux";
 import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
 // import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
+import { IoIosLogOut } from "react-icons/io";
 import "./Header.css";
 import logo from "../../assets/upload/logo.png";
 import { UserMenuClasses } from "react-admin";
@@ -64,12 +65,20 @@ function Header() {
               <li className="flex mx-8">TIN TỨC</li>
               <li className="flex ml-20 ">
                 {parent != null ? (
-                  <div className="link_style">
-                    <div
-                      className="underline underline-offset-8"
-                      onClick={() => handleLogout()}
-                    >
-                      Đăng xuất
+                  <div className="link_style flex">
+                    <div className="flex">
+                      <div className="">
+                        <img
+                          src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+                          alt=""
+                          //   avatar
+                          className="w-8 h-8 rounded-[50%]"
+                        />
+                      </div>
+                      <div className="mx-2">{parent?.name}</div>
+                    </div>
+                    <div className="ml-2 mt-1" onClick={() => handleLogout()}>
+                      <IoIosLogOut size={18} />
                     </div>
                   </div>
                 ) : (

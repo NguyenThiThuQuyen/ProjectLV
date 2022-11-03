@@ -38,15 +38,9 @@ const Sidebar = () => {
           </div>
         </span>
       </div>
-      {/* <hr className="h-0 border border-slate-300" /> */}
-      {/* center */}
+
       <div className="pl-2.5 mt-5">
         <ul className="list-none m-0 p-0">
-          {/* <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-            <MdOutlineDashboard className="mx-2 mt-1 text-xl text-teal-700" />
-            <span className="text-slate-800">Bảng điều khiển</span>
-          </li> */}
-
           <p className="text-sm font-bold text-slate-500 my-3.5">DANH SÁCH</p>
           <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
             <Link to="/admin/users-manager" className="flex">

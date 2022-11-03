@@ -33,7 +33,6 @@ function admin() {
           element={<GoiKhamSingle />}
         />
         <Route path="/medical-package-manager" element={<GoiKhamManager />} />
-        {/* <Route path="/package-price-manager" element={<GiaGoiKhamManager />} /> */}
         <Route path="/medical-type-manager" element={<LoaiThuocManager />} />
         <Route path="/medical-manager" element={<ThuocManager />} />
         <Route path="/parent-manager" element={<ParentManager />} />

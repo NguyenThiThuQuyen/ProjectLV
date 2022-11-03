@@ -34,6 +34,7 @@ let initWebRoutes = (app) => {
   // homepage
   // get doctor
   router.get("/api/all-doctor-home", doctorController.handleGetAllDoctorHome);
+
   // get medical package
   router.get(
     "/api/all-medicalpackage-home",
@@ -56,6 +57,7 @@ let initWebRoutes = (app) => {
   router.get("/api/find-patient", parentController.handleFindPatient);
   // tìm all bac si
   router.get("/api/get-doctor", scheduleController.handleFindDoctor);
+  router.post("/api/get-find-email", phieudatchoController.handleEmail);
   // tìm lịch theo báo sĩ
   router.get(
     "/api/find-schedule-to-doctor",
@@ -70,7 +72,7 @@ let initWebRoutes = (app) => {
   router.post("/api/find-id-schedule", scheduleController.handleFindIdSchedule);
 
   // dem so luong lich da dang ky
-  // router.get("/api/count-schedule", scheduleController.handleCountSchedule);
+  router.get("/api/count-schedule", scheduleController.handleCountSchedule);
 
   // user
   router.get("/api/get-user", userController.handleGetUser);

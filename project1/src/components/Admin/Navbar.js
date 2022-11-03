@@ -8,6 +8,9 @@ import { RiFullscreenExitLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log("user:", user);
+
   return (
     // navbar
     <div className="h-12 flex items-center text-base border-b-2 border-scale-700">
@@ -24,8 +27,7 @@ const Navbar = () => {
         </div> */}
         {/* items */}
         <div className="flex items-center">
-          {/* item */}
-          <div className="flex items-center mr-5 relative">
+          {/* <div className="flex items-center mr-5 relative">
             <MdOutlineDarkMode className="text-xl" />
           </div>
           <div className="flex items-center mr-5 relative">
@@ -39,8 +41,9 @@ const Navbar = () => {
           </div>
           <div className="flex items-center mr-5 relative">
             <AiOutlineUnorderedList className="text-xl" />
-          </div>
-          <div className="flex items-center mr-5 relative">
+          </div> */}
+
+          <div className="flex items-center mr-2 relative">
             <img
               src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
               alt=""
@@ -48,6 +51,7 @@ const Navbar = () => {
               className="w-8 h-8 rounded-[50%]"
             />
           </div>
+          <div className="">{user.name}</div>
         </div>
       </div>
     </div>
