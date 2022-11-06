@@ -12,19 +12,19 @@ const NavbarUser = () => {
         <div className="flex items-center ml-3">
           <ul className="flex">
             <li className="flex text-sm p-3 text-slate-600 font-medium cursor-pointer hover:bg-slate-300 hover:text-green-900">
-              <Link to="/admin/users-manager" className="flex">
+              <Link to="/manager/users-manager" className="flex">
                 <FaUsersCog className="mr-2 text-lg text-teal-700" />
                 Q.LÝ NHÂN VIÊN
               </Link>
             </li>
             <li className="flex text-sm p-3 text-slate-600 font-medium cursor-pointer hover:bg-slate-300 hover:text-green-900">
-              <Link to="/admin/patient-manager" className="flex">
+              <Link to="/manager/patient-manager" className="flex">
                 <FaUserFriends className="mr-2 text-lg text-teal-700" />
                 Q.LÝ BỆNH NHÂN
               </Link>
             </li>
             <li className="flex text-sm p-3 text-slate-600 font-medium cursor-pointer hover:bg-slate-300 hover:text-green-900">
-              <Link to="/admin/parent-manager" className="flex">
+              <Link to="/manager/parent-manager" className="flex">
                 <FaUserFriends className="mr-2 text-lg text-teal-700" />
                 Q.LÝ PHỤ HUYNH
               </Link>

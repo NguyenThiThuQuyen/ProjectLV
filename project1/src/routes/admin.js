@@ -4,7 +4,6 @@ import HomeAdmin from "../pages/Admin/HomeAdmin";
 import UserManager from "../pages/Admin/UserManager";
 import UserSingle from "../pages/Admin/UserSingle";
 import GoiKhamManager from "../pages/Admin/GoiKhamManager";
-// import GiaGoiKhamManager from "../pages/Admin/GiaGoiKhamManager";
 import ScheduleManager from "../pages/Admin/ScheduleManager";
 import ScheduleSingle from "../pages/Admin/ScheduleSingle";
 import LoaiThuocManager from "../pages/Admin/LoaiThuocManager";
@@ -17,6 +16,14 @@ import GoiKhamSingle from "../pages/Admin/GoiKhamSingle";
 import TimeslotManager from "../pages/Admin/TimeslotManager";
 import PhieudatchoManager from "../pages/Admin/PhieudatchoManager";
 import PatientModal from "../../src/components/Admin/Modal/Patient/PatientModal";
+import DishManager from "../pages/Admin/DishManager";
+import DishSingle from "../pages/Admin/DishSingle";
+import CategoryManager from "../pages/Admin/CategoryManager";
+
+import ConsultDoctor from "../pages/Doctor/ConsultDoctor";
+import ConsultAllDate from "../pages/Doctor/ConsultAllDate";
+import Prescription from "../pages/Doctor/Prescription";
+
 function admin() {
   return (
     <div>
@@ -49,6 +56,16 @@ function admin() {
           path="/reservation-ticket-manager"
           element={<PhieudatchoManager />}
         />
+
+        {/* mon an */}
+        <Route path="/dish-manager" element={<DishManager />} />
+        <Route path="/dish-manager/:dishId" element={<DishSingle />} />
+        <Route path="/category-manager" element={<CategoryManager />} />
+
+        {/* trang bac si */}
+        <Route path="/consult" element={<ConsultDoctor />} />
+        <Route path="/consult-alldate" element={<ConsultAllDate />} />
+        <Route path="/prescription/:id" element={<Prescription />} />
       </Routes>
     </div>
   );

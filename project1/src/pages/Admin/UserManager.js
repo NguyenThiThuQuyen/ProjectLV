@@ -34,7 +34,7 @@ const UserManager = () => {
   };
 
   const handleDetail = (userId) => {
-    navigate(`/admin/user-detail-manager/${userId}`);
+    navigate(`/manager/user-detail-manager/${userId}`);
     dispatch(getAUserAPI(userId));
   };
 

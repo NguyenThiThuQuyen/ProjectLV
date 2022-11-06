@@ -6,7 +6,7 @@ import bglogin from "../../assets/upload/bglogin.jpg";
 import { getLoginAPI, dataCheck } from "../../redux/Auth/adminRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState();
@@ -31,10 +31,10 @@ const Login = () => {
 
   useEffect(() => {
     if (USER && USER.roleId == "R1") {
-      navigator("/admin");
+      navigator("/manager");
     }
     if (USER && USER.roleId == "R2") {
-      navigator("/admin/users-manager");
+      navigator("/manager/users-manager");
     }
   }, [check]);
 

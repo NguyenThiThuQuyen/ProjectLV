@@ -55,6 +55,12 @@ let handleEmail = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleFindLichTheoNgay = async (req, res) => {
+  let data = req.body;
+  let message = await phieudatchoService.findLichTheoNgay(data);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleCreatePhieudatcho: handleCreatePhieudatcho,
   handleEditPhieudatcho: handleEditPhieudatcho,
@@ -62,4 +68,5 @@ module.exports = {
   handleGetPhieudatcho: handleGetPhieudatcho,
   handleDeletePhieudatcho: handleDeletePhieudatcho,
   handleEmail: handleEmail,
+  handleFindLichTheoNgay: handleFindLichTheoNgay,
 };

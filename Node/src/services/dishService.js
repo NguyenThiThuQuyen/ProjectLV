@@ -1,13 +1,42 @@
 const db = require("../models/index");
-// const argon2 = require("argon2");
 
 let getAllDishes = () => {
   return new Promise(async (resolve, reject) => {
     try {
       let dishes = {};
-      dishes = await db.Dish.findAll();
-
+      dishes = await db.Dish.findAll({
+        include: [
+          {
+            model: db.Category,
+            as: "categoryDataToDish",
+            attributes: ["name", "id"],
+          },
+        ],
+      });
       resolve(dishes);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getDish = (dishId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let dish = "";
+      if (dishId && dishId !== "ALL") {
+        dish = await db.Dish.findOne({
+          where: { id: dishId },
+          include: [
+            {
+              model: db.Category,
+              as: "categoryDataToDish",
+              attributes: ["name", "id"],
+            },
+          ],
+        });
+      }
+      resolve(dish);
     } catch (e) {
       reject(e);
     }
@@ -44,13 +73,14 @@ let createNewDish = (data) => {
       } else {
         await db.Dish.create({
           name: data.name,
-          formula: data.formula,
-          image: data.image,
+          contentHTML: data.contentHTML,
+          contentMarkdown: data.contentMarkdown,
+          categoryId: data.categoryId,
         });
       }
       resolve({
         code: 0,
-        message: "success",
+        message: "Tạo thành công !",
       });
     } catch (e) {
       reject(e);
@@ -73,17 +103,19 @@ let updateDishData = (data) => {
         });
         if (dish) {
           dish.name = data.name;
-          dish.formula = data.formula;
-          dish.image = data.image;
+          dish.contentHTML = data.contentHTML;
+          dish.contentMarkdown = data.contentMarkdown;
+          dish.categoryId = data.categoryId;
+
           await dish.save();
           resolve({
             code: 0,
-            message: "Update the dish succeeds!",
+            message: "Cập nhật món ăn thành công!",
           });
         } else {
           resolve({
             code: 1,
-            message: `User not found!`,
+            message: `Không tìm thấy!`,
           });
         }
       }
@@ -101,7 +133,7 @@ let deleteDish = (id) => {
     if (!found) {
       resolve({
         code: 2,
-        message: `The user isn't exist`,
+        message: `Món ăn không tồn tại !`,
       });
     }
     await db.Dish.destroy({
@@ -109,8 +141,25 @@ let deleteDish = (id) => {
     });
     resolve({
       code: 0,
-      message: `The user is deleted`,
+      message: `Xóa thành công !`,
     });
+  });
+};
+
+let findDishToCate = (cateId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let findDish = await db.Dish.findAll({
+        where: { categoryId: cateId },
+        attributes: ["name", "id"],
+      });
+      resolve({
+        code: 0,
+        data: findDish,
+      });
+    } catch (e) {
+      reject(e);
+    }
   });
 };
 
@@ -119,4 +168,6 @@ module.exports = {
   createNewDish: createNewDish,
   deleteDish: deleteDish,
   updateDishData: updateDishData,
+  getDish: getDish,
+  findDishToCate: findDishToCate,
 };

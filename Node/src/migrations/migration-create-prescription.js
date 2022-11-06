@@ -11,7 +11,10 @@ module.exports = {
       dateCreate: {
         type: Sequelize.DATE,
       },
-      note: {
+      loidan: {
+        type: Sequelize.STRING,
+      },
+      menuId: {
         type: Sequelize.STRING,
       },
       reservationTicketId: {

@@ -128,29 +128,6 @@ let updateGoiKham = (data) => {
           await goiKham.save();
         }
 
-        // if (goiKham) {
-        //   let check = await checkNamePackage(data.packageName);
-        //   if (check === true) {
-        //     resolve({
-        //       code: 1,
-        //       message: `Tên đã tồn tại, vui lòng nhập lại!`,
-        //     });
-        //   } else {
-        //     goiKham.packageName = data.packageName;
-        //     goiKham.packageDecs = data.packageDecs;
-        //     goiKham.detailDecs = data.detailDecs;
-        //     goiKham.image = data.image;
-        //     goiKham.contentHTML = data.contentHTML;
-        //     goiKham.contentMarkdown = data.contentMarkdown;
-        //     await goiKham.save();
-        //   }
-        // } else {
-        //   resolve({
-        //     code: 1,
-        //     message: `Không tìm thấy gói khám!`,
-        //   });
-        // }
-
         if (giagoikham) {
           giagoikham.price = data.price;
           giagoikham.applydateId = data.applydateId;

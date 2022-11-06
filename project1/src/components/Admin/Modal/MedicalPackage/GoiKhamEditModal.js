@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { getBase64 } from "../../../../utils/CommonUtils";
-import { BsPlusLg } from "react-icons/bs";
 import { ImUpload3 } from "react-icons/im";
 import { editGoiKhamAPI } from "../../../../redux/goiKhamRedux";
 import { useDispatch, useSelector } from "react-redux";
@@ -206,7 +205,7 @@ export default function GoiKhamModalEdit(props) {
                     Close
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => handleSave()}
                   >

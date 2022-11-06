@@ -33,7 +33,7 @@ const ScheduleManager = () => {
   };
 
   const handleDetail = (scheduleId) => {
-    navigate(`/admin/schedule-detail/${scheduleId}`);
+    navigate(`/manager/schedule-detail/${scheduleId}`);
     dispatch(getAScheduleAPI(scheduleId));
   };
 

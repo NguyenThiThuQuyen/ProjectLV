@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("user: " + user);
+  // console.log("user: " + user);
 
   const navigator = useNavigate();
 
@@ -18,14 +18,16 @@ function App() {
     <>
       <Routes>
         <Route path="/*" element={<Guest />} index />
-        {user !== null ? (
+        {/* {user !== null ? (
           <>
-            <Route path="/admin/*" element={<Admin />} index />
+            <Route path="/manager/*" element={<Admin />} index />
           </>
         ) : (
-          // <>{(window.location.href = "/")}</>
           <Route path="/login" element={<Login />} />
-        )}
+        )} */}
+        <Route path="/manager/*" element={<Admin />} index />
+
+        <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
       </Routes>

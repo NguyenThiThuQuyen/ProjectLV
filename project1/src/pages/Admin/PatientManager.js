@@ -31,7 +31,7 @@ const PatientManager = () => {
   const navigate = useNavigate();
 
   const handleDetail = (patientId) => {
-    navigate(`/admin/patient-detail-manager/${patientId}`);
+    navigate(`/manager/patient-detail-manager/${patientId}`);
     dispatch(getPatientAPI(patientId));
   };
 

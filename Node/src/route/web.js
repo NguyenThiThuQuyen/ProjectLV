@@ -15,6 +15,9 @@ const doctorController = require("../controllers/doctorController");
 const timeSlotController = require("../controllers/timeSlotController");
 const scheduleController = require("../controllers/scheduleController");
 const phieudatchoController = require("../controllers/phieudatchoController");
+const menuController = require("../controllers/menuController");
+const eatdateController = require("../controllers/eatdateController");
+const categoryController = require("../controllers/categoryController");
 
 const { Router } = require("express");
 
@@ -53,7 +56,34 @@ let initWebRoutes = (app) => {
     doctorController.getScheduleByDate
   );
 
+  // danh muc mon an
+  router.get(
+    "/api/get-all-categories",
+    categoryController.handleGetAllCategories
+  );
+
+  // menu
+  // router.get("/api/get-a-menu", menuController.handleGetAMenu);
+  // router.get("/api/get-all-menus", menuController.handleGetAllMenus);
+  router.post(
+    "/api/create-new-menu-eatdetail",
+    menuController.handleCreateNewMenuEatDetail
+  );
+  router.put("/api/edit-menu", menuController.handleEditMenu);
+  // router.delete("/api/delete-menu", menuController.handleDeleteMenu);
+
+  // ngày ăn
+  router.get("/api/get-all-eatdates", eatdateController.handleGetAllEatDates);
+
   // tìm
+  router.post(
+    "/api/find-lich-theo-ngay",
+    phieudatchoController.handleFindLichTheoNgay
+  );
+
+  // tìm món ăn theo danh mục
+  router.get("/api/find-dish-to-cate", dishController.handleFindDishToCate);
+
   router.get("/api/find-patient", parentController.handleFindPatient);
   // tìm all bac si
   router.get("/api/get-doctor", scheduleController.handleFindDoctor);
@@ -216,6 +246,7 @@ let initWebRoutes = (app) => {
 
   //mon an
   router.get("/api/get-all-dishes", dishController.handleGetAllDishes);
+  router.get("/api/get-dish", dishController.handleGetDish);
   router.post("/api/create-new-dish", dishController.handleCreateDish);
   router.put("/api/edit-dish", dishController.handleEditDish);
   router.delete("/api/delete-dish", dishController.handleDeleteDish);

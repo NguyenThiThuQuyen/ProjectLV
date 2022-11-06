@@ -1,3 +1,4 @@
+const { cloneDeep } = require("lodash");
 const db = require("../models/index");
 require("dotenv").config();
 const emailService = require("./emailService");
@@ -231,10 +232,98 @@ let deletePhieudatcho = (phieudatchoId) => {
   });
 };
 
+let findLichTheoNgay = (data) => {
+  console.log("data:", data);
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (data.DateChon === "") {
+        let today = new Date();
+
+        let date =
+          today.getFullYear() +
+          "-" +
+          (today.getMonth() + 1) +
+          "-" +
+          today.getDate();
+        console.log("date:", date);
+        let test = new Date(date).getTime();
+        console.log("test:", test);
+
+        let findday = await db.ReservationTicket.findAll({
+          where: { doctorId: data.doctorId, arrivalDate: test },
+          include: [
+            {
+              model: db.MedicalPackage,
+              as: "goituvanDataToPhieudatcho",
+              attributes: ["packageName", "id"],
+            },
+            {
+              model: db.Patient,
+              as: "patientDataToPhieudatcho",
+              attributes: ["childrentName", "gender", "birthday", "id"],
+            },
+            {
+              model: db.Schedule,
+              as: "scheduleDataToPhieudatcho",
+              attributes: ["timeslotId", "id"],
+              include: [
+                {
+                  model: db.TimeSlot,
+                  as: "timeSlotDataToSchedule",
+                  attributes: ["timeslot", "id"],
+                },
+              ],
+            },
+          ],
+        });
+        resolve({
+          code: 0,
+          data: findday,
+        });
+      } else {
+        let findday = await db.ReservationTicket.findAll({
+          where: { doctorId: data.doctorId },
+          include: [
+            {
+              model: db.MedicalPackage,
+              as: "goituvanDataToPhieudatcho",
+              attributes: ["packageName", "id"],
+            },
+            {
+              model: db.Patient,
+              as: "patientDataToPhieudatcho",
+              attributes: ["childrentName", "gender", "birthday", "id"],
+            },
+            {
+              model: db.Schedule,
+              as: "scheduleDataToPhieudatcho",
+              attributes: ["timeslotId", "id"],
+              include: [
+                {
+                  model: db.TimeSlot,
+                  as: "timeSlotDataToSchedule",
+                  attributes: ["timeslot", "id"],
+                },
+              ],
+            },
+          ],
+        });
+        resolve({
+          code: 0,
+          data: findday,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createPhieudatcho: createPhieudatcho,
   updatePhieudatcho: updatePhieudatcho,
   getAllPhieudatcho: getAllPhieudatcho,
   getPhieudatcho: getPhieudatcho,
   deletePhieudatcho: deletePhieudatcho,
+  findLichTheoNgay: findLichTheoNgay,
 };

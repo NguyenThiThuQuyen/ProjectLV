@@ -38,10 +38,21 @@ const deletePhieudatcho = async (id) => {
   return phieudatchoDelete.data;
 };
 
+const timPhieuTheoNgay = async (body) => {
+  // console.log("object,", body);
+  const timphieu = await axios.post(
+    `http://localhost:8081/api/find-lich-theo-ngay`,
+    body
+  );
+  console.log("timphieu:", timphieu);
+  return timphieu.data;
+};
+
 export {
   getAllPhieudatcho,
   createPhieudatcho,
   editPhieudatcho,
   deletePhieudatcho,
   getPhieudatcho,
+  timPhieuTheoNgay,
 };

@@ -36,7 +36,7 @@ const ParentManager = () => {
   };
 
   const handleDetail = (parentId) => {
-    navigate(`/admin/parent-detail/${parentId}`);
+    navigate(`/manager/parent-detail/${parentId}`);
     dispatch(getAParentAPI(parentId));
   };
 

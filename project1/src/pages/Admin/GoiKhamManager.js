@@ -33,7 +33,7 @@ const GoiKhamManager = () => {
   };
 
   const handleDetail = (medicalpackageId) => {
-    navigate(`/admin/medical-package-detail/${medicalpackageId}`);
+    navigate(`/manager/medical-package-detail/${medicalpackageId}`);
     dispatch(getGoiKhamAPI(medicalpackageId));
   };
 

@@ -62,9 +62,9 @@ const DetailDoctorHome = (props) => {
   const doctorId = userId?.userId;
 
   const parent = JSON.parse(localStorage.getItem("parent"));
-  console.log("parent:", parent);
+  // console.log("parent:", parent);
   const patientId1 = parent?.parentDataToPatient[0];
-  console.log("-----------patientId1:", patientId1);
+  // console.log("-----------patientId1:", patientId1);
 
   const params = {
     doctorId: doctorId,
@@ -89,8 +89,6 @@ const DetailDoctorHome = (props) => {
     testGiaGoiKham: testGiaGoiKham,
   };
 
-  console.log("params:", params);
-
   const check = useSelector(dataCheck);
   const user = useSelector(dataGetAUser);
   const dataAllGoiKham = useSelector(dataGetAllGoiKham);
@@ -105,12 +103,22 @@ const DetailDoctorHome = (props) => {
     dispatch(getLoginGuestAPI(parent?.parentDataToPatient?.id));
   }, [check]);
 
+  const today = new Date();
+
+  let date2 =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  let day2 = new Date(date2).getTime();
+
+  // console.log("day2: ", day2);
+
   useEffect(() => {
     dataFindSchedule?.schedule?.data &&
       dataFindSchedule?.schedule?.data?.length > 0 &&
       dataFindSchedule?.schedule?.data?.map((item, index) => {
         const kt = XoaTrungTrongMang(item?.registerDate);
-        if (kt) {
+        let temp = new Date(item?.registerDate).getTime();
+        console.log("temp: ", temp);
+        if (kt && day2 < temp) {
           mang.push(item?.registerDate);
         }
       });
@@ -193,7 +201,6 @@ const DetailDoctorHome = (props) => {
     testTenPhuHuynh: parent?.name,
     testEmail: parent?.email,
     testPhone: parent?.phone,
-    // testTenTre: parent?.patientId?.childrentName,
     testGoiKham: testGoiKham,
     testTimeslot: testTimeslot,
     testGiaGoiKham: testGiaGoiKham,
@@ -287,15 +294,34 @@ const DetailDoctorHome = (props) => {
                   {dataFindTimeslot?.data &&
                     dataFindTimeslot?.data.length > 0 &&
                     dataFindTimeslot?.data.map((item, index) => {
+                      // console.log("item: ", item);
+
                       return (
-                        <div
-                          key={index}
-                          value={item.timeslotId}
-                          onClick={() => handleGetIdTimeslot(item.timeslotId)}
-                          className="border p-2 bg-sky-200 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
-                        >
-                          {item?.timeSlotDataToSchedule?.timeslot}
-                        </div>
+                        <>
+                          {item?.soluongdangky >= 1 ? (
+                            <>
+                              <div
+                                key={index}
+                                value={item.timeslotId}
+                                title="Đã hết chỗ"
+                                className="border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                              >
+                                {item?.timeSlotDataToSchedule?.timeslot}
+                              </div>
+                            </>
+                          ) : (
+                            <div
+                              key={index}
+                              value={item.timeslotId}
+                              onClick={() =>
+                                handleGetIdTimeslot(item.timeslotId)
+                              }
+                              className="border p-2 bg-sky-200 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                            >
+                              {item?.timeSlotDataToSchedule?.timeslot}
+                            </div>
+                          )}
+                        </>
                       );
                     })}
                 </div>

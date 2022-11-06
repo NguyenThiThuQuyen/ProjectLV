@@ -107,6 +107,7 @@ export default function PhieudatchoModal() {
   };
 
   const handleFindSchedule = (id) => {
+    console.log("id", id);
     setMang([]);
     dispatch(getFindScheduleToDoctorAPI(id));
     setDoctorId(id);
@@ -203,14 +204,7 @@ export default function PhieudatchoModal() {
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên bệnh nhân
                           </label>
-                          {/* <Select
-                            className="w-full h-10 mt-1"
-                            id=""
-                            onChange={(event) =>
-                              setPatientId(event.target.value)
-                            }
-                            options={unique}
-                          /> */}
+
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
@@ -252,10 +246,7 @@ export default function PhieudatchoModal() {
                           </select>
                         </div>
                       </div>
-                      <div
-                        className="grid row-span-1 grid-cols-3"
-                        // onChange={(event) => setScheduleId(event.target.value)}
-                      >
+                      <div className="grid row-span-1 grid-cols-3">
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Bác sĩ tư vấn
@@ -263,10 +254,6 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            // value={doctorId}
-                            // onChange={(event) =>
-                            //   setDoctorId(event.target.value)
-                            // }
                             onClick={(e) => handleFindSchedule(e.target.value)}
                           >
                             {dataDoctor.doctor.data &&
@@ -287,9 +274,6 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            // onChange={(event) =>
-                            //   setRegisterDate(event.target.value)
-                            // }
                             onClick={(e) => handleFindTimeslot(e.target.value)}
                           >
                             {mang &&
@@ -340,7 +324,7 @@ export default function PhieudatchoModal() {
                     Close
                   </button>
                   <button
-                    className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => handleSave()}
                   >

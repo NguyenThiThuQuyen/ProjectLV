@@ -25,8 +25,6 @@ const PhieudatchoManager = () => {
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
-  console.log("check", check);
-
   useEffect(() => {
     dispatch(getAllPhieudatchoAPI());
   }, [check]);
@@ -36,7 +34,7 @@ const PhieudatchoManager = () => {
   };
 
   //   const handleDetailUser = (userId) => {
-  //     navigate(`/admin/user-detail-manager/${userId}`);
+  //     navigate(`/manager/user-detail-manager/${userId}`);
   //     dispatch(getAUserAPI(userId));
   //   };
 
@@ -120,7 +118,7 @@ const PhieudatchoManager = () => {
 
                             <div
                               className=""
-                              title="Xóa"
+                              title=""
                               onClick={() => handleDeletePhieudatcho(item.id)}
                             >
                               <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />

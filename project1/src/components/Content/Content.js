@@ -318,7 +318,7 @@ const Content = () => {
         <div className="">
           <img src={bacsi4} alt="" />
         </div>
-        <div className="mt-[-150px] absolute w-full">
+        <div className="mt-[-500px] absolute w-full">
           <div className="w-full">
             <div
               data-aos="fade-up"

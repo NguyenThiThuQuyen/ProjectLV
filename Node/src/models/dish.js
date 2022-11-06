@@ -7,13 +7,20 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {}
+    static associate(models) {
+      Dish.belongsTo(models.Category, {
+        foreignKey: "categoryId",
+        targetKey: "id",
+        as: "categoryDataToDish",
+      });
+    }
   }
   Dish.init(
     {
       name: DataTypes.STRING,
-      formula: DataTypes.STRING,
-      image: DataTypes.STRING,
+      contentHTML: DataTypes.TEXT("long"),
+      contentMarkdown: DataTypes.TEXT("long"),
+      categoryId: DataTypes.STRING,
     },
     {
       sequelize,

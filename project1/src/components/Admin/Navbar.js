@@ -9,7 +9,7 @@ import { AiOutlineUnorderedList } from "react-icons/ai";
 
 const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("user:", user);
+  // console.log("user:", user);
 
   return (
     // navbar

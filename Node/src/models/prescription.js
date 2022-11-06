@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
   Prescription.init(
     {
       dateCreate: DataTypes.DATE,
-      note: DataTypes.STRING,
+      loidan: DataTypes.STRING,
+      menuId: DataTypes.STRING,
       reservationTicketId: DataTypes.STRING,
     },
     {

@@ -3,15 +3,16 @@ const db = require("../models/index");
 let createNewPrescription = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      await db.User.create({
+      await db.Prescription.create({
         dateCreate: data.dateCreate,
-        note: data.note,
+        loidan: data.loidan,
+        menuId: data.menuId,
         reservationTicketId: data.reservationTicketId,
       });
 
       resolve({
         code: 0,
-        message: "success",
+        message: "Tạo thành công !",
       });
     } catch (e) {
       reject(e);
@@ -34,8 +35,8 @@ let updatePrescriptionData = (data) => {
         });
         if (prescription) {
           prescription.dateCreate = data.dateCreate;
-          prescription.note = data.note;
           prescription.reservationTicketId = data.reservationTicketId;
+          prescription.menuId = data.menuId;
           await prescription.save();
           resolve({
             code: 0,

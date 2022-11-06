@@ -57,7 +57,6 @@ export const PatientRedux = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllPatientsAPI.fulfilled, (state, action) => {
       state.getAllPatient = action.payload;
-      console.log("object", action.payload);
       state.patients = action.payload.patients;
       state.check = false;
     });

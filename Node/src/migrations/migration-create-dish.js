@@ -11,12 +11,18 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
       },
-      formula: {
+      contentHTML: {
+        allowNull: false,
+        type: Sequelize.TEXT("long"),
+      },
+      contentMarkdown: {
+        allowNull: false,
+        type: Sequelize.TEXT("long"),
+      },
+      categoryId: {
         type: Sequelize.STRING,
       },
-      image: {
-        type: Sequelize.BLOB("long"),
-      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -80,7 +80,6 @@ export const getFindIdScheduleAPI = createAsyncThunk(
   "lichtuvan/FindIdSchedule",
   async (params) => {
     const findId = await getFindIdSchedule(params);
-    console.log("find id:", findId);
     return findId;
   }
 );
@@ -128,7 +127,6 @@ export const ScheduleRedux = createSlice({
     });
 
     builder.addCase(getFindScheduleToDoctorAPI.fulfilled, (state, action) => {
-      console.log("action.payload getFindScheduleToDoctorAPI:", action.payload);
       state.getFindSchedule = action.payload;
       state.check = false;
     });

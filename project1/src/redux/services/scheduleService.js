@@ -55,7 +55,6 @@ const getFindIdSchedule = async (body) => {
     `http://localhost:8081/api/find-id-schedule`,
     body
   );
-  console.log("respose ne he:", response.data);
   return response.data;
 };
 

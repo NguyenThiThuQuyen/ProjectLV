@@ -67,9 +67,9 @@ let checkRegisterDate = (regDate) => {
 };
 
 let findTimeslot = (data) => {
+  console.log("data", data);
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("data.registerDate:", data.registerDate);
       let find = await db.Schedule.findAll({
         where: { registerDate: new Date(data.registerDate) },
         include: [
@@ -79,11 +79,37 @@ let findTimeslot = (data) => {
             attributes: ["timeslot", "id"],
           },
         ],
+        raw: true,
+        nest: true,
+      });
+      console.log("find", find.length);
+      if (find !== []) {
+        for (let i = 0; i < find.length; i++) {
+          let test = await getCountSchedule(find[i].id);
+
+          find[i].soluongdangky = test.data;
+        }
+        resolve({
+          code: 0,
+          data: find,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getCountSchedule = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await db.ReservationTicket.count({
+        where: { scheduleId: id },
         raw: false,
       });
       resolve({
         code: 0,
-        data: find,
+        data: count,
       });
     } catch (e) {
       reject(e);
@@ -247,23 +273,6 @@ let findIdSchedule = (data) => {
         console.log("find 123:", find.id);
         resolve(find.id);
       }
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
-
-let getCountSchedule = (id) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let count = await db.ReservationTicket.count({
-        where: { scheduleId: id },
-        raw: false,
-      });
-      resolve({
-        code: 0,
-        data: count,
-      });
     } catch (e) {
       reject(e);
     }

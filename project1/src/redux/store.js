@@ -11,6 +11,10 @@ import ScheduleRedux from "./scheduleRedux";
 import AdminRedux from "./Auth/adminRedux";
 import GuestRedux from "./Auth/guestRedux";
 import PhieudatchoRedux from "./phieudatchoRedux";
+import MenuRedux from "./menuRedux";
+import NgayAnRedux from "./ngayanRedux";
+import MonAnRedux from "./monanRedux";
+import DanhMucMonAnRedux from "./danhmucmonanRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -21,9 +25,12 @@ export const store = configureStore({
     loginguest: GuestRedux,
     parent: ParentRedux,
     patient: PatientRedux,
-    // giagoikham: GiaGoiKhamRedux,
     khunggio: TimeslotRedux,
     lichtuvan: ScheduleRedux,
     phieudatcho: PhieudatchoRedux,
+    thucdon: MenuRedux,
+    ngayan: NgayAnRedux,
+    monan: MonAnRedux,
+    danhmucmonan: DanhMucMonAnRedux,
   },
 });
