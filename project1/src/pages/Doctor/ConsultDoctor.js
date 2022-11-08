@@ -8,10 +8,11 @@ import { useNavigate } from "react-router-dom";
 import {
   dataGetTimthieutheongay,
   timPhieuTheoNgayAPI,
+  getPhieudatchoAPI,
   dataCheck,
 } from "../../redux/phieudatchoRedux";
 import moment from "moment";
-import { dataGetFindSchedule } from "../../redux/scheduleRedux";
+// import { getPrescriptionAPI } from "../../redux/prescriptionRedux";
 
 const ConsultDoctor = () => {
   const [mang, setMang] = useState([]);
@@ -41,9 +42,9 @@ const ConsultDoctor = () => {
     // console.log("test:");
   }, []);
 
-  const handleConsult = (id) => {
+  const handleConsult = async (id) => {
     navigate(`/manager/prescription/${id}`);
-    // dispatch(getAUserAPI(userId));
+    dispatch(getPhieudatchoAPI(id));
   };
 
   return (

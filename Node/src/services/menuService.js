@@ -1,4 +1,5 @@
 const db = require("../models/index");
+
 let createNewMenuEatDetail = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -18,6 +19,7 @@ let createNewMenuEatDetail = (data) => {
       resolve({
         code: 0,
         message: "Tạo thành công !",
+        data: chitietan,
       });
     } catch (e) {
       reject(e);
@@ -68,7 +70,32 @@ let updateMenu = (data) => {
   });
 };
 
+let findMenuToPrescription = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.menuId) {
+        resolve({
+          errCode: 2,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        let find = await db.Prescription.findOne({
+          where: {
+            menuId: data.menuId,
+          },
+          raw: false,
+        });
+        console.log("find 123:", find);
+        resolve(find);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewMenuEatDetail: createNewMenuEatDetail,
   updateMenu: updateMenu,
+  findMenuToPrescription: findMenuToPrescription,
 };

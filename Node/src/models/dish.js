@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "categoryDataToDish",
       });
+
+      Dish.hasMany(models.EatDetail, {
+        foreignKey: "dishId",
+        as: "dishDataToEatDetail",
+      });
     }
   }
   Dish.init(

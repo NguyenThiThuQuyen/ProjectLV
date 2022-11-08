@@ -6,7 +6,6 @@ export const getAllCaterogyAPI = createAsyncThunk(
   "danhmucmonan/GetAll",
   async () => {
     const getAll = await getAllCaterogy();
-    console.log("getAll:", getAll);
     return getAll;
   }
 );

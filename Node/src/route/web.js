@@ -18,6 +18,7 @@ const phieudatchoController = require("../controllers/phieudatchoController");
 const menuController = require("../controllers/menuController");
 const eatdateController = require("../controllers/eatdateController");
 const categoryController = require("../controllers/categoryController");
+const eatDetailController = require("../controllers/eatDetailController");
 
 const { Router } = require("express");
 
@@ -83,6 +84,28 @@ let initWebRoutes = (app) => {
 
   // tìm món ăn theo danh mục
   router.get("/api/find-dish-to-cate", dishController.handleFindDishToCate);
+
+  // tìm id phieu dat cho trong toa thuoc
+  router.post(
+    "/api/find-id-phieudatcho-in-prescription",
+    prescriptionController.handleFindPhieuDatChoInPrescription
+  );
+
+  // tìm thực đơn theo toa thuốc
+  router.post(
+    "/api/find-menu-to-prescription",
+    menuController.handleFindMenuToPrescription
+  );
+
+  // tìm chi tiết ăn theo ngày
+  router.post(
+    "/api/find-eat-detail-to-date",
+    eatDetailController.handleFindEatDetailToDate
+  );
+  router.post(
+    "/api/create-eat-detail",
+    eatDetailController.handleCreateEatDetail
+  );
 
   router.get("/api/find-patient", parentController.handleFindPatient);
   // tìm all bac si
@@ -255,6 +278,10 @@ let initWebRoutes = (app) => {
   router.get(
     "/api/get-all-prescriptions",
     prescriptionController.handleGetAllPrescriptions
+  );
+  router.get(
+    "/api/get-prescription",
+    prescriptionController.handleGetPrescription
   );
   router.post(
     "/api/create-new-prescription",

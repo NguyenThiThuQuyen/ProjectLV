@@ -4,7 +4,6 @@ import { getAllEatDates } from "./services/ngayanService";
 
 export const getAllEatDatesAPI = createAsyncThunk("ngayan/GetAll", async () => {
   const getAllngayan = await getAllEatDates();
-  console.log("getAllngayan:", getAllngayan);
   return getAllngayan;
 });
 

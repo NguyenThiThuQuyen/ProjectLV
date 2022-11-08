@@ -12,7 +12,7 @@ let createNewPrescription = (data) => {
 
       resolve({
         code: 0,
-        message: "Tạo thành công !",
+        message: "Tạo thành công!",
       });
     } catch (e) {
       reject(e);
@@ -76,8 +76,50 @@ let deletePrescription = (prescriptionId) => {
   });
 };
 
+let getPrescription = (prescriptionId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let prescription = "";
+      if (prescriptionId && prescriptionId !== "ALL") {
+        prescription = await db.Prescription.findOne({
+          where: { id: prescriptionId },
+        });
+      }
+      resolve(prescription);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let findPhieuDatChoInPrescription = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.reservationTicketId) {
+        resolve({
+          errCode: 2,
+          errMessage: "Missing required parameters",
+        });
+      } else {
+        let find = await db.Prescription.findOne({
+          where: {
+            reservationTicketId: data.reservationTicketId,
+          },
+          // raw: false,
+        });
+
+        resolve(find);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewPrescription: createNewPrescription,
   updatePrescriptionData: updatePrescriptionData,
   deletePrescription: deletePrescription,
+  getPrescription: getPrescription,
+  findPhieuDatChoInPrescription: findPhieuDatChoInPrescription,
 };

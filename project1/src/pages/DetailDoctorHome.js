@@ -117,7 +117,6 @@ const DetailDoctorHome = (props) => {
       dataFindSchedule?.schedule?.data?.map((item, index) => {
         const kt = XoaTrungTrongMang(item?.registerDate);
         let temp = new Date(item?.registerDate).getTime();
-        console.log("temp: ", temp);
         if (kt && day2 < temp) {
           mang.push(item?.registerDate);
         }

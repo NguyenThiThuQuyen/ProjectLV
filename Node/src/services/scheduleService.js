@@ -270,7 +270,6 @@ let findIdSchedule = (data) => {
           },
           // raw: false,
         });
-        console.log("find 123:", find.id);
         resolve(find.id);
       }
     } catch (e) {

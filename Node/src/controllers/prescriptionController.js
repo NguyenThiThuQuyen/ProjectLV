@@ -31,9 +31,33 @@ let handleGetAllPrescriptions = async (req, res) => {
   });
 };
 
+let handleGetPrescription = async (req, res) => {
+  let id = req.query.id; //all, id
+  if (!id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      prescriptions: [],
+    });
+  }
+  let prescription = await prescriptionService.getPrescription(id);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    prescription,
+  });
+};
+
+let handleFindPhieuDatChoInPrescription = async (req, res) => {
+  let data = req.body;
+  let message = await prescriptionService.findPhieuDatChoInPrescription(data);
+  return res.status(200).json(message);
+};
 module.exports = {
   handleCreatePrescription: handleCreatePrescription,
   handleEditPrescription: handleEditPrescription,
   handleDeletePrescription: handleDeletePrescription,
   handleGetAllPrescriptions: handleGetAllPrescriptions,
+  handleGetPrescription: handleGetPrescription,
+  handleFindPhieuDatChoInPrescription: handleFindPhieuDatChoInPrescription,
 };

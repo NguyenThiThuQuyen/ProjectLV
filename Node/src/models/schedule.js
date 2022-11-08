@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "timeSlotDataToSchedule",
       });
+
       Schedule.belongsTo(models.User, {
         foreignKey: "userId",
         targetKey: "id",

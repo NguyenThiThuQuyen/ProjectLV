@@ -15,6 +15,8 @@ import MenuRedux from "./menuRedux";
 import NgayAnRedux from "./ngayanRedux";
 import MonAnRedux from "./monanRedux";
 import DanhMucMonAnRedux from "./danhmucmonanRedux";
+import ChiTietAnRedux from "./chitietanRedux";
+import PrescriptionRedux from "./prescriptionRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -32,5 +34,7 @@ export const store = configureStore({
     ngayan: NgayAnRedux,
     monan: MonAnRedux,
     danhmucmonan: DanhMucMonAnRedux,
+    chitietan: ChiTietAnRedux,
+    hoadon: PrescriptionRedux,
   },
 });

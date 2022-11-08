@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      //     Menu.hasMany(models.Medical, {
-      //     foreignKey: "nhacungcapId",
-      //     as: "nhacungcapDataToMedical",
-      //   });
+      Menu.hasMany(models.EatDetail, {
+        foreignKey: "menuId",
+        as: "menuDataToEatDetail",
+      });
     }
   }
   Menu.init(
