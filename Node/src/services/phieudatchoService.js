@@ -74,7 +74,7 @@ let updatePhieudatcho = (data) => {
       } else {
         let phieudat = await db.ReservationTicket.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (phieudat) {
           phieudat.bookingDate = data.bookingDate;

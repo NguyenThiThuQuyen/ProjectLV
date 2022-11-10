@@ -7,13 +7,12 @@ import {
   getFindDishToCateAPI,
 } from "../../redux/monanRedux";
 import { createMenuAPI } from "../../redux/menuRedux";
-import { createPrescriptionAPI } from "../../redux/prescriptionRedux";
+import { getCreateEatDetailAPI } from "../../redux/chitietanRedux";
 import {
   dataGetAllCaterogy,
   getAllCaterogyAPI,
 } from "../../redux/danhmucmonanRedux";
 export default function EatDetailModal(props) {
-  console.log("props", props);
   const [showModalEatDetail, setShowModalEatDetail] = useState(false);
   const [dishId, setDishId] = useState();
   const [gioan, setGioan] = useState();
@@ -22,9 +21,11 @@ export default function EatDetailModal(props) {
   const [ghichu, setGhichu] = useState();
   const [eatdateId, setEatdateId] = useState();
   const [menuId, setMenuId] = useState();
+  const [menuName, setMenuName] = useState();
 
   const [loidan, setLoidan] = useState();
   const [dishCategory, setDishCategory] = useState();
+  const [mang, setMang] = useState([]);
 
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
@@ -33,18 +34,28 @@ export default function EatDetailModal(props) {
 
   const params = {
     eatdateId: eatdateId,
+    name: menuName,
+    menuId: menuId,
 
     dishId: dishId,
     gioan: gioan,
     huongdanan: huongdanan,
     solan: solan,
     ghichu: ghichu,
-    name: menuId,
+    dishCategory: dishCategory,
   };
+  console.log("params:", params);
 
   useEffect(() => {
     setShowModalEatDetail(true);
   }, [props?.openModal === true]);
+
+  useEffect(() => {
+    setEatdateId(props?.item?.eatdateId);
+    setMenuName(props?.item?.menuDataToEatDetail?.name);
+    setMenuId(props?.item?.menuDataToEatDetail?.id);
+    setDishCategory(props?.item?.dishDataToEatDetail?.categoryDataToDish?.id);
+  }, [props?.item]);
 
   useEffect(() => {
     dispatch(getAllEatDatesAPI());
@@ -55,8 +66,15 @@ export default function EatDetailModal(props) {
 
   const handleFindDishToCate = (id) => {
     dispatch(getFindDishToCateAPI(id));
-    setDishId(id);
   };
+
+  useEffect(() => {
+    dataCate.categories &&
+      dataCate.categories.length > 0 &&
+      dataCate.categories.map((item, index) => {
+        const findid = handleFindDishToCate(item.id);
+      });
+  }, [dataCate]);
 
   const handleClose = () => {
     setShowModalEatDetail(false);
@@ -64,25 +82,7 @@ export default function EatDetailModal(props) {
   };
 
   const handleSave = async () => {
-    // let getData = await dispatch(createMenuAPI(params));
-    // console.log("getData:", getData);
-    // let getId = getData.payload.menu.data.menuId;
-    // let data2 = {
-    //   eatdateId: eatdateId,
-    //   menuId: getData.payload.menu.data.menuId,
-    // };
-    // if (props?.getParams) {
-    //   props.getParams(data2);
-    // }
-
-    // let dataLuu = {
-    //   dateCreate: props.params2.dateCreate,
-    //   reservationTicketId: props.params2.reservationTicketId,
-    //   menuId: getId,
-    //   loidan: loidan,
-    // };
-    // dispatch(createPrescriptionAPI(dataLuu));
-
+    dispatch(getCreateEatDetailAPI(params));
     setShowModalEatDetail(false);
     props.handleMo(false);
   };
@@ -111,6 +111,7 @@ export default function EatDetailModal(props) {
                             className="ml-3 w-1/2 h-11 border rounded-lg p-2 mt-1 bg-sky-300 outline-slate-300"
                             id=""
                             value={eatdateId}
+                            disabled
                             onChange={(event) =>
                               setEatdateId(event.target.value)
                             }
@@ -135,7 +136,11 @@ export default function EatDetailModal(props) {
                           <input
                             type="text"
                             className="border-b uppercase ml-2 border-solid border-slate-400 w-2/3 h-6 outline-none"
-                            onChange={(event) => setMenuId(event.target.value)}
+                            value={menuName}
+                            disabled
+                            onChange={(event) =>
+                              setMenuName(event.target.value)
+                            }
                           />
                         </div>
                       </div>
@@ -145,9 +150,10 @@ export default function EatDetailModal(props) {
                             Chọn mục dinh dưỡng
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300"
                             id=""
                             value={dishCategory}
+                            disabled
                             onClick={(e) =>
                               handleFindDishToCate(e.target.value)
                             }
@@ -155,6 +161,7 @@ export default function EatDetailModal(props) {
                             {dataCate.categories &&
                               dataCate.categories.length > 0 &&
                               dataCate.categories.map((item, index) => {
+                                // console.log("item: ", item);
                                 return (
                                   <option key={index} value={item.id}>
                                     {item.name}

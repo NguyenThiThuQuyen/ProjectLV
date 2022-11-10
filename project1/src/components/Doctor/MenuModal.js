@@ -17,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { circularProgressClasses } from "@mui/material";
 export default function MenuModal(props) {
-  console.log("params2", props);
   const [showModal, setShowModal] = useState(false);
   const [dishId, setDishId] = useState();
   const [gioan, setGioan] = useState();
@@ -87,8 +86,8 @@ export default function MenuModal(props) {
       reservationTicketId: props.params2.reservationTicketId,
       menuId: getId,
       loidan: loidan,
+      eatdateId: eatdateId,
     };
-    // console.log("dataLuu:", dataLuu);
     dispatch(createPrescriptionAPI(dataLuu));
 
     setShowModal(false);

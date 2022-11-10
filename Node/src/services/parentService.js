@@ -179,7 +179,7 @@ let updateParentData = (data) => {
       } else {
         let parent = await db.Parent.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (parent) {
           parent.name = data.name;
@@ -274,7 +274,7 @@ let deleteParent = (data) => {
     } else {
       let del = await db.Parent.findOne({
         where: { id: data.id },
-        raw: false,
+        raw: true,
       });
       if (!del) {
         resolve({

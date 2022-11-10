@@ -74,7 +74,7 @@ let initWebRoutes = (app) => {
   // router.delete("/api/delete-menu", menuController.handleDeleteMenu);
 
   // ngày ăn
-  router.get("/api/get-all-eatdates", eatdateController.handleGetAllEatDates);
+  router.post("/api/get-all-eatdates", eatdateController.handleGetAllEatDates);
 
   // tìm
   router.post(

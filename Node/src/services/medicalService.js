@@ -89,7 +89,7 @@ let updateMedical = (data) => {
       } else {
         let tenthuoc = await db.Medical.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (tenthuoc) {
           let check = await checkMedicalName(data.name);

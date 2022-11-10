@@ -43,6 +43,13 @@ let findEatDetailToDate = (data) => {
                 "categoryId",
                 "id",
               ],
+              include: [
+                {
+                  model: db.Category,
+                  as: "categoryDataToDish",
+                  attributes: ["name", "id"],
+                },
+              ],
             },
           ],
 
@@ -85,6 +92,13 @@ let findEatDetailToDate = (data) => {
                 "contentMarkdown",
                 "categoryId",
                 "id",
+              ],
+              include: [
+                {
+                  model: db.Category,
+                  as: "categoryDataToDish",
+                  attributes: ["name", "id"],
+                },
               ],
             },
           ],

@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const getAllEatDates = async () => {
-  const response = await axios.get(
-    `http://localhost:8081/api/get-all-eatdates`
+const getAllEatDates = async (body) => {
+  const response = await axios.post(
+    `http://localhost:8081/api/get-all-eatdates`,
+    body
   );
   return response.data;
 };

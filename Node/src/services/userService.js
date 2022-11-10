@@ -77,7 +77,7 @@ let updateUserData = (data) => {
       } else {
         let user = await db.User.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (user && data.roleId === "R1") {
           user.name = data.name;

@@ -31,7 +31,7 @@ let updatePrescriptionData = (data) => {
       } else {
         let prescription = await db.Prescription.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (prescription) {
           prescription.dateCreate = data.dateCreate;
@@ -105,7 +105,7 @@ let findPhieuDatChoInPrescription = (data) => {
           where: {
             reservationTicketId: data.reservationTicketId,
           },
-          // raw: false,
+          // raw: true,
         });
 
         resolve(find);

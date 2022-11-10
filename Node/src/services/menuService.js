@@ -38,11 +38,11 @@ let updateMenu = (data) => {
       } else {
         let menu = await db.Menu.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         let chitietan = await db.EatDetail.findOne({
           where: { menuId: data.id },
-          raw: false,
+          raw: true,
         });
 
         if (menu) {
@@ -83,7 +83,7 @@ let findMenuToPrescription = (data) => {
           where: {
             menuId: data.menuId,
           },
-          raw: false,
+          raw: true,
         });
         console.log("find 123:", find);
         resolve(find);

@@ -52,7 +52,7 @@ let updateMedicalType = (data) => {
       } else {
         let tenloai = await db.MedicalType.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (tenloai) {
           let check = await checkMedicaltypeName(data.name);

@@ -57,7 +57,7 @@ let updatePatientData = (data) => {
       } else {
         let patient1 = await db.Patient.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (patient1) {
           let day = new Date(data.birthday);

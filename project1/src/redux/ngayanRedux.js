@@ -2,10 +2,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { getAllEatDates } from "./services/ngayanService";
 
-export const getAllEatDatesAPI = createAsyncThunk("ngayan/GetAll", async () => {
-  const getAllngayan = await getAllEatDates();
-  return getAllngayan;
-});
+export const getAllEatDatesAPI = createAsyncThunk(
+  "ngayan/GetAll",
+  async (params) => {
+    const getAllngayan = await getAllEatDates(params);
+    return getAllngayan;
+  }
+);
 
 export const NgayAnRedux = createSlice({
   name: "ngayan",

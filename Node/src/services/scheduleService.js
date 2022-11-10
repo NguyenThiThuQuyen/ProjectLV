@@ -105,7 +105,7 @@ let getCountSchedule = (id) => {
     try {
       let count = await db.ReservationTicket.count({
         where: { scheduleId: id },
-        raw: false,
+        raw: true,
       });
       resolve({
         code: 0,
@@ -173,7 +173,7 @@ let updateSchedule = (data) => {
       } else {
         let schedule = await db.Schedule.findOne({
           where: { id: data.id },
-          raw: false,
+          raw: true,
         });
         if (schedule) {
           schedule.registerDate = data.registerDate;
@@ -268,7 +268,7 @@ let findIdSchedule = (data) => {
             timeslotId: data.timeslotId,
             registerDate: new Date(data.registerDate),
           },
-          // raw: false,
+          // raw: true,
         });
         resolve(find.id);
       }

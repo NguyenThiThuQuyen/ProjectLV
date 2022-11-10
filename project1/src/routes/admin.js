@@ -23,6 +23,7 @@ import CategoryManager from "../pages/Admin/CategoryManager";
 import ConsultDoctor from "../pages/Doctor/ConsultDoctor";
 import ConsultAllDate from "../pages/Doctor/ConsultAllDate";
 import Prescription from "../pages/Doctor/Prescription";
+import DetailMenu from "../pages/Doctor/DetailMenu";
 
 function admin() {
   return (
@@ -66,6 +67,8 @@ function admin() {
         <Route path="/consult" element={<ConsultDoctor />} />
         <Route path="/consult-alldate" element={<ConsultAllDate />} />
         <Route path="/prescription/:id" element={<Prescription />} />
+
+        <Route path="/detail-menu/:menuId/:id" element={<DetailMenu />} />
       </Routes>
     </div>
   );
