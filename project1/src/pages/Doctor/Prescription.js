@@ -26,7 +26,14 @@ import {
 import {
   datagetFindIdPhieuDatCho,
   findIdPhieuDatChoPrescriptionAPI,
+  createPrescriptionAPI,
 } from "../../redux/prescriptionRedux";
+import {
+  dataGetTimPhieutheongay,
+  timPhieuTheoNgayAPI,
+  getPhieudatchoAPI,
+  dataGetAPhieudatcho,
+} from "../../redux/phieudatchoRedux";
 import { ToastContainer } from "react-toastify";
 import { circularProgressClasses } from "@mui/material";
 
@@ -40,16 +47,19 @@ const Prescription = () => {
   const [eatdateId, setEatdateId] = useState();
   const [categoryId, setCategoryId] = useState();
   const [categoryName, setCategoryName] = useState();
+  const [dateCreate, setDateCreate] = useState();
   const [reservationTicketId, setReservationTicketId] = useState();
   const [menuName, setMenuName] = useState();
+
   const paramsTuvan = useParams();
+
   const navigator = useNavigate();
   const today = new Date();
   let date =
     today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
 
   const params = {
-    dateCreate: date,
+    dateCreate: dateCreate,
     loidan: loidan,
     menuId: menuId,
     reservationTicketId: reservationTicketId,
@@ -62,8 +72,9 @@ const Prescription = () => {
   const dispatch = useDispatch();
   const dataEatDates = useSelector(dataAllEatDates);
 
+  const dataTimphieu = useSelector(dataGetAPhieudatcho);
+
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
-  console.log("dataFindCate:", dataFindCate);
 
   useEffect(() => {
     setReservationTicketId(paramsTuvan.id);
@@ -71,6 +82,8 @@ const Prescription = () => {
       findIdPhieuDatChoPrescriptionAPI({ reservationTicketId: paramsTuvan.id })
     );
     dispatch(getAllEatDatesAPI());
+
+    dispatch(getPhieudatchoAPI(paramsTuvan.id));
   }, []);
 
   const handleFind = async (menuId) => {
@@ -84,7 +97,6 @@ const Prescription = () => {
   const data = useSelector(DataGetFindEatDetailToDate);
 
   const dataFindId = useSelector(datagetFindIdPhieuDatCho);
-  console.log("dataFindId:", dataFindId);
 
   const dataFindMenu = useSelector(dataGetFindMenuToPrescription);
 
@@ -150,9 +162,13 @@ const Prescription = () => {
   };
 
   const handleCreateMenuToDate = (id) => {
-    console.log("id: ", id);
+    // console.log("id: ", id);
     setEatdateId(id);
     setShowMenuModalToDate(true);
+  };
+
+  const handleSave = () => {
+    dispatch(createPrescriptionAPI(params));
   };
 
   return (
@@ -164,60 +180,69 @@ const Prescription = () => {
           <Navbar />
           <div className="w-full mt-10">
             <div className="w-2/3 ml-5 mr-auto">
-              <div className="border-2 border-slate-200 p-4 shadow-lg">
-                <div className="flex ">
-                  <span className="font-medium">Ngày lập:</span>
-                  <div className="ml-3">{date}</div>
-                </div>
-                {dataFindId === null ? (
-                  <>
-                    <div className="w-full mt-5">
-                      <button
-                        className="p-2 bg-yellow-500 text-white text-md font-medium rounded-md mx-auto"
-                        onClick={() => handleMenu()}
-                      >
-                        <div className="flex">
-                          <BsPlusLg className="mt-1 mr-2" />
-                          <span>Tạo thực đơn</span>
-                        </div>
-                      </button>
-                      <div className="">
-                        {showModal === true ? (
-                          <MenuModal
-                            openModal={showModal}
-                            handleClose={handleDong}
-                            getParams={getParams}
-                            handleMo={handleMoLai}
-                            params2={params}
-                          />
-                        ) : (
-                          <>
-                            <div className=""></div>
-                          </>
-                        )}
-                      </div>
+              {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? (
+                <>
+                  <div className="border-2 border-slate-200 p-4 shadow-lg">
+                    <div className="flex ">
+                      <span className="font-medium">Ngày lập:</span>
+                      <div className="ml-3">{date}</div>
                     </div>
-                  </>
-                ) : (
-                  <></>
-                )}
+                    {dataFindId === null ? (
+                      <>
+                        <div className="w-full mt-5">
+                          <button
+                            className="p-2 bg-yellow-500 text-white text-md font-medium rounded-md mx-auto"
+                            onClick={() => handleMenu()}
+                          >
+                            <div className="flex">
+                              <BsPlusLg className="mt-1 mr-2" />
+                              <span>Tạo thực đơn</span>
+                            </div>
+                          </button>
+                          <div className="">
+                            {showModal === true ? (
+                              <MenuModal
+                                openModal={showModal}
+                                handleClose={handleDong}
+                                getParams={getParams}
+                                handleMo={handleMoLai}
+                                params2={params}
+                              />
+                            ) : (
+                              <>
+                                <div className=""></div>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
 
-                <div className="mt-5">
-                  <label htmlFor="" className="font-medium">
-                    Lời dặn:
-                  </label>
-                  <textarea
-                    type="text"
-                    placeholder="..."
-                    className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
-                  />
-                </div>
-                <div className="w-full text-right mt-2">
-                  <button className="p-3 bg-green-500 text-white text-sm font-medium rounded-md mx-auto">
-                    LƯU THÔNG TIN
-                  </button>
-                </div>
-              </div>
+                    <div className="mt-5">
+                      <label htmlFor="" className="font-medium">
+                        Lời dặn:
+                      </label>
+                      <textarea
+                        type="text"
+                        placeholder="..."
+                        className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
+                      />
+                    </div>
+                    <div className="w-full text-right mt-2">
+                      <button
+                        className="p-3 bg-green-500 text-white text-sm font-medium rounded-md mx-auto"
+                        onClick={() => handleSave()}
+                      >
+                        LƯU THÔNG TIN
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
 
@@ -243,43 +268,67 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                <div className="flex mt-3">
-                                  <button
-                                    className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
-                                    onClick={() => handleEatDetail(item.id)}
-                                  >
-                                    <div className="flex">
-                                      <BsPlusLg className="mt-1 mr-2" />
-                                      <span>Thêm khẩu phần</span>
+                                {dataTimphieu?.phieudatcho?.status !==
+                                "Đã tư vấn" ? (
+                                  <>
+                                    <div className="flex mt-3">
+                                      <button
+                                        className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
+                                        onClick={() => handleEatDetail(item.id)}
+                                      >
+                                        <div className="flex">
+                                          <BsPlusLg className="mt-1 mr-2" />
+                                          <span>Thêm khẩu phần</span>
+                                        </div>
+                                      </button>
+                                      <div className="">
+                                        {showModalEatDetail === true ? (
+                                          <EatDetailModal
+                                            openModal={showModalEatDetail}
+                                            handleClose={handleDong}
+                                            getParams={getParams}
+                                            handleMo={handleMoLai}
+                                            params2={params}
+                                            item={item}
+                                          />
+                                        ) : (
+                                          <>
+                                            <div className=""></div>
+                                          </>
+                                        )}
+                                      </div>
                                     </div>
-                                  </button>
-                                  <div className="">
-                                    {showModalEatDetail === true ? (
-                                      <EatDetailModal
-                                        openModal={showModalEatDetail}
-                                        handleClose={handleDong}
-                                        getParams={getParams}
-                                        handleMo={handleMoLai}
-                                        params2={params}
-                                        item={item}
-                                      />
-                                    ) : (
-                                      <>
-                                        <div className=""></div>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="flex mt-3">
-                                  <div
-                                    className="italic hover:underline hover:underline-offset-2"
-                                    onClick={() =>
-                                      handleXemMenu(item.id, dataFindId?.menuId)
-                                    }
-                                  >
-                                    Xem chi tiết thực đơn đã tạo
-                                  </div>
-                                </div>
+                                    <div className="flex mt-3">
+                                      <div
+                                        className="italic hover:underline hover:underline-offset-2"
+                                        onClick={() =>
+                                          handleXemMenu(
+                                            item.id,
+                                            dataFindId?.menuId
+                                          )
+                                        }
+                                      >
+                                        Xem chi tiết thực đơn đã tạo
+                                      </div>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <>
+                                    <div className="flex mt-3">
+                                      <div
+                                        className="italic hover:underline hover:underline-offset-2"
+                                        onClick={() =>
+                                          handleXemMenu(
+                                            item.id,
+                                            dataFindId?.menuId
+                                          )
+                                        }
+                                      >
+                                        Xem chi tiết thực đơn đã tạo
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           ) : (
@@ -292,40 +341,55 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                <div className="flex mt-3">
-                                  <button
-                                    className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"
-                                    onClick={() =>
-                                      handleCreateMenuToDate(item.id)
-                                    }
-                                  >
-                                    <div className="flex">
-                                      <BsPlusLg className="mt-1 mr-2" />
-                                      <span>Thêm thực đơn</span>
+                                {dataTimphieu?.phieudatcho?.status !==
+                                "Đã tư vấn" ? (
+                                  <>
+                                    <div className="flex mt-3">
+                                      <button
+                                        className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"
+                                        onClick={() =>
+                                          handleCreateMenuToDate(item.id)
+                                        }
+                                      >
+                                        <div className="flex">
+                                          <BsPlusLg className="mt-1 mr-2" />
+                                          <span>Thêm thực đơn</span>
+                                        </div>
+                                      </button>
+                                      <div className="">
+                                        {showMenuModalToDate === true ? (
+                                          <MenuModalToDate
+                                            openModal={showMenuModalToDate}
+                                            handleClose={handleDong}
+                                            getParams={getParams}
+                                            handleMo={handleMoLai}
+                                            params2={params}
+                                            item={item}
+                                          />
+                                        ) : (
+                                          <>
+                                            <div className=""></div>
+                                          </>
+                                        )}
+                                      </div>
                                     </div>
-                                  </button>
-                                  <div className="">
-                                    {showMenuModalToDate === true ? (
-                                      <MenuModalToDate
-                                        openModal={showMenuModalToDate}
-                                        handleClose={handleDong}
-                                        getParams={getParams}
-                                        handleMo={handleMoLai}
-                                        params2={params}
-                                        item={item}
-                                      />
-                                    ) : (
-                                      <>
-                                        <div className=""></div>
-                                      </>
-                                    )}
-                                  </div>
-                                </div>
-                                <div className="flex mt-3">
-                                  <div className="italic text-red-600">
-                                    Chưa có thực đơn, vui lòng thêm thực đơn !
-                                  </div>
-                                </div>
+                                    <div className="flex mt-3">
+                                      <div className="italic text-red-600">
+                                        Chưa có thực đơn, vui lòng thêm thực
+                                        đơn!
+                                      </div>
+                                    </div>
+                                  </>
+                                ) : (
+                                  <>
+                                    <div className="flex mt-3">
+                                      <div className="italic text-red-600">
+                                        Chưa có thực đơn, vui lòng thêm thực đơn
+                                        !
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
                           )}

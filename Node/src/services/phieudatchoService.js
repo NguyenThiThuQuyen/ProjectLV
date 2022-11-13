@@ -26,7 +26,7 @@ let createPhieudatcho = (data) => {
           },
         });
         if (find) {
-          await db.ReservationTicket.create({
+          let datcho = await db.ReservationTicket.create({
             bookingDate: data.bookingDate,
             arrivalDate: data.arrivalDate,
             status: data.status,
@@ -36,18 +36,31 @@ let createPhieudatcho = (data) => {
             doctorId: data.doctorId,
           });
 
+          if (datcho) {
+            let trangthai = await db.ReservationTicket.findOne({
+              where: {
+                id: data.reservationTicketId,
+              },
+            });
+            if (trangthai) {
+              console.log("đã tạo");
+              trangthai.status = "Đã tư vấn";
+              trangthai.save();
+            }
+          }
+
           let findemail = await emailService.sendSimpleEmail({
             reciverEmail: data.email,
-            name: data.name,
-            phone: data.phone,
+            // name: data.name,
+            // phone: data.phone,
 
-            childrentName: data.childrentName,
-            birthday: data.birthday,
-            gender: data.gender,
+            // childrentName: data.childrentName,
+            // birthday: data.birthday,
+            // gender: data.gender,
 
-            testGoiKham: data.testGoiKham,
-            testTimeslot: data.testTimeslot,
-            testGiaGoiKham: data.testGiaGoiKham,
+            // testGoiKham: data.testGoiKham,
+            // testTimeslot: data.testTimeslot,
+            // testGiaGoiKham: data.testGiaGoiKham,
             arrivalDate: data.arrivalDate,
           });
           resolve({
@@ -236,21 +249,18 @@ let findLichTheoNgay = (data) => {
   console.log("data:", data);
   return new Promise(async (resolve, reject) => {
     try {
-      if (data.DateChon === "") {
+      if (data.DateChon === "today" && data.doctorId) {
+        console.log("TH1");
         let today = new Date();
-
         let date =
           today.getFullYear() +
           "-" +
           (today.getMonth() + 1) +
           "-" +
           today.getDate();
-        console.log("date:", date);
-        let test = new Date(date).getTime();
-        console.log("test:", test);
 
         let findday = await db.ReservationTicket.findAll({
-          where: { doctorId: data.doctorId, arrivalDate: test },
+          where: { doctorId: data.doctorId, arrivalDate: date },
           include: [
             {
               model: db.MedicalPackage,
@@ -280,7 +290,40 @@ let findLichTheoNgay = (data) => {
           code: 0,
           data: findday,
         });
-      } else {
+      } else if (data.DateChon && data.DateChon !== "today" && data.doctorId) {
+        let findday = await db.ReservationTicket.findAll({
+          where: { doctorId: data.doctorId, arrivalDate: data.DateChon },
+          include: [
+            {
+              model: db.MedicalPackage,
+              as: "goituvanDataToPhieudatcho",
+              attributes: ["packageName", "id"],
+            },
+            {
+              model: db.Patient,
+              as: "patientDataToPhieudatcho",
+              attributes: ["childrentName", "gender", "birthday", "id"],
+            },
+            {
+              model: db.Schedule,
+              as: "scheduleDataToPhieudatcho",
+              attributes: ["timeslotId", "id"],
+              include: [
+                {
+                  model: db.TimeSlot,
+                  as: "timeSlotDataToSchedule",
+                  attributes: ["timeslot", "id"],
+                },
+              ],
+            },
+          ],
+        });
+        resolve({
+          code: 0,
+          data: findday,
+        });
+      } else if (data.doctorId) {
+        console.log("TH2");
         let findday = await db.ReservationTicket.findAll({
           where: { doctorId: data.doctorId },
           include: [

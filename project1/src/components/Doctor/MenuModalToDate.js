@@ -124,10 +124,19 @@ export default function MenuModalToDate(props) {
     props.handleClose(false);
   };
 
+  // const handleSave = async () => {
+  //   // dispatch(getCreateEatDetailAPI(params));
+  //   setShowMenuModalToDate(false);
+  //   props.handleMo(false);
+  // };
+
   const handleSave = async () => {
-    // dispatch(getCreateEatDetailAPI(params));
-    setShowMenuModalToDate(false);
-    props.handleMo(false);
+    dispatch(getCreateEatDetailAPI(params));
+    setShowMenuModalToDate(true);
+    // props.handleMo(false);
+    // setTimeout(function () {
+    //   window.location.reload(1);
+    // }, 500);
   };
 
   const handleFindEatTimeslot = (id) => {

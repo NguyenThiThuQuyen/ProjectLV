@@ -40,9 +40,9 @@ let handleGetAllFindEatTimeslotsToSession = async (req, res) => {
 
 let handleFindEatStimeslot = async (req, res) => {
   let data = req.body.data;
-  // let message = await eatTimeslotService.getFindEatStimeslot(data);
+  let message = await eatTimeslotService.getFindEatStimeslot(data);
   console.log("data:", data);
-  // return res.status(200).json(message);
+  return res.status(200).json(message);
 };
 
 module.exports = {

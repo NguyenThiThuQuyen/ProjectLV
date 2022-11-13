@@ -16,6 +16,7 @@ import {
   deleteEatDetailAPI,
   DataGetFindEatDetailToDate,
   getFindEatDetailToDateAPI,
+  dataCheck,
 } from "../../redux/chitietanRedux";
 import {
   getAllFindEatTimeslotsToSessionAPI,
@@ -54,7 +55,7 @@ export default function EatDetailModal(props) {
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
 
   const dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail);
-  console.log("dataFind: =============", dataFind);
+  const check = useSelector(dataCheck);
 
   const dispatch = useDispatch();
 
@@ -88,7 +89,7 @@ export default function EatDetailModal(props) {
     dispatch(getAllDishesAPI());
     dispatch(getFindDishToCateAPI());
     dispatch(getAllSessionsAPI());
-  }, []);
+  }, [check]);
 
   useEffect(() => {
     dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
@@ -101,7 +102,7 @@ export default function EatDetailModal(props) {
         menuId: props?.params2?.menuId,
       })
     );
-  }, []);
+  }, [check]);
 
   const handleClose = () => {
     setShowModalEatDetail(false);
@@ -124,16 +125,16 @@ export default function EatDetailModal(props) {
     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
   };
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getFindEatTimeslotsToEatDetailAPI({
-  //       data: {
-  //         array: dataFindEatTimeslots,
-  //         obj: { menuId: menuId, eatdateId: eatdateId },
-  //       },
-  //     })
-  //   );
-  // }, [dataFindEatTimeslots]);
+  useEffect(() => {
+    dispatch(
+      getFindEatTimeslotsToEatDetailAPI({
+        data: {
+          array: dataFindEatTimeslots,
+          obj: { menuId: menuId, eatdateId: eatdateId },
+        },
+      })
+    );
+  }, [dataFindEatTimeslots]);
 
   const handleDelete = (id) => {
     dispatch(deleteEatDetailAPI(id));
@@ -241,17 +242,34 @@ export default function EatDetailModal(props) {
                                   setEatTimeslotId(event.target.value)
                                 }
                               >
-                                {dataFindEatTimeslots &&
-                                  dataFindEatTimeslots.length > 0 &&
-                                  dataFindEatTimeslots.map((item, index) => {
+                                {dataFind &&
+                                  dataFind.length > 0 &&
+                                  dataFind.map((item, index) => {
                                     return (
-                                      <option
-                                        key={index}
-                                        value={item.id}
-                                        className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
-                                      >
-                                        {item.khunggioan}
-                                      </option>
+                                      <>
+                                        {item.checkTimes === true ? (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              disabled
+                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-300 text-white text-center cursor-no-drop"
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        )}
+                                      </>
                                     );
                                   })}
                               </div>

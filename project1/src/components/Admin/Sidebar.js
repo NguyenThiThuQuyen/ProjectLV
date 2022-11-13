@@ -13,17 +13,24 @@ import {
   AiOutlineBarChart,
 } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import { MdOutlineDashboard } from "react-icons/md";
 import { IoIosLogOut } from "react-icons/io";
 import { logout, dataCheckLogout } from "../../redux/Auth/adminRedux";
-
 const Sidebar = () => {
+  const navigator = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
+  const id = user.id;
+  console.log("user:", user);
 
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleInfor = () => {
+    navigator(`/manager/infor-user/${id}`);
   };
 
   return (
@@ -91,7 +98,10 @@ const Sidebar = () => {
             <p className="text-sm font-bold text-slate-500 my-3.5">
               NGƯỜI DÙNG
             </p>
-            <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
+            <li
+              className="flex p-3 items-center cursor-pointer hover:bg-slate-300"
+              onClick={() => handleInfor()}
+            >
               <AiOutlineUserAdd className="mx-2 mt-1 text-xl text-teal-700" />
               <span className="text-slate-800">Thông tin người dùng</span>
             </li>
@@ -120,7 +130,10 @@ const Sidebar = () => {
             <p className="text-sm font-bold text-slate-500 my-3.5">
               NGƯỜI DÙNG
             </p>
-            <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
+            <li
+              className="flex p-3 items-center cursor-pointer hover:bg-slate-300"
+              onClick={() => handleInfor()}
+            >
               <AiOutlineUserAdd className="mx-2 mt-1 text-xl text-teal-700" />
               <span className="text-slate-800">Thông tin người dùng</span>
             </li>

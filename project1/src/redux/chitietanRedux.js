@@ -44,6 +44,7 @@ export const ChiTietAnRedux = createSlice({
   initialState: {
     getFindEatDetail: {},
     findEatDate: {},
+    check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -80,4 +81,5 @@ export const ChiTietAnRedux = createSlice({
 export const DataGetFindEatDetailToDate = (state) =>
   state.chitietan.getFindEatDetail;
 export const DataGetFindEatDate = (state) => state.chitietan.findEatDate;
+export const dataCheck = (state) => state.chitietan.check;
 export default ChiTietAnRedux.reducer;

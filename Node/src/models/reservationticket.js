@@ -31,6 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "doctorDataToPhieudatcho",
       });
+
+      // ReservationTicket.hasMany(models.ReservationTicket, {
+      //   foreignKey: "reservationTicketId",
+      //   as: "phieudatchoDataToPrescription",
+      // });
     }
   }
   ReservationTicket.init(

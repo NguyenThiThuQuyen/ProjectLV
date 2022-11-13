@@ -72,7 +72,7 @@ function admin() {
 
         <Route path="/detail-menu/:menuId/:id" element={<DetailMenu />} />
 
-        <Route path="/infor-user/:userId" element={<InforUser />} />
+        <Route path="/infor-user/:id" element={<InforUser />} />
       </Routes>
     </div>
   );

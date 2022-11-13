@@ -39,7 +39,7 @@ export default function PhieudatchoModal() {
   const [scheduleId, setScheduleId] = useState();
   const [timeslotId, setTimeslotId] = useState();
   const [patientId, setPatientId] = useState();
-  // const [userId, setUserId] = useState();
+  const [email, setEmail] = useState();
   const [doctorId, setDoctorId] = useState();
   const params = {
     bookingDate: bookingDate,
@@ -52,6 +52,7 @@ export default function PhieudatchoModal() {
     userId: doctorId,
     timeslotId: timeslotId,
     registerDate: registerDate,
+    email: email,
   };
 
   const dataDoctor = useSelector(dataGetDoctor);
@@ -197,6 +198,30 @@ export default function PhieudatchoModal() {
                           <div className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300">
                             {date}
                           </div>
+                        </div>
+                        <div className="col-span-1 mx-3 my-4">
+                          <label htmlFor="" className="text-slate-600 ml-2">
+                            Email
+                          </label>
+
+                          <select
+                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            id=""
+                            onChange={(event) => setEmail(event.target.value)}
+                          >
+                            {dataPatient.patients &&
+                              dataPatient.patients.length > 0 &&
+                              dataPatient.patients.map((item, index) => {
+                                return (
+                                  <option
+                                    key={index}
+                                    value={item?.parentDataToPatient?.email}
+                                  >
+                                    {item?.parentDataToPatient?.email}
+                                  </option>
+                                );
+                              })}
+                          </select>
                         </div>
                       </div>
                       <div className="grid row-span-1 grid-cols-3">

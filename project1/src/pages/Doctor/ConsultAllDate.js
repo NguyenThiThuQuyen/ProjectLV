@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import {
-  dataGetTimthieutheongay,
+  dataGetTimPhieutheongay,
   timPhieuTheoNgayAPI,
   dataCheck,
 } from "../../redux/phieudatchoRedux";
@@ -33,7 +33,7 @@ const ConsultAllDate = () => {
   };
   console.log("params: ", params);
 
-  const data = useSelector(dataGetTimthieutheongay);
+  const data = useSelector(dataGetTimPhieutheongay);
 
   console.log("data", data);
 
@@ -98,7 +98,7 @@ const ConsultAllDate = () => {
                 </select>
               </div>
             </div>
-            {/* <table className="border border-slate-200 mt-10">
+            <table className="border border-slate-200 mt-10">
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
                   <th className="border border-slate-200 p-3 text-white font-medium">
@@ -118,7 +118,7 @@ const ConsultAllDate = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              {/* <tbody>
                 {data?.data &&
                   data?.data?.length > 0 &&
                   data?.data?.map((item, index) => {
@@ -154,8 +154,8 @@ const ConsultAllDate = () => {
                       </tr>
                     );
                   })}
-              </tbody>
-            </table> */}
+              </tbody> */}
+            </table>
           </div>
         </div>
       </div>

@@ -113,7 +113,7 @@ export const phieudatchoRedux = createSlice({
 export const dataGetAllPhieudatcho = (state) =>
   state.phieudatcho.getAllPhieudatcho;
 export const dataGetAPhieudatcho = (state) => state.phieudatcho.getAPhieudatcho;
-export const dataGetTimthieutheongay = (state) =>
+export const dataGetTimPhieutheongay = (state) =>
   state.phieudatcho.getTimthieutheongay;
 export const dataCheck = (state) => state.phieudatcho.check;
 

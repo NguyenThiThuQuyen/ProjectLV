@@ -44,7 +44,6 @@ const timPhieuTheoNgay = async (body) => {
     `http://localhost:8081/api/find-lich-theo-ngay`,
     body
   );
-  console.log("timphieu:", timphieu);
   return timphieu.data;
 };
 

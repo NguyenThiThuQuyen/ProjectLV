@@ -67,38 +67,36 @@ let getAllFindEatTimeslotsToSession = (data) => {
 //   });
 // };
 
-let getFindEatStimeslot = (data, array) => {
+let getFindEatStimeslot = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let find = await db.EatDetail.findAll({
-        where: {
-          eatdateId: data.eatdateId,
-          menuId: data.menuId,
-        },
-        include: [
-          {
-            model: db.EatTimeslot,
-            as: "eatTimeslotDataToEatDetail",
-            attributes: ["khunggioan", "sessionId", "id"],
+      if (data.obj.eatdateId !== undefined && data.obj.menuId !== undefined) {
+        let find = await db.EatDetail.findAll({
+          where: {
+            eatdateId: data.obj.eatdateId,
+            menuId: data.obj.menuId,
           },
-        ],
-        raw: true,
-        nest: true,
-      });
-      if (array && find) {
-        for (let i = 0; i < find.length; i++) {
-          for (let j = 0; j < array.length; j++) {
-            if (array[j].eatTimeslotId === find[i].id.toString()) {
-              array[j].checkTimes = true;
+          include: [
+            {
+              model: db.EatTimeslot,
+              as: "eatTimeslotDataToEatDetail",
+              attributes: ["khunggioan", "sessionId", "id"],
+            },
+          ],
+          raw: true,
+          nest: true,
+        });
+        if (data.array && find) {
+          for (let i = 0; i < find.length; i++) {
+            for (let j = 0; j < data.array.length; j++) {
+              if (data.array[j].id.toString() === find[i].eatTimeslotId) {
+                data.array[j].checkTimes = true;
+              }
             }
           }
+          resolve(data.array);
         }
-        resolve(array);
       }
-      resolve({
-        code: 0,
-        data: find,
-      });
     } catch (e) {
       reject(e);
     }

@@ -1,18 +1,39 @@
 const db = require("../models/index");
 
 let createNewPrescription = (data) => {
+  console.log("data:", data);
   return new Promise(async (resolve, reject) => {
     try {
-      await db.Prescription.create({
-        dateCreate: data.dateCreate,
+      let prescription = await db.Prescription.create({
         loidan: data.loidan,
         menuId: data.menuId,
         reservationTicketId: data.reservationTicketId,
       });
+      if (prescription) {
+        let temp = await db.Prescription.findOne({
+          where: { id: prescription.id },
+        });
+        if (temp) {
+          temp.dateCreate = prescription.createdAt;
+          await temp.save();
+        }
 
+        if (temp) {
+          let trangthai = await db.ReservationTicket.findOne({
+            where: {
+              id: data.reservationTicketId,
+            },
+          });
+          if (trangthai) {
+            console.log("đã tạo");
+            trangthai.status = "Đã tư vấn";
+            trangthai.save();
+          }
+        }
+      }
       resolve({
         code: 0,
-        message: "Tạo thành công!",
+        message: "Lưu thành công!",
       });
     } catch (e) {
       reject(e);
@@ -83,6 +104,15 @@ let getPrescription = (prescriptionId) => {
       if (prescriptionId && prescriptionId !== "ALL") {
         prescription = await db.Prescription.findOne({
           where: { id: prescriptionId },
+          // include: [
+          //   {
+          //     model: db.ReservationTicket,
+          //     as: "phieudatchoDataToPrescription",
+          //     attributes: ["status", "id"],
+          //   },
+          // ],
+          // raw: true,
+          // nest: true,
         });
       }
       resolve(prescription);

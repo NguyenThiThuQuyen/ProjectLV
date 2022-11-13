@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
-  dataGetTimthieutheongay,
+  dataGetTimPhieutheongay,
   timPhieuTheoNgayAPI,
   getPhieudatchoAPI,
   dataCheck,
@@ -16,6 +16,7 @@ import moment from "moment";
 
 const ConsultDoctor = () => {
   const [mang, setMang] = useState([]);
+  const [arrivalDate, SetArrivalDate] = useState();
   const check = useSelector(dataCheck);
 
   const user = JSON.parse(localStorage.getItem("user"));
@@ -27,18 +28,24 @@ const ConsultDoctor = () => {
   const today = new Date();
   let date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  const test = new Date(date).getTime();
+  // const test = new Date(date).getTime();
   // console.log("test date: ", test);
 
   const params = {
     doctorId: user.id,
-    DateChon: test,
+    DateChon: date,
   };
-  // console.log("params: ", params);
-  const data = useSelector(dataGetTimthieutheongay);
+  console.log("params: ", params);
+  const data = useSelector(dataGetTimPhieutheongay);
+  console.log("data:", data);
 
   useEffect(() => {
-    dispatch(timPhieuTheoNgayAPI(params));
+    dispatch(
+      timPhieuTheoNgayAPI({
+        doctorId: user.id,
+        DateChon: "today",
+      })
+    );
     // console.log("test:");
   }, []);
 
@@ -85,6 +92,7 @@ const ConsultDoctor = () => {
                 {data?.data &&
                   data?.data?.length > 0 &&
                   data?.data?.map((item, index) => {
+                    console.log("item: ", item);
                     let fotmatday = moment(
                       item?.patientDataToPhieudatcho?.birthday
                     ).format("DD/MM/YYYY");
@@ -107,12 +115,25 @@ const ConsultDoctor = () => {
                         </td>
 
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          <div
-                            className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
-                            onClick={() => handleConsult(item.id)}
-                          >
-                            Tư vấn
-                          </div>
+                          {item.status == "Đã tư vấn" ? (
+                            <>
+                              <div
+                                className="bg-green-600 hover:bg-green-700 p-1 rounded-md text-white"
+                                onClick={() => handleConsult(item.id)}
+                              >
+                                {item?.status}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
+                                onClick={() => handleConsult(item.id)}
+                              >
+                                Tư vấn
+                              </div>
+                            </>
+                          )}
                         </td>
                       </tr>
                     );
