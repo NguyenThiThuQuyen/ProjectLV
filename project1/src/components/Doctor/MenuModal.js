@@ -2,51 +2,59 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dataAllEatDates, getAllEatDatesAPI } from "../../redux/ngayanRedux";
 import {
-  dataAllDishes,
   getAllDishesAPI,
   dataGetFindDishToCate,
   getFindDishToCateAPI,
 } from "../../redux/monanRedux";
+
+import {
+  getAllFindEatTimeslotsToSessionAPI,
+  dataGetAllFindEatTimeslotsToSession,
+} from "../../redux/eatTimeslotRedux";
+
+import {
+  getAllSessionsAPI,
+  dataGetAllSessions,
+} from "../../redux/sessionRedux";
 import { createMenuAPI } from "../../redux/menuRedux";
 import { createPrescriptionAPI } from "../../redux/prescriptionRedux";
 import {
   dataGetAllCaterogy,
   getAllCaterogyAPI,
 } from "../../redux/danhmucmonanRedux";
-import { useNavigate } from "react-router-dom";
-import moment from "moment";
 import { circularProgressClasses } from "@mui/material";
+
 export default function MenuModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [dishId, setDishId] = useState();
-  const [gioan, setGioan] = useState();
   const [huongdanan, setHuongdanan] = useState();
   const [solan, setSolan] = useState();
   const [ghichu, setGhichu] = useState();
   const [eatdateId, setEatdateId] = useState();
   const [menuId, setMenuId] = useState();
+  const [eatTimeslotId, setEatTimeslotId] = useState();
 
   const [loidan, setLoidan] = useState();
 
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
   const dataFindDish = useSelector(dataGetFindDishToCate);
-  const dispatch = useDispatch();
+  const dataSession = useSelector(dataGetAllSessions);
+  const dataFindEatTimeslots = useSelector(dataGetAllFindEatTimeslotsToSession);
 
-  const today = new Date();
-  let date =
-    today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
+  const dispatch = useDispatch();
 
   const params = {
     eatdateId: eatdateId,
-
     dishId: dishId,
-    gioan: gioan,
     huongdanan: huongdanan,
     solan: solan,
     ghichu: ghichu,
     name: menuId,
+    eatTimeslotId: eatTimeslotId,
   };
+
+  console.log("params", params);
 
   useEffect(() => {
     setShowModal(true);
@@ -57,6 +65,8 @@ export default function MenuModal(props) {
     dispatch(getAllDishesAPI());
     dispatch(getAllCaterogyAPI());
     dispatch(getFindDishToCateAPI());
+    dispatch(getAllSessionsAPI());
+    // dispatch(getAllFindEatTimeslotsToSessionAPI());
   }, []);
 
   const handleFindDishToCate = (id) => {
@@ -71,7 +81,7 @@ export default function MenuModal(props) {
 
   const handleSave = async () => {
     let getData = await dispatch(createMenuAPI(params));
-    console.log("getData:", getData);
+    // console.log("getData:", getData);
     let getId = getData.payload.menu.data.menuId;
     let data2 = {
       eatdateId: eatdateId,
@@ -94,28 +104,45 @@ export default function MenuModal(props) {
     props.handleMo(false);
   };
 
+  const handleFindEatTimeslot = (id) => {
+    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
+  };
+
   return (
     <>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-5xl">
+            <div className="relative w-3/5 mx-auto max-w-5xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200">
                   <h3 className="text-base font-bold text-slate-500">
                     TẠO THỰC ĐƠN
                   </h3>
                 </div>
-                <div className="relative p-6 flex-auto">
+                <div className="relative px-6 py-4 flex-auto">
                   <form className="">
-                    <div className="grid grid-rows-4">
+                    <div className="grid grid-rows-5">
+                      <div className="grid row-span-1 grid-cols-2">
+                        <div className="col-span-2 mx-3 flex">
+                          <label htmlFor="" className="text-slate-900 ml-2">
+                            Tiêu đề thực đơn:
+                          </label>
+                          <input
+                            type="text"
+                            className="border-b uppercase ml-2 border-solid border-slate-400 w-2/3 h-6 outline-none"
+                            onChange={(event) => setMenuId(event.target.value)}
+                          />
+                        </div>
+                      </div>
+
                       <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-3">
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-900 ml-2">
                             Chọn ngày:
                           </label>
                           <select
-                            className="ml-3 w-1/2 h-11 border rounded-lg p-2 mt-1 bg-sky-300 outline-slate-300"
+                            className="ml-3 w-1/2 h-11 border rounded-lg p-2 bg-sky-300 outline-slate-300 shadow-lg hover:bg-sky-400"
                             id=""
                             onChange={(event) =>
                               setEatdateId(event.target.value)
@@ -132,21 +159,69 @@ export default function MenuModal(props) {
                               })}
                           </select>
                         </div>
-                      </div>
-                      <div className="grid row-span-1 grid-cols-3">
+
                         <div className="col-span-2 mx-3 flex">
-                          <label htmlFor="" className="text-slate-900 ml-2">
-                            Tiêu đề thực đơn:
+                          <label
+                            htmlFor=""
+                            className="text-slate-900 ml-2 mt-3"
+                          >
+                            Chọn buổi ăn:
                           </label>
-                          <input
-                            type="text"
-                            className="border-b uppercase ml-2 border-solid border-slate-400 w-2/3 h-6 outline-none"
-                            onChange={(event) => setMenuId(event.target.value)}
-                          />
+                          <div
+                            className="flex w-4/5"
+                            id=""
+                            onClick={(e) =>
+                              handleFindEatTimeslot(e.target.value)
+                            }
+                          >
+                            {dataSession.session &&
+                              dataSession.session.length > 0 &&
+                              dataSession.session.map((item, index) => {
+                                return (
+                                  <option
+                                    key={index}
+                                    value={item.id}
+                                    className="ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-300 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                  >
+                                    {item.name}
+                                  </option>
+                                );
+                              })}
+                          </div>
                         </div>
                       </div>
+
+                      <div className="grid row-span-1 grid-cols-4 mt-1">
+                        <div className="col-span-2 mx-3 mb-3">
+                          <label htmlFor="" className="text-slate-900 ml-2">
+                            Chọn giờ ăn
+                          </label>
+                          <div
+                            className="flex"
+                            id=""
+                            onClick={(event) =>
+                              setEatTimeslotId(event.target.value)
+                            }
+                          >
+                            {dataFindEatTimeslots &&
+                              dataFindEatTimeslots.length > 0 &&
+                              dataFindEatTimeslots.map((item, index) => {
+                                return (
+                                  <option
+                                    key={index}
+                                    value={item.id}
+                                    className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
+                                  >
+                                    {item.khunggioan}
+                                  </option>
+                                );
+                              })}
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="grid row-span-1 grid-cols-2">
-                        <div className="col-span-1 mx-3 mb-3">
+                        <div className="col-span-1 mx-3 mt-2">
                           <label htmlFor="" className="text-slate-900 ml-2">
                             Chọn mục dinh dưỡng
                           </label>
@@ -168,7 +243,7 @@ export default function MenuModal(props) {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-1 mx-3 mb-3">
+                        <div className="col-span-1 mx-3 mt-2">
                           <label htmlFor="" className="text-slate-900 ml-2">
                             Chọn món ăn
                           </label>
@@ -193,19 +268,7 @@ export default function MenuModal(props) {
                       </div>
 
                       <div className="grid row-span-1 grid-cols-2">
-                        <div className="col-span-1 mx-3 my-3">
-                          <label htmlFor="" className="text-slate-900 ml-2">
-                            Giờ ăn trong ngày
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            onChange={(event) => setGioan(event.target.value)}
-                          />
-                        </div>
-
-                        <div className="col-span-1 mx-3 my-3">
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-900 ml-2">
                             Số lần ăn
                           </label>
@@ -216,16 +279,15 @@ export default function MenuModal(props) {
                             onChange={(event) => setSolan(event.target.value)}
                           />
                         </div>
-                      </div>
-                      <div className="grid row-span-1 grid-cols-2">
-                        <div className="col-span-2 mx-3 my-3">
+
+                        <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-900 ml-2">
                             Ghi chú
                           </label>
                           <textarea
                             type="text"
                             placeholder="..."
-                            className=" w-full h-20 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className=" w-full h-10 border rounded-lg px-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setGhichu(event.target.value)}
                           />
                         </div>

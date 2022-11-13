@@ -25,17 +25,23 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "dishDataToEatDetail",
       });
+
+      EatDetail.belongsTo(models.EatTimeslot, {
+        foreignKey: "eatTimeslotId",
+        targetKey: "id",
+        as: "eatTimeslotDataToEatDetail",
+      });
     }
   }
   EatDetail.init(
     {
-      gioan: DataTypes.STRING,
       huongdanan: DataTypes.STRING,
       solan: DataTypes.STRING,
       ghichu: DataTypes.STRING,
       menuId: DataTypes.STRING,
       dishId: DataTypes.STRING,
       eatdateId: DataTypes.STRING,
+      eatTimeslotId: DataTypes.STRING,
     },
     {
       sequelize,

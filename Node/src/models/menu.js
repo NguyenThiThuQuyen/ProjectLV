@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "menuId",
         as: "menuDataToEatDetail",
       });
+
+      Menu.hasMany(models.Prescription, {
+        foreignKey: "menuId",
+        as: "menuDataToPrescription",
+      });
     }
   }
   Menu.init(

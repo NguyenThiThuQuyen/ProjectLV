@@ -8,13 +8,13 @@ let createNewMenuEatDetail = (data) => {
       });
 
       let chitietan = await db.EatDetail.create({
-        gioan: data.gioan,
         huongdanan: data.huongdanan,
         solan: data.solan,
         ghichu: data.ghichu,
         menuId: menu.id,
         dishId: data.dishId,
         eatdateId: data.eatdateId,
+        eatTimeslotId: data.eatTimeslotId,
       });
       resolve({
         code: 0,

@@ -105,6 +105,13 @@ let findPhieuDatChoInPrescription = (data) => {
           where: {
             reservationTicketId: data.reservationTicketId,
           },
+          include: [
+            {
+              model: db.Menu,
+              as: "menuDataToPrescription",
+              attributes: ["name", "id"],
+            },
+          ],
           // raw: true,
         });
 

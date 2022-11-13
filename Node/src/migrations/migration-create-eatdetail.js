@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      gioan: {
-        type: Sequelize.STRING,
-      },
       huongdanan: {
         type: Sequelize.STRING,
       },
@@ -27,6 +24,9 @@ module.exports = {
         type: Sequelize.STRING,
       },
       eatdateId: {
+        type: Sequelize.STRING,
+      },
+      eatTimeslotId: {
         type: Sequelize.STRING,
       },
       createdAt: {

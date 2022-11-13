@@ -293,8 +293,6 @@ const DetailDoctorHome = (props) => {
                   {dataFindTimeslot?.data &&
                     dataFindTimeslot?.data.length > 0 &&
                     dataFindTimeslot?.data.map((item, index) => {
-                      // console.log("item: ", item);
-
                       return (
                         <>
                           {item?.soluongdangky >= 1 ? (

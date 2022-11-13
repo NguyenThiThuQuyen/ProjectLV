@@ -19,6 +19,8 @@ const menuController = require("../controllers/menuController");
 const eatdateController = require("../controllers/eatdateController");
 const categoryController = require("../controllers/categoryController");
 const eatDetailController = require("../controllers/eatDetailController");
+const sessionController = require("../controllers/sessionController");
+const eatTimeslotController = require("../controllers/eatTimeslotController");
 
 const { Router } = require("express");
 
@@ -26,6 +28,39 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // tìm khung giờ trong chi tiết ăn theo ngày ăn và menuId
+  router.post(
+    "/api/find-eat-timeslot",
+    eatTimeslotController.handleFindEatStimeslot
+  );
+
+  // đếm chi tiết ăn theo khung giờ ăn, ngày ăn và menuId
+  // router.post(
+  //   "/api/count-eat-detail",
+  //   eatTimeslotController.handleCountEatDetail
+  // );
+
+  // tim danh muc theo id menu
+  router.get(
+    "/api/get-find-category-in-menuId",
+    categoryController.handleGetFindCateInMenuId
+  );
+
+  // lay tat ca buoi
+  router.get("/api/get-all-sessions", sessionController.handleGetAllSessions);
+
+  // lay tat ca khung gio an
+  router.get(
+    "/api/get-all-eat-timeslots",
+    eatTimeslotController.handleGetAllEatTimeslots
+  );
+
+  // lay tat ca khung gio an theo buoi
+  router.post(
+    "/api/get-find-all-eattimeslots-to-sessions",
+    eatTimeslotController.handleGetAllFindEatTimeslotsToSession
+  );
 
   // dang nhap bac si, admin
   router.post("/api/login", userController.handleLogin);
@@ -97,14 +132,24 @@ let initWebRoutes = (app) => {
     menuController.handleFindMenuToPrescription
   );
 
-  // tìm chi tiết ăn theo ngày
+  // tìm chi tiết ăn theo ngày và menuId
   router.post(
     "/api/find-eat-detail-to-date",
     eatDetailController.handleFindEatDetailToDate
   );
+
+  // tìm chi tiết ăn theo ngày
+  router.post("/api/find-eat-date", eatDetailController.handleFindEatDate);
+
+  // tạo chi tiết
   router.post(
     "/api/create-eat-detail",
     eatDetailController.handleCreateEatDetail
+  );
+  // xóa chi tiết
+  router.delete(
+    "/api/delete-eat-detail",
+    eatDetailController.handleDeleteEatDetail
   );
 
   router.get("/api/find-patient", parentController.handleFindPatient);
