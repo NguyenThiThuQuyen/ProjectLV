@@ -264,6 +264,8 @@ let findLichTheoNgay = (data) => {
         let temp = await db.ReservationTicket.findAll({
           raw: true,
         });
+        console.log("temp luc dau:", temp);
+
         if (temp && temp.length > 0) {
           temp = temp.map((item) => {
             console.log("item:", item);

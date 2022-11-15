@@ -171,8 +171,10 @@ export const ScheduleRedux = createSlice({
 export const dataGetAllSchedule = (state) => state.lichtuvan.getAllSchedule;
 export const dataGetDoctor = (state) => state.lichtuvan.getDoctor;
 export const dataGetFindSchedule = (state) => state.lichtuvan.getFindSchedule;
+//
 export const dataGetFindTimeslot = (state) =>
   state.lichtuvan.getFindTimeslotToDate;
+//
 export const dataFindIdSchedule = (state) =>
   state.lichtuvan.getFindIdScheduleToDetail;
 export const dataGetSchedule = (state) => state.lichtuvan.getSchedule;

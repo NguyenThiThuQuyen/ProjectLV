@@ -77,7 +77,7 @@ export default function PhieudatchoModal() {
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllSchedulesAPI());
-    dispatch(getFindScheduleToDoctorAPI());
+    // dispatch(getFindScheduleToDoctorAPI());
     dispatch(getFindIdScheduleAPI());
   }, [showModal]);
 
@@ -121,7 +121,9 @@ export default function PhieudatchoModal() {
   const handleFindTimeslot = (item) => {
     const params = {
       registerDate: item,
+      userId: doctorId,
     };
+    console.log("params: ", params);
     dispatch(getFindTimeslotAPI(params));
     setRegisterDate(item);
   };
@@ -308,6 +310,7 @@ export default function PhieudatchoModal() {
                             {mang &&
                               mang?.length > 0 &&
                               mang?.map((item, index) => {
+                                console.log("item: ", item);
                                 let day = "";
                                 day = moment(item).format("YYYY-MM-DD");
                                 return (
