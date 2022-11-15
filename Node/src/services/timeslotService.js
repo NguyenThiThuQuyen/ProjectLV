@@ -27,7 +27,6 @@ let updateTimeslot = (data) => {
       } else {
         let khunggio = await db.TimeSlot.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (khunggio) {
           khunggio.timeslot = data.timeslot;

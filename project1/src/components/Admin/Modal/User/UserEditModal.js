@@ -178,7 +178,7 @@ export default function UserModalEdit(props) {
                             <input
                               type="text"
                               placeholder="..."
-                              value={roleId}
+                              value={address}
                               className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                               onChange={(event) =>
                                 setAddress(event.target.value)

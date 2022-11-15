@@ -26,6 +26,7 @@ let handleUserLogin = (email, password) => {
       let isExist = await checkUserEmail(email);
       if (isExist) {
         let user = await db.User.findOne({
+          where: { email: email },
           attributes: [
             "id",
             "email",
@@ -35,9 +36,22 @@ let handleUserLogin = (email, password) => {
             "address",
             "phone",
             "gender",
+            "image",
           ],
-          where: { email: email },
+          include: [
+            {
+              model: db.Allcode,
+              as: "genderDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+            {
+              model: db.Allcode,
+              as: "roleDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+          ],
           raw: true,
+          nest: true,
         });
         if (user) {
           //compare password
@@ -77,7 +91,6 @@ let updateUserData = (data) => {
       } else {
         let user = await db.User.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (user && data.roleId === "R1") {
           user.name = data.name;
@@ -93,7 +106,7 @@ let updateUserData = (data) => {
             message: "Cập nhật thành công admin!",
           });
         } else {
-          if (user && data.roleId === "R2") {
+          if (user && data.roleId == "R2") {
             user.name = data.name;
             user.password = data.password;
             user.address = data.address;

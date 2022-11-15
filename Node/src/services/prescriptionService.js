@@ -52,7 +52,6 @@ let updatePrescriptionData = (data) => {
       } else {
         let prescription = await db.Prescription.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (prescription) {
           prescription.dateCreate = data.dateCreate;

@@ -71,7 +71,10 @@ let findTimeslot = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let find = await db.Schedule.findAll({
-        where: { registerDate: new Date(data.registerDate) },
+        where: {
+          registerDate: new Date(data.registerDate),
+          userId: data.userId,
+        },
         include: [
           {
             model: db.TimeSlot,
@@ -173,7 +176,6 @@ let updateSchedule = (data) => {
       } else {
         let schedule = await db.Schedule.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (schedule) {
           schedule.registerDate = data.registerDate;

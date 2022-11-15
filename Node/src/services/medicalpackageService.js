@@ -111,7 +111,6 @@ let updateGoiKham = (data) => {
       } else {
         let goiKham = await db.MedicalPackage.findOne({
           where: { id: data.id },
-          raw: true,
         });
         let giagoikham = await db.PackagePrice.findOne({
           where: { medicalpackageId: data.id },

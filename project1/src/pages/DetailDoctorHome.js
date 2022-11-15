@@ -94,6 +94,7 @@ const DetailDoctorHome = (props) => {
   const dataAllGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
+  console.log("dataFindTimeslot:", dataFindTimeslot);
 
   useEffect(() => {
     dispatch(getAllGoiKhamAPI());
@@ -123,6 +124,7 @@ const DetailDoctorHome = (props) => {
       });
     const params = {
       registerDate: mang[0],
+      userId: doctorId,
     };
     dispatch(getFindTimeslotAPI(params));
   }, [dataFindSchedule]);

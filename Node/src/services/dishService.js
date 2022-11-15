@@ -99,7 +99,6 @@ let updateDishData = (data) => {
       } else {
         let dish = await db.Dish.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (dish) {
           dish.name = data.name;

@@ -179,7 +179,6 @@ let updateParentData = (data) => {
       } else {
         let parent = await db.Parent.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (parent) {
           parent.name = data.name;

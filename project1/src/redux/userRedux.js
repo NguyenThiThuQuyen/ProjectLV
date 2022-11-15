@@ -87,6 +87,7 @@ export const deleteUserAPI = createAsyncThunk(
 
 export const editUserAPI = createAsyncThunk("datten/Edit", async (params) => {
   const edit = await editUser(params);
+  console.log("edit:", edit);
   return edit;
 });
 

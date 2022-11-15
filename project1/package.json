@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-chart": "^3.0.6",
+    "@devexpress/dx-react-chart-material-ui": "^3.0.6",
+    "@devexpress/dx-react-core": "^3.0.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/material": "^5.10.2",
@@ -14,6 +17,7 @@
     "aos": "^2.3.4",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",
+    "chart.js": "^3.9.1",
     "connected-react-router": "^6.9.3",
     "lodash": "^4.17.21",
     "markdown-it": "^12.1.0",
@@ -21,6 +25,8 @@
     "ra-data-simple-rest": "^4.3.0",
     "react": "^18.2.0",
     "react-admin": "^4.3.0",
+    "react-chartjs-2": "^4.3.1",
+    "react-circular-progressbar": "^2.1.0",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
@@ -61,7 +67,9 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "autoprefixer": "^10.4.8",
+    "faker": "^6.6.6",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
   }

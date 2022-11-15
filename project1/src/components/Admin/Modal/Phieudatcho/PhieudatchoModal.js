@@ -58,7 +58,11 @@ export default function PhieudatchoModal() {
   const dataDoctor = useSelector(dataGetDoctor);
   const dataGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
+  console.log("dataFindSchedule:", dataFindSchedule);
+
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
+  console.log("dataFindTimeslot:", dataFindTimeslot);
+
   const dataIdSchedule = useSelector(dataFindIdSchedule);
   // console.log("dataIdSchedule", dataIdSchedule);
 

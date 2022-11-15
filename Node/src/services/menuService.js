@@ -38,7 +38,6 @@ let updateMenu = (data) => {
       } else {
         let menu = await db.Menu.findOne({
           where: { id: data.id },
-          raw: true,
         });
         let chitietan = await db.EatDetail.findOne({
           where: { menuId: data.id },

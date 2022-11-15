@@ -87,8 +87,10 @@ const Sidebar = () => {
               <span className="text-slate-800">Thông báo</span>
             </li>
             <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
-              <AiOutlineBarChart className="mx-2 mt-1 text-xl text-teal-700" />
-              <span className="text-slate-800">Thống kê</span>
+              <Link to="/manager/" className="flex">
+                <AiOutlineBarChart className="mx-2 mt-1 text-xl text-teal-700" />
+                <span className="text-slate-800">Thống kê</span>
+              </Link>
             </li>
             <li className="flex p-3 items-center cursor-pointer hover:bg-slate-300">
               <FiSettings className="mx-2 mt-1 text-xl text-teal-700" />

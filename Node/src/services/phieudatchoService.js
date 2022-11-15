@@ -36,18 +36,18 @@ let createPhieudatcho = (data) => {
             doctorId: data.doctorId,
           });
 
-          if (datcho) {
-            let trangthai = await db.ReservationTicket.findOne({
-              where: {
-                id: data.reservationTicketId,
-              },
-            });
-            if (trangthai) {
-              console.log("đã tạo");
-              trangthai.status = "Đã tư vấn";
-              trangthai.save();
-            }
-          }
+          // if (datcho) {
+          //   let trangthai = await db.ReservationTicket.findOne({
+          //     where: {
+          //       id: data.reservationTicketId,
+          //     },
+          //   });
+          //   if (trangthai) {
+          //     console.log("đã tạo");
+          //     trangthai.status = "Đã tư vấn";
+          //     trangthai.save();
+          //   }
+          // }
 
           let findemail = await emailService.sendSimpleEmail({
             reciverEmail: data.email,
@@ -87,7 +87,6 @@ let updatePhieudatcho = (data) => {
       } else {
         let phieudat = await db.ReservationTicket.findOne({
           where: { id: data.id },
-          raw: true,
         });
         if (phieudat) {
           phieudat.bookingDate = data.bookingDate;
@@ -259,37 +258,52 @@ let findLichTheoNgay = (data) => {
           "-" +
           today.getDate();
 
-        let findday = await db.ReservationTicket.findAll({
-          where: { doctorId: data.doctorId, arrivalDate: date },
-          include: [
-            {
-              model: db.MedicalPackage,
-              as: "goituvanDataToPhieudatcho",
-              attributes: ["packageName", "id"],
-            },
-            {
-              model: db.Patient,
-              as: "patientDataToPhieudatcho",
-              attributes: ["childrentName", "gender", "birthday", "id"],
-            },
-            {
-              model: db.Schedule,
-              as: "scheduleDataToPhieudatcho",
-              attributes: ["timeslotId", "id"],
-              include: [
-                {
-                  model: db.TimeSlot,
-                  as: "timeSlotDataToSchedule",
-                  attributes: ["timeslot", "id"],
-                },
-              ],
-            },
-          ],
+        const testDate = new Date(date).getTime();
+        console.log("date:", testDate);
+
+        let temp = await db.ReservationTicket.findAll({
+          raw: true,
         });
-        resolve({
-          code: 0,
-          data: findday,
-        });
+        if (temp && temp.length > 0) {
+          temp = temp.map((item) => {
+            console.log("item:", item);
+            item.arrivalDate = new Date(item.arrivalDate).getTime();
+            return item;
+          });
+        }
+        console.log("temp:", temp);
+
+        // let findday = await db.ReservationTicket.findAll({
+        //   where: { doctorId: data.doctorId, arrivalDate: today },
+        //   include: [
+        //     {
+        //       model: db.MedicalPackage,
+        //       as: "goituvanDataToPhieudatcho",
+        //       attributes: ["packageName", "id"],
+        //     },
+        //     {
+        //       model: db.Patient,
+        //       as: "patientDataToPhieudatcho",
+        //       attributes: ["childrentName", "gender", "birthday", "id"],
+        //     },
+        //     {
+        //       model: db.Schedule,
+        //       as: "scheduleDataToPhieudatcho",
+        //       attributes: ["timeslotId", "id"],
+        //       include: [
+        //         {
+        //           model: db.TimeSlot,
+        //           as: "timeSlotDataToSchedule",
+        //           attributes: ["timeslot", "id"],
+        //         },
+        //       ],
+        //     },
+        //   ],
+        // });
+        // resolve({
+        //   code: 0,
+        //   data: findday,
+        // });
       } else if (data.DateChon && data.DateChon !== "today" && data.doctorId) {
         let findday = await db.ReservationTicket.findAll({
           where: { doctorId: data.doctorId, arrivalDate: data.DateChon },
