@@ -15,7 +15,7 @@ const getPhieudatcho = async (id) => {
 };
 
 const createPhieudatcho = async (body) => {
-  console.log("object,", body);
+  console.log("object:", body);
   const create = await axios.post(
     `http://localhost:8081/api/create-new-phieudatcho`,
     body

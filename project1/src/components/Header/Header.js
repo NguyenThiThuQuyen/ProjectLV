@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-// import { logout, dataCheckLogout } from "../../redux/Auth/adminRedux";
 import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
-// import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
 import { IoIosLogOut } from "react-icons/io";
+import { FaUserCircle, FaRegAddressBook } from "react-icons/fa";
 import "./Header.css";
 import logo from "../../assets/upload/logo.png";
 import { UserMenuClasses } from "react-admin";
 
 function Header() {
+  const [showModal, setShowModal] = useState(false);
+  const [showInfor, setShowInfor] = useState(false);
   const [button, setButton] = useState(true);
   const [navbar, setNavbar] = useState(false);
   const dispatch = useDispatch();
   const checklogoutguest = useSelector(dataCheckLogoutGuest);
-  // console.log("checklogoutguest:", checklogoutguest);
 
   const showButton = () => {
     if (window.innerWidth < 960) {
@@ -24,7 +24,6 @@ function Header() {
     }
   };
   const parent = JSON.parse(localStorage.getItem("parent"));
-  // console.log("parent", parent);
 
   useEffect(() => {
     showButton();
@@ -43,6 +42,10 @@ function Header() {
     }
   };
   window.addEventListener("scroll", changeBackground);
+
+  const handleOpenClose = () => {
+    setShowInfor(!showInfor);
+  };
 
   return (
     <>
@@ -65,8 +68,8 @@ function Header() {
               <li className="flex mx-8">TIN TỨC</li>
               <li className="flex ml-20 ">
                 {parent != null ? (
-                  <div className="link_style flex">
-                    <div className="flex">
+                  <div className="flex">
+                    <div className="flex" onClick={() => handleOpenClose()}>
                       <div className="">
                         <img
                           src="https://images.pexels.com/photos/941693/pexels-photo-941693.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
@@ -75,8 +78,63 @@ function Header() {
                           className="w-8 h-8 rounded-[50%]"
                         />
                       </div>
-                      <div className="mx-2">{parent?.name}</div>
+                      <div
+                        className="mx-2 link_style"
+                        // onClick={() => setShowModal(true)}
+                      >
+                        {parent?.name}
+                      </div>
                     </div>
+                    {showInfor == true ? (
+                      <>
+                        <div className="grid justify-items-end fixed inset-0 z-50 outline-none focus:outline-none mt-12 mr-32">
+                          <div className="relative w-auto my-6 max-w-5xl">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-sky-50 outline-none focus:outline-none">
+                              <div className="flex items-start justify-between px-10 py-5 border-b border-solid border-slate-300">
+                                <div className="text-black">
+                                  <div className="flex">
+                                    <FaUserCircle
+                                      size={34}
+                                      className="mt-2 mr-4 text-slate-600"
+                                    />
+                                    <div className="">
+                                      <div className="text-slate-800">
+                                        Xin chào!
+                                      </div>
+                                      <div className="font-medium">
+                                        {parent?.name}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="relative px-6 pb-5 flex-auto">
+                                <div className="flex mt-3">
+                                  <FaRegAddressBook className="mt-1 text-slate-700" />
+                                  <div className="text-slate-700 ml-2">
+                                    Hồ sơ bệnh nhân
+                                  </div>
+                                </div>
+                                <div className="flex mt-3">
+                                  <FaRegAddressBook className="mt-1 text-slate-700" />
+                                  <div className="text-slate-700 ml-2">
+                                    Hồ sơ bệnh nhân
+                                  </div>
+                                </div>
+                                <div className="flex mt-3">
+                                  <FaRegAddressBook className="mt-1 text-slate-700" />
+                                  <div className="text-slate-700 ml-2">
+                                    Hồ sơ bệnh nhân
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                     <div className="ml-2 mt-1" onClick={() => handleLogout()}>
                       <IoIosLogOut size={18} />
                     </div>

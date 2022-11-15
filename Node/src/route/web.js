@@ -181,6 +181,12 @@ let initWebRoutes = (app) => {
   router.delete("/api/delete-user", userController.handleDeleteUser);
 
   // patient
+
+  router.get(
+    "/api/get-all-patient-to-parentId",
+    patientController.handleGetAllPatientToIdParent
+  );
+
   router.get("/api/get-patient", patientController.handleGetPatient);
   router.get("/api/get-all-patients", patientController.handleGetAllPatients);
   router.get(
@@ -195,6 +201,13 @@ let initWebRoutes = (app) => {
   router.delete("/api/delete-patient", patientController.handleDeletePatient);
 
   // phu huynh
+
+  // tìm thông tin ba mẹ và con theo email
+  // router.post(
+  //   "/api/create-new-parent-patient",
+  //   parentController.handleCreateNewParentPatient
+  // );
+
   router.post(
     "/api/create-new-parent-patient",
     parentController.handleCreateNewParentPatient

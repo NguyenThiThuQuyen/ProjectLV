@@ -137,7 +137,7 @@ export default function GoiKhamModal() {
                             Ngày áp dụng
                           </label>
                           <DatePicker
-                            className="w-full border border-2 p-2 rounded-md mt-1  outline-slate-300"
+                            className="w-full border-2 p-2 rounded-md mt-1  outline-slate-300"
                             selected={applydateId}
                             onChange={(date) => setApplydateId(date)}
                             dateFormat="yyyy/MM/dd"

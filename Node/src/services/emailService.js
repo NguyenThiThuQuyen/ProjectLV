@@ -25,7 +25,7 @@ let sendSimpleEmail = async (dataSend) => {
     <div><b>Số điện thoại: ${dataSend.phone}</b></div>
     <div><b>Tên trẻ: ${dataSend.childrentName}</b></div>
     <div><b>Ngày sinh: ${dataSend.birthday}</b></div>
-    <div><b>Giới tính: ${dataSend.gender}</b></div>
+   
 
     <p>Thông tin tư vấn:</p>
     <div><b>Gói tư vấn: ${dataSend.testGoiKham}</b></div>

@@ -69,6 +69,23 @@ let handleSearchParent = async (req, res) => {
   });
 };
 
+let handleGetAllPatientToIdParent = async (req, res) => {
+  let parentId = req.query.parentId;
+  if (!parentId) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      findallpatients: [],
+    });
+  }
+  let findallpatient = await patientService.getAllPatientToIdParent(parentId);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    findallpatient,
+  });
+};
+
 module.exports = {
   handleCreateNewPatient: handleCreateNewPatient,
   handleGetAllPatients: handleGetAllPatients,
@@ -76,4 +93,5 @@ module.exports = {
   handleDeletePatient: handleDeletePatient,
   handleGetPatient: handleGetPatient,
   handleSearchParent: handleSearchParent,
+  handleGetAllPatientToIdParent: handleGetAllPatientToIdParent,
 };

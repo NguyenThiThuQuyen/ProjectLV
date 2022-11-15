@@ -20,7 +20,6 @@ const ConsultDoctor = () => {
   const check = useSelector(dataCheck);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  // console.log("user: ", user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,8 +27,6 @@ const ConsultDoctor = () => {
   const today = new Date();
   let date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  // const test = new Date(date).getTime();
-  // console.log("test date: ", test);
 
   const params = {
     doctorId: user.id,

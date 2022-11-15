@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { ImDownload3, ImUpload3 } from "react-icons/im";
+
 import {
   createScheduleAPI,
   getAllDoctorAPI,
@@ -91,6 +92,7 @@ export default function ScheduleModal() {
   };
 
   const dispatch = useDispatch();
+
   const handleSave = async () => {
     dispatch(createScheduleAPI(params));
     let result = [];
@@ -118,7 +120,10 @@ export default function ScheduleModal() {
       userId: params.userId,
       registerDate: params.registerDate * 1,
     });
-    console.log("check saveBulkScheduleDoctor:", res);
+    if (res.code == 0) {
+      toast.success(res.message);
+    }
+
     console.log("check result:", result);
     setShowModal(false);
   };

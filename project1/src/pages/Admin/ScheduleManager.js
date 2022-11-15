@@ -39,6 +39,7 @@ const ScheduleManager = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex w-full">
         <Sidebar />
         <div className="flex-initial w-5/6">

@@ -162,6 +162,33 @@ let getSearchParentById = (id) => {
   });
 };
 
+let getAllPatientToIdParent = (parentId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let findparentId = "";
+      findparentId = await db.Patient.findAll({
+        where: { parentId: parentId },
+        include: [
+          {
+            model: db.Parent,
+            as: "parentDataToPatient",
+            attributes: ["name", "email", "phone", "gender", "id"],
+          },
+          {
+            model: db.Allcode,
+            as: "genderDataToPatient",
+            attributes: ["value", "keyMap", "type"],
+          },
+        ],
+      });
+
+      resolve(findparentId);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewPatient: createNewPatient,
   getAllPatient: getAllPatient,
@@ -169,4 +196,5 @@ module.exports = {
   deletePatient: deletePatient,
   getPatient: getPatient,
   getSearchParentById: getSearchParentById,
+  getAllPatientToIdParent: getAllPatientToIdParent,
 };

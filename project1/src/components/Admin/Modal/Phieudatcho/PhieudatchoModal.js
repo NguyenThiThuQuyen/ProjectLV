@@ -71,6 +71,12 @@ export default function PhieudatchoModal() {
   const array1 = useSelector(ArrayPatient);
   const [mang, setMang] = useState([]);
 
+  // const today = new Date();
+  // let dataDate =
+  //   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  // const test = new Date(dataDate).getTime();
+  // console.log("test date lay ngay: ", test);
+
   useEffect(() => {
     dispatch(getAllPatientsAPI());
     dispatch(getAllDoctorAPI());
@@ -313,6 +319,10 @@ export default function PhieudatchoModal() {
                                 console.log("item: ", item);
                                 let day = "";
                                 day = moment(item).format("YYYY-MM-DD");
+
+                                // const testday = new Date(day).getTime();
+                                // console.log(testday);
+
                                 return (
                                   <option key={index} value={item}>
                                     {day}

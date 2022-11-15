@@ -4,7 +4,7 @@ import { createPhieudatchoAPI } from "../../redux/phieudatchoRedux";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 export default function XemChiTietLichModal(props) {
-  // console.log("props params 111:", props);
+  console.log("props params 111:", props);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
@@ -41,6 +41,9 @@ export default function XemChiTietLichModal(props) {
     }
   };
 
+  const ngaykham = moment(props?.params2?.registerDate).format("DD/MM/yyyy");
+  const ngaysinh = moment(props?.params?.birthday).format("DD/MM/yyyy");
+
   return (
     <>
       {showModal ? (
@@ -53,7 +56,8 @@ export default function XemChiTietLichModal(props) {
                     XEM THÔNG TIN VỪA NHẬP
                   </h3>
                 </div>
-                <div className="relative p-6 flex-auto">
+
+                {/* <div className="relative p-6 flex-auto">
                   <div className="flex">
                     <span>Tên phụ huynh: </span>
                     <div className="mx-5">
@@ -78,13 +82,136 @@ export default function XemChiTietLichModal(props) {
 
                   <div className="flex">
                     <span>Ngày khám: </span>
-                    <div className="mx-5">{props?.params2?.registerDate}</div>
+                    <div className="mx-5">{ngaykham}</div>
                   </div>
                   <div className="flex">
                     <span>Khung gio kham: </span>
                     <div className="mx-5">{props?.params2?.testTimeslot}</div>
                   </div>
+                </div> */}
+
+                <div className="relative p-6 flex-auto">
+                  <form className="">
+                    <div className="border-2 border-slate-100 shadow-lg mt-5">
+                      <div className="text-green-700 uppercase text-md font-medium mt-3 mx-3">
+                        Thông tin phụ huynh
+                      </div>
+                      <div className="grid grid-rows-1">
+                        <div className="grid row-span-1 grid-cols-3">
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Tên phụ huynh
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b uppercase ml-2 border-solid border-slate-400 w-auto outline-none mt-1 bg-sky-100 text-sky-900"
+                              // onChange={(event) => setName(event.target.value)}
+                            >
+                              {props?.params?.name}
+                            </div>
+                          </div>
+
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Điện thoại
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b uppercase ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                              // onChange={(event) => setName(event.target.value)}
+                            >
+                              {props?.params?.phone}
+                            </div>
+                          </div>
+
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Email
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                              // onChange={(event) => setName(event.target.value)}
+                            >
+                              {props?.params?.email}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-rows-3">
+                      <div className="grid row-span-1 grid-cols-3">
+                        <div className="col-span-1 mx-3 my-3">
+                          <label
+                            htmlFor=""
+                            className="text-sky-800 font-medium ml-2"
+                          >
+                            Tên trẻ
+                          </label>
+                          <div
+                            type="text"
+                            placeholder="..."
+                            disabled
+                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                            // onChange={(event) => setName(event.target.value)}
+                          >
+                            {props?.params?.childrentName}
+                          </div>
+                        </div>
+
+                        <div className="col-span-1 mx-3 my-3">
+                          <label
+                            htmlFor=""
+                            className="text-sky-800 font-medium ml-2"
+                          >
+                            Ngày sinh
+                          </label>
+                          <div
+                            type="text"
+                            placeholder="..."
+                            disabled
+                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                            // onChange={(event) => setName(event.target.value)}
+                          >
+                            {ngaysinh}
+                          </div>
+                        </div>
+
+                        <div className="col-span-1 mx-3 my-3">
+                          <label htmlFor="" className="text-sky-700 ml-2">
+                            Ngày sinh
+                          </label>
+                          <div
+                            type="text"
+                            placeholder="..."
+                            disabled
+                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                            // onChange={(event) => setName(event.target.value)}
+                          >
+                            {ngaysinh}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
+
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

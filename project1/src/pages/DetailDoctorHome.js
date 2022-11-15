@@ -3,8 +3,6 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { AiFillStar } from "react-icons/ai";
 import { FiUsers } from "react-icons/fi";
-import { BsPersonCheck } from "react-icons/bs";
-import hinh1 from "../assets/upload/bacsi2.jpg";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { Buffer } from "buffer";
@@ -12,8 +10,7 @@ import { getAUserAPI, dataGetAUser, dataCheck } from "../redux/userRedux";
 import { getATimeslotAPI, dataGetATimeslot } from "../redux/timeslotRedux";
 import { getLoginGuestAPI, dataCheck2 } from "../redux/Auth/guestRedux";
 import { useLocation, useParams } from "react-router-dom";
-import { createPhieudatchoAPI } from "../redux/phieudatchoRedux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import XemChiTietLichModal from "../components/Guest/XemChiTietLichModal";
 
@@ -62,14 +59,14 @@ const DetailDoctorHome = (props) => {
   const doctorId = userId?.userId;
 
   const parent = JSON.parse(localStorage.getItem("parent"));
-  // console.log("parent:", parent);
+  console.log("patientId:", patientId);
   const patientId1 = parent?.parentDataToPatient[0];
   // console.log("-----------patientId1:", patientId1);
 
   const params = {
     doctorId: doctorId,
     userId: userId.userId,
-    patientId: newCreateParentId,
+    patientId: parent ? patientId : newCreateParentId,
     medicalpackageId: medicalpackageId,
     registerDate: registerDate,
     timeslotId: timeslotId,
@@ -94,7 +91,6 @@ const DetailDoctorHome = (props) => {
   const dataAllGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
-  console.log("dataFindTimeslot:", dataFindTimeslot);
 
   useEffect(() => {
     dispatch(getAllGoiKhamAPI());
@@ -109,8 +105,6 @@ const DetailDoctorHome = (props) => {
   let date2 =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   let day2 = new Date(date2).getTime();
-
-  // console.log("day2: ", day2);
 
   useEffect(() => {
     dataFindSchedule?.schedule?.data &&
@@ -165,8 +159,16 @@ const DetailDoctorHome = (props) => {
     setTestGiaGoiKham(testgia);
   };
 
+  // useEffect(() => {
+  //   setNewCreateParentId(parent?.parentDataToPatient[0].id);
+  // }, [parent?.parentDataToPatient]);
+
   useEffect(() => {
-    setNewCreateParentId(parent?.parentDataToPatient[0].id);
+    parent?.parentDataToPatient &&
+      parent?.parentDataToPatient?.length > 0 &&
+      parent?.parentDataToPatient?.map((item, index) => {
+        setNewCreateParentId(item?.id);
+      });
   }, [parent?.parentDataToPatient]);
 
   const date =
@@ -208,6 +210,16 @@ const DetailDoctorHome = (props) => {
     registerDate: registerDate,
   };
 
+  const handleClickBtnTime = (time) => {
+    if (timeslotId && timeslotId.length > 0) {
+      let times = timeslotId.map((item) => {
+        if (item.id === time.id) item.isSelected = !item.isSelected;
+        return item;
+      });
+      setTimeslotId(times);
+    }
+  };
+
   return (
     <div className="h-screen bg-slate-50">
       <Header />
@@ -233,8 +245,8 @@ const DetailDoctorHome = (props) => {
                     </div>
                   </div>
                   <div className="text-slate-400">Chuyên khoa Nhi</div>
-                  <div className="text-slate-400">Id patient</div>
-                  <select
+                  {/* <div className="text-slate-400">Id patient</div> */}
+                  {/* <select
                     className="text-slate-400"
                     onChange={(e) => handleCrete(e.target.value)}
                   >
@@ -247,7 +259,7 @@ const DetailDoctorHome = (props) => {
                           </option>
                         );
                       })}
-                  </select>
+                  </select> */}
                 </div>
               </div>
               <div className="mt-5">
@@ -264,6 +276,32 @@ const DetailDoctorHome = (props) => {
 
             <div className="col-span-1 border-y-[1px] border-r-[1px] p-5 relative">
               <div className="font-semibold">Lịch tư vấn trực tuyến:</div>
+              {parent !== null ? (
+                <>
+                  <div className="my-4">
+                    <label htmlFor="" className="text-slate-700">
+                      Tên trẻ:
+                    </label>
+                    <select
+                      className="h-10 border p-1 mt-1 ml-5 bg-green-300 outline-slate-300"
+                      onChange={(e) => setPatientId(e.target.value)}
+                    >
+                      {parent?.parentDataToPatient &&
+                        parent?.parentDataToPatient?.length > 0 &&
+                        parent?.parentDataToPatient?.map((item, index) => {
+                          return (
+                            <option key={index} value={item.id}>
+                              {item.childrentName}
+                            </option>
+                          );
+                        })}
+                    </select>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
               <div className="my-4">
                 <label htmlFor="" className="text-slate-700">
                   Ngày tư vấn:
@@ -277,7 +315,7 @@ const DetailDoctorHome = (props) => {
                     mang?.length > 0 &&
                     mang?.map((item, index) => {
                       let day = "";
-                      day = moment(item).format("YYYY-MM-DD");
+                      day = moment(item).format("DD/MM/YYYY");
                       return (
                         <option key={index} value={item}>
                           {day}
@@ -291,7 +329,7 @@ const DetailDoctorHome = (props) => {
                 <label htmlFor="" className="text-slate-700">
                   Khung giờ tư vấn
                 </label>
-                <div className="flex">
+                <div className="grid grid-cols-3">
                   {dataFindTimeslot?.data &&
                     dataFindTimeslot?.data.length > 0 &&
                     dataFindTimeslot?.data.map((item, index) => {
@@ -303,7 +341,7 @@ const DetailDoctorHome = (props) => {
                                 key={index}
                                 value={item.timeslotId}
                                 title="Đã hết chỗ"
-                                className="border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                                className="border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 col-span-1 mb-2 cursor-not-allowed"
                               >
                                 {item?.timeSlotDataToSchedule?.timeslot}
                               </div>
@@ -315,7 +353,11 @@ const DetailDoctorHome = (props) => {
                               onClick={() =>
                                 handleGetIdTimeslot(item.timeslotId)
                               }
-                              className="border p-2 bg-sky-200 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                              className={
+                                item.timeslotId === timeslotId
+                                  ? "border p-2 bg-sky-400 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                                  : "border p-2 bg-sky-200 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                              }
                             >
                               {item?.timeSlotDataToSchedule?.timeslot}
                             </div>

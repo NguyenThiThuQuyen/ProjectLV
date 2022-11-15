@@ -1,5 +1,6 @@
 const { cloneDeep } = require("lodash");
 const db = require("../models/index");
+const moment = require("moment");
 require("dotenv").config();
 const emailService = require("./emailService");
 
@@ -36,32 +37,19 @@ let createPhieudatcho = (data) => {
             doctorId: data.doctorId,
           });
 
-          // if (datcho) {
-          //   let trangthai = await db.ReservationTicket.findOne({
-          //     where: {
-          //       id: data.reservationTicketId,
-          //     },
-          //   });
-          //   if (trangthai) {
-          //     console.log("đã tạo");
-          //     trangthai.status = "Đã tư vấn";
-          //     trangthai.save();
-          //   }
-          // }
-
           let findemail = await emailService.sendSimpleEmail({
             reciverEmail: data.email,
-            // name: data.name,
-            // phone: data.phone,
+            name: data.name,
+            phone: data.phone,
 
-            // childrentName: data.childrentName,
-            // birthday: data.birthday,
+            childrentName: data.childrentName,
+            birthday: moment(data.birthday).format("DD/MM/YYYY"),
             // gender: data.gender,
 
-            // testGoiKham: data.testGoiKham,
-            // testTimeslot: data.testTimeslot,
-            // testGiaGoiKham: data.testGiaGoiKham,
-            arrivalDate: data.arrivalDate,
+            testGoiKham: data.testGoiKham,
+            testTimeslot: data.testTimeslot,
+            testGiaGoiKham: data.testGiaGoiKham,
+            arrivalDate: moment(data.arrivalDate).format("DD/MM/YYYY"),
           });
           resolve({
             code: 0,
@@ -250,62 +238,66 @@ let findLichTheoNgay = (data) => {
     try {
       if (data.DateChon === "today" && data.doctorId) {
         console.log("TH1");
-        let today = new Date();
+        const today = new Date();
         let date =
           today.getFullYear() +
           "-" +
           (today.getMonth() + 1) +
           "-" +
           today.getDate();
+        // const test = new Date(date).getTime();
+        // console.log("test date: ", test);
+        // console.log("testDate:", testDate);
+        // console.log("date:", date);
 
-        const testDate = new Date(date).getTime();
-        console.log("date:", testDate);
+        // let temp = await db.ReservationTicket.findAll({
+        //   raw: true,
+        // });
+        // console.log("temp luc dau:", temp);
+        // console.log("today:", today);
 
-        let temp = await db.ReservationTicket.findAll({
-          raw: true,
+        // if (temp && temp.length > 0) {
+        //   temp = temp.map((item) => {
+        //     console.log("eitm:", item);
+        //     item.arrivalDate = new Date(item.arrivalDate).getTime();
+        //     console.log("item.arrivalDate", typeof item.arrivalDate);
+        //     console.log("item.arrivalDate 1", item.arrivalDate);
+        //     return item;
+        //   });
+        // }
+        // console.log("temp:", temp);
+
+        let findday = await db.ReservationTicket.findAll({
+          where: { doctorId: data.doctorId, arrivalDate: date },
+          include: [
+            {
+              model: db.MedicalPackage,
+              as: "goituvanDataToPhieudatcho",
+              attributes: ["packageName", "id"],
+            },
+            {
+              model: db.Patient,
+              as: "patientDataToPhieudatcho",
+              attributes: ["childrentName", "gender", "birthday", "id"],
+            },
+            {
+              model: db.Schedule,
+              as: "scheduleDataToPhieudatcho",
+              attributes: ["timeslotId", "id"],
+              include: [
+                {
+                  model: db.TimeSlot,
+                  as: "timeSlotDataToSchedule",
+                  attributes: ["timeslot", "id"],
+                },
+              ],
+            },
+          ],
         });
-        console.log("temp luc dau:", temp);
-
-        if (temp && temp.length > 0) {
-          temp = temp.map((item) => {
-            console.log("item:", item);
-            item.arrivalDate = new Date(item.arrivalDate).getTime();
-            return item;
-          });
-        }
-        console.log("temp:", temp);
-
-        // let findday = await db.ReservationTicket.findAll({
-        //   where: { doctorId: data.doctorId, arrivalDate: today },
-        //   include: [
-        //     {
-        //       model: db.MedicalPackage,
-        //       as: "goituvanDataToPhieudatcho",
-        //       attributes: ["packageName", "id"],
-        //     },
-        //     {
-        //       model: db.Patient,
-        //       as: "patientDataToPhieudatcho",
-        //       attributes: ["childrentName", "gender", "birthday", "id"],
-        //     },
-        //     {
-        //       model: db.Schedule,
-        //       as: "scheduleDataToPhieudatcho",
-        //       attributes: ["timeslotId", "id"],
-        //       include: [
-        //         {
-        //           model: db.TimeSlot,
-        //           as: "timeSlotDataToSchedule",
-        //           attributes: ["timeslot", "id"],
-        //         },
-        //       ],
-        //     },
-        //   ],
-        // });
-        // resolve({
-        //   code: 0,
-        //   data: findday,
-        // });
+        resolve({
+          code: 0,
+          data: findday,
+        });
       } else if (data.DateChon && data.DateChon !== "today" && data.doctorId) {
         let findday = await db.ReservationTicket.findAll({
           where: { doctorId: data.doctorId, arrivalDate: data.DateChon },

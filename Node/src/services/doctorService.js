@@ -139,7 +139,7 @@ let bulkCreateSchedule = (data) => {
       }
       resolve({
         code: 0,
-        message: "Success thành công!",
+        message: "Tạo lịch thành công!",
       });
     } catch (e) {
       reject(e);

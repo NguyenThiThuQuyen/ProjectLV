@@ -3,23 +3,27 @@ import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import NavbarConsult from "../../components/Doctor/NavbarConsult";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
 import {
   dataGetTimPhieutheongay,
   timPhieuTheoNgayAPI,
+  getPhieudatchoAPI,
   dataCheck,
 } from "../../redux/phieudatchoRedux";
 import { dataGetFindSchedule } from "../../redux/scheduleRedux";
-
+import { current } from "@reduxjs/toolkit";
+import { useNavigate } from "react-router-dom";
 const ConsultAllDate = () => {
   const [mang, setMang] = useState([]);
-  const [dateChon, setDateChon] = useState();
+  const [dateChon, setDateChon] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
   const check = useSelector(dataCheck);
-
+  const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   console.log("user: ", user);
-
   const dispatch = useDispatch();
 
   //   const today = new Date();
@@ -30,6 +34,7 @@ const ConsultAllDate = () => {
 
   const params = {
     doctorId: user.id,
+    DateChon: moment(dateChon).format("YYYY-MM-DD"),
   };
   console.log("params: ", params);
 
@@ -40,31 +45,13 @@ const ConsultAllDate = () => {
   useEffect(() => {
     dispatch(timPhieuTheoNgayAPI(params));
     console.log("test:");
-  }, []);
+  }, [dateChon]);
 
-  useEffect(() => {
-    data?.data &&
-      data?.data?.length > 0 &&
-      data?.data?.map((item, index) => {
-        const kt = XoaTrungTrongMang(item?.arrivalDate);
-        if (kt) {
-          mang.push(item?.arrivalDate);
-        }
-      });
+  console.log("dateChon:", dateChon);
 
-    // const params = {
-    //   arrivalDate: mang[0],
-    // };
-    // dispatch(getFindTimeslotAPI(params));
-  }, [data]);
-
-  const XoaTrungTrongMang = (date) => {
-    for (var i = 0; i < mang.length; i++) {
-      if (mang[i].toString() == date.toString()) {
-        return false;
-      }
-    }
-    return true;
+  const handleConsult = async (id) => {
+    navigate(`/manager/prescription/${id}`);
+    dispatch(getPhieudatchoAPI(id));
   };
 
   return (
@@ -80,22 +67,19 @@ const ConsultAllDate = () => {
                 <label htmlFor="" className="text-slate-600 ml-2">
                   Chọn ngày:
                 </label>
-                <select
-                  className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
-                  id=""
-                  onChange={(event) => setDateChon(event.target.value)}
-                >
-                  {mang &&
-                    mang.length > 0 &&
-                    mang.map((item, index) => {
-                      let fotmatday = moment(item).format("DD/MM/YYYY");
-                      return (
-                        <option key={index} value={item}>
-                          {fotmatday}
-                        </option>
-                      );
-                    })}
-                </select>
+
+                <DatePicker
+                  className="w-full border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                  selected={dateChon}
+                  required
+                  // value={dateChon}
+                  onChange={(date) => setDateChon(date)}
+                  date={new Date()}
+                  dateFormat="dd/MM/yyyy"
+                  isClearable
+                  showYearDropdown
+                  scrollableMonthYearDropdown
+                />
               </div>
             </div>
             <table className="border border-slate-200 mt-10">
@@ -118,10 +102,11 @@ const ConsultAllDate = () => {
                   </th>
                 </tr>
               </thead>
-              {/* <tbody>
+              <tbody>
                 {data?.data &&
                   data?.data?.length > 0 &&
                   data?.data?.map((item, index) => {
+                    console.log("item: ", item);
                     let fotmatday = moment(
                       item?.patientDataToPhieudatcho?.birthday
                     ).format("DD/MM/YYYY");
@@ -144,17 +129,30 @@ const ConsultAllDate = () => {
                         </td>
 
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          <div
-                            className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
-                            onClick={() => handleConsult(item.id)}
-                          >
-                            Tư vấn
-                          </div>
+                          {item.status == "Đã tư vấn" ? (
+                            <>
+                              <div
+                                className="bg-green-600 hover:bg-green-700 p-1 rounded-md text-white"
+                                onClick={() => handleConsult(item.id)}
+                              >
+                                {item?.status}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
+                                onClick={() => handleConsult(item.id)}
+                              >
+                                Tư vấn
+                              </div>
+                            </>
+                          )}
                         </td>
                       </tr>
                     );
                   })}
-              </tbody> */}
+              </tbody>
             </table>
           </div>
         </div>
