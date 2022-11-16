@@ -3,6 +3,7 @@ import {
   getPrescription,
   createPrescription,
   findIdPhieuDatChoPrescription,
+  editPrescription,
 } from "./services/prescriptionService";
 import { toast } from "react-toastify";
 
@@ -11,6 +12,14 @@ export const getPrescriptionAPI = createAsyncThunk(
   async (params) => {
     const getltv = await getPrescription(params);
     return getltv;
+  }
+);
+
+export const editPrescriptionAPI = createAsyncThunk(
+  "hoadon/EditH",
+  async (params) => {
+    const editHd = await editPrescription(params);
+    return editHd;
   }
 );
 
@@ -53,6 +62,15 @@ export const PrescriptionRedux = createSlice({
     );
 
     builder.addCase(createPrescriptionAPI.fulfilled, (state, action) => {
+      state.check = true;
+      if (action.payload.code == "0") {
+        toast.success(action.payload.message);
+      } else {
+        toast.error(action.payload.message);
+      }
+    });
+
+    builder.addCase(editPrescriptionAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code == "0") {
         toast.success(action.payload.message);

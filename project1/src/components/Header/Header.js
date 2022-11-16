@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
 import { IoIosLogOut } from "react-icons/io";
 import { FaUserCircle, FaRegAddressBook } from "react-icons/fa";
+import { BiBookmarkAltPlus, BiBellMinus } from "react-icons/bi";
 import "./Header.css";
 import logo from "../../assets/upload/logo.png";
 import { UserMenuClasses } from "react-admin";
@@ -90,11 +91,11 @@ function Header() {
                         <div className="grid justify-items-end fixed inset-0 z-50 outline-none focus:outline-none mt-12 mr-32">
                           <div className="relative w-auto my-6 max-w-5xl">
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-sky-50 outline-none focus:outline-none">
-                              <div className="flex items-start justify-between px-10 py-5 border-b border-solid border-slate-300">
+                              <div className="flex items-start justify-between pr-10 pl-5 py-5 border-b border-solid border-slate-300">
                                 <div className="text-black">
                                   <div className="flex">
                                     <FaUserCircle
-                                      size={34}
+                                      size={40}
                                       className="mt-2 mr-4 text-slate-600"
                                     />
                                     <div className="">
@@ -109,22 +110,34 @@ function Header() {
                                 </div>
                               </div>
                               <div className="relative px-6 pb-5 flex-auto">
-                                <div className="flex mt-3">
+                                <div className="flex mt-6">
                                   <FaRegAddressBook className="mt-1 text-slate-700" />
                                   <div className="text-slate-700 ml-2">
                                     Hồ sơ bệnh nhân
                                   </div>
                                 </div>
-                                <div className="flex mt-3">
-                                  <FaRegAddressBook className="mt-1 text-slate-700" />
+                                <div className="flex mt-6">
+                                  <BiBookmarkAltPlus
+                                    size={18}
+                                    className="mt-1 text-slate-700"
+                                  />
                                   <div className="text-slate-700 ml-2">
-                                    Hồ sơ bệnh nhân
+                                    Phiếu khám bệnh
                                   </div>
                                 </div>
-                                <div className="flex mt-3">
+                                <div className="flex mt-6">
+                                  <BiBellMinus
+                                    size={18}
+                                    className="mt-1 text-slate-700"
+                                  />
+                                  <div className="text-slate-700 ml-2">
+                                    Thông báo
+                                  </div>
+                                </div>
+                                <div className="flex mt-6">
                                   <FaRegAddressBook className="mt-1 text-slate-700" />
                                   <div className="text-slate-700 ml-2">
-                                    Hồ sơ bệnh nhân
+                                    Thoát
                                   </div>
                                 </div>
                               </div>

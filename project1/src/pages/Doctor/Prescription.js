@@ -27,6 +27,7 @@ import {
   datagetFindIdPhieuDatCho,
   findIdPhieuDatChoPrescriptionAPI,
   createPrescriptionAPI,
+  editPrescriptionAPI,
 } from "../../redux/prescriptionRedux";
 import {
   dataGetTimPhieutheongay,
@@ -41,6 +42,7 @@ const Prescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEatDetail, setShowModalEatDetail] = useState(false);
   const [showMenuModalToDate, setShowMenuModalToDate] = useState(false);
+  const [checkTuvan, setCheckTuvan] = useState(false);
 
   const [loidan, setLoidan] = useState();
   const [menuId, setMenuId] = useState();
@@ -58,21 +60,11 @@ const Prescription = () => {
   let date =
     today.getDate() + "/" + (today.getMonth() + 1) + "/" + today.getFullYear();
 
-  const params = {
-    dateCreate: dateCreate,
-    loidan: loidan,
-    menuId: menuId,
-    reservationTicketId: reservationTicketId,
-    eatdateId: eatdateId,
-    categoryId: categoryId,
-    categoryName: categoryName,
-    menuName: menuName,
-  };
-
   const dispatch = useDispatch();
   const dataEatDates = useSelector(dataAllEatDates);
 
   const dataTimphieu = useSelector(dataGetAPhieudatcho);
+  console.log("dataTimphieu:", dataTimphieu);
 
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
 
@@ -97,6 +89,7 @@ const Prescription = () => {
   const data = useSelector(DataGetFindEatDetailToDate);
 
   const dataFindId = useSelector(datagetFindIdPhieuDatCho);
+  console.log("dataFindId:", dataFindId);
 
   const dataFindMenu = useSelector(dataGetFindMenuToPrescription);
 
@@ -121,7 +114,7 @@ const Prescription = () => {
   }, [dataFindId]);
 
   useEffect(() => {
-    dispatch(getFindCaterogyInMenuIdAPI(dataFindId.menuId));
+    dispatch(getFindCaterogyInMenuIdAPI(dataFindId?.menuId));
   }, []);
 
   const handleMenu = () => {
@@ -168,8 +161,23 @@ const Prescription = () => {
   };
 
   const handleSave = () => {
-    dispatch(createPrescriptionAPI(params));
+    dispatch(editPrescriptionAPI(params));
+    setCheckTuvan(true);
+    // navigator(`/manager/prescription-save/${}`);
   };
+
+  const params = {
+    dateCreate: dateCreate,
+    loidan: loidan,
+    menuId: menuId,
+    reservationTicketId: reservationTicketId,
+    eatdateId: eatdateId,
+    categoryId: categoryId,
+    categoryName: categoryName,
+    menuName: menuName,
+    id: dataFindId?.id,
+  };
+  console.log("params:", params);
 
   return (
     <>
@@ -180,7 +188,8 @@ const Prescription = () => {
           <Navbar />
           <div className="w-full mt-10">
             <div className="w-2/3 ml-5 mr-auto">
-              {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? (
+              {/* {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? ( */}
+              {checkTuvan === false ? (
                 <>
                   <div className="border-2 border-slate-200 p-4 shadow-lg">
                     <div className="flex ">
@@ -227,7 +236,9 @@ const Prescription = () => {
                       <textarea
                         type="text"
                         placeholder="..."
+                        value={loidan}
                         className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
+                        onChange={(event) => setLoidan(event.target.value)}
                       />
                     </div>
                     <div className="w-full text-right mt-2">
@@ -268,8 +279,10 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                {dataTimphieu?.phieudatcho?.status !==
+                                {/* {dataTimphieu?.phieudatcho?.status !==
                                 "Đã tư vấn" ? (
+                                  <> */}
+                                {checkTuvan === false ? (
                                   <>
                                     <div className="flex mt-3">
                                       <button
@@ -341,8 +354,10 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                {dataTimphieu?.phieudatcho?.status !==
+                                {/* {dataTimphieu?.phieudatcho?.status !==
                                 "Đã tư vấn" ? (
+                                  <> */}
+                                {checkTuvan === false ? (
                                   <>
                                     <div className="flex mt-3">
                                       <button

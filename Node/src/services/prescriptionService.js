@@ -24,6 +24,7 @@ let createNewPrescription = (data) => {
               id: data.reservationTicketId,
             },
           });
+
           if (trangthai) {
             console.log("đã tạo");
             trangthai.status = "Đã tư vấn";
@@ -33,6 +34,7 @@ let createNewPrescription = (data) => {
       }
       resolve({
         code: 0,
+        data: prescription.id,
         message: "Lưu thành công!",
       });
     } catch (e) {
@@ -57,6 +59,7 @@ let updatePrescriptionData = (data) => {
           prescription.dateCreate = data.dateCreate;
           prescription.reservationTicketId = data.reservationTicketId;
           prescription.menuId = data.menuId;
+          prescription.loidan = data.loidan;
           await prescription.save();
           resolve({
             code: 0,

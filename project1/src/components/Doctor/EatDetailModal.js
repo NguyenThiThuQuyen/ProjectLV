@@ -30,7 +30,7 @@ import {
 } from "../../redux/danhmucmonanRedux";
 
 export default function EatDetailModal(props) {
-  console.log("props:", props);
+  // console.log("props:", props);
   const [showModalEatDetail, setShowModalEatDetail] = useState(false);
   const [dishId, setDishId] = useState();
   const [huongdanan, setHuongdanan] = useState();
@@ -49,12 +49,14 @@ export default function EatDetailModal(props) {
   const dataFindDish = useSelector(dataGetFindDishToCate);
   // console.log("dataFindDish:", dataFindDish);
   const dataFindEatTimeslots = useSelector(dataGetAllFindEatTimeslotsToSession);
-  console.log("dataFindEatTimeslots:", dataFindEatTimeslots);
+  // console.log("dataFindEatTimeslots:", dataFindEatTimeslots);
   const dataSession = useSelector(dataGetAllSessions);
 
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
 
-  const dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail);
+  let dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail);
+  console.log("dataFind:", dataFind);
+
   const check = useSelector(dataCheck);
 
   const dispatch = useDispatch();
@@ -93,6 +95,7 @@ export default function EatDetailModal(props) {
 
   useEffect(() => {
     dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
+    setDishCategory(props?.params2?.categoryId);
   }, [props?.params2?.categoryId]);
 
   useEffect(() => {
@@ -114,6 +117,8 @@ export default function EatDetailModal(props) {
 
   const handleSave = async () => {
     dispatch(getCreateEatDetailAPI(params));
+    setEatTimeslotId();
+    setDishId();
     setShowModalEatDetail(true);
     // props.handleMo(false);
     // setTimeout(function () {

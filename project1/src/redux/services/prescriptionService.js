@@ -23,4 +23,17 @@ const findIdPhieuDatChoPrescription = async (body) => {
   return response.data;
 };
 
-export { getPrescription, createPrescription, findIdPhieuDatChoPrescription };
+const editPrescription = async (body) => {
+  const edit = await axios.put(
+    `http://localhost:8081/api/edit-prescription`,
+    body
+  );
+  return edit.data;
+};
+
+export {
+  getPrescription,
+  createPrescription,
+  findIdPhieuDatChoPrescription,
+  editPrescription,
+};

@@ -16,17 +16,22 @@ import {
   getFindCaterogyInMenuIdAPI,
   dataGetFindCaterogyInMenuId,
 } from "../../redux/danhmucmonanRedux";
-
 import { createMenuAPI } from "../../redux/menuRedux";
 import {
   getCreateEatDetailAPI,
   DataGetFindEatDetailToDate,
   getFindEatDetailToDateAPI,
+  deleteEatDetailAPI,
+  dataCheck,
 } from "../../redux/chitietanRedux";
+
 import {
   getAllFindEatTimeslotsToSessionAPI,
   dataGetAllFindEatTimeslotsToSession,
+  dataGetFindEatTimeslotsToEatDetail,
+  getFindEatTimeslotsToEatDetailAPI,
 } from "../../redux/eatTimeslotRedux";
+
 import {
   dataGetAllCaterogy,
   getAllCaterogyAPI,
@@ -50,11 +55,17 @@ export default function MenuModalToDate(props) {
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
   const dataFindDish = useSelector(dataGetFindDishToCate);
+  // console.log("dataFindDish:", dataFindDish);
   const dataFindEatTimeslots = useSelector(dataGetAllFindEatTimeslotsToSession);
+  console.log("dataFindEatTimeslots:", dataFindEatTimeslots);
   const dataSession = useSelector(dataGetAllSessions);
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
+  // console.log("dataDetail:", dataDetail);
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
-  console.log("dataFindDish:", dataFindDish);
+  const check = useSelector(dataCheck);
+
+  const dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail);
+  // console.log("dataFindDish:", dataFindDish);
 
   const dispatch = useDispatch();
 
@@ -68,6 +79,7 @@ export default function MenuModalToDate(props) {
     ghichu: ghichu,
     dishCategory: dishCategory,
     categoryName: categoryName,
+    eatTimeslotId: eatTimeslotId,
   };
   console.log("params:", params);
 
@@ -104,10 +116,11 @@ export default function MenuModalToDate(props) {
     // dispatch(getAllCaterogyAPI());
     dispatch(getFindDishToCateAPI());
     dispatch(getAllSessionsAPI());
-  }, []);
+  }, [check]);
 
   useEffect(() => {
     dispatch(getFindDishToCateAPI(params?.dishCategory));
+    setDishCategory(props?.params2?.categoryId);
   }, [params?.dishCategory]);
 
   useEffect(() => {
@@ -117,11 +130,14 @@ export default function MenuModalToDate(props) {
         menuId: props?.params2?.menuId,
       })
     );
-  }, []);
+  }, [check]);
 
   const handleClose = () => {
     setShowMenuModalToDate(false);
     props.handleClose(false);
+    setTimeout(function () {
+      window.location.reload(1);
+    }, 500);
   };
 
   // const handleSave = async () => {
@@ -139,8 +155,27 @@ export default function MenuModalToDate(props) {
     // }, 500);
   };
 
-  const handleFindEatTimeslot = (id) => {
-    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
+  const handleFindEatTimeslot = async (id) => {
+    console.log("id:", id);
+    let testId = await dispatch(
+      getAllFindEatTimeslotsToSessionAPI({ sessionId: id })
+    );
+    console.log("testId:", testId);
+  };
+
+  useEffect(() => {
+    dispatch(
+      getFindEatTimeslotsToEatDetailAPI({
+        data: {
+          array: dataFindEatTimeslots,
+          obj: { menuId: menuId, eatdateId: eatdateId },
+        },
+      })
+    );
+  }, [dataFindEatTimeslots]);
+
+  const handleDelete = (id) => {
+    dispatch(deleteEatDetailAPI(id));
   };
 
   return (
@@ -234,7 +269,7 @@ export default function MenuModalToDate(props) {
                             </div>
                           </div>
 
-                          <div className="grid row-span-1 grid-cols-4 mt-1">
+                          {/* <div className="grid row-span-1 grid-cols-4 mt-1">
                             <div className="col-span-2 mx-3 mb-3">
                               <label htmlFor="" className="text-slate-900 ml-2">
                                 Chọn giờ ăn
@@ -257,6 +292,52 @@ export default function MenuModalToDate(props) {
                                       >
                                         {item.khunggioan}
                                       </option>
+                                    );
+                                  })}
+                              </div>
+                            </div>
+                          </div> */}
+
+                          <div className="grid row-span-1 grid-cols-4 mt-1">
+                            <div className="col-span-2 mx-3 mb-3">
+                              <label htmlFor="" className="text-slate-900 ml-2">
+                                Chọn giờ ăn
+                              </label>
+                              <div
+                                className="flex"
+                                id=""
+                                onClick={(event) =>
+                                  setEatTimeslotId(event.target.value)
+                                }
+                              >
+                                {dataFind &&
+                                  dataFind.length > 0 &&
+                                  dataFind.map((item, index) => {
+                                    return (
+                                      <>
+                                        {item.checkTimes === true ? (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              disabled
+                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-300 text-white text-center cursor-no-drop"
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        )}
+                                      </>
                                     );
                                   })}
                               </div>
@@ -366,6 +447,7 @@ export default function MenuModalToDate(props) {
                                       title="Xóa"
                                       size={22}
                                       className="text-red-600 cursor-pointer"
+                                      onClick={() => handleDelete(item.id)}
                                     />
                                   </div>
                                 </div>
