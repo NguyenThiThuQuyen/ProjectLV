@@ -137,6 +137,7 @@ const DetailDoctorHome = (props) => {
   const handleFindTimeslot = (item) => {
     const params = {
       registerDate: item,
+      userId: doctorId,
     };
     dispatch(getFindTimeslotAPI(params));
     setRegisterDate(item);

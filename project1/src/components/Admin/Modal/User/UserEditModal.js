@@ -47,16 +47,16 @@ export default function UserModalEdit(props) {
     contentHTML: contentHTML,
   };
   useEffect(() => {
-    setName(props.item.name);
-    setEmail(props.item.email);
-    setImage(props.item.image);
-    setPhone(props.item.phone);
-    setAddress(props.item.address);
-    setGender(props.item.gender);
-    setRoleId(props.item.roleId);
-    setContentHTML(props.item.contentHTML);
-    setContentMarkdown(props.item.contentMarkdown);
-    setId(props.item.id);
+    setName(props?.item?.name);
+    setEmail(props?.item?.email);
+    setImage(props?.item?.image);
+    setPhone(props?.item?.phone);
+    setAddress(props?.item?.address);
+    setGender(props?.item?.gender);
+    setRoleId(props?.item?.roleId);
+    setContentHTML(props?.item?.contentHTML);
+    setContentMarkdown(props?.item?.contentMarkdown);
+    setId(props?.item?.id);
   }, [props.item]);
 
   useEffect(() => {

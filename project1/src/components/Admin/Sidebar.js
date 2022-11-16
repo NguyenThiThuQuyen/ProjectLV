@@ -22,7 +22,6 @@ const Sidebar = () => {
   const navigator = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user.id;
-  console.log("user:", user);
 
   const dispatch = useDispatch();
   const handleLogout = () => {

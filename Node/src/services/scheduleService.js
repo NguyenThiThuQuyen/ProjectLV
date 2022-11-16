@@ -121,6 +121,7 @@ let getCountSchedule = (id) => {
 };
 
 let createNewSchedule = (data) => {
+  console.log("data:", data);
   return new Promise(async (resolve, reject) => {
     try {
       let date = new Date(data.registerDate * 1);

@@ -64,7 +64,6 @@ const Prescription = () => {
   const dataEatDates = useSelector(dataAllEatDates);
 
   const dataTimphieu = useSelector(dataGetAPhieudatcho);
-  console.log("dataTimphieu:", dataTimphieu);
 
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
 
@@ -89,7 +88,6 @@ const Prescription = () => {
   const data = useSelector(DataGetFindEatDetailToDate);
 
   const dataFindId = useSelector(datagetFindIdPhieuDatCho);
-  console.log("dataFindId:", dataFindId);
 
   const dataFindMenu = useSelector(dataGetFindMenuToPrescription);
 
@@ -155,14 +153,12 @@ const Prescription = () => {
   };
 
   const handleCreateMenuToDate = (id) => {
-    // console.log("id: ", id);
     setEatdateId(id);
     setShowMenuModalToDate(true);
   };
 
   const handleSave = async () => {
     let testdata = await dispatch(editPrescriptionAPI(params));
-    console.log("testdata:", testdata);
     if (testdata.payload.code == 0) {
       setCheckTuvan(true);
     }
@@ -180,7 +176,6 @@ const Prescription = () => {
     menuName: menuName,
     id: dataFindId?.id,
   };
-  console.log("params:", params);
 
   return (
     <>
@@ -191,8 +186,7 @@ const Prescription = () => {
           <Navbar />
           <div className="w-full mt-10">
             <div className="w-2/3 ml-5 mr-auto">
-              {/* {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? ( */}
-              {checkTuvan === false ? (
+              {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? (
                 <>
                   <div className="border-2 border-slate-200 p-4 shadow-lg">
                     <div className="flex ">
@@ -282,11 +276,11 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                {/* {dataTimphieu?.phieudatcho?.status !==
+                                {dataTimphieu?.phieudatcho?.status !==
                                 "Đã tư vấn" ? (
-                                  <> */}
-                                {checkTuvan === false ? (
                                   <>
+                                    {/* {checkTuvan === false ? (
+                                  <> */}
                                     <div className="flex mt-3">
                                       <button
                                         className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
@@ -357,11 +351,11 @@ const Prescription = () => {
                                 <div className="">{item.eatdate}</div>
                               </div>
                               <div className="">
-                                {/* {dataTimphieu?.phieudatcho?.status !==
+                                {dataTimphieu?.phieudatcho?.status !==
                                 "Đã tư vấn" ? (
-                                  <> */}
-                                {checkTuvan === false ? (
                                   <>
+                                    {/* {checkTuvan === false ? (
+                                  <> */}
                                     <div className="flex mt-3">
                                       <button
                                         className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"

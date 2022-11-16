@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dataAllEatDates, getAllEatDatesAPI } from "../../redux/ngayanRedux";
 import {
   getAllDishesAPI,
-  dataGetFindDishToCate,
+  dataGetFindDishToCate, // lấy tất cả món ăn theo buổi
   getFindDishToCateAPI,
 } from "../../redux/monanRedux";
 import { MdOutlineCancel } from "react-icons/md";
@@ -30,7 +30,6 @@ import {
 } from "../../redux/danhmucmonanRedux";
 
 export default function EatDetailModal(props) {
-  // console.log("props:", props);
   const [showModalEatDetail, setShowModalEatDetail] = useState(false);
   const [dishId, setDishId] = useState();
   const [huongdanan, setHuongdanan] = useState();
@@ -44,18 +43,16 @@ export default function EatDetailModal(props) {
   const [dishCategory, setDishCategory] = useState();
   const [categoryName, setCategoryName] = useState();
   const [mang, setMang] = useState([]);
+  const [sectionId, setSectionId] = useState();
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
   const dataFindDish = useSelector(dataGetFindDishToCate);
-  // console.log("dataFindDish:", dataFindDish);
   const dataFindEatTimeslots = useSelector(dataGetAllFindEatTimeslotsToSession);
-  // console.log("dataFindEatTimeslots:", dataFindEatTimeslots);
   const dataSession = useSelector(dataGetAllSessions);
 
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
 
-  let dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail);
-  console.log("dataFind:", dataFind);
+  let dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail); // mảng giờ ăn
 
   const check = useSelector(dataCheck);
 
@@ -73,7 +70,6 @@ export default function EatDetailModal(props) {
     categoryName: categoryName,
     eatTimeslotId: eatTimeslotId,
   };
-  console.log("params:", params);
 
   useEffect(() => {
     setShowModalEatDetail(true);
@@ -89,23 +85,21 @@ export default function EatDetailModal(props) {
 
   useEffect(() => {
     dispatch(getAllDishesAPI());
-    dispatch(getFindDishToCateAPI());
+    dispatch(getFindDishToCateAPI(props?.params2?.categoryId)); /// sai thiếu id
     dispatch(getAllSessionsAPI());
-  }, [check]);
-
-  useEffect(() => {
-    dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
-    setDishCategory(props?.params2?.categoryId);
-  }, [props?.params2?.categoryId]);
-
-  useEffect(() => {
     dispatch(
       getFindEatDetailToDateAPI({
         eatdateId: props?.params2?.eatdateId,
         menuId: props?.params2?.menuId,
       })
     );
+    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sectionId }));
   }, [check]);
+
+  useEffect(() => {
+    dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
+    setDishCategory(props?.params2?.categoryId);
+  }, [props?.params2?.categoryId]);
 
   const handleFindDishToCate = (id) => {
     dispatch(getFindDishToCateAPI(id));
@@ -132,6 +126,7 @@ export default function EatDetailModal(props) {
     setEatTimeslotId();
     setDishId();
     setShowModalEatDetail(true);
+
     // props.handleMo(false);
     // setTimeout(function () {
     //   window.location.reload(1);
@@ -139,12 +134,15 @@ export default function EatDetailModal(props) {
   };
 
   const handleFindEatTimeslot = (id) => {
+    /// chọn buổi ăn
     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
+    setSectionId(id);
   };
 
   useEffect(() => {
     dispatch(
       getFindEatTimeslotsToEatDetailAPI({
+        /// api gọi để lấy mảng giờ ăn
         data: {
           array: dataFindEatTimeslots,
           obj: { menuId: menuId, eatdateId: eatdateId },
@@ -152,7 +150,7 @@ export default function EatDetailModal(props) {
       })
     );
   }, [dataFindEatTimeslots]);
-
+  console.log("dataFindEatTimeslots", dataFindEatTimeslots);
   const handleDelete = (id) => {
     dispatch(deleteEatDetailAPI(id));
   };
@@ -262,6 +260,7 @@ export default function EatDetailModal(props) {
                                 {dataFind &&
                                   dataFind.length > 0 &&
                                   dataFind.map((item, index) => {
+                                    // console.log("item giờ ăn", item);
                                     return (
                                       <>
                                         {item.checkTimes === true ? (
@@ -298,16 +297,16 @@ export default function EatDetailModal(props) {
                               <label htmlFor="" className="text-slate-900 ml-2">
                                 Chọn mục dinh dưỡng
                               </label>
-                              {/* <select
+                              <select
                                 className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                                 id=""
                                 value={dishCategory}
                                 disabled
                               >
                                 <option>{categoryName}</option>
-                              </select> */}
+                              </select>
 
-                              <select
+                              {/* <select
                                 className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300"
                                 id=""
                                 value={dishCategory}
@@ -319,14 +318,13 @@ export default function EatDetailModal(props) {
                                 {dataCate.categories &&
                                   dataCate.categories.length > 0 &&
                                   dataCate.categories.map((item, index) => {
-                                    // console.log("item: ", item);
                                     return (
                                       <option key={index} value={item.id}>
                                         {item.name}
                                       </option>
                                     );
                                   })}
-                              </select>
+                              </select> */}
                             </div>
                             <div className="col-span-1 mx-3 mt-2">
                               <label htmlFor="" className="text-slate-900 ml-2">

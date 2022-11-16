@@ -25,6 +25,8 @@ function Header() {
     }
   };
   const parent = JSON.parse(localStorage.getItem("parent"));
+  console.log("parent111:", parent);
+  const id = parent.id;
 
   useEffect(() => {
     showButton();
@@ -46,6 +48,10 @@ function Header() {
 
   const handleOpenClose = () => {
     setShowInfor(!showInfor);
+  };
+
+  const handleInforPatient = () => {
+    navigator(`/infor-patient/${id}`);
   };
 
   return (
@@ -90,13 +96,13 @@ function Header() {
                       <>
                         <div className="grid justify-items-end fixed inset-0 z-50 outline-none focus:outline-none mt-12 mr-32">
                           <div className="relative w-auto my-6 max-w-5xl">
-                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-sky-50 outline-none focus:outline-none">
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                               <div className="flex items-start justify-between pr-10 pl-5 py-5 border-b border-solid border-slate-300">
                                 <div className="text-black">
                                   <div className="flex">
                                     <FaUserCircle
                                       size={40}
-                                      className="mt-2 mr-4 text-slate-600"
+                                      className="mt-2 mr-4 text-slate-400"
                                     />
                                     <div className="">
                                       <div className="text-slate-800">
@@ -111,33 +117,46 @@ function Header() {
                               </div>
                               <div className="relative px-6 pb-5 flex-auto">
                                 <div className="flex mt-6">
-                                  <FaRegAddressBook className="mt-1 text-slate-700" />
-                                  <div className="text-slate-700 ml-2">
-                                    Hồ sơ bệnh nhân
+                                  <div
+                                    className="flex"
+                                    onClick={() => handleInforPatient()}
+                                  >
+                                    <FaRegAddressBook className="mt-1 text-slate-700 cursor-pointer" />
+                                    <div className="text-slate-700 ml-2 hover:text-sky-600 cursor-pointer">
+                                      Hồ sơ bệnh nhân
+                                    </div>
                                   </div>
                                 </div>
                                 <div className="flex mt-6">
                                   <BiBookmarkAltPlus
                                     size={18}
-                                    className="mt-1 text-slate-700"
+                                    className="mt-1 text-slate-700 cursor-pointer"
                                   />
-                                  <div className="text-slate-700 ml-2">
+                                  <div className="text-slate-700 ml-2 hover:text-sky-600 cursor-pointer">
                                     Phiếu khám bệnh
                                   </div>
                                 </div>
                                 <div className="flex mt-6">
                                   <BiBellMinus
                                     size={18}
-                                    className="mt-1 text-slate-700"
+                                    className="mt-1 text-slate-700 cursor-pointer"
                                   />
-                                  <div className="text-slate-700 ml-2">
+                                  <div className="text-slate-700 ml-2 hover:text-sky-600 cursor-pointer">
                                     Thông báo
                                   </div>
                                 </div>
                                 <div className="flex mt-6">
-                                  <FaRegAddressBook className="mt-1 text-slate-700" />
-                                  <div className="text-slate-700 ml-2">
-                                    Thoát
+                                  <div
+                                    className="flex"
+                                    onClick={() => handleLogout()}
+                                  >
+                                    <IoIosLogOut
+                                      size={18}
+                                      className="mt-1 text-slate-700 cursor-pointer"
+                                    />
+                                    <div className="text-slate-700 ml-2 hover:text-sky-600 cursor-pointer">
+                                      Thoát
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -148,9 +167,9 @@ function Header() {
                     ) : (
                       <></>
                     )}
-                    <div className="ml-2 mt-1" onClick={() => handleLogout()}>
+                    {/* <div className="ml-2 mt-1" onClick={() => handleLogout()}>
                       <IoIosLogOut size={18} />
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   <>

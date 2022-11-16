@@ -94,9 +94,9 @@ export default function ScheduleModal() {
   const dispatch = useDispatch();
 
   const handleSave = async () => {
-    dispatch(createScheduleAPI(params));
+    // dispatch(createScheduleAPI(params));
     let result = [];
-    console.log("params", params);
+    // console.log("params", params);
 
     let data = params.timeslotId;
     // let formatDate = new Date(params.registerDate).getTime();
