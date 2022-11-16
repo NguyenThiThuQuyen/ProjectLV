@@ -107,6 +107,18 @@ export default function EatDetailModal(props) {
     );
   }, [check]);
 
+  const handleFindDishToCate = (id) => {
+    dispatch(getFindDishToCateAPI(id));
+  };
+
+  useEffect(() => {
+    dataCate.categories &&
+      dataCate.categories.length > 0 &&
+      dataCate.categories.map((item, index) => {
+        const findid = handleFindDishToCate(item.id);
+      });
+  }, [dataCate]);
+
   const handleClose = () => {
     setShowModalEatDetail(false);
     props.handleClose(false);
@@ -286,13 +298,34 @@ export default function EatDetailModal(props) {
                               <label htmlFor="" className="text-slate-900 ml-2">
                                 Chọn mục dinh dưỡng
                               </label>
-                              <select
+                              {/* <select
                                 className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                                 id=""
                                 value={dishCategory}
                                 disabled
                               >
                                 <option>{categoryName}</option>
+                              </select> */}
+
+                              <select
+                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300"
+                                id=""
+                                value={dishCategory}
+                                disabled
+                                onClick={(e) =>
+                                  handleFindDishToCate(e.target.value)
+                                }
+                              >
+                                {dataCate.categories &&
+                                  dataCate.categories.length > 0 &&
+                                  dataCate.categories.map((item, index) => {
+                                    // console.log("item: ", item);
+                                    return (
+                                      <option key={index} value={item.id}>
+                                        {item.name}
+                                      </option>
+                                    );
+                                  })}
                               </select>
                             </div>
                             <div className="col-span-1 mx-3 mt-2">

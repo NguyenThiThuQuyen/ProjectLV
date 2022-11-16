@@ -160,9 +160,12 @@ const Prescription = () => {
     setShowMenuModalToDate(true);
   };
 
-  const handleSave = () => {
-    dispatch(editPrescriptionAPI(params));
-    setCheckTuvan(true);
+  const handleSave = async () => {
+    let testdata = await dispatch(editPrescriptionAPI(params));
+    console.log("testdata:", testdata);
+    if (testdata.payload.code == 0) {
+      setCheckTuvan(true);
+    }
     // navigator(`/manager/prescription-save/${}`);
   };
 

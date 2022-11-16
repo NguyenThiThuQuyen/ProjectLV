@@ -53,6 +53,7 @@ let handleFindPhieuDatChoInPrescription = async (req, res) => {
   let message = await prescriptionService.findPhieuDatChoInPrescription(data);
   return res.status(200).json(message);
 };
+
 module.exports = {
   handleCreatePrescription: handleCreatePrescription,
   handleEditPrescription: handleEditPrescription,
