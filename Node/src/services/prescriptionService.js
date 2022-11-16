@@ -18,19 +18,19 @@ let createNewPrescription = (data) => {
           await temp.save();
         }
 
-        if (temp) {
-          let trangthai = await db.ReservationTicket.findOne({
-            where: {
-              id: data.reservationTicketId,
-            },
-          });
+        // if (temp) {
+        //   let trangthai = await db.ReservationTicket.findOne({
+        //     where: {
+        //       id: data.reservationTicketId,
+        //     },
+        //   });
 
-          if (trangthai) {
-            console.log("đã tạo");
-            trangthai.status = "Đã tư vấn";
-            trangthai.save();
-          }
-        }
+        //   if (trangthai) {
+        //     console.log("đã tạo");
+        //     trangthai.status = "Đã tư vấn";
+        //     trangthai.save();
+        //   }
+        // }
       }
       resolve({
         code: 0,
@@ -56,22 +56,41 @@ let updatePrescriptionData = (data) => {
           where: { id: data.id },
         });
         if (prescription) {
-          prescription.dateCreate = data.dateCreate;
+          prescription.dateCreate = data.createdAt;
           prescription.reservationTicketId = data.reservationTicketId;
           prescription.menuId = data.menuId;
           prescription.loidan = data.loidan;
+
           await prescription.save();
-          resolve({
-            code: 0,
-            message: "Cập nhật toa thuốc thành công!",
-          });
-        } else {
-          resolve({
-            code: 1,
-            message: `Không tìm thấy toa thuốc!`,
-          });
+          // resolve({
+          //   code: 0,
+          //   message: "Cập nhật toa thuốc thành công!",
+          // });
         }
+        if (prescription) {
+          let trangthai = await db.ReservationTicket.findOne({
+            where: {
+              id: data.reservationTicketId,
+            },
+          });
+
+          if (trangthai) {
+            console.log("đã tạo");
+            trangthai.status = "Đã tư vấn";
+            trangthai.save();
+          }
+        }
+        // else {
+        //   resolve({
+        //     code: 1,
+        //     message: `Không tìm thấy toa thuốc!`,
+        //   });
+        // }
       }
+      resolve({
+        code: 0,
+        message: "Lưu thành công!",
+      });
     } catch (e) {
       reject(e);
     }
