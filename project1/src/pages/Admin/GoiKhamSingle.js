@@ -19,10 +19,10 @@ const GoiKhamSingle = () => {
   useEffect(() => {
     dispatch(getGoiKhamAPI(params.medicalpackageId));
   }, [check]);
-  //   let imageBase64 = "";
-  //   if (user?.user?.image) {
-  //     imageBase64 = new Buffer(user?.user?.image, "base64").toString("binary");
-  //   }
+  // let imageBase64 = "";
+  // if (data?.goikham?.image) {
+  //   imageBase64 = new Buffer(data?.goikham?.image, "base64").toString("binary");
+  // }
   return (
     <div className="flex w-full">
       <Sidebar />

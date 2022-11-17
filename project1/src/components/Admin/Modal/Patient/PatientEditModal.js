@@ -29,6 +29,8 @@ export default function PatientModalEdit(props) {
     id: id,
   };
 
+  console.log("params:", params);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -60,6 +62,7 @@ export default function PatientModalEdit(props) {
     const file = event.target.files[0];
     const base64 = await getBase64(file);
     setImage(base64);
+    setPreImg(base64);
   };
 
   return (
@@ -196,11 +199,11 @@ export default function PatientModalEdit(props) {
 
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModalEdit(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                   <button
                     className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

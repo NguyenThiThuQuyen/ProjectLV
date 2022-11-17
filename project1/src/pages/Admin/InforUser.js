@@ -51,11 +51,7 @@ const InforUser = () => {
           <div className="">
             <div className="grid grid-cols-4 px-10 py-14">
               <SidebarInfor />
-
-              {/* <div className="col-span-3"> */}
-
               <div className="col-span-3 shadow-xl border-[1px] p-5 relative ml-5">
-                {/* <div className="col-span-3 p-5 ml-5"> */}
                 <div className="flex pl-2 absolute top-0 right-0 px-3 py-1.5 text-xs text-indigo-600 bg-slate-200 cursor-pointer rounded-[3px]">
                   <UserModalEdit item={data?.user} />
                   Edit

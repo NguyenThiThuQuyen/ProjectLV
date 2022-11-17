@@ -23,6 +23,7 @@ const ScheduleManager = () => {
   const navigate = useNavigate();
   const data = useSelector(dataGetAllSchedule);
   const check = useSelector(dataCheck);
+  console.log("check:", check);
 
   useEffect(() => {
     dispatch(getAllSchedulesAPI());

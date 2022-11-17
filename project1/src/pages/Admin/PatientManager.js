@@ -95,11 +95,7 @@ const PatientManager = () => {
                     let day = "";
                     day = moment(item.birthday).format("YYYY-MM-DD");
                     return (
-                      <tr
-                        key={item.id}
-                        className="hover:bg-slate-200"
-                        // onClick={() => handleDetail(item?.id)}
-                      >
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.childrentName}
                         </td>
@@ -128,6 +124,14 @@ const PatientManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
+                            <div
+                              className="mr-5"
+                              title="Sửa"
+                              onClick={() => handleDetail(item?.id)}
+                            >
+                              Xem
+                            </div>
+
                             <div className="mr-5" title="Sửa">
                               <PatientModalEdit item={item} />
                             </div>

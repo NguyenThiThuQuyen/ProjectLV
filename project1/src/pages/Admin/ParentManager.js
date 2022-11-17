@@ -9,6 +9,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { BsPlusLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import {
   getAllParentsAPI,
   dataGetAllParent,
@@ -42,6 +43,7 @@ const ParentManager = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex w-full">
         <Sidebar />
         <div className="flex-initial w-5/6">
@@ -74,11 +76,7 @@ const ParentManager = () => {
                   data.parents.length > 0 &&
                   data.parents.map((item, index) => {
                     return (
-                      <tr
-                        key={item.id}
-                        className="hover:bg-slate-200"
-                        // onClick={() => handleDetail(item.id)}
-                      >
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
                         </td>
@@ -93,12 +91,41 @@ const ParentManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
+                            <div
+                              className=""
+                              onClick={() => handleDetail(item.id)}
+                            >
+                              Xem
+                            </div>
                             <div className="" title="Thêm con">
                               <PatientModal2 item={item} />
                             </div>
+                            {/* <div className="" title="Thêm con">
+                              <div className="ml-5">
+                                <button
+                                  type="button"
+                                  onClick={() => setShowModal(true)}
+                                >
+                                  <BsPlusLg className="cursor-pointer text-lg text-blue-600" />
+                                </button>
+                              </div>
+                            </div> */}
+
+                            {/* {setShowModal === true ? (
+                              <>
+                                <PatientModal2
+                                  openModal={setShowModal}
+                                  item={item}
+                                />
+                              </>
+                            ) : (
+                              <>null</>
+                            )} */}
+
                             <div className="mr-3" title="Sửa">
                               <ParentModalEdit item={item} />
                             </div>
+
                             <div
                               className=""
                               title="Xóa"

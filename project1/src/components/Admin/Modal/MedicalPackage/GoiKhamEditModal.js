@@ -11,6 +11,7 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 export default function GoiKhamModalEdit(props) {
+  console.log("props", props);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [packageName, setPackageName] = useState();
   const [packageDecs, setPackageDecs] = useState();
@@ -198,11 +199,11 @@ export default function GoiKhamModalEdit(props) {
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModalEdit(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                   <button
                     className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

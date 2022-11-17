@@ -6,7 +6,16 @@ import {
   editParent,
   deleteParent,
   getAParent,
+  getFindAllPatient,
 } from "./services/parentService";
+
+export const getFindAllPatientAPI = createAsyncThunk(
+  "parent/GetFind",
+  async (params) => {
+    const getFind = await getFindAllPatient(params);
+    return getFind;
+  }
+);
 
 export const getAllParentsAPI = createAsyncThunk("parent/GetAll", async () => {
   const getParent = await getAllParents();
@@ -41,10 +50,16 @@ export const ParentRedux = createSlice({
   initialState: {
     allParent: {},
     aParent: {},
+    findAllPatient: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getFindAllPatientAPI.fulfilled, (state, action) => {
+      state.findAllPatient = action.payload;
+      state.check = false;
+    });
+
     builder.addCase(getAllParentsAPI.fulfilled, (state, action) => {
       state.allParent = action.payload;
       state.check = false;
@@ -91,6 +106,7 @@ export const ParentRedux = createSlice({
 });
 
 export const dataGetAllParent = (state) => state.parent.allParent;
+export const dataGetFindPatient = (state) => state.parent.findAllPatient;
 export const dataGetAParent = (state) => state.parent.aParent;
 export const dataCheck = (state) => state.parent.check;
 export default ParentRedux.reducer;

@@ -8,6 +8,14 @@ import {
   dataGetAllPatient,
   ArrayPatient,
 } from "../../../../redux/patientRedux";
+
+import {
+  getAllParentsAPI,
+  dataGetAllParent,
+  getFindAllPatientAPI,
+  dataGetFindPatient,
+} from "../../../../redux/parentRedux";
+
 import {
   getAllDoctorAPI,
   dataGetDoctor,
@@ -39,6 +47,8 @@ export default function PhieudatchoModal() {
   const [scheduleId, setScheduleId] = useState();
   const [timeslotId, setTimeslotId] = useState();
   const [patientId, setPatientId] = useState();
+  const [parentId, setParentId] = useState("");
+  console.log("parentId:", parentId);
   const [email, setEmail] = useState();
   const [doctorId, setDoctorId] = useState();
   const params = {
@@ -55,17 +65,15 @@ export default function PhieudatchoModal() {
     email: email,
   };
 
+  const dataFind = useSelector(dataGetFindPatient);
+  console.log("dataFind:", dataFind);
   const dataDoctor = useSelector(dataGetDoctor);
   const dataGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
-  console.log("dataFindSchedule:", dataFindSchedule);
-
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
-  console.log("dataFindTimeslot:", dataFindTimeslot);
-
   const dataIdSchedule = useSelector(dataFindIdSchedule);
-  // console.log("dataIdSchedule", dataIdSchedule);
-
+  const dataAllParent = useSelector(dataGetAllParent);
+  console.log("dataAllParent:", dataAllParent);
   const dispatch = useDispatch();
   const dataPatient = useSelector(dataGetAllPatient);
   const array1 = useSelector(ArrayPatient);
@@ -83,9 +91,14 @@ export default function PhieudatchoModal() {
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllSchedulesAPI());
-    // dispatch(getFindScheduleToDoctorAPI());
     dispatch(getFindIdScheduleAPI());
+    dispatch(getAllParentsAPI());
   }, [showModal]);
+
+  useEffect(() => {
+    setParentId(dataAllParent[0]?.id);
+    dispatch(getFindAllPatientAPI(parentId));
+  }, [dataAllParent.parents]);
 
   useEffect(() => {
     dataFindSchedule?.schedule?.data &&
@@ -154,6 +167,11 @@ export default function PhieudatchoModal() {
 
   // console.log("date: " + date);
 
+  const handleFindPatient = (id) => {
+    console.log("id: ", id);
+    dispatch(getFindAllPatientAPI(id));
+  };
+
   return (
     <>
       <div className="mt-4 ml-5">
@@ -211,7 +229,7 @@ export default function PhieudatchoModal() {
                             {date}
                           </div>
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-2 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Email
                           </label>
@@ -219,17 +237,17 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onChange={(event) => setEmail(event.target.value)}
+                            onClick={(event) =>
+                              handleFindPatient(event.target.value)
+                            }
+                            value={parentId}
                           >
-                            {dataPatient.patients &&
-                              dataPatient.patients.length > 0 &&
-                              dataPatient.patients.map((item, index) => {
+                            {dataAllParent.parents &&
+                              dataAllParent.parents.length > 0 &&
+                              dataAllParent.parents.map((item, index) => {
                                 return (
-                                  <option
-                                    key={index}
-                                    value={item?.parentDataToPatient?.email}
-                                  >
-                                    {item?.parentDataToPatient?.email}
+                                  <option key={index} value={item.id}>
+                                    {item?.email}
                                   </option>
                                 );
                               })}
@@ -359,11 +377,11 @@ export default function PhieudatchoModal() {
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => handleClose(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                   <button
                     className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

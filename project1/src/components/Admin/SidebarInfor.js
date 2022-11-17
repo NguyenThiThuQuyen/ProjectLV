@@ -55,10 +55,6 @@ const SidebarInfor = () => {
               <RiLockPasswordLine className="mt-1 mr-2" />
               Đổi mật khẩu
             </li>
-            {/* <li className="text-slate-900 hover:text-slate-700 flex font-medium py-2 cursor-pointer hover:bg-sky-50 hover:rounded-r-full px-5">
-                      <FaRegAddressBook className="mt-1 mr-2" />
-                      Thông báo
-                    </li> */}
           </ul>
         </div>
       ) : (
@@ -78,10 +74,6 @@ const SidebarInfor = () => {
               <FaRegAddressBook className="mt-1 mr-2" />
               Đổi mật khẩu
             </li>
-            {/* <li className="text-slate-900 hover:text-slate-700 flex font-medium py-2 cursor-pointer hover:bg-sky-50 hover:rounded-r-full px-5">
-                      <FaRegAddressBook className="mt-1 mr-2" />
-                      Thông báo
-                    </li> */}
           </ul>
         </div>
       )}

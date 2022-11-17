@@ -122,6 +122,7 @@ export default function ScheduleModal() {
     });
     if (res.code == 0) {
       toast.success(res.message);
+      dispatch(createScheduleAPI());
     }
 
     console.log("check result:", result);
@@ -165,18 +166,19 @@ export default function ScheduleModal() {
       </div>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-4xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-base font-bold text-slate-500">
+          <div className="items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="w-auto my-6 mx-auto">
+              <div className="border-0 rounded-lg shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                  <div className="text-base font-bold text-slate-500">
                     THÊM LỊCH TƯ VẤN
-                  </h3>
+                  </div>
                 </div>
-                <div className="relative p-6 pb-14 flex-auto">
+                <div className="p-6 pb-5">
                   <form className="">
-                    <div className="grid grid-rows-2">
-                      <div className="grid row-span-1 grid-cols-2">
+                    <div className="grid row-auto">
+                      {/* <div className="grid row-span-1"> */}
+                      <div className="grid grid-cols-2">
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên bác sĩ
@@ -220,36 +222,41 @@ export default function ScheduleModal() {
                           </select>
                         </div>
                       </div>
-                      <div className="grid row-span-1 grid-cols-2 relative">
-                        <div className="col-span-2 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Khung giờ
-                          </label>
-                          <div
-                            id=""
-                            className="absolute"
-                            onChange={(event) =>
-                              setTimeslotId(event.target.value)
-                            }
-                          >
-                            {timeslotId &&
-                              timeslotId.length > 0 &&
-                              timeslotId.map((item, index) => {
-                                return (
-                                  <div
-                                    className={
-                                      item.isSelected === true
-                                        ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-green-300 outline-slate-300"
-                                        : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
-                                    }
-                                    key={index}
-                                    value={item.id}
-                                    onClick={() => handleClickBtnTime(item)}
-                                  >
-                                    {item.timeslot}
-                                  </div>
-                                );
-                              })}
+                      {/* </div> */}
+                      <div className="grid row-span-1 relative">
+                        <div className="grid-cols-2 ">
+                          <div className="col-span-2 mx-3 my-4">
+                            <label htmlFor="" className="text-slate-600 ml-2">
+                              Khung giờ
+                            </label>
+                            <div
+                              id=""
+                              className="row-auto grid grid-cols-5"
+                              onChange={(event) =>
+                                setTimeslotId(event.target.value)
+                              }
+                            >
+                              {timeslotId &&
+                                timeslotId.length > 0 &&
+                                timeslotId.map((item, index) => {
+                                  return (
+                                    <div className="col-span-1">
+                                      <div
+                                        className={
+                                          item.isSelected === true
+                                            ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-green-300 outline-slate-300"
+                                            : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
+                                        }
+                                        key={index}
+                                        value={item.id}
+                                        onClick={() => handleClickBtnTime(item)}
+                                      >
+                                        {item.timeslot}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                            </div>
                           </div>
                         </div>
                       </div>

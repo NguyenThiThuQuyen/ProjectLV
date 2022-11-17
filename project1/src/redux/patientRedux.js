@@ -74,6 +74,7 @@ export const PatientRedux = createSlice({
         toast.error(action.payload.message);
       }
     });
+
     builder.addCase(deletePatientAPI.fulfilled, (state, action) => {
       state.check = true;
       if (action.payload.code == "0") {

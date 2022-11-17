@@ -16,6 +16,7 @@ import {
   getGoiKhamAPI,
 } from "../../redux/goiKhamRedux";
 import moment from "moment/moment";
+import { ToastContainer } from "react-toastify";
 
 const GoiKhamManager = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const GoiKhamManager = () => {
   return (
     <>
       <div className="flex w-full">
+        <ToastContainer />
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
@@ -79,7 +81,7 @@ const GoiKhamManager = () => {
                     let day = "";
                     day = moment(
                       item.medicalPackageDataToPackagePrice.applydateId
-                    ).format("YYYY-MM-DD");
+                    ).format("DD-MM-YYYY");
                     return (
                       <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">

@@ -101,7 +101,7 @@ export default function DetailServiceModal() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                 </div>
               </div>

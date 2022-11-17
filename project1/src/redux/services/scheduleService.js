@@ -27,11 +27,11 @@ const getAllSchedule = async () => {
 };
 
 const createSchedule = async (body) => {
-  const response = await axios.post(
-    `http://localhost:8081/api/create-new-schedule`,
-    body
-  );
-  return response.data;
+  // const response = await axios.post(
+  //   `http://localhost:8081/api/create-new-schedule`,
+  //   body
+  // );
+  return 1;
 };
 
 const editSchedule = async (body) => {

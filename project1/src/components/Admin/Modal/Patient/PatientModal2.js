@@ -17,6 +17,7 @@ import {
   dataCheck,
 } from "../../../../redux/userRedux";
 export default function PatientModal2(props) {
+  console.log("props", props);
   const [showModal, setShowModal] = useState(false);
   const [childrentName, setChildrentName] = useState();
   const [gender, setgender] = useState("M");
@@ -41,8 +42,8 @@ export default function PatientModal2(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setParentId(props.item.id);
-    setName(props.item.name);
+    setParentId(props?.item?.id);
+    setName(props?.item?.name);
   }, [props.item]);
   console.log("props.item:", props.item);
 
@@ -62,11 +63,11 @@ export default function PatientModal2(props) {
   };
   return (
     <>
-      <div className="ml-5">
+      {/* <div className="ml-5">
         <button type="button" onClick={() => setShowModal(true)}>
           <BsPlusLg className="cursor-pointer text-lg text-blue-600" />
         </button>
-      </div>
+      </div> */}
       {showModal === true ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -191,11 +192,11 @@ export default function PatientModal2(props) {
                 {/*footer*/}
                 <div className="flex mt-14 items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                   <Link
                     to="/manager/patient-manager"

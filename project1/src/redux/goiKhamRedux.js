@@ -92,15 +92,17 @@ export const GoiKhamRedux = createSlice({
     });
     builder.addCase(addGoiKhamAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == 0) {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
       }
     });
     builder.addCase(editGoiKhamAPI.fulfilled, (state, action) => {
+      console.log("action.payload.code:", action.payload);
+
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == 0) {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
@@ -109,7 +111,7 @@ export const GoiKhamRedux = createSlice({
 
     builder.addCase(deleteGoiKhamAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);

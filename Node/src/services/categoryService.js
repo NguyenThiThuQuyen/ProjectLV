@@ -4,7 +4,7 @@ let getAllCategories = () => {
   return new Promise(async (resolve, reject) => {
     try {
       let categories = {};
-      categories = await db.Category.findAll();
+      categories = await db.Category.findAll({});
 
       resolve(categories);
     } catch (e) {

@@ -26,8 +26,9 @@ let handleGetGoiKham = async (req, res) => {
   });
 };
 
-let handleGoiKham = (req, res) => {
-  let data = goiKhamService.createNewMedicalpackage(req.body);
+let handleGoiKham = async (req, res) => {
+  let data = await goiKhamService.createNewMedicalpackage(req.body);
+  console.log("data:", data);
   return res.status(200).json(data);
 };
 

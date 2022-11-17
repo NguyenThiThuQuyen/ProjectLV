@@ -189,7 +189,7 @@ let updateParentData = (data) => {
           await parent.save();
           resolve({
             code: 0,
-            message: "Cập nhật người đại diện trẻ thành công!",
+            message: "Cập nhật thành công!",
           });
         } else {
           resolve({
@@ -249,7 +249,7 @@ let getParent = (parentId) => {
 let findPatient = (patient) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let find = await db.Patient.findOne({
+      let find = await db.Patient.findAll({
         where: { parentId: patient },
       });
       if (find) {
@@ -263,16 +263,16 @@ let findPatient = (patient) => {
   });
 };
 
-let deleteParent = (data) => {
+let deleteParent = (id) => {
   return new Promise(async (resolve, reject) => {
-    if (!data.id) {
+    if (!id) {
       resolve({
         code: 2,
         message: "Missing required parameters",
       });
     } else {
       let del = await db.Parent.findOne({
-        where: { id: data.id },
+        where: { id: id },
         raw: true,
       });
       if (!del) {
@@ -281,14 +281,14 @@ let deleteParent = (data) => {
           message: `Người dùng không tồn tại`,
         });
       } else {
-        let check = await findPatient(data.id);
+        let check = await findPatient(id);
         if (check) {
           resolve({
             code: 1,
-            message: "Đã tồn tại ... ",
+            message: "Người đại diện đã tồn tại bệnh nhân ",
           });
         } else {
-          await db.Parent.destroy({ where: { id: data.id } });
+          await db.Parent.destroy({ where: { id: id } });
         }
         resolve({
           code: 0,

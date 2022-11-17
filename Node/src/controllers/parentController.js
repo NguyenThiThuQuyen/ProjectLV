@@ -29,9 +29,20 @@ let handleEditParent = async (req, res) => {
   return res.status(200).json(message);
 };
 
+// let handleDeleteParent = async (req, res) => {
+//   let data = req.body;
+//   let message = await parentService.deleteParent(data);
+//   return res.status(200).json(message);
+// };
+
 let handleDeleteParent = async (req, res) => {
-  let data = req.body;
-  let message = await parentService.deleteParent(data);
+  if (!req.query.id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Error",
+    });
+  }
+  let message = await parentService.deleteParent(req.query.id);
   return res.status(200).json(message);
 };
 

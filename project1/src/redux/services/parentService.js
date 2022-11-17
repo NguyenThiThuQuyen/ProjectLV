@@ -33,4 +33,18 @@ const getAParent = async (id) => {
   return user.data;
 };
 
-export { getAllParents, createParent, editParent, deleteParent, getAParent };
+const getFindAllPatient = async (id) => {
+  const find = await axios.get(
+    `http://localhost:8081/api/find-patient?id=${id}`
+  );
+  return find.data;
+};
+
+export {
+  getAllParents,
+  createParent,
+  editParent,
+  deleteParent,
+  getAParent,
+  getFindAllPatient,
+};

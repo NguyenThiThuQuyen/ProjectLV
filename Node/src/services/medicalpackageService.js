@@ -12,6 +12,7 @@ let getAllGoiKham = () => {
             attributes: ["price", "applydateId", "id"],
           },
         ],
+        order: [["createdAt", "DESC"]],
         raw: true,
         nest: true,
       });
@@ -64,7 +65,6 @@ let checkNamePackage = (goikham) => {
   });
 };
 
-//ko hien thong bao
 let createNewMedicalpackage = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -89,11 +89,11 @@ let createNewMedicalpackage = (data) => {
           applydateId: data.applydateId,
           medicalpackageId: goikham.id,
         });
+        resolve({
+          code: 0,
+          message: "Thêm thành công!",
+        });
       }
-      resolve({
-        code: 0,
-        message: `Gói khám được thêm thành công! `,
-      });
     } catch (e) {
       reject(e);
     }
@@ -114,7 +114,6 @@ let updateGoiKham = (data) => {
         });
         let giagoikham = await db.PackagePrice.findOne({
           where: { medicalpackageId: data.id },
-          raw: true,
         });
 
         if (goiKham) {
@@ -134,8 +133,8 @@ let updateGoiKham = (data) => {
           await giagoikham.save();
         }
         resolve({
-          errCode: 0,
-          message: "Update succeeds!",
+          code: 0,
+          message: "Cập nhật thành công!",
         });
       }
     } catch (e) {

@@ -8,7 +8,7 @@ import { BiBookmarkAltPlus, BiBellMinus } from "react-icons/bi";
 import "./Header.css";
 import logo from "../../assets/upload/logo.png";
 import { UserMenuClasses } from "react-admin";
-
+import { useNavigate } from "react-router-dom";
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [showInfor, setShowInfor] = useState(false);
@@ -16,7 +16,7 @@ function Header() {
   const [navbar, setNavbar] = useState(false);
   const dispatch = useDispatch();
   const checklogoutguest = useSelector(dataCheckLogoutGuest);
-
+  const navigate = useNavigate();
   const showButton = () => {
     if (window.innerWidth < 960) {
       setButton(false);
@@ -25,7 +25,6 @@ function Header() {
     }
   };
   const parent = JSON.parse(localStorage.getItem("parent"));
-  console.log("parent111:", parent);
   const id = parent.id;
 
   useEffect(() => {
@@ -51,7 +50,7 @@ function Header() {
   };
 
   const handleInforPatient = () => {
-    navigator(`/infor-patient/${id}`);
+    navigate(`/infor-patient/${id}`);
   };
 
   return (
