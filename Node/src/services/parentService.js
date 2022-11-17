@@ -251,6 +251,18 @@ let findPatient = (patient) => {
     try {
       let find = await db.Patient.findAll({
         where: { parentId: patient },
+        include: [
+          {
+            model: db.Parent,
+            as: "parentDataToPatient",
+            attributes: ["name", "email", "phone", "gender", "id"],
+          },
+          {
+            model: db.Allcode,
+            as: "genderDataToPatient",
+            attributes: ["value", "keyMap", "type"],
+          },
+        ],
       });
       if (find) {
         resolve(find);

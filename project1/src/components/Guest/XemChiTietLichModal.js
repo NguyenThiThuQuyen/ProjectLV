@@ -57,39 +57,6 @@ export default function XemChiTietLichModal(props) {
                   </h3>
                 </div>
 
-                {/* <div className="relative p-6 flex-auto">
-                  <div className="flex">
-                    <span>Tên phụ huynh: </span>
-                    <div className="mx-5">
-                      {props?.params2?.testTenPhuHuynh}
-                    </div>
-                  </div>
-
-                  <div className="flex">
-                    <span>SDT:</span>
-                    <div className="mx-5">{props?.params2?.testPhone}</div>
-                  </div>
-
-                  <div className="flex">
-                    <span>Tên goi kham: </span>
-                    <div className="mx-5">{props?.params2?.testGoiKham}</div>
-                  </div>
-
-                  <div className="flex">
-                    <span>Gia goi kham</span>
-                    <div className="mx-5">{props?.params2?.testGiaGoiKham}</div>
-                  </div>
-
-                  <div className="flex">
-                    <span>Ngày khám: </span>
-                    <div className="mx-5">{ngaykham}</div>
-                  </div>
-                  <div className="flex">
-                    <span>Khung gio kham: </span>
-                    <div className="mx-5">{props?.params2?.testTimeslot}</div>
-                  </div>
-                </div> */}
-
                 <div className="relative p-6 flex-auto">
                   <form className="">
                     <div className="border-2 border-slate-100 shadow-lg mt-5">
@@ -155,56 +122,105 @@ export default function XemChiTietLichModal(props) {
                       </div>
                     </div>
 
-                    <div className="grid grid-rows-3">
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-3">
-                          <label
-                            htmlFor=""
-                            className="text-sky-800 font-medium ml-2"
-                          >
-                            Tên trẻ
-                          </label>
-                          <div
-                            type="text"
-                            placeholder="..."
-                            disabled
-                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
-                            // onChange={(event) => setName(event.target.value)}
-                          >
-                            {props?.params?.childrentName}
+                    <div className="border-2 border-slate-100 shadow-lg mt-10">
+                      <div className="text-green-700 uppercase text-md font-medium mt-3 mx-3">
+                        Thông tin bệnh nhân
+                      </div>
+                      <div className="grid grid-rows-1">
+                        <div className="grid row-span-1 grid-cols-3">
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Tên trẻ
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b uppercase ml-2 border-solid border-slate-400 w-auto outline-none mt-1 bg-sky-100 text-sky-900"
+                              // onChange={(event) => setName(event.target.value)}
+                            >
+                              {props?.params?.childrentName}
+                            </div>
+                          </div>
+
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Ngày sinh
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b uppercase ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                              // onChange={(event) => setName(event.target.value)}
+                            >
+                              {ngaysinh}
+                            </div>
+                          </div>
+
+                          <div className="col-span-1 mx-3 my-3">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Địa chỉ
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                            >
+                              {props?.params?.address}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="border-2 border-slate-100 shadow-lg mt-10">
+                      <div className="text-green-700 uppercase text-md font-medium mt-3 mx-3">
+                        Thông tin gói tư vấn
+                      </div>
+
+                      <div className="px-3 pb-3">
+                        <div className="flex mt-2">
+                          <div className="text-sky-800 font-medium ml-2">
+                            Bác sĩ tư vấn:
+                          </div>
+                          <div className="ml-2 uppercase">
+                            {props?.params?.nameDoctor}
                           </div>
                         </div>
 
-                        <div className="col-span-1 mx-3 my-3">
-                          <label
-                            htmlFor=""
-                            className="text-sky-800 font-medium ml-2"
-                          >
-                            Ngày sinh
-                          </label>
-                          <div
-                            type="text"
-                            placeholder="..."
-                            disabled
-                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
-                            // onChange={(event) => setName(event.target.value)}
-                          >
-                            {ngaysinh}
+                        <div className="flex mt-2">
+                          <div className="text-sky-800 font-medium ml-2">
+                            Gói tư vấn:
+                          </div>
+                          <div className="ml-2">
+                            {props?.params?.testGoiKham}
                           </div>
                         </div>
-
-                        <div className="col-span-1 mx-3 my-3">
-                          <label htmlFor="" className="text-sky-700 ml-2">
-                            Ngày sinh
-                          </label>
-                          <div
-                            type="text"
-                            placeholder="..."
-                            disabled
-                            className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
-                            // onChange={(event) => setName(event.target.value)}
-                          >
-                            {ngaysinh}
+                        <div className="flex mt-2">
+                          <div className="text-sky-800 font-medium ml-2">
+                            Giá gói khám:
+                          </div>
+                          <div className="ml-2">
+                            {props?.params?.testGiaGoiKham}
+                          </div>
+                        </div>
+                        <div className="flex mt-2">
+                          <div className="text-sky-800 font-medium ml-2">
+                            Khung giờ tư vấn:
+                          </div>
+                          <div className="ml-2">
+                            {props?.params?.testTimeslot}
                           </div>
                         </div>
                       </div>

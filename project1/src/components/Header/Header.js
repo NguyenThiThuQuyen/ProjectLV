@@ -25,7 +25,7 @@ function Header() {
     }
   };
   const parent = JSON.parse(localStorage.getItem("parent"));
-  const id = parent.id;
+  const id = parent?.id;
 
   useEffect(() => {
     showButton();

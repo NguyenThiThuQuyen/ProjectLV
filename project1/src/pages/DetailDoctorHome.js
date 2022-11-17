@@ -63,6 +63,14 @@ const DetailDoctorHome = (props) => {
   const patientId1 = parent?.parentDataToPatient[0];
   // console.log("-----------patientId1:", patientId1);
 
+  const check = useSelector(dataCheck);
+  const user = useSelector(dataGetAUser);
+  const dataAllGoiKham = useSelector(dataGetAllGoiKham);
+  const dataFindSchedule = useSelector(dataGetFindSchedule);
+  const dataFindTimeslot = useSelector(dataGetFindTimeslot);
+
+  const [nameDoctor, setNameDoctor] = useState(user?.user?.name);
+
   const params = {
     doctorId: doctorId,
     userId: userId.userId,
@@ -84,13 +92,8 @@ const DetailDoctorHome = (props) => {
     testGoiKham: testGoiKham,
     testTimeslot: testTimeslot,
     testGiaGoiKham: testGiaGoiKham,
+    nameDoctor: nameDoctor,
   };
-
-  const check = useSelector(dataCheck);
-  const user = useSelector(dataGetAUser);
-  const dataAllGoiKham = useSelector(dataGetAllGoiKham);
-  const dataFindSchedule = useSelector(dataGetFindSchedule);
-  const dataFindTimeslot = useSelector(dataGetFindTimeslot);
 
   useEffect(() => {
     dispatch(getAllGoiKhamAPI());

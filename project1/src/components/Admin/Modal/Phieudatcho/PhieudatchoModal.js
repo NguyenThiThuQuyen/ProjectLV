@@ -3,10 +3,13 @@ import { BsPlusLg, BsSearch } from "react-icons/bs";
 import Select from "react-select";
 import moment from "moment";
 import { createPhieudatchoAPI } from "../../../../redux/phieudatchoRedux";
+import { getATimeslotAPI } from "../../../../redux/timeslotRedux";
 import {
   getAllPatientsAPI,
   dataGetAllPatient,
   ArrayPatient,
+  dataGetPatient,
+  getPatientAPI,
 } from "../../../../redux/patientRedux";
 
 import {
@@ -23,6 +26,8 @@ import {
 import {
   getAllGoiKhamAPI,
   dataGetAllGoiKham,
+  dataGetGoiKham,
+  getGoiKhamAPI,
 } from "../../../../redux/goiKhamRedux";
 import {
   getAllSchedulesAPI,
@@ -48,9 +53,15 @@ export default function PhieudatchoModal() {
   const [timeslotId, setTimeslotId] = useState();
   const [patientId, setPatientId] = useState();
   const [parentId, setParentId] = useState("");
-  console.log("parentId:", parentId);
   const [email, setEmail] = useState();
   const [doctorId, setDoctorId] = useState();
+
+  const [name, setName] = useState();
+  const [phone, setPhone] = useState();
+  const [childrentName, setChildrentName] = useState();
+  const [packageName, setPackageName] = useState();
+  const [packagePrice, setPackagePrice] = useState();
+  const [timeslot, setTimeslot] = useState();
   const params = {
     bookingDate: bookingDate,
     arrivalDate: registerDate,
@@ -63,17 +74,25 @@ export default function PhieudatchoModal() {
     timeslotId: timeslotId,
     registerDate: registerDate,
     email: email,
+    parentId: parentId,
+    name: name,
+    phone: phone,
+    childrentName: childrentName,
+    testGoiKham: packageName,
+    testGiaGoiKham: packagePrice,
+    testTimeslot: timeslot,
   };
+  console.log("params:", params);
 
   const dataFind = useSelector(dataGetFindPatient);
-  console.log("dataFind:", dataFind);
   const dataDoctor = useSelector(dataGetDoctor);
   const dataGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
   const dataIdSchedule = useSelector(dataFindIdSchedule);
   const dataAllParent = useSelector(dataGetAllParent);
-  console.log("dataAllParent:", dataAllParent);
+  const dataAPatient = useSelector(dataGetPatient);
+
   const dispatch = useDispatch();
   const dataPatient = useSelector(dataGetAllPatient);
   const array1 = useSelector(ArrayPatient);
@@ -83,22 +102,29 @@ export default function PhieudatchoModal() {
   // let dataDate =
   //   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   // const test = new Date(dataDate).getTime();
-  // console.log("test date lay ngay: ", test);
 
   useEffect(() => {
     dispatch(getAllPatientsAPI());
     dispatch(getAllDoctorAPI());
-    dispatch(getAllGoiKhamAPI());
     dispatch(getAllGoiKhamAPI());
     dispatch(getAllSchedulesAPI());
     dispatch(getFindIdScheduleAPI());
     dispatch(getAllParentsAPI());
   }, [showModal]);
 
+  // const dataParent = dataAllParent?.parents[0]?.id;
+
   useEffect(() => {
-    setParentId(dataAllParent[0]?.id);
-    dispatch(getFindAllPatientAPI(parentId));
-  }, [dataAllParent.parents]);
+    if (dataAllParent.parents) {
+      setParentId(dataAllParent.parents[0].id);
+    }
+  }, [dataAllParent]);
+
+  useEffect(() => {
+    if (parentId) {
+      dispatch(getFindAllPatientAPI(parentId));
+    }
+  }, [parentId]);
 
   useEffect(() => {
     dataFindSchedule?.schedule?.data &&
@@ -131,18 +157,17 @@ export default function PhieudatchoModal() {
   };
 
   const handleFindSchedule = (id) => {
-    console.log("id", id);
     setMang([]);
     dispatch(getFindScheduleToDoctorAPI(id));
     setDoctorId(id);
   };
 
   const handleFindTimeslot = (item) => {
+    console.log("item:", item);
     const params = {
       registerDate: item,
       userId: doctorId,
     };
-    console.log("params: ", params);
     dispatch(getFindTimeslotAPI(params));
     setRegisterDate(item);
   };
@@ -153,7 +178,6 @@ export default function PhieudatchoModal() {
   //     timeslotId: timeslotId,
   //     registerDate: registerDate,
   //   };
-  //   console.log("params id schedule: ", params);
 
   //   dispatch(getFindIdScheduleAPI(params));
   // };
@@ -165,11 +189,46 @@ export default function PhieudatchoModal() {
     "-" +
     bookingDate.getFullYear();
 
-  // console.log("date: " + date);
+  const handleFindPatient = async (id) => {
+    let dataId = await dispatch(getFindAllPatientAPI(id));
+    let findemail = dataId?.payload?.parent[0]?.parentDataToPatient?.email;
+    console.log("dataId:", dataId);
+    setEmail(findemail);
+  };
 
-  const handleFindPatient = (id) => {
-    console.log("id: ", id);
-    dispatch(getFindAllPatientAPI(id));
+  const handleFindInfor = async (id) => {
+    console.log("id:", id);
+    let dataInfor = await dispatch(getPatientAPI(id));
+    console.log("dataInfor:", dataInfor);
+
+    let testNameBame = dataInfor?.payload?.patient?.parentDataToPatient?.name;
+    setName(testNameBame);
+
+    let testPhone = dataInfor?.payload?.patient?.parentDataToPatient?.phone;
+    setPhone(testPhone);
+
+    let testTenTre = dataInfor?.payload?.patient?.childrentName;
+    setChildrentName(testTenTre);
+  };
+
+  const handleFindGoiKham = async (id) => {
+    let goikham = await dispatch(getGoiKhamAPI(id));
+    console.log("goikham:", goikham);
+
+    let tengoi = goikham?.payload?.goikham?.packageName;
+    setPackageName(tengoi);
+
+    let giatengoi =
+      goikham?.payload?.goikham?.medicalPackageDataToPackagePrice?.price;
+    setPackagePrice(giatengoi);
+  };
+
+  const handleFindKhungGio = async (timeslotId) => {
+    let khunggio = await dispatch(getATimeslotAPI(timeslotId));
+
+    console.log("khunggio:", khunggio);
+    let gio = khunggio?.payload?.timeslot?.timeslot;
+    setTimeslot(gio);
   };
 
   return (
@@ -240,13 +299,13 @@ export default function PhieudatchoModal() {
                             onClick={(event) =>
                               handleFindPatient(event.target.value)
                             }
-                            value={parentId}
+                            // onChange={(event) => setEmail()}
                           >
                             {dataAllParent.parents &&
                               dataAllParent.parents.length > 0 &&
                               dataAllParent.parents.map((item, index) => {
                                 return (
-                                  <option key={index} value={item.id}>
+                                  <option key={item?.email} value={item.id}>
                                     {item?.email}
                                   </option>
                                 );
@@ -266,10 +325,13 @@ export default function PhieudatchoModal() {
                             onChange={(event) =>
                               setPatientId(event.target.value)
                             }
+                            onClick={(event) =>
+                              handleFindInfor(event.target.value)
+                            }
                           >
-                            {dataPatient.patients &&
-                              dataPatient.patients.length > 0 &&
-                              dataPatient.patients.map((item, index) => {
+                            {dataFind?.parent &&
+                              dataFind?.parent.length > 0 &&
+                              dataFind?.parent.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>
                                     {item.childrentName}
@@ -287,6 +349,9 @@ export default function PhieudatchoModal() {
                             id=""
                             onChange={(event) =>
                               setMedicalpackageId(event.target.value)
+                            }
+                            onClick={(event) =>
+                              handleFindGoiKham(event.target.value)
                             }
                           >
                             {dataGoiKham.goikham &&
@@ -334,12 +399,10 @@ export default function PhieudatchoModal() {
                             {mang &&
                               mang?.length > 0 &&
                               mang?.map((item, index) => {
-                                console.log("item: ", item);
                                 let day = "";
                                 day = moment(item).format("YYYY-MM-DD");
 
                                 // const testday = new Date(day).getTime();
-                                // console.log(testday);
 
                                 return (
                                   <option key={index} value={item}>
@@ -356,9 +419,10 @@ export default function PhieudatchoModal() {
                           <select
                             className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
-                            onClick={(event) =>
+                            onChange={(event) =>
                               setTimeslotId(event.target.value)
                             }
+                            onClick={(e) => handleFindKhungGio(e.target.value)}
                           >
                             {dataFindTimeslot?.data &&
                               dataFindTimeslot?.data.length > 0 &&
