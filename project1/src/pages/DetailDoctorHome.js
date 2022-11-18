@@ -345,7 +345,7 @@ const DetailDoctorHome = (props) => {
                                 key={index}
                                 value={item.timeslotId}
                                 title="Đã hết chỗ"
-                                className="border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 col-span-1 mb-2 cursor-not-allowed"
+                                className="border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 col-span-1 cursor-not-allowed"
                               >
                                 {item?.timeSlotDataToSchedule?.timeslot}
                               </div>

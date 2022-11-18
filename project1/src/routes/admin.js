@@ -26,6 +26,7 @@ import Prescription from "../pages/Doctor/Prescription";
 import DetailMenu from "../pages/Doctor/DetailMenu";
 
 import InforUser from "../pages/Admin/InforUser";
+import ReservationSingle from "../pages/Admin/PhieudatchoSingle";
 
 function admin() {
   return (
@@ -73,6 +74,7 @@ function admin() {
         <Route path="/detail-menu/:menuId/:id" element={<DetailMenu />} />
 
         <Route path="/infor-user/:id" element={<InforUser />} />
+        <Route path="/reservation-detail/:id" element={<ReservationSingle />} />
       </Routes>
     </div>
   );

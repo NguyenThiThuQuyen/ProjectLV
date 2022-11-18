@@ -28,6 +28,8 @@ const ConsultDoctor = () => {
   let date =
     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
 
+  let testDate = moment(date).format("DD/MM/YYYY");
+
   const params = {
     doctorId: user.id,
     DateChon: date,
@@ -60,9 +62,9 @@ const ConsultDoctor = () => {
           <NavbarConsult />
           <div className="w-full px-10 py-4">
             <div className="flex">
-              <div className="">
+              <div className="flex">
                 <div className="">Ngày khám:</div>
-                <div className="">{date}</div>
+                <div className="ml-2 bg-yellow-500 rounded-md">{testDate}</div>
               </div>
             </div>
             <table className="border border-slate-200 mt-10">
@@ -101,7 +103,7 @@ const ConsultDoctor = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {fotmatday}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y border-slate-300 w-[350px] py-3 px-7 text-slate-700">
                           {item?.goituvanDataToPhieudatcho?.packageName}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">

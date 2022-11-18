@@ -82,7 +82,7 @@ export default function PhieudatchoModal() {
     testGiaGoiKham: packagePrice,
     testTimeslot: timeslot,
   };
-  console.log("params:", params);
+  console.log("params: ", params);
 
   const dataFind = useSelector(dataGetFindPatient);
   const dataDoctor = useSelector(dataGetDoctor);
@@ -126,15 +126,38 @@ export default function PhieudatchoModal() {
     }
   }, [parentId]);
 
+  // useEffect(() => {
+  //   dataFindSchedule?.schedule?.data &&
+  //     dataFindSchedule?.schedule?.data?.length > 0 &&
+  //     dataFindSchedule?.schedule?.data?.map((item, index) => {
+  //       const kt = XoaTrungTrongMang(item?.registerDate);
+  //       if (kt) {
+  //         mang.push(item?.registerDate);
+  //       }
+  //     });
+  // }, [dataFindSchedule]);
+
+  const today = new Date();
+
+  let date2 =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  let day2 = new Date(date2).getTime();
+
   useEffect(() => {
     dataFindSchedule?.schedule?.data &&
       dataFindSchedule?.schedule?.data?.length > 0 &&
       dataFindSchedule?.schedule?.data?.map((item, index) => {
         const kt = XoaTrungTrongMang(item?.registerDate);
-        if (kt) {
+        let temp = new Date(item?.registerDate).getTime();
+        if (kt && day2 < temp) {
           mang.push(item?.registerDate);
         }
       });
+    const params = {
+      registerDate: mang[0],
+      userId: doctorId,
+    };
+    dispatch(getFindTimeslotAPI(params));
   }, [dataFindSchedule]);
 
   const XoaTrungTrongMang = (date) => {
@@ -152,8 +175,20 @@ export default function PhieudatchoModal() {
   };
 
   const handleSave = () => {
-    dispatch(createPhieudatchoAPI(params));
-    setShowModal(false);
+    if (
+      !email ||
+      !patientId ||
+      !medicalpackageId ||
+      !doctorId ||
+      // !arrivalDate ||
+      !timeslotId
+    ) {
+      setShowModal(true);
+      alert("Vui lòng nhập đầy đủ thông tin !");
+    } else {
+      dispatch(createPhieudatchoAPI(params));
+      setShowModal(false);
+    }
   };
 
   const handleFindSchedule = (id) => {
@@ -188,6 +223,8 @@ export default function PhieudatchoModal() {
     (bookingDate.getMonth() + 1) +
     "-" +
     bookingDate.getFullYear();
+
+  const dateformat = moment(data).format("DD/MM/YYYY");
 
   const handleFindPatient = async (id) => {
     let dataId = await dispatch(getFindAllPatientAPI(id));
@@ -224,11 +261,14 @@ export default function PhieudatchoModal() {
   };
 
   const handleFindKhungGio = async (timeslotId) => {
+    console.log("timeslotId:", timeslotId);
     let khunggio = await dispatch(getATimeslotAPI(timeslotId));
 
     console.log("khunggio:", khunggio);
     let gio = khunggio?.payload?.timeslot?.timeslot;
+    let gioId = khunggio?.payload?.timeslot?.id;
     setTimeslot(gio);
+    setTimeslotId(gioId);
   };
 
   return (
@@ -269,32 +309,37 @@ export default function PhieudatchoModal() {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="relative w-auto my-6 mx-auto max-w-4xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    ĐẶT CHỖ
+                    PHIẾU ĐẶT CHỖ
                   </h3>
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="">
-                    <div className="grid grid-rows-3">
+                    <div className="grid auto-rows-auto">
                       <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Ngày đặt
+                        <div className="col-span-2 flex mx-3 my-4">
+                          <label
+                            htmlFor=""
+                            className="text-slate-600 mt-3 ml-2"
+                          >
+                            Ngày đặt:
                           </label>
-                          <div className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-200 outline-slate-300">
-                            {date}
+                          <div className="shadow-lg w-1/3 ml-3 h-10 border rounded-lg p-2 mt-1 bg-yellow-600 outline-slate-300 cursor-not-allowed">
+                            {dateformat}
                           </div>
                         </div>
-                        <div className="col-span-2 mx-3 my-4">
+                      </div>
+                      <div className="grid row-span-1 grid-cols-6">
+                        <div className="col-span-3 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Email
                           </label>
 
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-11 shadow-md border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onClick={(event) =>
                               handleFindPatient(event.target.value)
@@ -312,15 +357,13 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                      </div>
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-3 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên bệnh nhân
                           </label>
 
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-11 shadow-md border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) =>
                               setPatientId(event.target.value)
@@ -340,12 +383,14 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-2 mx-3 my-4">
+                      </div>
+                      <div className="grid row-span-1 grid-cols-6">
+                        <div className="col-span-3 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Gói tư vấn
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-11 shadow-md border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) =>
                               setMedicalpackageId(event.target.value)
@@ -365,14 +410,12 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                      </div>
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
+                        <div className="col-span-3 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Bác sĩ tư vấn
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-11 shadow-md border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onClick={(e) => handleFindSchedule(e.target.value)}
                           >
@@ -387,12 +430,18 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Ngày tư vấn
+                      </div>
+
+                      <div className="grid row-span-1 grid-cols-3">
+                        <div className="col-span-2 flex mx-3 my-4">
+                          <label
+                            htmlFor=""
+                            className="text-slate-600 mt-3 ml-2"
+                          >
+                            Chọn ngày tư vấn:
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-1/3 ml-3 h-10 border rounded-lg p-2 mt-1 outline-slate-300 bg-green-500 shadow-lg"
                             id=""
                             onClick={(e) => handleFindTimeslot(e.target.value)}
                           >
@@ -400,10 +449,8 @@ export default function PhieudatchoModal() {
                               mang?.length > 0 &&
                               mang?.map((item, index) => {
                                 let day = "";
-                                day = moment(item).format("YYYY-MM-DD");
-
+                                day = moment(item).format("DD/MM/YYYY");
                                 // const testday = new Date(day).getTime();
-
                                 return (
                                   <option key={index} value={item}>
                                     {day}
@@ -412,28 +459,57 @@ export default function PhieudatchoModal() {
                               })}
                           </select>
                         </div>
-                        <div className="col-span-1 mx-3 my-4">
+                      </div>
+
+                      <div className="grid row-span-1 grid-cols-6">
+                        <div className="col-span-6 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Khung giờ tư vấn
                           </label>
-                          <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            id=""
-                            onChange={(event) =>
-                              setTimeslotId(event.target.value)
-                            }
-                            onClick={(e) => handleFindKhungGio(e.target.value)}
-                          >
+                          <div className="row-auto grid grid-cols-8">
                             {dataFindTimeslot?.data &&
                               dataFindTimeslot?.data.length > 0 &&
                               dataFindTimeslot?.data.map((item, index) => {
+                                console.log(
+                                  "item.timeslotId:",
+                                  item.timeslotId
+                                );
                                 return (
-                                  <option key={index} value={item.timeslotId}>
-                                    {item?.timeSlotDataToSchedule?.timeslot}
-                                  </option>
+                                  <>
+                                    {item?.soluongdangky >= 1 ? (
+                                      <>
+                                        <div
+                                          key={index}
+                                          value={item.timeslotId}
+                                          title="Đã hết chỗ"
+                                          className="col-span-2 border p-2 bg-red-400 w-fit rounded-md mr-3 mt-2 cursor-not-allowed"
+                                        >
+                                          {
+                                            item?.timeSlotDataToSchedule
+                                              ?.timeslot
+                                          }
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <div
+                                        key={index}
+                                        value={item.timeslotId}
+                                        onClick={() =>
+                                          handleFindKhungGio(item.timeslotId)
+                                        }
+                                        className={
+                                          item.timeslotId == timeslotId
+                                            ? "col-span-2 border p-2 bg-sky-400 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                                            : "col-span-2 border p-2 bg-sky-200 hover:bg-sky-300 w-fit rounded-md mr-3 mt-2 cursor-pointer"
+                                        }
+                                      >
+                                        {item?.timeSlotDataToSchedule?.timeslot}
+                                      </div>
+                                    )}
+                                  </>
                                 );
                               })}
-                          </select>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -452,7 +528,7 @@ export default function PhieudatchoModal() {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    LƯU THÔNG TIN
                   </button>
                 </div>
               </div>

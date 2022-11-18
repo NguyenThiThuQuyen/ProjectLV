@@ -77,6 +77,18 @@ const Prescription = () => {
     dispatch(getPhieudatchoAPI(paramsTuvan.id));
   }, []);
 
+  useEffect(() => {
+    if (checkTuvan == true) {
+      // setReservationTicketId(paramsTuvan.id);
+      // dispatch(
+      //   findIdPhieuDatChoPrescriptionAPI({
+      //     reservationTicketId: paramsTuvan.id,
+      //   })
+      // );
+      dispatch(getPhieudatchoAPI(paramsTuvan.id));
+    }
+  }, [checkTuvan]);
+
   const handleFind = async (menuId) => {
     let datafind = await dispatch(
       getFindMenuToPrescriptionAPI({ menuId: menuId })
@@ -162,7 +174,6 @@ const Prescription = () => {
     if (testdata.payload.code == 0) {
       setCheckTuvan(true);
     }
-    // navigator(`/manager/prescription-save/${}`);
   };
 
   const params = {

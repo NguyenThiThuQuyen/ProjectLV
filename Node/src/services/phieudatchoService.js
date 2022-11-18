@@ -164,6 +164,13 @@ let getPhieudatcho = (phieudatchoId) => {
               model: db.MedicalPackage,
               as: "goituvanDataToPhieudatcho",
               attributes: ["packageName", "id"],
+              include: [
+                {
+                  model: db.PackagePrice,
+                  as: "medicalPackageDataToPackagePrice",
+                  attributes: ["price", "id"],
+                },
+              ],
             },
             {
               model: db.Schedule,
@@ -183,9 +190,16 @@ let getPhieudatcho = (phieudatchoId) => {
               attributes: [
                 "childrentName",
                 "birthday",
-                "gender",
+                "address",
                 "gender",
                 "id",
+              ],
+              include: [
+                {
+                  model: db.Parent,
+                  as: "parentDataToPatient",
+                  attributes: ["name", "email", "phone", "gender", "id"],
+                },
               ],
             },
             {

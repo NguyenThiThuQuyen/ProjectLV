@@ -35,6 +35,7 @@ export default function MenuModal(props) {
   const [eatTimeslotId, setEatTimeslotId] = useState();
 
   const [loidan, setLoidan] = useState();
+  const [sessionId, setSessionId] = useState();
 
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
@@ -99,6 +100,9 @@ export default function MenuModal(props) {
       eatdateId: eatdateId,
     };
     dispatch(createPrescriptionAPI(dataLuu));
+    setTimeout(function () {
+      window.location.reload(1);
+    }, 4000);
 
     setShowModal(false);
     props.handleMo(false);
@@ -106,6 +110,7 @@ export default function MenuModal(props) {
 
   const handleFindEatTimeslot = (id) => {
     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
+    setSessionId(id);
   };
 
   return (
@@ -181,7 +186,11 @@ export default function MenuModal(props) {
                                   <option
                                     key={index}
                                     value={item.id}
-                                    className="ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-300 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                    className={
+                                      item.id == sessionId
+                                        ? "ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-500 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                        : "ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-300 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                    }
                                   >
                                     {item.name}
                                   </option>
@@ -210,7 +219,11 @@ export default function MenuModal(props) {
                                   <option
                                     key={index}
                                     value={item.id}
-                                    className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
+                                    className={
+                                      item.id == eatTimeslotId
+                                        ? "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-500 cursor-pointer hover:text-white text-center"
+                                        : "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-400 hover:bg-yellow-500 cursor-pointer hover:text-white text-center"
+                                    }
                                   >
                                     {item.khunggioan}
                                   </option>

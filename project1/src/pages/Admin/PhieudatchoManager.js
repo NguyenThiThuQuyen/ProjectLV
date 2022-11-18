@@ -4,7 +4,7 @@ import Navbar from "../../components/Admin/Navbar";
 import PhieudatchoModal from "../../components/Admin/Modal/Phieudatcho/PhieudatchoModal";
 import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { HiDotsHorizontal } from "react-icons/hi";
 import { AiOutlineEye } from "react-icons/ai";
 import { Buffer } from "buffer";
 import moment from "moment";
@@ -16,6 +16,8 @@ import {
   dataGetAllPhieudatcho,
   dataCheck,
   deletePhieudatchoAPI,
+  dataGetAPhieudatcho,
+  getPhieudatchoAPI,
 } from "../../redux/phieudatchoRedux";
 
 const PhieudatchoManager = () => {
@@ -33,10 +35,10 @@ const PhieudatchoManager = () => {
     dispatch(deletePhieudatchoAPI(id));
   };
 
-  //   const handleDetailUser = (userId) => {
-  //     navigate(`/manager/user-detail-manager/${userId}`);
-  //     dispatch(getAUserAPI(userId));
-  //   };
+  const handleDetail = (id) => {
+    navigate(`/manager/reservation-detail/${id}`);
+    dispatch(getPhieudatchoAPI(id));
+  };
 
   return (
     <>
@@ -56,11 +58,11 @@ const PhieudatchoManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Gói tư vấn
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Ngày đặt
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Ngày đến
+                    Ngày tư vấn
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Khung giờ tư vấn
@@ -78,26 +80,22 @@ const PhieudatchoManager = () => {
                   data.phieudatcho.length > 0 &&
                   data.phieudatcho.map((item, index) => {
                     let ngaydat = "";
-                    ngaydat = moment(item.bookingDate).format("YYYY-MM-DD");
+                    ngaydat = moment(item.bookingDate).format("DD/MM/YYYY");
 
                     let ngayden = "";
-                    ngayden = moment(item.arrivalDate).format("YYYY-MM-DD");
+                    ngayden = moment(item.arrivalDate).format("DD/MM/YYYY");
 
                     return (
-                      <tr
-                        key={item.id}
-                        className="hover:bg-slate-200"
-                        // onClick={() => handleDetailUser(item.id)}
-                      >
+                      <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.patientDataToPhieudatcho?.childrentName}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y w-[310px] border-slate-300 py-3 px-7 text-slate-700">
                           {item?.goituvanDataToPhieudatcho?.packageName}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {ngaydat}
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {ngayden}
                         </td>
@@ -118,10 +116,10 @@ const PhieudatchoManager = () => {
 
                             <div
                               className=""
-                              title=""
-                              onClick={() => handleDeletePhieudatcho(item.id)}
+                              title="Xem chi tiết"
+                              onClick={() => handleDetail(item.id)}
                             >
-                              <RiDeleteBinLine className="cursor-pointer text-lg text-red-700" />
+                              <HiDotsHorizontal className="cursor-pointer text-lg text-sky-800" />
                             </div>
                           </div>
                         </td>
