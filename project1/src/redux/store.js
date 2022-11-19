@@ -19,6 +19,7 @@ import ChiTietAnRedux from "./chitietanRedux";
 import PrescriptionRedux from "./prescriptionRedux";
 import SessionRedux from "./sessionRedux";
 import EatTimeslotRedux from "./eatTimeslotRedux";
+import ThongkeRedux from "./ThongkeRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -40,5 +41,6 @@ export const store = configureStore({
     hoadon: PrescriptionRedux,
     buoian: SessionRedux,
     khunggioan: EatTimeslotRedux,
+    thongke: ThongkeRedux,
   },
 });

@@ -51,6 +51,8 @@ export const data = {
   ],
 };
 
-export default function ThongKe() {
-  return <Bar options={options} data={data} />;
+export default function ThongKe(props) {
+  console.log("props:", props);
+  console.log("data Ben Thong Ke:", data);
+  return <Bar options={options} data={props.thongke} />;
 }

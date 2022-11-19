@@ -21,6 +21,7 @@ const categoryController = require("../controllers/categoryController");
 const eatDetailController = require("../controllers/eatDetailController");
 const sessionController = require("../controllers/sessionController");
 const eatTimeslotController = require("../controllers/eatTimeslotController");
+const thongkeController = require("../controllers/thongkeController");
 
 const { Router } = require("express");
 
@@ -28,6 +29,12 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // thongke
+  router.get(
+    "/api/get-thongke-theo-tuan",
+    thongkeController.handleThongketheotuan
+  );
 
   // tìm khung giờ trong chi tiết ăn theo ngày ăn và menuId
   router.post(

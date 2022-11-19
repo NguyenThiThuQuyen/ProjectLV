@@ -26,6 +26,7 @@ const Widget = () => {
             </div>
           </div>
         </div>
+
         <div className="col-span-1 mx-auto border-2 w-4/5 shadow-lg rounded-md h-34 bg-slate-50">
           <div className="flex px-5 py-3">
             <div className="mr-auto text-sm uppercase font-medium text-slate-600">
@@ -48,6 +49,7 @@ const Widget = () => {
             </div>
           </div>
         </div>
+
         <div className="col-span-1 mx-auto border-2 w-4/5 shadow-lg rounded-md h-34 bg-slate-50">
           <div className="flex px-5 py-3">
             <div className="mr-auto text-sm uppercase font-medium text-slate-600">

@@ -32,8 +32,8 @@ export default function ScheduleModal() {
   const [userId, setUserId] = useState();
 
   const dataDoctor = useSelector(dataGetDoctor);
+  // console.log("dataDoctor:", dataDoctor);
   const dataTimeslot = useSelector(datagetAllTimeslot);
-  // console.log("dataTimeslot", dataTimeslot);
   const check = useSelector(dataCheck);
 
   const params = {
@@ -41,6 +41,7 @@ export default function ScheduleModal() {
     timeslotId: timeslotId,
     userId: userId,
   };
+  // console.log("params: ", params);
 
   useEffect(() => {
     dispatch(getAllTimeslotAPI());
@@ -49,10 +50,11 @@ export default function ScheduleModal() {
     choiceTimes();
   }, [showModal]);
 
-  // useEffect(() => {
-  //   setName(props.item.name);
-  //   setId(props.item.id);
-  // }, [props.item]);
+  useEffect(() => {
+    if (dataDoctor?.doctor?.data) {
+      setUserId(dataDoctor?.doctor?.data[0]?.id);
+    }
+  }, [dataDoctor]);
 
   const dateFormat = {
     SEND_TO_SERVER: "DD/MM/YYYY",
@@ -70,8 +72,14 @@ export default function ScheduleModal() {
       arrDate.push(object);
     }
     setCreateDate(arrDate);
-    console.log("arrDate: ", arrDate);
   };
+  // console.log("createDate:", createDate);
+
+  useEffect(() => {
+    if (createDate) {
+      setRegisterDate(createDate[0].value);
+    }
+  }, [createDate]);
 
   const choiceTimes = () => {
     let data = dataTimeslot.timeslot;
@@ -102,10 +110,10 @@ export default function ScheduleModal() {
     // let formatDate = new Date(params.registerDate).getTime();
     if (data && data.length > 0) {
       let selectTime = data.filter((item) => item.isSelected === true);
-      console.log("selectTime:", selectTime);
+      // console.log("selectTime:", selectTime);
       if (selectTime && selectTime.length > 0) {
         selectTime.map((schedule, index) => {
-          console.log("check schedule:", schedule, index);
+          // console.log("check schedule:", schedule, index);
           let object = {};
           object.userId = params.userId;
           object.registerDate = params.registerDate * 1;
@@ -125,23 +133,13 @@ export default function ScheduleModal() {
       dispatch(createScheduleAPI());
     }
 
-    console.log("check result:", result);
+    // console.log("check result:", result);
     setShowModal(false);
   };
 
   return (
     <>
-      <div className="mt-4 ml-5">
-        <div className="ml-5 flex justify-start">
-          <div className="flex items-center border border-scale-200 p-1 rounded">
-            <input
-              className="border-0 outline-0 bg-transparent"
-              type="text"
-              placeholder="Search..."
-            />
-            <BsSearch />
-          </div>
-        </div>
+      <div className="ml-5">
         <div className="flex">
           <div className="ml-6 mt-8">
             <button
@@ -269,14 +267,14 @@ export default function ScheduleModal() {
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
-                    Close
+                    ĐÓNG
                   </button>
                   <button
                     className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    LƯU THÔNG TIN
                   </button>
                 </div>
               </div>

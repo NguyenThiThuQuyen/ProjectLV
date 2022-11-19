@@ -112,8 +112,6 @@ export default function PhieudatchoModal() {
     dispatch(getAllParentsAPI());
   }, [showModal]);
 
-  // const dataParent = dataAllParent?.parents[0]?.id;
-
   useEffect(() => {
     if (dataAllParent.parents) {
       setParentId(dataAllParent.parents[0].id);
@@ -198,7 +196,6 @@ export default function PhieudatchoModal() {
   };
 
   const handleFindTimeslot = (item) => {
-    console.log("item:", item);
     const params = {
       registerDate: item,
       userId: doctorId,
@@ -229,42 +226,30 @@ export default function PhieudatchoModal() {
   const handleFindPatient = async (id) => {
     let dataId = await dispatch(getFindAllPatientAPI(id));
     let findemail = dataId?.payload?.parent[0]?.parentDataToPatient?.email;
-    console.log("dataId:", dataId);
     setEmail(findemail);
   };
 
   const handleFindInfor = async (id) => {
-    console.log("id:", id);
     let dataInfor = await dispatch(getPatientAPI(id));
-    console.log("dataInfor:", dataInfor);
-
     let testNameBame = dataInfor?.payload?.patient?.parentDataToPatient?.name;
     setName(testNameBame);
-
     let testPhone = dataInfor?.payload?.patient?.parentDataToPatient?.phone;
     setPhone(testPhone);
-
     let testTenTre = dataInfor?.payload?.patient?.childrentName;
     setChildrentName(testTenTre);
   };
 
   const handleFindGoiKham = async (id) => {
     let goikham = await dispatch(getGoiKhamAPI(id));
-    console.log("goikham:", goikham);
-
     let tengoi = goikham?.payload?.goikham?.packageName;
     setPackageName(tengoi);
-
     let giatengoi =
       goikham?.payload?.goikham?.medicalPackageDataToPackagePrice?.price;
     setPackagePrice(giatengoi);
   };
 
   const handleFindKhungGio = async (timeslotId) => {
-    console.log("timeslotId:", timeslotId);
     let khunggio = await dispatch(getATimeslotAPI(timeslotId));
-
-    console.log("khunggio:", khunggio);
     let gio = khunggio?.payload?.timeslot?.timeslot;
     let gioId = khunggio?.payload?.timeslot?.id;
     setTimeslot(gio);
