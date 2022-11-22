@@ -3,6 +3,7 @@ import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import ScheduleModal from "../../components/Admin/Modal/Schedule/ScheduleModal";
 import ScheduleModalEdit from "../../components/Admin/Modal/Schedule/ScheduleEditModal";
+import "./ScheduleManager.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsSearch } from "react-icons/bs";
@@ -34,7 +35,7 @@ const ScheduleManager = () => {
   }, []);
   useEffect(() => {
     if (data.schedules) {
-      setPaging(data?.schedules?.slice(0, 10));
+      setPaging(data?.schedules?.slice(0, 100));
     }
   }, [data]);
   const handleDelete = (id) => {
@@ -45,6 +46,7 @@ const ScheduleManager = () => {
     navigate(`/manager/schedule-detail/${scheduleId}`);
     dispatch(getAScheduleAPI(scheduleId));
   };
+
   const removeAccents = (str) => {
     // hàm bỏ dấu tiếng việt
     var AccentsMap = [
@@ -70,7 +72,7 @@ const ScheduleManager = () => {
     }
     return str;
   };
-  const schedulePerPage = 3;
+  const schedulePerPage = 10;
   const pagesVisited = pageNumber * schedulePerPage;
 
   const displaySchedules =
@@ -130,11 +132,6 @@ const ScheduleManager = () => {
           </tbody>
         );
       });
-  // }
-  // </>
-  // );
-  // }
-  // );
 
   const pageCount = Math.ceil(data?.schedules?.length / schedulePerPage);
   const changePage = ({ selected }) => {
@@ -155,7 +152,7 @@ const ScheduleManager = () => {
                 <input
                   className="border-0 outline-0 bg-transparent"
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Tìm kiếm..."
                   onChange={(e) => setQuery(e.target.value)}
                 />
                 <BsSearch />
@@ -164,7 +161,7 @@ const ScheduleManager = () => {
           </div>
           <ScheduleModal />
 
-          <table className="border border-slate-200">
+          <table className="border ml-10 mt-3 border-slate-200">
             <thead>
               <tr className="border border-slate-200 bg-green-600">
                 <th className="border border-slate-200 p-3 text-white font-medium">
@@ -186,8 +183,8 @@ const ScheduleManager = () => {
 
           <div className="w-full px-10 py-3">
             <ReactPaginate
-              previousLabel={"Previous"}
-              nextLabel={"Next"}
+              previousLabel={"Trước"}
+              nextLabel={"Sau"}
               pageCount={pageCount}
               onPageChange={changePage}
               containerClassName={"paginationBttns"}

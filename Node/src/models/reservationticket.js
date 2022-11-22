@@ -32,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "doctorDataToPhieudatcho",
       });
 
-      // ReservationTicket.hasMany(models.ReservationTicket, {
-      //   foreignKey: "reservationTicketId",
-      //   as: "phieudatchoDataToPrescription",
-      // });
+      ReservationTicket.hasMany(models.Receipt, {
+        foreignKey: "reservationTicketId",
+        as: "phieudatchoDataToReceipt",
+      });
     }
   }
   ReservationTicket.init(

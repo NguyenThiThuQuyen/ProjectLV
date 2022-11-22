@@ -61,7 +61,6 @@ const DetailDoctorHome = (props) => {
   const parent = JSON.parse(localStorage.getItem("parent"));
   console.log("patientId:", patientId);
   const patientId1 = parent?.parentDataToPatient[0];
-  // console.log("-----------patientId1:", patientId1);
 
   const check = useSelector(dataCheck);
   const user = useSelector(dataGetAUser);
@@ -93,7 +92,10 @@ const DetailDoctorHome = (props) => {
     testTimeslot: testTimeslot,
     testGiaGoiKham: testGiaGoiKham,
     nameDoctor: nameDoctor,
+    tenbacsi: user?.user?.name,
   };
+
+  console.log("params:", params);
 
   useEffect(() => {
     dispatch(getAllGoiKhamAPI());

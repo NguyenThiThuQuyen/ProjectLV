@@ -22,6 +22,7 @@ const eatDetailController = require("../controllers/eatDetailController");
 const sessionController = require("../controllers/sessionController");
 const eatTimeslotController = require("../controllers/eatTimeslotController");
 const thongkeController = require("../controllers/thongkeController");
+const receiptController = require("../controllers/receiptController");
 
 const { Router } = require("express");
 
@@ -29,6 +30,11 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // hóa đơn
+  // router.get("/api/get-all-receipt", receiptController.handleGetAllReceipt);
+  router.get("/api/get-a-receipt", receiptController.handleGetReceipt);
+  router.post("/api/create-receipt", receiptController.handleCreateReceipt);
 
   // thongke
   router.get(
@@ -193,7 +199,6 @@ let initWebRoutes = (app) => {
     "/api/get-all-patient-to-parentId",
     patientController.handleGetAllPatientToIdParent
   );
-
   router.get("/api/get-patient", patientController.handleGetPatient);
   router.get("/api/get-all-patients", patientController.handleGetAllPatients);
   router.get(

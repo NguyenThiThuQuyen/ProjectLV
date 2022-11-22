@@ -23,6 +23,9 @@ const Chart = () => {
   const [label2, setLabel2] = useState([]);
   const [data, setData] = useState({});
 
+  console.log("label:", label);
+  console.log("label2:", label2);
+
   console.log("data: ", data);
 
   const dispatch = useDispatch();
@@ -122,10 +125,10 @@ const Chart = () => {
   return (
     <div className="mt-4 overflow-x-hidden overflow-y-auto">
       <div className="w-full mt-10">
-        <div className="">
+        <div className="ml-48">
           <select name="" id="" onChange={(e) => handleChon(e.target.value)}>
-            <option value={1}>1</option>
-            <option value={2}>2</option>
+            <option value={1}>7 ngày trước</option>
+            <option value={2}>14 ngày trước</option>
           </select>
         </div>
         <div className="mx-auto w-2/3 ">

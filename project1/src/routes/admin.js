@@ -27,6 +27,9 @@ import DetailMenu from "../pages/Doctor/DetailMenu";
 
 import InforUser from "../pages/Admin/InforUser";
 import ReservationSingle from "../pages/Admin/PhieudatchoSingle";
+import PaySingle from "../pages/Admin/PaySingle";
+import ReservationToDate from "../pages/Admin/ReservationToDate";
+import Receipt from "../pages/Admin/Receipt";
 
 function admin() {
   return (
@@ -75,6 +78,12 @@ function admin() {
 
         <Route path="/infor-user/:id" element={<InforUser />} />
         <Route path="/reservation-detail/:id" element={<ReservationSingle />} />
+        <Route path="/pay/:id" element={<PaySingle />} />
+        <Route
+          path="/reservation-ticket-date"
+          element={<ReservationToDate />}
+        />
+        <Route path="/receipt/:id" element={<Receipt />} />
       </Routes>
     </div>
   );

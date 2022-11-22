@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 
 export const getPrescriptionAPI = createAsyncThunk(
-  "hoadon/GetLTV",
+  "toathuoc/GetLTV",
   async (params) => {
     const getltv = await getPrescription(params);
     return getltv;
@@ -16,7 +16,7 @@ export const getPrescriptionAPI = createAsyncThunk(
 );
 
 export const editPrescriptionAPI = createAsyncThunk(
-  "hoadon/EditH",
+  "toathuoc/EditH",
   async (params) => {
     const editHd = await editPrescription(params);
     return editHd;
@@ -24,7 +24,7 @@ export const editPrescriptionAPI = createAsyncThunk(
 );
 
 export const createPrescriptionAPI = createAsyncThunk(
-  "hoadon/Add",
+  "toathuoc/Add",
   async (params) => {
     const create = await createPrescription(params);
     return create;
@@ -32,7 +32,7 @@ export const createPrescriptionAPI = createAsyncThunk(
 );
 
 export const findIdPhieuDatChoPrescriptionAPI = createAsyncThunk(
-  "hoadon/FindId",
+  "toathuoc/FindId",
   async (params) => {
     const find = await findIdPhieuDatChoPrescription(params);
     return find;
@@ -40,7 +40,7 @@ export const findIdPhieuDatChoPrescriptionAPI = createAsyncThunk(
 );
 
 export const PrescriptionRedux = createSlice({
-  name: "hoadon",
+  name: "toathuoc",
   initialState: {
     getAPrescription: {},
     getFindIdPhieu: {},
@@ -81,6 +81,7 @@ export const PrescriptionRedux = createSlice({
   },
 });
 
-export const dataGetPrescription = (state) => state.hoadon.getAPrescription;
-export const datagetFindIdPhieuDatCho = (state) => state.hoadon.getFindIdPhieu;
+export const dataGetPrescription = (state) => state.toathuoc.getAPrescription;
+export const datagetFindIdPhieuDatCho = (state) =>
+  state.toathuoc.getFindIdPhieu;
 export default PrescriptionRedux.reducer;

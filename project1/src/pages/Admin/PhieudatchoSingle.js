@@ -45,7 +45,7 @@ const ReservationSingle = () => {
                       <div className="text-sky-800 font-medium ml-2">
                         Bác sĩ tư vấn:
                       </div>
-                      <div className="ml-2 uppercase">
+                      <div className="ml-2 uppercase font-medium">
                         {data?.phieudatcho?.doctorDataToPhieudatcho?.name}
                       </div>
                     </div>
@@ -54,7 +54,7 @@ const ReservationSingle = () => {
                       <div className="text-sky-800 font-medium ml-2">
                         Gói tư vấn:
                       </div>
-                      <div className="ml-2">
+                      <div className="ml-2 bg-orange-400 rounded-lg px-3">
                         {
                           data?.phieudatcho?.goituvanDataToPhieudatcho
                             ?.packageName
@@ -65,7 +65,7 @@ const ReservationSingle = () => {
                       <div className="text-sky-800 font-medium ml-2">
                         Giá gói khám:
                       </div>
-                      <div className="ml-2">
+                      <div className="ml-2 bg-yellow-400 rounded-lg px-3">
                         {
                           data?.phieudatcho?.goituvanDataToPhieudatcho
                             ?.medicalPackageDataToPackagePrice[0]?.price
@@ -76,7 +76,7 @@ const ReservationSingle = () => {
                       <div className="text-sky-800 font-medium ml-2">
                         Khung giờ tư vấn:
                       </div>
-                      <div className="ml-2">
+                      <div className="ml-2 rounded-lg px-3 bg-sky-400">
                         {
                           data?.phieudatcho?.scheduleDataToPhieudatcho
                             ?.timeSlotDataToSchedule?.timeslot

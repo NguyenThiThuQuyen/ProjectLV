@@ -195,7 +195,7 @@ export default function XemChiTietLichModal(props) {
                             Bác sĩ tư vấn:
                           </div>
                           <div className="ml-2 uppercase">
-                            {props?.params?.nameDoctor}
+                            {props?.params?.tenbacsi}
                           </div>
                         </div>
 

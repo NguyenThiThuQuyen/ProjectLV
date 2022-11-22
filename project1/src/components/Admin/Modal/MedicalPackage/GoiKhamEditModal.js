@@ -210,7 +210,7 @@ export default function GoiKhamModalEdit(props) {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    LƯU THÔNG TIN
                   </button>
                 </div>
               </div>

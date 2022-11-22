@@ -60,7 +60,6 @@ let updatePrescriptionData = (data) => {
           prescription.reservationTicketId = data.reservationTicketId;
           prescription.menuId = data.menuId;
           prescription.loidan = data.loidan;
-
           await prescription.save();
           // resolve({
           //   code: 0,

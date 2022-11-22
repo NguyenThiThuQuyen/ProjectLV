@@ -67,7 +67,7 @@ let checkRegisterDate = (regDate) => {
 };
 
 let findTimeslot = (data) => {
-  console.log("data", data);
+  console.log("d====================> data", data);
   return new Promise(async (resolve, reject) => {
     try {
       let find = await db.Schedule.findAll({

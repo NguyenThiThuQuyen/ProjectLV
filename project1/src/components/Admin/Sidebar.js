@@ -36,10 +36,12 @@ const Sidebar = () => {
     <div className="flex-initial w-1/6 min-h-screen border-r-2 border-scale-700">
       <div className="h-12 flex items-center justify-center font-bold">
         <span className="text-slate-800">
-          <div className="flex py-8 font-Caveat text-3xl">
-            <img src={logo} alt="" className="h-[2rem] " />
-            Children's Care
-          </div>
+          <Link to="/manager">
+            <div className="flex py-8 font-Caveat text-3xl">
+              <img src={logo} alt="" className="h-[2rem] " />
+              Children's Care
+            </div>
+          </Link>
         </span>
       </div>
 

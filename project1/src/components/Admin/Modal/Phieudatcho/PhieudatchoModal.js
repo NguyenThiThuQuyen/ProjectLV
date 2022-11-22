@@ -82,7 +82,7 @@ export default function PhieudatchoModal() {
     testGiaGoiKham: packagePrice,
     testTimeslot: timeslot,
   };
-  console.log("params: ", params);
+  // console.log("params: ", params);
 
   const dataFind = useSelector(dataGetFindPatient);
   const dataDoctor = useSelector(dataGetDoctor);
@@ -151,6 +151,7 @@ export default function PhieudatchoModal() {
           mang.push(item?.registerDate);
         }
       });
+    console.log("doctorId", doctorId);
     const params = {
       registerDate: mang[0],
       userId: doctorId,
@@ -264,7 +265,7 @@ export default function PhieudatchoModal() {
             <input
               className="border-0 outline-0 bg-transparent"
               type="text"
-              placeholder="Search..."
+              placeholder="Tìm kiếm..."
             />
             <BsSearch />
           </div>

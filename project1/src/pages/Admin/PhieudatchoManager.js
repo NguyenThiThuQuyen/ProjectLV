@@ -19,6 +19,7 @@ import {
   dataGetAPhieudatcho,
   getPhieudatchoAPI,
 } from "../../redux/phieudatchoRedux";
+import NavbarPhieuDatCho from "../../components/Admin/NavbarPhieuDatCho";
 
 const PhieudatchoManager = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,11 @@ const PhieudatchoManager = () => {
     dispatch(getPhieudatchoAPI(id));
   };
 
+  const handleThanhToan = (id) => {
+    navigate(`/manager/pay/${id}`);
+    dispatch(getPhieudatchoAPI(id));
+  };
+
   return (
     <>
       <div className="flex w-full">
@@ -47,11 +53,15 @@ const PhieudatchoManager = () => {
         <div className="flex-initial w-5/6">
           <Navbar />
           <ToastContainer />
+          <NavbarPhieuDatCho />
           <PhieudatchoModal />
           <div className="w-full px-10 py-4">
             <table className="border border-slate-200">
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
+                  <th className="border border-slate-200 p-3 text-white font-medium">
+                    id
+                  </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên bệnh nhân
                   </th>
@@ -64,9 +74,9 @@ const PhieudatchoManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Ngày tư vấn
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Khung giờ tư vấn
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Bác sĩ tư vấn
                   </th>
@@ -88,6 +98,9 @@ const PhieudatchoManager = () => {
                     return (
                       <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                          {item?.id}
+                        </td>
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.patientDataToPhieudatcho?.childrentName}
                         </td>
                         <td className="border-y w-[310px] border-slate-300 py-3 px-7 text-slate-700">
@@ -99,28 +112,31 @@ const PhieudatchoManager = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {ngayden}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {
                             item?.scheduleDataToPhieudatcho
                               ?.timeSlotDataToSchedule?.timeslot
                           }
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.doctorDataToPhieudatcho?.name}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-800">
                           <div className="flex">
-                            <div className="mr-5" title="Sửa">
-                              {/* <UserModalEdit item={item} /> */}
-                            </div>
+                            <button
+                              className="mr-5 bg-yellow-500 rounded-md px-1 hover:bg-yellow-600 hover:text-white"
+                              onClick={() => handleThanhToan(item.id)}
+                            >
+                              Thanh toán
+                            </button>
 
-                            <div
-                              className=""
+                            <button
+                              className="bg-sky-400 hover:bg-sky-500 px-3 rounded-md"
                               title="Xem chi tiết"
                               onClick={() => handleDetail(item.id)}
                             >
                               <HiDotsHorizontal className="cursor-pointer text-lg text-sky-800" />
-                            </div>
+                            </button>
                           </div>
                         </td>
                       </tr>

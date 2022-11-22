@@ -51,7 +51,7 @@ export default function ParentModal() {
             <input
               className="border-0 outline-0 bg-transparent"
               type="text"
-              placeholder="Search..."
+              placeholder="Tìm kiếm..."
             />
             <BsSearch />
           </div>
