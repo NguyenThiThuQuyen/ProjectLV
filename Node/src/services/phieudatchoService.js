@@ -187,18 +187,19 @@ let getPhieudatcho = (phieudatchoId) => {
             {
               model: db.Patient,
               as: "patientDataToPhieudatcho",
-              attributes: [
-                "childrentName",
-                "birthday",
-                "address",
-                "gender",
-                "id",
-              ],
+              attributes: ["childrentName", "birthday", "gender", "id"],
               include: [
                 {
                   model: db.Parent,
                   as: "parentDataToPatient",
-                  attributes: ["name", "email", "phone", "gender", "id"],
+                  attributes: [
+                    "name",
+                    "email",
+                    "address",
+                    "phone",
+                    "gender",
+                    "id",
+                  ],
                 },
               ],
             },

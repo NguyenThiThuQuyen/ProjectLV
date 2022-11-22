@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import ParentModal from "../../components/Admin/Modal/Parent/ParentModal";
 import PatientModalEdit from "../../components/Admin/Modal/Patient/PatientEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { AiOutlineEye } from "react-icons/ai";
+import { BsThreeDots } from "react-icons/bs";
 import { Buffer } from "buffer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -65,15 +65,15 @@ const PatientManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Giới Tính
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Hình ảnh
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên người đại diện
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Email
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Điện thoại
                   </th>
@@ -93,7 +93,7 @@ const PatientManager = () => {
                       );
                     }
                     let day = "";
-                    day = moment(item.birthday).format("YYYY-MM-DD");
+                    day = moment(item.birthday).format("DD/MM/YYYY");
                     return (
                       <tr key={item.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -105,34 +105,34 @@ const PatientManager = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.genderDataToPatient?.value}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <img
                             src={imageBase64}
                             alt=""
                             className=""
                             style={{ height: "80px", width: "80px" }}
                           />
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.parentDataToPatient?.name}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.parentDataToPatient?.email}
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item?.parentDataToPatient?.phone}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
                             <div
-                              className="mr-5"
+                              className="cursor-pointer"
                               title="Sửa"
                               onClick={() => handleDetail(item?.id)}
                             >
-                              Xem
+                              <BsThreeDots className="mt-1" />
                             </div>
 
-                            <div className="mr-5" title="Sửa">
+                            <div className="mr-3" title="Sửa">
                               <PatientModalEdit item={item} />
                             </div>
                             <div

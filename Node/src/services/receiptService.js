@@ -81,6 +81,13 @@ let getReceipt = (receiptId) => {
                 model: db.MedicalPackage,
                 as: "goituvanDataToPhieudatcho",
                 attributes: ["packageName", "id"],
+                include: [
+                  {
+                    model: db.PackagePrice,
+                    as: "medicalPackageDataToPackagePrice",
+                    attributes: ["price", "applydateId", "id"],
+                  },
+                ],
               },
               {
                 model: db.Patient,

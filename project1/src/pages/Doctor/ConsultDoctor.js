@@ -67,78 +67,148 @@ const ConsultDoctor = () => {
                 <div className="ml-2 bg-yellow-500 rounded-md">{testDate}</div>
               </div>
             </div>
-            <table className="border border-slate-200 mt-10">
-              <thead>
-                <tr className="border border-slate-200 bg-green-600">
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Tên
-                  </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Ngày sinh
-                  </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Gói tư vấn
-                  </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Giờ tư vấn
-                  </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Trạng thái
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {data?.data &&
-                  data?.data?.length > 0 &&
-                  data?.data?.map((item, index) => {
-                    console.log("item: ", item);
-                    let fotmatday = moment(
-                      item?.patientDataToPhieudatcho?.birthday
-                    ).format("DD/MM/YYYY");
-                    return (
-                      <tr key={item.id} className="hover:bg-slate-200">
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item?.patientDataToPhieudatcho?.childrentName}
-                        </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {fotmatday}
-                        </td>
-                        <td className="border-y border-slate-300 w-[350px] py-3 px-7 text-slate-700">
-                          {item?.goituvanDataToPhieudatcho?.packageName}
-                        </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {
-                            item?.scheduleDataToPhieudatcho
-                              ?.timeSlotDataToSchedule?.timeslot
-                          }
-                        </td>
+            <div className="">
+              <div className="grid row-auto">
+                <div className="grid grid-cols-5">
+                  <div className="col-span-3">
+                    <div className="text-center uppercase text-sm font-medium text-slate-700">
+                      Đơn tư vấn hôm nay
+                    </div>
+                    <div className="">
+                      <div className="mt-10">
+                        <div className="px-3">
+                          {data?.data &&
+                            data?.data?.length > 0 &&
+                            data?.data?.map((item, index) => {
+                              console.log("item: ", item);
+                              let fotmatday = moment(
+                                item?.patientDataToPhieudatcho?.birthday
+                              ).format("DD/MM/YYYY");
+                              return (
+                                <>
+                                  {item?.status == "Đã thanh toán" ? (
+                                    <div className="border-y border-y-slate-200 flex justify-between">
+                                      <div className="p-4">
+                                        <div className="flex">
+                                          <div className="mr-2 font-medium">
+                                            Tên bệnh nhân:
+                                          </div>
+                                          <div className="">
+                                            {
+                                              item?.patientDataToPhieudatcho
+                                                ?.childrentName
+                                            }
+                                          </div>
+                                        </div>
+                                        <div className="text-sm uppercase text-slate-600 font-medium mt-1">
+                                          {
+                                            item?.goituvanDataToPhieudatcho
+                                              ?.packageName
+                                          }
+                                        </div>
+                                        <div className="text-md uppercase text-orange-800 font-medium mt-1">
+                                          {
+                                            item?.scheduleDataToPhieudatcho
+                                              ?.timeSlotDataToSchedule?.timeslot
+                                          }
+                                        </div>
+                                      </div>
+                                      <div className="my-auto">
+                                        <button
+                                          className="mr-5 bg-lime-500 rounded-md px-1 hover:bg-lime-600 hover:text-white"
+                                          onClick={() => handleConsult(item.id)}
+                                        >
+                                          Đã thanh toán
+                                        </button>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className=""></div>
+                                  )}
+                                </>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-span-2 border-l-4 border-indigo-500">
+                    <div className="text-center uppercase text-sm font-medium text-slate-700">
+                      Tất cả đơn hôm nay
+                    </div>
+                    <div className="">
+                      <div className="mt-10">
+                        <div className="px-3">
+                          {data?.data &&
+                            data?.data?.length > 0 &&
+                            data?.data?.map((item, index) => {
+                              console.log("item: ", item);
+                              let fotmatday = moment(
+                                item?.patientDataToPhieudatcho?.birthday
+                              ).format("DD/MM/YYYY");
+                              return (
+                                <div className="border-y border-y-slate-200 flex justify-between">
+                                  <div className="py-2 px-4">
+                                    <div className="">
+                                      {
+                                        item?.patientDataToPhieudatcho
+                                          ?.childrentName
+                                      }
+                                    </div>
+                                    <div className="text-sm uppercase text-slate-600 font-medium mt-1">
+                                      {
+                                        item?.goituvanDataToPhieudatcho
+                                          ?.packageName
+                                      }
+                                    </div>
+                                  </div>
 
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.status == "Đã tư vấn" ? (
-                            <>
-                              <div
-                                className="bg-green-600 hover:bg-green-700 p-1 rounded-md text-white"
-                                onClick={() => handleConsult(item.id)}
-                              >
-                                {item?.status}
-                              </div>
-                            </>
-                          ) : (
-                            <>
-                              <div
-                                className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
-                                onClick={() => handleConsult(item.id)}
-                              >
-                                Tư vấn
-                              </div>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+                                  <div className="py-5">
+                                    {item?.status == "Đã thanh toán" ? (
+                                      <>
+                                        <button
+                                          className="mr-5 bg-lime-500 rounded-md px-1 hover:bg-lime-600 hover:text-white"
+                                          onClick={() => handleConsult(item.id)}
+                                        >
+                                          Đã thanh toán
+                                        </button>
+                                      </>
+                                    ) : (
+                                      <div className="">
+                                        {item.status == "Đã tư vấn" ? (
+                                          <>
+                                            <button
+                                              className="mr-5 bg-yellow-500 rounded-md px-1 hover:bg-yellow-600 hover:text-white"
+                                              onClick={() =>
+                                                handleConsult(item.id)
+                                              }
+                                            >
+                                              Đã tư vấn
+                                            </button>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <button
+                                              className="mr-5 bg-orange-500 rounded-md px-1 cursor-not-allowed"
+                                              // onClick={() => handleThanhToan(item.id)}
+                                            >
+                                              Chưa thanh toán
+                                            </button>
+                                          </>
+                                        )}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

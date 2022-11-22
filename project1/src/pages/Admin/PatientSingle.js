@@ -63,26 +63,19 @@ const PatientSingle = () => {
                 <h1 className="mb-2	text-slate-800 font-medium">
                   {patient?.patient?.childrentName}
                 </h1>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Ngày sinh:</span>
                   <span className="font-normal ml-2">
                     {patient?.patient?.birthday.slice(0, 10)}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
                     {patient?.patient?.genderDataToPatient.value}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
-                  <span className="font-bold text-slate-500">Địa chỉ:</span>
-                  <span className="font-normal ml-2">
-                    {patient?.patient?.address}
-                  </span>
-                </div>
-
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Quốc gia:</span>
                   <span className="font-normal ml-2">Việt Nam</span>
                 </div>
@@ -101,7 +94,7 @@ const PatientSingle = () => {
             </h1>
             <div className="flex gap-5">
               <div className="ml-5 mt-3">
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">
                     Tên phụ huynh:
                   </span>
@@ -109,26 +102,32 @@ const PatientSingle = () => {
                     {patient?.patient?.parentDataToPatient.name}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Email:</span>
                   <span className="font-normal ml-2">
                     {patient?.patient?.parentDataToPatient.email}
                   </span>
                 </div>
-                {/* <div className="mb-2 text-sm">
+                {/* <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
                     {patient?.patient?.parentDataToPatient.email}
                   </span>
                 </div> */}
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Điện thoại:</span>
                   <span className="font-normal ml-2">
                     {patient?.patient?.parentDataToPatient.phone}
                   </span>
                 </div>
+                <div className="mb-2 text-md">
+                  <span className="font-bold text-slate-500">Địa chỉ:</span>
+                  <span className="font-normal ml-2">
+                    {patient?.patient?.parentDataToPatient?.address}
+                  </span>
+                </div>
 
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Country:</span>
                   <span className="font-normal ml-2">Việt Nam</span>
                 </div>

@@ -79,7 +79,7 @@ export const ParentRedux = createSlice({
           action.payload.parent.id.id ? action.payload.parent.id.id : false
         )
       );
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);

@@ -173,7 +173,7 @@ const Content = () => {
                           />
                         </div>
                         <div className="col-span-1 w-full">
-                          <div className="font-medium text-sky-700 cursor-pointer">
+                          <div className="font-medium text-sky-700 cursor-pointer uppercase">
                             {item.packageName}
                           </div>
                           <div className="text-sm">{item.packageDecs}</div>

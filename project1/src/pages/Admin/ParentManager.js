@@ -6,6 +6,7 @@ import ParentModal from "../../components/Admin/Modal/Parent/ParentModal";
 import PatientModal2 from "../../components/Admin/Modal/Patient/PatientModal2";
 import ParentModalEdit from "../../components/Admin/Modal/Parent/ParentEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { BsThreeDots } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { BsPlusLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,10 +23,12 @@ import { addPatientAPI } from "../../redux/patientRedux";
 
 const ParentManager = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector(dataGetAllParent);
   const check = useSelector(dataCheck);
+  console.log("check");
 
   useEffect(() => {
     dispatch(getAllParentsAPI());
@@ -55,6 +58,9 @@ const ParentManager = () => {
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
                   <th className="border border-slate-200 p-3 text-white font-medium">
+                    Thêm con
+                  </th>
+                  <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
@@ -67,6 +73,9 @@ const ParentManager = () => {
                     Giới Tính
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
+                    Địa chỉ
+                  </th>
+                  <th className="border border-slate-200 p-3 text-white font-medium">
                     Điều chỉnh
                   </th>
                 </tr>
@@ -76,30 +85,38 @@ const ParentManager = () => {
                   data.parents.length > 0 &&
                   data.parents.map((item, index) => {
                     return (
-                      <tr key={item.id} className="hover:bg-slate-200">
+                      <tr key={item?.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.name}
+                          <div className="" title="Thêm con">
+                            <PatientModal2 item={item} />
+                          </div>
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.email}
+                          {item?.name}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.phone}
+                          {item?.email}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.genderDataToParent.value}
+                          {item?.phone}
+                        </td>
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                          {item?.address}
+                        </td>
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                          {item?.genderDataToParent?.value}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
                             <div
                               className=""
-                              onClick={() => handleDetail(item.id)}
+                              onClick={() => handleDetail(item?.id)}
                             >
-                              Xem
+                              <BsThreeDots className="mt-1" />
                             </div>
-                            <div className="" title="Thêm con">
+                            {/* <div className="" title="Thêm con">
                               <PatientModal2 item={item} />
-                            </div>
+                            </div> */}
                             {/* <div className="" title="Thêm con">
                               <div className="ml-5">
                                 <button

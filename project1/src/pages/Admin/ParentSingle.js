@@ -75,6 +75,12 @@ const ParentSingle = () => {
                       {data?.parent?.email}
                     </span>
                   </div>
+                  <div className="mb-2 text-sm">
+                    <span className="font-bold text-slate-500">Địa chỉ:</span>
+                    <span className="font-normal ml-2">
+                      {data?.parent?.address}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -128,14 +134,6 @@ const ParentSingle = () => {
                             Ngày sinh:
                           </span>
                           <span className="font-normal ml-2">{day}</span>
-                        </div>
-                        <div className="mb-2 text-sm">
-                          <span className="font-bold text-slate-500">
-                            Địa chỉ:
-                          </span>
-                          <span className="font-normal ml-2">
-                            {item?.address}
-                          </span>
                         </div>
                       </div>
                     </div>

@@ -24,7 +24,6 @@ import NavbarPhieuDatCho from "../../components/Admin/NavbarPhieuDatCho";
 const PhieudatchoManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllPhieudatcho);
-  // console.log("data:", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
@@ -89,6 +88,7 @@ const PhieudatchoManager = () => {
                 {data.phieudatcho &&
                   data.phieudatcho.length > 0 &&
                   data.phieudatcho.map((item, index) => {
+                    console.log("item:", item);
                     let ngaydat = "";
                     ngaydat = moment(item.bookingDate).format("DD/MM/YYYY");
 
@@ -123,20 +123,45 @@ const PhieudatchoManager = () => {
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-800">
                           <div className="flex">
-                            <button
-                              className="mr-5 bg-yellow-500 rounded-md px-1 hover:bg-yellow-600 hover:text-white"
-                              onClick={() => handleThanhToan(item.id)}
-                            >
-                              Thanh toán
-                            </button>
-
-                            <button
-                              className="bg-sky-400 hover:bg-sky-500 px-3 rounded-md"
-                              title="Xem chi tiết"
-                              onClick={() => handleDetail(item.id)}
-                            >
-                              <HiDotsHorizontal className="cursor-pointer text-lg text-sky-800" />
-                            </button>
+                            {item?.status == null ? (
+                              <>
+                                <button
+                                  className="mr-5 bg-yellow-500 rounded-md px-1 hover:bg-yellow-600 hover:text-white"
+                                  onClick={() => handleThanhToan(item.id)}
+                                >
+                                  Thanh toán
+                                </button>
+                                <button
+                                  className="bg-sky-400 hover:bg-sky-500 px-3 rounded-md"
+                                  title="Xem chi tiết"
+                                  onClick={() => handleDetail(item.id)}
+                                >
+                                  <HiDotsHorizontal className="cursor-pointer text-lg text-sky-800" />
+                                </button>
+                              </>
+                            ) : (
+                              <div className="">
+                                {item?.status == "Đã thanh toán" ? (
+                                  <>
+                                    <button
+                                      className="mr-5 bg-lime-500 rounded-md px-1 hover:bg-lime-600 hover:text-white"
+                                      onClick={() => handleThanhToan(item.id)}
+                                    >
+                                      Đã thanh toán
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      className="mr-5 bg-orange-500 rounded-md px-1 hover:bg-orange-600 hover:text-white"
+                                      onClick={() => handleThanhToan(item.id)}
+                                    >
+                                      Đã tư vấn
+                                    </button>
+                                  </>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </td>
                       </tr>

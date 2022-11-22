@@ -17,9 +17,6 @@ module.exports = {
       birthday: {
         type: Sequelize.DATE,
       },
-      address: {
-        type: Sequelize.STRING,
-      },
       image: {
         type: Sequelize.BLOB("long"),
       },

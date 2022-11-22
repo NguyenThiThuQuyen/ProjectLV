@@ -32,7 +32,7 @@ const ScheduleManager = () => {
   const [paging, setPaging] = useState();
   useEffect(() => {
     dispatch(getAllSchedulesAPI());
-  }, []);
+  }, [check]);
   useEffect(() => {
     if (data.schedules) {
       setPaging(data?.schedules?.slice(0, 100));

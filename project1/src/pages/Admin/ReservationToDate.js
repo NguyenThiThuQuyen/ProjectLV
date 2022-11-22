@@ -3,6 +3,7 @@ import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import NavbarConsult from "../../components/Doctor/NavbarConsult";
 import { useDispatch, useSelector } from "react-redux";
+import { HiDotsHorizontal } from "react-icons/hi";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -65,6 +66,16 @@ const ReservationToDate = () => {
     dispatch(getPhieudatchoAPI(id));
   };
 
+  const handleThanhToan = (id) => {
+    navigate(`/manager/pay/${id}`);
+    dispatch(getPhieudatchoAPI(id));
+  };
+
+  const handleDetail = (id) => {
+    navigate(`/manager/reservation-detail/${id}`);
+    dispatch(getPhieudatchoAPI(id));
+  };
+
   return (
     <div className="flex w-full">
       <Sidebar />
@@ -119,7 +130,7 @@ const ReservationToDate = () => {
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Tên
+                    Tên bệnh nhân
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Ngày sinh
@@ -127,12 +138,16 @@ const ReservationToDate = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Gói tư vấn
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
-                    Giờ tư vấn
-                  </th>
                   {/* <th className="border border-slate-200 p-3 text-white font-medium">
-                    Trạng thái
+                    Ngày đặt
                   </th> */}
+                  <th className="border border-slate-200 p-3 text-white font-medium">
+                    Khung giờ tư vấn
+                  </th>
+
+                  <th className="border border-slate-200 p-3 text-white font-medium">
+                    Điều chỉnh
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -151,37 +166,62 @@ const ReservationToDate = () => {
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {fotmatday}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y w-[310px] border-slate-300 py-3 px-7 text-slate-700">
                           {item?.goituvanDataToPhieudatcho?.packageName}
                         </td>
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                          {ngaydat}
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {
                             item?.scheduleDataToPhieudatcho
                               ?.timeSlotDataToSchedule?.timeslot
                           }
                         </td>
-                        {/* 
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
-                          {item.status == "Đã tư vấn" ? (
-                            <>
-                              <div
-                                className="bg-green-600 hover:bg-green-700 p-1 rounded-md text-white"
-                                onClick={() => handleConsult(item.id)}
-                              >
-                                {item?.status}
+
+                        <td className="border-y border-slate-300 py-3 px-7 text-slate-800">
+                          <div className="flex">
+                            {item?.status == null ? (
+                              <>
+                                <button
+                                  className="mr-5 bg-yellow-500 rounded-md px-1 hover:bg-yellow-600 hover:text-white"
+                                  onClick={() => handleThanhToan(item.id)}
+                                >
+                                  Thanh toán
+                                </button>
+                                <button
+                                  className="bg-sky-400 hover:bg-sky-500 px-3 rounded-md"
+                                  title="Xem chi tiết"
+                                  onClick={() => handleDetail(item.id)}
+                                >
+                                  <HiDotsHorizontal className="cursor-pointer text-lg text-sky-800" />
+                                </button>
+                              </>
+                            ) : (
+                              <div className="">
+                                {item?.status == "Đã thanh toán" ? (
+                                  <>
+                                    <button
+                                      className="mr-5 bg-lime-500 rounded-md px-1 hover:bg-lime-600 hover:text-white"
+                                      onClick={() => handleThanhToan(item.id)}
+                                    >
+                                      Đã thanh toán
+                                    </button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <button
+                                      className="mr-5 bg-orange-500 rounded-md px-1 hover:bg-orange-600 hover:text-white"
+                                      onClick={() => handleThanhToan(item.id)}
+                                    >
+                                      Đã tư vấn
+                                    </button>
+                                  </>
+                                )}
                               </div>
-                            </>
-                          ) : (
-                            <>
-                              <div
-                                className="bg-yellow-400 p-2 rounded-md hover:bg-yellow-500 hover:text-white cursor-pointer font-semibold"
-                                onClick={() => handleConsult(item.id)}
-                              >
-                                Tư vấn
-                              </div>
-                            </>
-                          )}
-                        </td> */}
+                            )}
+                          </div>
+                        </td>
                       </tr>
                     );
                   })}

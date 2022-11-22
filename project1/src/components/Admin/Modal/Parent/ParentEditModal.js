@@ -4,11 +4,14 @@ import { editParentAPI } from "../../../../redux/parentRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
 import { dataGetAllGender } from "../../../../redux/userRedux";
+import logo from "../../../../assets/upload/logo.png";
 export default function ParentModalEdit(props) {
+  console.log("props: ", props);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
+  const [address, setAddress] = useState();
   const [gender, setgender] = useState("M");
   const [id, setId] = useState();
   const dataGender = useSelector(dataGetAllGender);
@@ -18,6 +21,7 @@ export default function ParentModalEdit(props) {
     email: email,
     phone: phone,
     gender: gender,
+    address: address,
     id: id,
   };
 
@@ -27,6 +31,7 @@ export default function ParentModalEdit(props) {
     setEmail(props?.item?.email);
     setPhone(props?.item?.phone);
     setgender(props?.item?.gender);
+    setAddress(props?.item?.address);
     setId(props?.item?.id);
   }, [props.item]);
 
@@ -52,14 +57,7 @@ export default function ParentModalEdit(props) {
                   <h3 className="text-base font-bold text-slate-500">
                     CẬP NHẬT THÔNG TIN NGƯỜI ĐẠI DIỆN
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
@@ -74,7 +72,7 @@ export default function ParentModalEdit(props) {
                           type="text"
                           placeholder="..."
                           required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           value={name}
                           onChange={(event) => setName(event.target.value)}
                         />
@@ -88,7 +86,7 @@ export default function ParentModalEdit(props) {
                           placeholder="..."
                           disabled
                           required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           value={email}
                           onChange={(event) => setEmail(event.target.value)}
                         />
@@ -98,7 +96,7 @@ export default function ParentModalEdit(props) {
                           Giới tính
                         </label>
                         <select
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           id=""
                           value={gender}
                           onChange={(event) => setgender(event.target.value)}
@@ -124,9 +122,22 @@ export default function ParentModalEdit(props) {
                           type="text"
                           placeholder="..."
                           required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           value={phone}
                           onChange={(event) => setPhone(event.target.value)}
+                        />
+                      </div>
+                      <div className="col-span-2 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-600 ml-2">
+                          Địa chỉ
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="..."
+                          required
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                          value={address}
+                          onChange={(event) => setAddress(event.target.value)}
                         />
                       </div>
                     </div>
@@ -145,7 +156,7 @@ export default function ParentModalEdit(props) {
                     type="submit"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    LƯU THÔNG TIN
                   </button>
                 </div>
               </div>

@@ -13,7 +13,6 @@ export default function PatientModalEdit(props) {
   const [childrentName, setChildrentName] = useState();
   const [gender, setgender] = useState("M");
   const [birthday, setBirthday] = useState(new Date());
-  const [address, setAddress] = useState();
   const [image, setImage] = useState();
   const [preImg, setPreImg] = useState();
   const [parentId, setParentId] = useState();
@@ -22,7 +21,6 @@ export default function PatientModalEdit(props) {
   const params = {
     childrentName: childrentName,
     image: image,
-    address: address,
     birthday: birthday,
     gender: gender,
     parentId: parentId,
@@ -38,7 +36,6 @@ export default function PatientModalEdit(props) {
     setChildrentName(props?.item?.childrentName);
     setImage(props?.item?.image);
     setBirthday(date);
-    setAddress(props?.item?.address);
     setgender(props?.item?.gender);
     setParentId(props?.item?.parentId);
     setId(props?.item?.id);
@@ -83,18 +80,18 @@ export default function PatientModalEdit(props) {
                   </h3>
                 </div>
 
-                <div className="relative p-6 flex-auto">
+                <div className="relative px-6 pt-6 pb-24 flex-auto">
                   <div className="grid grid-rows-2">
-                    <div className="grid row-span-1 grid-cols-3">
+                    <div className="grid row-span-1 grid-cols-2">
                       <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
+                        <label htmlFor="" className="text-slate-800 ml-2">
                           Họ tên trẻ
                         </label>
                         <input
                           type="text"
                           placeholder="..."
                           required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           value={childrentName}
                           onChange={(event) =>
                             setChildrentName(event.target.value)
@@ -102,11 +99,11 @@ export default function PatientModalEdit(props) {
                         />
                       </div>
                       <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
+                        <label htmlFor="" className="text-slate-800 ml-2">
                           Giới tính
                         </label>
                         <select
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           id=""
                           required
                           value={gender}
@@ -123,8 +120,10 @@ export default function PatientModalEdit(props) {
                             })}
                         </select>
                       </div>
+                    </div>
+                    <div className="grid row-span-1 grid-cols-2">
                       <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
+                        <label htmlFor="" className="text-slate-800 ml-2">
                           Ngày sinh
                         </label>
                         <DatePicker
@@ -140,23 +139,8 @@ export default function PatientModalEdit(props) {
                           scrollableMonthYearDropdown
                         />
                       </div>
-                    </div>
-                    <div className="grid row-span-1 grid-cols-3">
-                      <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
-                          Địa chỉ
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="..."
-                          required
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                          value={address}
-                          onChange={(event) => setAddress(event.target.value)}
-                        />
-                      </div>
                       <div className="col-span-1 mx-3 my-4 relative">
-                        <label htmlFor="" className="text-slate-600 ml-2 flex">
+                        <label htmlFor="" className="text-slate-800 ml-2 flex">
                           Tải ảnh
                           <ImUpload3 className="mt-1 ml-2" />
                         </label>
@@ -171,12 +155,12 @@ export default function PatientModalEdit(props) {
                         </div>
                       </div>
 
-                      <div className="col-span-1 mx-3 my-4">
-                        <label htmlFor="" className="text-slate-600 ml-2">
+                      {/* <div className="col-span-1 mx-3 my-4">
+                        <label htmlFor="" className="text-slate-800 ml-2">
                           Người đại diện
                         </label>
-                        {/* <select
-                          className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                        <select
+                          className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                           id=""
                           required
                           value={parentId}
@@ -191,8 +175,8 @@ export default function PatientModalEdit(props) {
                                 </option>
                               );
                             })}
-                        </select> */}
-                      </div>
+                        </select>
+                      </div> */}
                     </div>
                   </div>
                 </div>

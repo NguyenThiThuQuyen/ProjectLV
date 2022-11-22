@@ -9,7 +9,7 @@ let getAllPatient = () => {
           {
             model: db.Parent,
             as: "parentDataToPatient",
-            attributes: ["name", "email", "phone", "gender", "id"],
+            attributes: ["name", "email", "phone", "address", "gender", "id"],
           },
           {
             model: db.Allcode,
@@ -32,13 +32,12 @@ let createNewPatient = (data) => {
         childrentName: data.childrentName,
         gender: data.gender,
         birthday: data.birthday,
-        address: data.address,
         image: data.image,
         parentId: data.parentId,
       });
       resolve({
         code: 0,
-        message: "success",
+        message: "Thêm thành công!",
       });
     } catch (e) {
       reject(e);
@@ -61,9 +60,8 @@ let updatePatientData = (data) => {
         if (patient1) {
           let day = new Date(data.birthday);
           patient1.childrentName = data.childrentName;
-          patient1.address = data.address;
           patient1.birthday = day;
-          // patient1.image = data.image;
+          patient1.image = data.image;
           patient1.gender = data.gender;
           patient1.parentId = data.parentId;
           await patient1.save();
@@ -116,7 +114,7 @@ let getPatient = (patientId) => {
             {
               model: db.Parent,
               as: "parentDataToPatient",
-              attributes: ["name", "email", "phone", "gender", "id"],
+              attributes: ["name", "email", "phone", "address", "gender", "id"],
             },
             {
               model: db.Allcode,
@@ -142,7 +140,7 @@ let getSearchParentById = (id) => {
           {
             model: db.Parent,
             as: "parentDataToPatient",
-            attributes: ["id", "email", "name", "phone"],
+            attributes: ["id", "email", "name", "address", "phone"],
           },
         ],
         raw: true,
@@ -172,7 +170,7 @@ let getAllPatientToIdParent = (parentId) => {
           {
             model: db.Parent,
             as: "parentDataToPatient",
-            attributes: ["name", "email", "phone", "gender", "id"],
+            attributes: ["name", "email", "phone", "address", "gender", "id"],
           },
           {
             model: db.Allcode,

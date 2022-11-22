@@ -24,6 +24,7 @@ const PaySingle = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const data = useSelector(dataGetAPhieudatcho);
+  console.log("data:", data);
 
   useEffect(() => {
     dispatch(getPhieudatchoAPI(params?.id));
@@ -157,7 +158,7 @@ const PaySingle = () => {
                         </div>
                       </div>
 
-                      <div className="col-span-1 mx-3 my-3">
+                      {/* <div className="col-span-1 mx-3 my-3">
                         <label
                           htmlFor=""
                           className="text-sky-800 font-medium ml-2"
@@ -172,7 +173,7 @@ const PaySingle = () => {
                         >
                           {data?.phieudatcho?.patientDataToPhieudatcho?.address}
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -249,15 +250,27 @@ const PaySingle = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-end">
-                <button
-                  className="mt-10 bg-green-600 text-white active:bg-green-700 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 uppercase"
-                  type="button"
-                  onClick={() => handleSave()}
-                >
-                  xác nhận thanh toán
-                </button>
-              </div>
+              {data?.phieudatcho?.status == "Đã thanh toán" ||
+              data?.phieudatcho?.status == "Đã tư vấn" ? (
+                <div className="flex items-center justify-end">
+                  <button
+                    className="mt-10 bg-green-600 text-white active:bg-green-700 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 uppercase"
+                    type="button"
+                  >
+                    in lại hóa đơn
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-end">
+                  <button
+                    className="mt-10 bg-green-600 text-white active:bg-green-700 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 uppercase"
+                    type="button"
+                    onClick={() => handleSave()}
+                  >
+                    xác nhận thanh toán
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>

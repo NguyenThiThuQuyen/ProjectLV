@@ -5,7 +5,7 @@ import { AiOutlineGooglePlus } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
 import bglogin from "../../assets/upload/logo.png";
 import { getBase64 } from "../../utils/CommonUtils";
-import { ImUpload3 } from "react-icons/im";
+import { ImUpload3, ImCancelCircle } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
 import XemChiTietLichModal from "./XemChiTietLichModal";
 import {
@@ -23,7 +23,6 @@ export default function TaoThongTinNguoiDungModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [showModalXemLai, setShowModalXemLai] = useState(false);
   const [check, setCheck] = useState(true);
-  const [newCreateUserId, setNewCreateUserId] = useState();
 
   // parent
   const [name, setName] = useState("A");
@@ -134,7 +133,7 @@ export default function TaoThongTinNguoiDungModal(props) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="items-start justify-between p-5 border-b border-solid border-slate-200">
                   {check === true ? (
-                    <div className="flex">
+                    <div className="flex justify-between">
                       <div className="flex">
                         <div
                           className="text-sm font-semibold underline underline-offset-8 text-green-700 cursor-pointer"
@@ -150,8 +149,12 @@ export default function TaoThongTinNguoiDungModal(props) {
                           TẠO THÔNG TIN
                         </div>
                       </div>
-                      <div className="" onClick={() => hanldeClose()}>
-                        Đóng
+                      <div
+                        children="cursor-pointer"
+                        title="Đóng"
+                        onClick={() => hanldeClose()}
+                      >
+                        <ImCancelCircle size={20} className="text-green-800" />
                       </div>
                     </div>
                   ) : (
@@ -264,7 +267,7 @@ export default function TaoThongTinNguoiDungModal(props) {
                             Thông tin bắt buộc nhập *
                           </div>
                           <div className="grid grid-rows-2 mt-2">
-                            <div className="grid row-span-1 grid-cols-2">
+                            <div className="grid row-span-1 grid-cols-3">
                               <div className="col-span-1 mx-5">
                                 <label htmlFor="" className="text-slate-700">
                                   Họ tên người đại diện
@@ -300,6 +303,19 @@ export default function TaoThongTinNguoiDungModal(props) {
                                       );
                                     })}
                                 </select>
+                              </div>
+                              <div className="col-span-1 mx-5">
+                                <label htmlFor="" className="text-slate-700">
+                                  Địa chỉ liên hệ
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="Nhập địa chỉ thường trú"
+                                  className="w-full h-10 border rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
+                                  onChange={(event) =>
+                                    setAddress(event.target.value)
+                                  }
+                                />
                               </div>
                             </div>
                             <div className="grid row-span-1 grid-cols-3 mt-2">
@@ -411,19 +427,6 @@ export default function TaoThongTinNguoiDungModal(props) {
                             </div>
 
                             <div className="grid row-span-1 grid-cols-3 mt-4">
-                              <div className="col-span-2 mx-5">
-                                <label htmlFor="" className="text-slate-700">
-                                  Địa chỉ liên hệ
-                                </label>
-                                <input
-                                  type="text"
-                                  placeholder="Nhập địa chỉ thường trú"
-                                  className="w-full h-10 border rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
-                                  onChange={(event) =>
-                                    setAddress(event.target.value)
-                                  }
-                                />
-                              </div>
                               <div className="col-span-1 mx-3 relative">
                                 <label
                                   htmlFor=""

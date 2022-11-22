@@ -31,19 +31,21 @@ let loginParent = (email, password) => {
       let isExist = await checkParentEmail(email);
       if (isExist) {
         let parent = await db.Parent.findOne({
-          attributes: ["email", "password", "name", "gender", "phone", "id"],
+          attributes: [
+            "email",
+            "password",
+            "name",
+            "gender",
+            "phone",
+            "address",
+            "id",
+          ],
           where: { email: email },
           include: [
             {
               model: db.Patient,
               as: "parentDataToPatient",
-              attributes: [
-                "id",
-                "childrentName",
-                "gender",
-                "birthday",
-                "address",
-              ],
+              attributes: ["id", "childrentName", "gender", "birthday"],
             },
           ],
           // raw: true,
@@ -92,20 +94,43 @@ let checkParentEmail = (parentEmail) => {
   });
 };
 
+let checkParentPhone = (parentPhone) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let parent = await db.Parent.findOne({
+        where: { phone: parentPhone },
+      });
+      if (parent) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 let createNewParentPatient = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let check = await checkParentEmail(data.email);
+      let checkemail = await checkParentEmail(data.email);
+      let checkphone = await checkParentPhone(data.phone);
       if (data.email === "") {
         resolve({
           code: 2,
           message: "Vui lòng nhập email !",
         });
       } else {
-        if (check === true) {
+        if (checkemail === true) {
           resolve({
             code: 1,
             message: "Email đã tồn tại, vui lòng nhập lại!",
+          });
+        } else if (checkphone === true) {
+          resolve({
+            code: 1,
+            message: "Số điện thoại đã tồn tại, vui lòng nhập lại!",
           });
         } else {
           let parent = await db.Parent.create({
@@ -113,6 +138,7 @@ let createNewParentPatient = (data) => {
             email: data.email,
             password: data.password,
             phone: data.phone,
+            address: data.address,
             gender: data.genderparent,
           });
 
@@ -120,7 +146,6 @@ let createNewParentPatient = (data) => {
             childrentName: data.childrentName,
             gender: data.genderpatient,
             birthday: data.birthday,
-            address: data.address,
             image: data.image,
             parentId: parent.id,
           });
@@ -154,11 +179,12 @@ let createNewParent = (data) => {
           email: data.email,
           password: data.password,
           phone: data.phone,
+          address: data.address,
           gender: data.gender,
         });
         resolve({
           code: 0,
-          message: "success",
+          message: "Thêm thành công!",
           id,
         });
       }
@@ -185,6 +211,7 @@ let updateParentData = (data) => {
           parent.email = data.email;
           parent.password = data.password;
           parent.phone = data.phone;
+          parent.address = data.address;
           parent.gender = data.gender;
           await parent.save();
           resolve({
@@ -219,7 +246,6 @@ let getParent = (parentId) => {
                 "childrentName",
                 "gender",
                 "birthday",
-                "address",
                 "image",
                 "id",
               ],
@@ -255,7 +281,7 @@ let findPatient = (patient) => {
           {
             model: db.Parent,
             as: "parentDataToPatient",
-            attributes: ["name", "email", "phone", "gender", "id"],
+            attributes: ["name", "email", "phone", "address", "gender", "id"],
           },
           {
             model: db.Allcode,
