@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Search from "../components/Search/Search.js";
+import { getSearchAPI, dataGetSearch } from "../redux/searchRedux";
 import {
   dataGetDoctorHome,
   getAllDoctorHomeAPI,
@@ -17,14 +19,26 @@ import {
 import { getFindScheduleToDoctorAPI } from "../redux/scheduleRedux";
 const AllDocTorHome = () => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useState([]);
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
+  const dataSearch = useSelector(dataGetSearch);
+  console.log("dataSearch:", dataSearch);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI());
-    // dispatch(getFindScheduleToDoctorAPI());
   }, [check]);
+
+  useEffect(() => {
+    dispatch(getSearchAPI());
+  }, []);
+
+  useEffect(() => {
+    if (dataSearch.search) {
+      setSearch(dataSearch.search);
+    }
+  }, [dataSearch]);
 
   const handleDetail = (userId) => {
     navigate(`/detail-doctor/${userId}`);
@@ -55,17 +69,18 @@ const AllDocTorHome = () => {
             </div>
           </div>
           <div className="flex pb-10 mt-5">
-            <input
+            <Search data={search} placeholder={"Tìm kiếm"} />
+            {/* <input
               type=""
               placeholder="Tìm bác sĩ ..."
               className="pl-5 w-full h-12 border hover:border-none rounded-l-3xl p-2 bg-slate-50 shadow-lg outline-slate-300"
-            />
-            <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
+            /> */}
+            {/* <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
               <BiSearch
                 size={22}
                 className="text-slate-600 ml-5 hover:text-white"
               />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

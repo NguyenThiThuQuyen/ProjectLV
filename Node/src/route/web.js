@@ -23,6 +23,7 @@ const sessionController = require("../controllers/sessionController");
 const eatTimeslotController = require("../controllers/eatTimeslotController");
 const thongkeController = require("../controllers/thongkeController");
 const receiptController = require("../controllers/receiptController");
+const searchController = require("../controllers/searchController");
 
 const { Router } = require("express");
 
@@ -30,6 +31,9 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // tìm kiếm
+  router.get("/api/search", searchController.handleSearch);
 
   // hóa đơn
   // router.get("/api/get-all-receipt", receiptController.handleGetAllReceipt);
