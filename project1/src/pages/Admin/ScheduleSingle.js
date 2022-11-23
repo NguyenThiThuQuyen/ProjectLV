@@ -16,7 +16,6 @@ const ScheduleSingle = () => {
   const params = useParams();
   const check = useSelector(dataCheck);
   const schedule = useSelector(dataGetSchedule);
-  console.log("schedule: ", schedule);
   useEffect(() => {
     dispatch(getAScheduleAPI(params.scheduleId));
   }, [check]);

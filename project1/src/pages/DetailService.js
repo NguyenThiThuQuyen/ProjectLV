@@ -20,7 +20,6 @@ const DetailService = () => {
   const params = useParams();
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetGoiKham);
-  console.log("data", data);
   useEffect(() => {
     dispatch(getGoiKhamAPI(params.medicalpackageId));
   }, [check]);

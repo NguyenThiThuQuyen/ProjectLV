@@ -47,7 +47,6 @@ export default function ParentModal() {
     image: image,
     genderpatient: genderpatient,
   };
-  console.log("params: ", params);
 
   const dispatch = useDispatch();
 

@@ -27,8 +27,6 @@ export default function PatientModalEdit(props) {
     id: id,
   };
 
-  console.log("params:", params);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

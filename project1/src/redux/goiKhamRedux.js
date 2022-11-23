@@ -99,8 +99,6 @@ export const GoiKhamRedux = createSlice({
       }
     });
     builder.addCase(editGoiKhamAPI.fulfilled, (state, action) => {
-      console.log("action.payload.code:", action.payload);
-
       state.check = true;
       if (action.payload.code == 0) {
         toast.success(action.payload.message);

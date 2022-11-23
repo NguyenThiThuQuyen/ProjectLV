@@ -201,6 +201,10 @@ let getPhieudatcho = (phieudatchoId) => {
                     "id",
                   ],
                 },
+                {
+                  model: db.Allcode,
+                  as: "genderDataToPatient",
+                },
               ],
             },
             {

@@ -38,6 +38,7 @@ export default function MenuModal(props) {
   const [sessionId, setSessionId] = useState();
 
   const dataEatDates = useSelector(dataAllEatDates);
+  console.log("dataEatDates:", dataEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
   const dataFindDish = useSelector(dataGetFindDishToCate);
   const dataSession = useSelector(dataGetAllSessions);
@@ -55,7 +56,7 @@ export default function MenuModal(props) {
     eatTimeslotId: eatTimeslotId,
   };
 
-  console.log("params", params);
+  console.log("params:", params);
 
   useEffect(() => {
     setShowModal(true);
@@ -70,6 +71,12 @@ export default function MenuModal(props) {
     // dispatch(getAllFindEatTimeslotsToSessionAPI());
   }, []);
 
+  useEffect(() => {
+    if (dataEatDates.eatdates) {
+      setEatdateId(dataEatDates.eatdates[0].id);
+    }
+  }, [dataEatDates]);
+
   const handleFindDishToCate = (id) => {
     dispatch(getFindDishToCateAPI(id));
     setDishId(id);
@@ -81,31 +88,35 @@ export default function MenuModal(props) {
   };
 
   const handleSave = async () => {
-    let getData = await dispatch(createMenuAPI(params));
-    // console.log("getData:", getData);
-    let getId = getData.payload.menu.data.menuId;
-    let data2 = {
-      eatdateId: eatdateId,
-      menuId: getData.payload.menu.data.menuId,
-    };
-    if (props?.getParams) {
-      props.getParams(data2);
+    if (!eatTimeslotId || !eatdateId || !dishId) {
+      setShowModal(true);
+      alert("Vui lòng nhập đầy đủ thông tin !");
+    } else {
+      let getData = await dispatch(createMenuAPI(params));
+      let getId = getData.payload.menu.data.menuId;
+      let data2 = {
+        eatdateId: eatdateId,
+        menuId: getData.payload.menu.data.menuId,
+      };
+      if (props?.getParams) {
+        props.getParams(data2);
+      }
+
+      let dataLuu = {
+        dateCreate: props.params2.dateCreate,
+        reservationTicketId: props.params2.reservationTicketId,
+        menuId: getId,
+        loidan: loidan,
+        eatdateId: eatdateId,
+      };
+      dispatch(createPrescriptionAPI(dataLuu));
+      setTimeout(function () {
+        window.location.reload(1);
+      }, 4000);
+
+      setShowModal(false);
+      props.handleMo(false);
     }
-
-    let dataLuu = {
-      dateCreate: props.params2.dateCreate,
-      reservationTicketId: props.params2.reservationTicketId,
-      menuId: getId,
-      loidan: loidan,
-      eatdateId: eatdateId,
-    };
-    dispatch(createPrescriptionAPI(dataLuu));
-    setTimeout(function () {
-      window.location.reload(1);
-    }, 4000);
-
-    setShowModal(false);
-    props.handleMo(false);
   };
 
   const handleFindEatTimeslot = (id) => {

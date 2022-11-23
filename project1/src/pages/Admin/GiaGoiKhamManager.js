@@ -15,7 +15,6 @@
 // const GoiKhamManager = () => {
 //   const dispatch = useDispatch();
 //   const data = useSelector(dataGetAllGiaGoiKham);
-//   console.log("data:", data);
 //   const check = useSelector(dataCheck);
 
 //   useEffect(() => {
@@ -64,7 +63,6 @@
 //                         "base64"
 //                       ).toString("binary");
 //                     }
-//                     console.log("item?.image: ", item?.image);
 //                     return (
 //                       <tr key={item.id} className="hover:bg-slate-200">
 //                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">

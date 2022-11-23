@@ -20,7 +20,6 @@ const ParentSingle = () => {
   const params = useParams();
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetAParent);
-  console.log("data: ", data);
   useEffect(() => {
     dispatch(getAParentAPI(params.parentId));
   }, [check]);

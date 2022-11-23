@@ -18,7 +18,6 @@ import {
   dataCheck,
 } from "../../../../redux/userRedux";
 export default function PatientModal2(props) {
-  console.log("props", props);
   const [showModal, setShowModal] = useState(false);
   const [childrentName, setChildrentName] = useState();
   const [gender, setgender] = useState("M");
@@ -46,7 +45,6 @@ export default function PatientModal2(props) {
     setName(props?.item?.name);
     setPhone(props?.item?.phone);
   }, [props.item]);
-  console.log("props.item:", props.item);
 
   useEffect(() => {
     dispatch(getAllGenderAPI());

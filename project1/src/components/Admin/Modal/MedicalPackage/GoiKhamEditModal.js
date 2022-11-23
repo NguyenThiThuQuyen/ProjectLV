@@ -11,7 +11,6 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 export default function GoiKhamModalEdit(props) {
-  console.log("props", props);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [packageName, setPackageName] = useState();
   const [packageDecs, setPackageDecs] = useState();
@@ -71,7 +70,6 @@ export default function GoiKhamModalEdit(props) {
 
   const mdParser = new MarkdownIt();
   function handleEditorChange({ html, text }) {
-    console.log("handleEditorChange", html, text);
     setContentHTML(html);
     setContentMarkdown(text);
   }

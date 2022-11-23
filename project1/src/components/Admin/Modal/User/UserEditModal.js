@@ -82,7 +82,6 @@ export default function UserModalEdit(props) {
 
   const mdParser = new MarkdownIt();
   function handleEditorChange({ html, text }) {
-    console.log("handleEditorChange", html, text);
     setContentHTML(html);
     setContentMarkdown(text);
   }

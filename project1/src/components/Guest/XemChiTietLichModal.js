@@ -4,7 +4,6 @@ import { createPhieudatchoAPI } from "../../redux/phieudatchoRedux";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 export default function XemChiTietLichModal(props) {
-  console.log("props params 111:", props);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   // const navigate = useNavigate();
@@ -30,7 +29,6 @@ export default function XemChiTietLichModal(props) {
       alert("Vui lòng nhập đầy đủ thông tin !");
     } else {
       let taothanhcong = await dispatch(createPhieudatchoAPI(props.params));
-      console.log("taothanhcong:", taothanhcong);
       if (taothanhcong.payload.code == "0") {
         setTimeout(function () {
           window.location.reload(1);

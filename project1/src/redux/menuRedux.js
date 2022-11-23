@@ -25,7 +25,6 @@ export const MenuRedux = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createMenuAPI.fulfilled, (state, action) => {
       state.check = true;
-      console.log("action: ", action);
       if (action.payload.code == "0") {
         toast.success(action.payload.menu.message);
       } else {

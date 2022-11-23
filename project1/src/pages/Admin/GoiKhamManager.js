@@ -29,7 +29,6 @@ const GoiKhamManager = () => {
   }, [check]);
 
   const handleDeleteGoiKham = (id) => {
-    console.log("id", id);
     dispatch(deleteGoiKhamAPI(id));
   };
 

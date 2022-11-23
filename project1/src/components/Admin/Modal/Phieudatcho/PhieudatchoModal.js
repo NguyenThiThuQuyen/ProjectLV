@@ -82,7 +82,6 @@ export default function PhieudatchoModal() {
     testGiaGoiKham: packagePrice,
     testTimeslot: timeslot,
   };
-  // console.log("params: ", params);
 
   const dataFind = useSelector(dataGetFindPatient);
   const dataDoctor = useSelector(dataGetDoctor);
@@ -151,7 +150,6 @@ export default function PhieudatchoModal() {
           mang.push(item?.registerDate);
         }
       });
-    console.log("doctorId", doctorId);
     const params = {
       registerDate: mang[0],
       userId: doctorId,
@@ -436,7 +434,6 @@ export default function PhieudatchoModal() {
                               mang?.map((item, index) => {
                                 let day = "";
                                 day = moment(item).format("DD/MM/YYYY");
-                                // const testday = new Date(day).getTime();
                                 return (
                                   <option key={index} value={item}>
                                     {day}
@@ -456,10 +453,6 @@ export default function PhieudatchoModal() {
                             {dataFindTimeslot?.data &&
                               dataFindTimeslot?.data.length > 0 &&
                               dataFindTimeslot?.data.map((item, index) => {
-                                console.log(
-                                  "item.timeslotId:",
-                                  item.timeslotId
-                                );
                                 return (
                                   <>
                                     {item?.soluongdangky >= 1 ? (

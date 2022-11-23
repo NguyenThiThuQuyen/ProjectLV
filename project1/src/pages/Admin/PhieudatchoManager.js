@@ -88,7 +88,6 @@ const PhieudatchoManager = () => {
                 {data.phieudatcho &&
                   data.phieudatcho.length > 0 &&
                   data.phieudatcho.map((item, index) => {
-                    console.log("item:", item);
                     let ngaydat = "";
                     ngaydat = moment(item.bookingDate).format("DD/MM/YYYY");
 

@@ -12,14 +12,12 @@ import moment from "moment";
 const ReservationSingle = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  console.log("params: ", params);
 
   const data = useSelector(dataGetAPhieudatcho);
 
   useEffect(() => {
     dispatch(getPhieudatchoAPI(params?.id));
   }, []);
-  console.log("data:", data);
 
   const nsinh = data?.phieudatcho?.patientDataToPhieudatcho?.birthday;
   const ngaysinh = moment(nsinh).format("DD/MM/YYYY");
@@ -137,7 +135,7 @@ const ReservationSingle = () => {
                         htmlFor=""
                         className="text-sky-800 font-medium ml-2"
                       >
-                        Địa chỉ
+                        Giới tính
                       </label>
                       <div
                         type="text"
@@ -145,7 +143,10 @@ const ReservationSingle = () => {
                         disabled
                         className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
                       >
-                        {data?.phieudatcho?.patientDataToPhieudatcho?.address}
+                        {
+                          data?.phieudatcho?.patientDataToPhieudatcho
+                            ?.genderDataToPatient?.value
+                        }
                       </div>
                     </div>
                   </div>

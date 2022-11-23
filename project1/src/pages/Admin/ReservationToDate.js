@@ -28,38 +28,42 @@ const ReservationToDate = () => {
   const check = useSelector(dataCheck);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log("user: ", user);
   const dispatch = useDispatch();
 
   //   const today = new Date();
   //   let date =
   //     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
   //   const test = new Date(date).getTime();
-  //   console.log("test date: ", test);
 
   const dataDoctor = useSelector(dataGetDoctorHome);
-  console.log("dataDoctor:", dataDoctor);
 
   const params = {
     doctorId: bacsiId,
     DateChon: moment(dateChon).format("YYYY-MM-DD"),
   };
-  console.log("params: ", params);
 
   const data = useSelector(dataGetTimPhieutheongay);
-
-  console.log("data", data);
+  useEffect(() => {
+    if (dataDoctor.data) {
+      setBacsiId(dataDoctor.data[0].id);
+    }
+  }, [dataDoctor]);
 
   useEffect(() => {
-    dispatch(timPhieuTheoNgayAPI(params));
-    console.log("test:");
+    if (bacsiId !== undefined) {
+      dispatch(timPhieuTheoNgayAPI(params));
+    }
+  }, [bacsiId]);
+
+  useEffect(() => {
+    if (dateChon !== undefined) {
+      dispatch(timPhieuTheoNgayAPI(params));
+    }
   }, [dateChon]);
 
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI());
   }, []);
-
-  console.log("dateChon:", dateChon);
 
   const handleConsult = async (id) => {
     navigate(`/manager/prescription/${id}`);
@@ -154,7 +158,7 @@ const ReservationToDate = () => {
                 {data?.data &&
                   data?.data?.length > 0 &&
                   data?.data?.map((item, index) => {
-                    console.log("item: ", item);
+                    console.log("item:", item);
                     let fotmatday = moment(
                       item?.patientDataToPhieudatcho?.birthday
                     ).format("DD/MM/YYYY");

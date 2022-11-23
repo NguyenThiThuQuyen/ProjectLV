@@ -22,7 +22,6 @@ import NavbarUser from "../../components/Admin/NavbarUser";
 const UserManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllUser);
-  console.log("data:", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 

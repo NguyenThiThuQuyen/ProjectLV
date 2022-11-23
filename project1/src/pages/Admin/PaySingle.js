@@ -18,18 +18,15 @@ const PaySingle = () => {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("params: ", params);
   const [date, setDate] = useState();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
   const data = useSelector(dataGetAPhieudatcho);
-  console.log("data:", data);
 
   useEffect(() => {
     dispatch(getPhieudatchoAPI(params?.id));
   }, []);
-  console.log("data:", data);
 
   const nsinh = data?.phieudatcho?.patientDataToPhieudatcho?.birthday;
   const ngaysinh = moment(nsinh).format("DD/MM/YYYY");
@@ -38,11 +35,9 @@ const PaySingle = () => {
     userId: user?.id,
     reservationTicketId: data?.phieudatcho?.id,
   };
-  console.log("paramsHoaDon:", paramsHoaDon);
 
   const handleSave = async () => {
     let test = await dispatch(createReceiptAPI(paramsHoaDon));
-    console.log("test:", test);
     const receipt = test.payload.receipt.data;
     navigate(`/manager/receipt/${receipt}`);
   };

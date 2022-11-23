@@ -80,10 +80,7 @@ export default function TaoThongTinNguoiDungModal(props) {
   const handleSave = async () => {
     dispatch(getCreateParentPatientAPI(params));
 
-    console.log(paramsparent);
     let test = await dispatch(getLoginGuestAPI(paramsparent));
-    // console.log("paramsparent:", paramsparent);
-    // navigate(`/confirm`);
     if (test.payload.code === 0) {
       setShowModal(false);
       props.hanldeParent(true);
@@ -102,7 +99,6 @@ export default function TaoThongTinNguoiDungModal(props) {
   };
 
   const handleopen = (data3) => {
-    // console.log("data from 12345:", data2);
     setShowModalXemLai(data3);
   };
 

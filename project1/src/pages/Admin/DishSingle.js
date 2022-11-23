@@ -10,10 +10,8 @@ import { getDishAPI, dataGetADish, dataCheck } from "../../redux/monanRedux";
 const DishSingle = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  console.log("params:", params);
   const check = useSelector(dataCheck);
   const dataDish = useSelector(dataGetADish);
-  console.log("dish: ", dataDish);
   useEffect(() => {
     dispatch(getDishAPI(params.dishId));
   }, [check]);

@@ -27,11 +27,8 @@ const InforUser = () => {
   const dispatch = useDispatch();
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetAUser);
-  console.log("data", data);
-  console.log("params", params);
   const user = JSON.parse(localStorage.getItem("user"));
   const id = user.id;
-  console.log("user111:", user);
   useEffect(() => {
     dispatch(getAUserAPI(params.id));
   }, [check]);

@@ -6,9 +6,9 @@ import "./Search.css";
 import { Link } from "react-router-dom";
 import { Buffer } from "buffer";
 import { BiSearch } from "react-icons/bi";
+import { MdOutlineCancel } from "react-icons/md";
 
 function Search({ placeholder, data }) {
-  console.log("data::::::::", data);
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
@@ -69,8 +69,8 @@ function Search({ placeholder, data }) {
     return str;
   };
   return (
-    <div className="">
-      <div className="">
+    <>
+      <div className="flex pb-10 mt-5">
         {/* <input
           type="text"
           placeholder={placeholder}
@@ -84,7 +84,7 @@ function Search({ placeholder, data }) {
           onChange={handleFilter}
           className="pl-5 w-full h-12 border hover:border-none rounded-l-3xl p-2 bg-slate-50 shadow-lg outline-slate-300"
         />
-        <div className="">
+        <div className="overflow-hidden overflow-y-auto">
           {filteredData.length === 0 ? (
             <>
               {" "}
@@ -97,29 +97,33 @@ function Search({ placeholder, data }) {
             </>
           ) : (
             <div id="clearBtn" onClick={clearInput}>
-              đóng
+              <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
+                <MdOutlineCancel
+                  size={22}
+                  className="text-slate-600 ml-5 hover:text-white"
+                />
+              </button>
             </div>
           )}
         </div>
       </div>
       {filteredData.length != 0 && (
-        <div className="dataResult">
+        <div className="absolute bg-white mt-[-25px] w-[770px] h-[200px] shadow-lg overflow-hidden overflow-y-scroll">
           {filteredData.slice(0, 15).map((value, key) => {
-            console.log("value: ", value);
             let imageBase64 = new Buffer(value.img, "base64").toString(
               "binary"
             );
             return (
               <div>
                 <Link to={value.link}>
-                  <p className="title-dataItem">
+                  <p className="title-dataItem px-5 py-2 hover:bg-sky-200">
                     {imageBase64 !== undefined ? (
-                      <div>
+                      <div className="flex">
                         <img className="img-dataResult" src={imageBase64}></img>
-                        <span style={{ color: "black" }}>{value.title}</span>
+                        <span className="mt-1">{value.title}</span>
                       </div>
                     ) : (
-                      <span style={{ color: "black" }}>{value.title}</span>
+                      <span className="mt-1">{value.title}</span>
                     )}
                   </p>
                 </Link>
@@ -128,7 +132,7 @@ function Search({ placeholder, data }) {
           })}
         </div>
       )}
-    </div>
+    </>
   );
 }
 

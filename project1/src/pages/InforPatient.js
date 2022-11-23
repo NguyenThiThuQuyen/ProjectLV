@@ -25,7 +25,6 @@ const InforPatient = () => {
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
   const dataParent = useSelector(dataGetAParent);
-  console.log("dataParent: ", dataParent);
   const params = useParams();
   const navigate = useNavigate();
 

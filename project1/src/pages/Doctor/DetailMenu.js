@@ -11,11 +11,8 @@ import {
 const DetailMenu = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  console.log("params:", params);
 
   const data = useSelector(DataGetFindEatDetailToDate);
-
-  console.log("data:", data);
 
   useEffect(() => {
     dispatch(

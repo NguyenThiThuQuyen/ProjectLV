@@ -34,9 +34,7 @@ const ConsultDoctor = () => {
     doctorId: user.id,
     DateChon: date,
   };
-  console.log("params: ", params);
   const data = useSelector(dataGetTimPhieutheongay);
-  console.log("data:", data);
 
   useEffect(() => {
     dispatch(
@@ -45,7 +43,6 @@ const ConsultDoctor = () => {
         DateChon: "today",
       })
     );
-    // console.log("test:");
   }, []);
 
   const handleConsult = async (id) => {
@@ -80,7 +77,6 @@ const ConsultDoctor = () => {
                           {data?.data &&
                             data?.data?.length > 0 &&
                             data?.data?.map((item, index) => {
-                              console.log("item: ", item);
                               let fotmatday = moment(
                                 item?.patientDataToPhieudatcho?.birthday
                               ).format("DD/MM/YYYY");
@@ -142,7 +138,6 @@ const ConsultDoctor = () => {
                           {data?.data &&
                             data?.data?.length > 0 &&
                             data?.data?.map((item, index) => {
-                              console.log("item: ", item);
                               let fotmatday = moment(
                                 item?.patientDataToPhieudatcho?.birthday
                               ).format("DD/MM/YYYY");

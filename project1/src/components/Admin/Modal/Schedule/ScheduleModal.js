@@ -32,7 +32,6 @@ export default function ScheduleModal() {
   const [userId, setUserId] = useState();
 
   const dataDoctor = useSelector(dataGetDoctor);
-  // console.log("dataDoctor:", dataDoctor);
   const dataTimeslot = useSelector(datagetAllTimeslot);
   const check = useSelector(dataCheck);
 
@@ -41,7 +40,6 @@ export default function ScheduleModal() {
     timeslotId: timeslotId,
     userId: userId,
   };
-  console.log("params: ", params);
 
   useEffect(() => {
     dispatch(getAllTimeslotAPI());
@@ -61,7 +59,6 @@ export default function ScheduleModal() {
   };
 
   const getDate = () => {
-    console.log("moment ", moment(new Date()).format("dddd - DD/MM/YYYY"));
     let arrDate = [];
     for (let i = 0; i < 7; i++) {
       let object = {};
@@ -73,7 +70,6 @@ export default function ScheduleModal() {
     }
     setCreateDate(arrDate);
   };
-  // console.log("createDate:", createDate);
 
   useEffect(() => {
     if (createDate) {
@@ -104,16 +100,13 @@ export default function ScheduleModal() {
   const handleSave = async () => {
     // dispatch(createScheduleAPI(params));
     let result = [];
-    // console.log("params", params);
 
     let data = params.timeslotId;
     // let formatDate = new Date(params.registerDate).getTime();
     if (data && data.length > 0) {
       let selectTime = data.filter((item) => item.isSelected === true);
-      // console.log("selectTime:", selectTime);
       if (selectTime && selectTime.length > 0) {
         selectTime.map((schedule, index) => {
-          // console.log("check schedule:", schedule, index);
           let object = {};
           object.userId = params.userId;
           object.registerDate = params.registerDate * 1;
@@ -133,7 +126,6 @@ export default function ScheduleModal() {
       dispatch(createScheduleAPI());
     }
 
-    // console.log("check result:", result);
     setShowModal(false);
   };
 

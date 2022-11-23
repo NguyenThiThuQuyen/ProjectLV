@@ -143,7 +143,6 @@ export const ScheduleRedux = createSlice({
 
     builder.addCase(createScheduleAPI.fulfilled, (state, action) => {
       state.check = true;
-      console.log("action.payload.code:", action.payload.code);
       if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {

@@ -24,10 +24,8 @@ const SidebarInfor = () => {
   const [check, setCheck] = useState(true);
   const navigator = useNavigate();
   const params = useParams();
-  console.log("params: ", params);
   const parent = JSON.parse(localStorage.getItem("parent"));
   const id = parent?.id;
-  console.log("patient:", parent);
 
   const dispatch = useDispatch();
   const handleLogout = () => {

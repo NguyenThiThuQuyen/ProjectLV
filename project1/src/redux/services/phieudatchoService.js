@@ -15,7 +15,6 @@ const getPhieudatcho = async (id) => {
 };
 
 const createPhieudatcho = async (body) => {
-  console.log("object:", body);
   const create = await axios.post(
     `http://localhost:8081/api/create-new-phieudatcho`,
     body
@@ -39,7 +38,6 @@ const deletePhieudatcho = async (id) => {
 };
 
 const timPhieuTheoNgay = async (body) => {
-  // console.log("object,", body);
   const timphieu = await axios.post(
     `http://localhost:8081/api/find-lich-theo-ngay`,
     body

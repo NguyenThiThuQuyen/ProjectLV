@@ -12,7 +12,6 @@ const Receipt = () => {
   const dispatch = useDispatch();
   const componentRef = useRef(null);
   const params = useParams();
-  console.log("componentRef:", componentRef);
   const user = JSON.parse(localStorage.getItem("user"));
 
   const handlePrint = useReactToPrint({
@@ -20,7 +19,6 @@ const Receipt = () => {
   });
 
   const data = useSelector(dataGetAReceipt);
-  console.log("data:", data);
 
   useEffect(() => {
     dispatch(getReceiptAPI(params.id));

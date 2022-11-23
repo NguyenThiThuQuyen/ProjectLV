@@ -42,6 +42,7 @@ export default function EatDetailModal(props) {
   const [loidan, setLoidan] = useState();
   const [dishCategory, setDishCategory] = useState();
   const [categoryName, setCategoryName] = useState();
+  const [sessionId, setSessionId] = useState();
   const [mang, setMang] = useState([]);
   const [sectionId, setSectionId] = useState();
   const dataEatDates = useSelector(dataAllEatDates);
@@ -53,6 +54,7 @@ export default function EatDetailModal(props) {
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
 
   let dataFind = useSelector(dataGetFindEatTimeslotsToEatDetail); // mảng giờ ăn
+  console.log("dataFind:", dataFind);
 
   const check = useSelector(dataCheck);
 
@@ -93,7 +95,9 @@ export default function EatDetailModal(props) {
         menuId: props?.params2?.menuId,
       })
     );
-    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sectionId }));
+    if (sessionId !== undefined) {
+      dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sessionId }));
+    }
   }, [check]);
 
   useEffect(() => {
@@ -134,12 +138,15 @@ export default function EatDetailModal(props) {
   };
 
   const handleFindEatTimeslot = (id) => {
-    /// chọn buổi ăn
     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
-    setSectionId(id);
+    setSessionId(id);
   };
 
   useEffect(() => {
+    console.log("menuId111111111111111111:", menuId);
+    console.log("eatdateId22222222222222:", eatdateId);
+    console.log("dataFindEatTimeslots33333", dataFindEatTimeslots);
+
     dispatch(
       getFindEatTimeslotsToEatDetailAPI({
         /// api gọi để lấy mảng giờ ăn
@@ -150,7 +157,7 @@ export default function EatDetailModal(props) {
       })
     );
   }, [dataFindEatTimeslots]);
-  console.log("dataFindEatTimeslots", dataFindEatTimeslots);
+
   const handleDelete = (id) => {
     dispatch(deleteEatDetailAPI(id));
   };

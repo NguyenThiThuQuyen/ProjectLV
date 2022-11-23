@@ -84,7 +84,6 @@ const ScheduleManager = () => {
         let name = removeAccents(item?.userDataToSchedule?.name);
         let timeslot = removeAccents(item?.timeSlotDataToSchedule?.timeslot);
         let input = removeAccents(query);
-        console.log("temp chỗ fill", item?.userDataToSchedule?.name);
         return (
           name.includes(input) ||
           name.toLowerCase().includes(input) ||

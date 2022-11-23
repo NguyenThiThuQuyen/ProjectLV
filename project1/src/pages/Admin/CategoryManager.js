@@ -30,7 +30,6 @@ const CategoryManager = () => {
   }, [check]);
 
   const handleDeleteGoiKham = (id) => {
-    console.log("id", id);
     dispatch(deleteGoiKhamAPI(id));
   };
 

@@ -23,15 +23,9 @@ const Chart = () => {
   const [label2, setLabel2] = useState([]);
   const [data, setData] = useState({});
 
-  console.log("label:", label);
-  console.log("label2:", label2);
-
-  console.log("data: ", data);
-
   const dispatch = useDispatch();
 
   const dataThongke = useSelector(dataGetThongkeTheoTuan);
-  console.log("dataThongke:", dataThongke);
 
   useEffect(() => {
     if (dataThongke?.res1?.length == 7) {

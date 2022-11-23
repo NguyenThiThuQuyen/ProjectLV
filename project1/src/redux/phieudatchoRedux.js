@@ -22,7 +22,6 @@ export const timPhieuTheoNgayAPI = createAsyncThunk(
   "phieudatcho/Timphieu",
   async (params) => {
     const timngay = await timPhieuTheoNgay(params);
-    console.log("timngay:", timngay);
     return timngay;
   }
 );

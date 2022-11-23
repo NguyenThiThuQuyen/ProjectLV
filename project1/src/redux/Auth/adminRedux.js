@@ -19,19 +19,16 @@ export const AdminRedux = createSlice({
       localStorage.removeItem("user");
       window.location.href = "/login";
       state.isLoginedAdmin = false;
-      console.log("state.isLoginedAdmin", state.isLoginedAdmin);
     },
 
     // logout(state) {
     //   localStorage.clear();
     //   window.location.href = "/";
     //   state.isLoginedAdmin = false;
-    //   console.log("state.isLoginedAdmin", state.isLoginedAdmin);
     // },
   },
   extraReducers: (builder) => {
     builder.addCase(getLoginAPI.fulfilled, (state, action) => {
-      console.log("action.payload admin:", action.payload);
       if (action.payload.code === 0) {
         localStorage.setItem(
           "user",

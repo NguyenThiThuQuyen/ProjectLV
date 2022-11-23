@@ -28,14 +28,12 @@ const ParentManager = () => {
   const navigate = useNavigate();
   const data = useSelector(dataGetAllParent);
   const check = useSelector(dataCheck);
-  console.log("check");
 
   useEffect(() => {
     dispatch(getAllParentsAPI());
   }, [check]);
 
   const handleDeleteParent = (id) => {
-    console.log("id parent:", id);
     dispatch(deleteParentAPI(id));
   };
 

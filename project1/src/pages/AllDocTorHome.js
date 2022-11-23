@@ -23,7 +23,6 @@ const AllDocTorHome = () => {
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
   const dataSearch = useSelector(dataGetSearch);
-  console.log("dataSearch:", dataSearch);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,20 +67,20 @@ const AllDocTorHome = () => {
               Để được tiếp đón ưu tiên hoặc được tư vấn với bác sĩ riêng
             </div>
           </div>
-          <div className="flex pb-10 mt-5">
-            <Search data={search} placeholder={"Tìm kiếm"} />
-            {/* <input
+          <Search data={search} placeholder={"Tìm kiếm"} />
+          {/* <div className="flex pb-10 mt-5">
+            <input
               type=""
               placeholder="Tìm bác sĩ ..."
               className="pl-5 w-full h-12 border hover:border-none rounded-l-3xl p-2 bg-slate-50 shadow-lg outline-slate-300"
-            /> */}
-            {/* <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
+            />
+            <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
               <BiSearch
                 size={22}
                 className="text-slate-600 ml-5 hover:text-white"
               />
-            </button> */}
-          </div>
+            </button>
+          </div> */}
         </div>
       </div>
       <div className="w-full pb-32 bg-slate-200">
