@@ -34,7 +34,7 @@ export default function EatDetailModal(props) {
   const [dishId, setDishId] = useState();
   const [huongdanan, setHuongdanan] = useState();
   const [solan, setSolan] = useState("1");
-  const [ghichu, setGhichu] = useState();
+  const [ghichu, setGhichu] = useState("aaaaa");
   const [eatdateId, setEatdateId] = useState();
   const [menuId, setMenuId] = useState();
   const [menuName, setMenuName] = useState();
@@ -43,13 +43,13 @@ export default function EatDetailModal(props) {
   const [dishCategory, setDishCategory] = useState();
   const [categoryName, setCategoryName] = useState();
   const [sessionId, setSessionId] = useState();
-  const [mang, setMang] = useState([]);
-  const [sectionId, setSectionId] = useState();
   const dataEatDates = useSelector(dataAllEatDates);
   const dataCate = useSelector(dataGetAllCaterogy);
   const dataFindDish = useSelector(dataGetFindDishToCate);
   const dataFindEatTimeslots = useSelector(dataGetAllFindEatTimeslotsToSession);
+  console.log("dataFindEatTimeslots khung gio an:", dataFindEatTimeslots);
   const dataSession = useSelector(dataGetAllSessions);
+  // console.log("dataSession:", dataSession);
 
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
 
@@ -71,7 +71,9 @@ export default function EatDetailModal(props) {
     dishCategory: dishCategory,
     categoryName: categoryName,
     eatTimeslotId: eatTimeslotId,
+    sessionId: sessionId,
   };
+  console.log("params:", params);
 
   useEffect(() => {
     setShowModalEatDetail(true);
@@ -95,10 +97,24 @@ export default function EatDetailModal(props) {
         menuId: props?.params2?.menuId,
       })
     );
-    if (sessionId !== undefined) {
-      dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sessionId }));
-    }
   }, [check]);
+
+  console.log("sessionId:", sessionId);
+
+  // useEffect(() => {
+  //   if (dataSession.session) {
+  //     setSessionId(dataSession.session[0].id);
+  //     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sessionId }));
+  //   }
+  // }, [dataSession]);
+
+  // useEffect(() => {
+  //   console.log("123AAAAAAA");
+  //   if (sessionId !== undefined) {
+  //     console.log("11111111111AAAA:", sessionId);
+  //     dispatch(getAllFindEatTimeslotsToSessionAPI(sessionId));
+  //   }
+  // }, [sessionId]);
 
   useEffect(() => {
     dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
@@ -137,16 +153,7 @@ export default function EatDetailModal(props) {
     // }, 500);
   };
 
-  const handleFindEatTimeslot = (id) => {
-    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
-    setSessionId(id);
-  };
-
   useEffect(() => {
-    console.log("menuId111111111111111111:", menuId);
-    console.log("eatdateId22222222222222:", eatdateId);
-    console.log("dataFindEatTimeslots33333", dataFindEatTimeslots);
-
     dispatch(
       getFindEatTimeslotsToEatDetailAPI({
         /// api gọi để lấy mảng giờ ăn
@@ -157,6 +164,11 @@ export default function EatDetailModal(props) {
       })
     );
   }, [dataFindEatTimeslots]);
+
+  const handleFindEatTimeslot = (id) => {
+    dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: id }));
+    setSessionId(id);
+  };
 
   const handleDelete = (id) => {
     dispatch(deleteEatDetailAPI(id));
@@ -238,11 +250,16 @@ export default function EatDetailModal(props) {
                                 {dataSession.session &&
                                   dataSession.session.length > 0 &&
                                   dataSession.session.map((item, index) => {
+                                    // console.log("sessionId item: ", sessionId);
                                     return (
                                       <option
                                         key={index}
                                         value={item.id}
-                                        className="ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-300 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                        className={
+                                          item.id == sessionId
+                                            ? "ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-500 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                            : "ml-2 w-1/2 h-12 shadow-lg rounded-lg p-2 mr-3 bg-green-300 hover:bg-green-500 cursor-pointer hover:text-white text-center"
+                                        }
                                       >
                                         {item.name}
                                       </option>
@@ -267,6 +284,42 @@ export default function EatDetailModal(props) {
                                 {dataFind &&
                                   dataFind.length > 0 &&
                                   dataFind.map((item, index) => {
+                                    console.log("item giờ ăn", item);
+                                    return (
+                                      <>
+                                        {item.checkTimes === true ? (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              disabled
+                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-300 text-white text-center cursor-no-drop"
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        ) : (
+                                          <>
+                                            <option
+                                              key={index}
+                                              value={item.id}
+                                              className={
+                                                item.id == eatTimeslotId
+                                                  ? "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-500 cursor-pointer hover:text-white text-center"
+                                                  : "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-400 hover:bg-yellow-500 cursor-pointer hover:text-white text-center"
+                                              }
+                                            >
+                                              {item.khunggioan}
+                                            </option>
+                                          </>
+                                        )}
+                                      </>
+                                    );
+                                  })}
+
+                                {/* {dataFindEatTimeslots &&
+                                  dataFindEatTimeslots.length > 0 &&
+                                  dataFindEatTimeslots.map((item, index) => {
                                     // console.log("item giờ ăn", item);
                                     return (
                                       <>
@@ -286,7 +339,11 @@ export default function EatDetailModal(props) {
                                             <option
                                               key={index}
                                               value={item.id}
-                                              className="w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-500 hover:bg-yellow-600 cursor-pointer hover:text-white text-center"
+                                              className={
+                                                item.id == eatTimeslotId
+                                                  ? "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-orange-500 cursor-pointer hover:text-white text-center"
+                                                  : "w-full h-12 shadow-lg rounded-lg p-2 mr-3 bg-yellow-400 hover:bg-yellow-500 cursor-pointer hover:text-white text-center"
+                                              }
                                             >
                                               {item.khunggioan}
                                             </option>
@@ -294,7 +351,7 @@ export default function EatDetailModal(props) {
                                         )}
                                       </>
                                     );
-                                  })}
+                                  })} */}
                               </div>
                             </div>
                           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import Widget from "../../components/Admin/Widget/Widget";
-import Chart from "../../components/Admin/Chart/Chart";
+import Chart from "../../components/Admin/Chart/DangKyTuVan/Chart";
 
 const HomeAdmin = () => {
   return (

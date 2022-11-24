@@ -10,7 +10,7 @@ let handleGetAllEatTimeslots = async (req, res) => {
 };
 
 let handleGetAllFindEatTimeslotsToSession = async (req, res) => {
-  let data = req.body.sessionId;
+  let data = req.body;
   let message = await eatTimeslotService.getAllFindEatTimeslotsToSession(data);
   return res.status(200).json(message);
 };
@@ -32,22 +32,23 @@ let handleGetAllFindEatTimeslotsToSession = async (req, res) => {
 //   });
 // };
 
-// let handleCountEatDetail = async (req, res) => {
-//   let data = req.body;
-//   let message = await eatTimeslotService.getCountEatDetail(data);
-//   return res.status(200).json(message);
-// };
+let handleCountEatDetail = async (req, res) => {
+  let data = req.body;
+  let message = await eatTimeslotService.getCountEatDetail(data);
+  return res.status(200).json(message);
+};
 
 let handleFindEatStimeslot = async (req, res) => {
+  // let data = req.body;
   let data = req.body.data;
   let message = await eatTimeslotService.getFindEatStimeslot(data);
-  console.log("data:", data);
+  // console.log("dataaaaaa:", data);
   return res.status(200).json(message);
 };
 
 module.exports = {
   handleGetAllEatTimeslots: handleGetAllEatTimeslots,
   handleGetAllFindEatTimeslotsToSession: handleGetAllFindEatTimeslotsToSession,
-  // handleCountEatDetail: handleCountEatDetail,
+  handleCountEatDetail: handleCountEatDetail,
   handleFindEatStimeslot: handleFindEatStimeslot,
 };

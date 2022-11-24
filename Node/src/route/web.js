@@ -53,10 +53,10 @@ let initWebRoutes = (app) => {
   );
 
   // đếm chi tiết ăn theo khung giờ ăn, ngày ăn và menuId
-  // router.post(
-  //   "/api/count-eat-detail",
-  //   eatTimeslotController.handleCountEatDetail
-  // );
+  router.post(
+    "/api/count-eat-detail",
+    eatTimeslotController.handleCountEatDetail
+  );
 
   // tim danh muc theo id menu
   router.get(

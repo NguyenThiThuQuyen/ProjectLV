@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   getThongkeTheoTuanAPI,
   dataGetThongkeTheoTuan,
-} from "../../../redux/ThongkeRedux";
+} from "../../../../redux/ThongkeRedux";
 import {
   CircularProgressbar,
   CircularProgressbarWithChildren,

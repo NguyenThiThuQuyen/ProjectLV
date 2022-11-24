@@ -19,6 +19,7 @@ export const getAllFindEatTimeslotsToSessionAPI = createAsyncThunk(
   "khunggioan/GetFind",
   async (params) => {
     const getfind = await getAllFindEatTimeslotsToSession(params);
+    console.log("getfind");
     return getfind;
   }
 );

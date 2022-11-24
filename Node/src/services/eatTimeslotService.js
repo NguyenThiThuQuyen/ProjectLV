@@ -15,7 +15,7 @@ let getAllEatTimeslots = () => {
 let getAllFindEatTimeslotsToSession = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!data) {
+      if (!data.sessionId) {
         resolve({
           code: 2,
           message: "Missing required parameters",
@@ -23,16 +23,17 @@ let getAllFindEatTimeslotsToSession = (data) => {
       } else {
         let find = await db.EatTimeslot.findAll({
           where: {
-            sessionId: data,
+            sessionId: data.sessionId,
           },
           raw: true,
+          nest: true,
         });
         resolve(find);
-        // console.log("find", find.length);
+
         // if (find !== []) {
         //   for (let i = 0; i < find.length; i++) {
         //     let test = await getCountEatDetail(find[i].id);
-        //     find[i].sldatlich = test.data;
+        //     find[i].dadangky = test.data;
         //   }
         //   resolve({
         //     code: 0,
@@ -46,36 +47,46 @@ let getAllFindEatTimeslotsToSession = (data) => {
   });
 };
 
-// let getCountEatDetail = (data) => {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       let count = await db.EatDetail.count({
-//         where: {
-//           menuId: data.menuId,
-//           eatdateId: data.eatdateId,
-//           eatTimeslotId: data.eatTimeslotId,
-//         },
-//         raw: true,
-//       });
-//       resolve({
-//         code: 0,
-//         data: count,
-//       });
-//     } catch (e) {
-//       reject(e);
-//     }
-//   });
-// };
-
-let getFindEatStimeslot = (data) => {
+let getCountEatDetail = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (data.obj.eatdateId !== undefined && data.obj.menuId !== undefined) {
+      let count = await db.EatDetail.count({
+        where: {
+          menuId: data.menuId,
+          eatdateId: data.eatdateId,
+          eatTimeslotId: data._eatTimeslotId,
+        },
+        raw: true,
+      });
+      resolve({
+        code: 0,
+        data: count,
+      });
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let getFindEatStimeslot = (data) => {
+  console.log("data123", data);
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!data.obj.eatdateId || !data.obj.menuId) {
+        resolve({
+          code: 2,
+          message: "Missing required parameters",
+        });
+      } else {
         let find = await db.EatDetail.findAll({
           where: {
             eatdateId: data.obj.eatdateId,
             menuId: data.obj.menuId,
           },
+          // where: {
+          //   eatdateId: data.eatdateId,
+          //   menuId: data.menuId,
+          // },
           include: [
             {
               model: db.EatTimeslot,
@@ -84,8 +95,11 @@ let getFindEatStimeslot = (data) => {
             },
           ],
           raw: true,
-          nest: true,
+          // nest: true,
         });
+
+        // resolve(find);
+
         if (data.array && find) {
           for (let i = 0; i < find.length; i++) {
             for (let j = 0; j < data.array.length; j++) {
@@ -106,6 +120,6 @@ let getFindEatStimeslot = (data) => {
 module.exports = {
   getAllEatTimeslots: getAllEatTimeslots,
   getAllFindEatTimeslotsToSession: getAllFindEatTimeslotsToSession,
-  // getCountEatDetail: getCountEatDetail,
+  getCountEatDetail: getCountEatDetail,
   getFindEatStimeslot: getFindEatStimeslot,
 };

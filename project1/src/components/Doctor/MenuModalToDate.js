@@ -69,6 +69,7 @@ export default function MenuModalToDate(props) {
     ghichu: ghichu,
     dishCategory: dishCategory,
     categoryName: categoryName,
+    eatTimeslotId: eatTimeslotId,
   };
   console.log("params:", params);
 

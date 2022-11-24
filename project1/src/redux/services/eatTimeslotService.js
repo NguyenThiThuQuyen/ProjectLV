@@ -12,6 +12,7 @@ const getAllFindEatTimeslotsToSession = async (body) => {
     `http://localhost:8081/api/get-find-all-eattimeslots-to-sessions`,
     body
   );
+  console.log("response: ", response);
   return response.data;
 };
 
