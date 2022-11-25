@@ -50,16 +50,7 @@ const AllDocTorHome = () => {
       <Header />
       <div className="w-full bg-green-50">
         <div className="w-1/2 mx-auto">
-          <div
-            // data-aos="fade-down"
-            className="pt-32"
-          >
-            {/* <div className="text-center flex ml-72 font-Caveat text-4xl text-rose-600">
-              Children's Care
-            </div>
-            <div className="text-center font-Bangers mt-2 ml-3 text-3xl text-neutral-800 drop-shadow-xl shadow-white">
-              Dinh dưỡng hợp lý là nền tảng của
-            </div> */}
+          <div className="pt-32">
             <div className="text-center font-SmoochSans mt-2 ml-3 text-4xl text-sky-600 font-medium drop-shadow-xl shadow-white">
               Đăng Ký Khám Qua Childrent's Care
             </div>
@@ -67,20 +58,10 @@ const AllDocTorHome = () => {
               Để được tiếp đón ưu tiên hoặc được tư vấn với bác sĩ riêng
             </div>
           </div>
-          <Search data={search} placeholder={"Tìm kiếm"} />
-          {/* <div className="flex pb-10 mt-5">
-            <input
-              type=""
-              placeholder="Tìm bác sĩ ..."
-              className="pl-5 w-full h-12 border hover:border-none rounded-l-3xl p-2 bg-slate-50 shadow-lg outline-slate-300"
-            />
-            <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
-              <BiSearch
-                size={22}
-                className="text-slate-600 ml-5 hover:text-white"
-              />
-            </button>
-          </div> */}
+          <Search
+            data={search}
+            placeholder={"Tìm kiếm bác sĩ, danh mục, dịch vụ ..."}
+          />
         </div>
       </div>
       <div className="w-full pb-32 bg-slate-200">

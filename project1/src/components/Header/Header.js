@@ -68,8 +68,12 @@ function Header() {
                   <span className="">TRANG CHỦ</span>
                 </Link>
               </li>
+              <li className="flex mx-8">
+                <Link to="/service" className="">
+                  <span className="">DỊCH VỤ</span>
+                </Link>
+              </li>
               <li className="flex mx-8">VỀ CHÚNG TÔI</li>
-              <li className="flex mx-8">TRỊ LIỆU</li>
               <li className="flex mx-8">LIÊN HỆ</li>
               <li className="flex mx-8">TIN TỨC</li>
               <li className="flex ml-20 ">

@@ -6,6 +6,7 @@ import { addGoiKhamAPI } from "../../../../redux/goiKhamRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import { ImDownload3, ImUpload3 } from "react-icons/im";
+import logo from "../../../../assets/upload/logo.png";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -93,14 +94,7 @@ export default function GoiKhamModal() {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM GÓI TƯ VẤN
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
@@ -114,7 +108,7 @@ export default function GoiKhamModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) =>
                               setPackageName(event.target.value)
                             }
@@ -127,7 +121,7 @@ export default function GoiKhamModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1  outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setPrice(event.target.value)}
                           />
                         </div>
@@ -136,7 +130,7 @@ export default function GoiKhamModal() {
                             Ngày áp dụng
                           </label>
                           <DatePicker
-                            className="w-full border-2 p-2 rounded-md mt-1  outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             selected={applydateId}
                             onChange={(date) => setApplydateId(date)}
                             dateFormat="yyyy/MM/dd"
@@ -156,7 +150,7 @@ export default function GoiKhamModal() {
                           <textarea
                             type="text"
                             placeholder="..."
-                            className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
+                            className="w-full h-16 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) =>
                               setPackageDecs(event.target.value)
                             }

@@ -17,6 +17,24 @@ let handleThongketheotuan = async (req, res) => {
   });
 };
 
+let handleThongkeDoanhthu = async (req, res) => {
+  let year = req.query.year;
+  if (!year) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      year: [],
+    });
+  }
+  let res1 = await thongkeService.getThongkeDoanhthu(year);
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    res1,
+  });
+};
+
 module.exports = {
   handleThongketheotuan: handleThongketheotuan,
+  handleThongkeDoanhthu: handleThongkeDoanhthu,
 };

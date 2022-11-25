@@ -84,11 +84,11 @@ function Search({ placeholder, data }) {
           onChange={handleFilter}
           className="pl-5 w-full h-12 border hover:border-none rounded-l-3xl p-2 bg-slate-50 shadow-lg outline-slate-300"
         />
-        <div className="overflow-hidden overflow-y-auto">
+        <div className="">
           {filteredData.length === 0 ? (
             <>
-              {" "}
-              <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
+              {/* {" "} */}
+              <button className="hover:bg-sky-600 border w-[70px] rounded-r-full h-12 bg-slate-50 shadow-lg">
                 <BiSearch
                   size={22}
                   className="text-slate-600 ml-5 hover:text-white"
@@ -97,7 +97,7 @@ function Search({ placeholder, data }) {
             </>
           ) : (
             <div id="clearBtn" onClick={clearInput}>
-              <button className="hover:bg-green-600 border w-[90px] rounded-r-3xl h-12 bg-slate-50 shadow-lg">
+              <button className="hover:bg-sky-600 border w-[90px] rounded-r-full h-12 bg-slate-50 shadow-lg">
                 <MdOutlineCancel
                   size={22}
                   className="text-slate-600 ml-5 hover:text-white"

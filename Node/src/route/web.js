@@ -45,6 +45,10 @@ let initWebRoutes = (app) => {
     "/api/get-thongke-theo-tuan",
     thongkeController.handleThongketheotuan
   );
+  router.get(
+    "/api/get-thongke-doanh-thu",
+    thongkeController.handleThongkeDoanhthu
+  );
 
   // tìm khung giờ trong chi tiết ăn theo ngày ăn và menuId
   router.post(
