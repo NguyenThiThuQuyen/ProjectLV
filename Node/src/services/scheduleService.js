@@ -145,6 +145,7 @@ let getAllSchedules = () => {
     try {
       let schedule = {};
       schedule = await db.Schedule.findAll({
+        order: [["createdAt", "DESC"]],
         include: [
           {
             model: db.TimeSlot,

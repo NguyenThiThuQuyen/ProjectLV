@@ -65,7 +65,7 @@ let handleGetAllMedicalPackageHome = async (req, res) => {
 
 let handleGetAllMedicalPackageHomeAll = async (req, res) => {
   let limit = req.query.limit;
-  if (!limit) limit = 50;
+  if (!limit) limit = 4;
   try {
     let response = await goiKhamService.getAllMedicalPackageHomeAll(limit);
     return res.status(200).json(response);

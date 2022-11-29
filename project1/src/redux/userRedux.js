@@ -16,8 +16,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const getAllDoctorHomeAPI = createAsyncThunk(
   "datten/GetAllHome",
-  async () => {
-    const getHome = await getAllDoctorHome();
+  async (params) => {
+    const getHome = await getAllDoctorHome(params);
     return getHome;
   }
 );

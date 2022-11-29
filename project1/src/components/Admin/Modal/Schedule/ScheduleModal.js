@@ -40,6 +40,7 @@ export default function ScheduleModal() {
     timeslotId: timeslotId,
     userId: userId,
   };
+  console.log("params: ", params);
 
   useEffect(() => {
     dispatch(getAllTimeslotAPI());

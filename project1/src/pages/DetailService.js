@@ -14,6 +14,7 @@ import {
   dataGetGoiKham,
   dataCheck,
 } from "../redux/goiKhamRedux";
+import SearchImport from "../components/Search/SearchImport";
 
 const DetailService = () => {
   const dispatch = useDispatch();
@@ -36,19 +37,16 @@ const DetailService = () => {
   return (
     <div className="h-screen ">
       <Header />
-      <div className="mt-32">
-        <div className="text-center text-xl font-semibold text-sky-700">
+      <SearchImport />
+      <div className="mt-10">
+        <div className="text-center text-xl font-semibold text-sky-700 uppercase">
           {data?.goikham?.packageName}
         </div>
         <div className="w-full mt-10">
           <div className="w-3/4 mx-auto">
             <div className="grid grid-cols-4 w-3/2">
               <div className="col-span-1">
-                <img
-                  src={imageBase64}
-                  alt=""
-                  className="w-full h-[200px] w-[300px]"
-                />
+                <img src={imageBase64} alt="" className="h-[200px] w-[300px]" />
               </div>
               <div className="col-span-3 ml-5">
                 <div className="text-sm font-semibold text-sky-700">

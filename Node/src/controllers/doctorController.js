@@ -3,7 +3,8 @@ const doctorService = require("../services/doctorService");
 
 let handleGetAllDoctorHome = async (req, res) => {
   let limit = req.query.limit;
-  if (!limit) limit = 3;
+  console.log("limit:", limit);
+  // if (!limit) limit = 3;
   try {
     let response = await doctorService.getAllDoctorHome(limit);
     return res.status(200).json(response);

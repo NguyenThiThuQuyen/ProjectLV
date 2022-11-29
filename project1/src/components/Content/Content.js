@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   dataGetDoctorHome,
   getAllDoctorHomeAPI,
+  getAUserAPI,
   dataCheck,
 } from "../../redux/userRedux";
 
@@ -34,7 +35,7 @@ const Content = () => {
   const check = useSelector(dataCheck);
   const navigate = useNavigate();
   useEffect(() => {
-    dispatch(getAllDoctorHomeAPI());
+    dispatch(getAllDoctorHomeAPI(3));
     dispatch(getAllMedicalPackaheHomeAPI());
   }, [check]);
   const settings = {
@@ -57,6 +58,11 @@ const Content = () => {
   const handleDetail = (medicalpackageId) => {
     navigate(`/detail-service/${medicalpackageId}`);
     dispatch(getGoiKhamAPI(medicalpackageId));
+  };
+
+  const handleDetailDocTor = (userId) => {
+    navigate(`/detail-doctor/${userId}`);
+    dispatch(getAUserAPI(userId));
   };
 
   return (
@@ -165,7 +171,10 @@ const Content = () => {
                   <>
                     <div className="col-span-1 mt-10">
                       <div className="grid grid-cols-2 justify-items-center">
-                        <div className="col-span-1 px-5">
+                        <div
+                          onClick={() => handleDetail(item.id)}
+                          className="col-span-1 px-5"
+                        >
                           <img
                             src={imageBase64}
                             alt=""
@@ -173,15 +182,23 @@ const Content = () => {
                           />
                         </div>
                         <div className="col-span-1 w-full">
-                          <div className="font-medium text-sky-700 cursor-pointer uppercase">
+                          <div
+                            onClick={() => handleDetail(item.id)}
+                            className="font-medium text-sky-700 cursor-pointer uppercase"
+                          >
                             {item.packageName}
                           </div>
-                          <div className="text-sm">{item.packageDecs}</div>
+                          <div
+                            className="text-sm"
+                            onClick={() => handleDetail(item.id)}
+                          >
+                            {item.packageDecs}
+                          </div>
                           <div
                             className="font-medium mt-5 underline underline-offset-8 hover:text-sky-500 cursor-pointer"
                             onClick={() => handleDetail(item.id)}
                           >
-                            LEARN MORE
+                            XEM THÊM
                           </div>
                         </div>
                       </div>
@@ -258,8 +275,8 @@ const Content = () => {
       </div>
 
       <div className="mt-96">
-        <div className="text-center font-medium text-sky-700 text-3xl">
-          Meet The Team
+        <div className="text-center uppercase font-medium text-sky-700 text-2xl">
+          Đội ngũ bác sĩ
         </div>
         <Slider {...settings}>
           <div className="w-full">
@@ -277,8 +294,11 @@ const Content = () => {
                     return (
                       <>
                         <div className="col-span-1 mx-5" key={item.id}>
-                          <div className=" bg-slate-200">
-                            <div className="w-full mt-5">
+                          <div className=" bg-slate-100 border-[1px] mt-5 shadow-lg">
+                            <div
+                              className="w-full mt-5"
+                              onClick={() => handleDetailDocTor(item.id)}
+                            >
                               <img
                                 src={imageBase64}
                                 alt=""
@@ -287,8 +307,19 @@ const Content = () => {
                               <div className="text-center mt-3 text-xl font-medium">
                                 {item.name}
                               </div>
-                              <div className="text-center mt-2 text-lg font-light">
-                                CHIEF OPERATING OFFICER
+                              <div className="text-center uppercase mt-2 text-lg font-light">
+                                chuyên khoa nhi
+                              </div>
+                              <div className="text-center mt-4">
+                                <button className="mx-5 rounded py-3 px-5 box-border border-1 bg-green-700  hover:bg-green-600 text-white">
+                                  <div className="flex animate-pulse">
+                                    <TbBellRinging
+                                      className="animate-bounce mr-1"
+                                      size={25}
+                                    />
+                                    ĐẶT LỊCH NGAY
+                                  </div>
+                                </button>
                               </div>
                               <div className="text-center mt-2 px-4 py-4">
                                 Sức khỏe, sự an toàn của bạn là sứ mệnh và nguồn

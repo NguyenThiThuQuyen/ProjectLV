@@ -6,31 +6,58 @@ const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 let getAllDoctorHome = (limitInput) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let users = await db.User.findAll({
-        limit: limitInput,
-        where: { roleId: "R2" },
-        order: [["createdAt", "DESC"]],
-        attributes: {
-          exclude: ["password"],
-        },
-        // raw: true
-        include: [
-          {
-            model: db.Allcode,
-            as: "genderDataToUser",
-            attributes: ["value", "keyMap", "type"],
+      if (limitInput !== "ALL") {
+        let users = await db.User.findAll({
+          limit: +limitInput,
+          where: { roleId: "R2" },
+          order: [["createdAt", "DESC"]],
+          attributes: {
+            exclude: ["password"],
           },
-          {
-            model: db.Allcode,
-            as: "roleDataToUser",
-            attributes: ["value", "keyMap", "type"],
+          // raw: true
+          include: [
+            {
+              model: db.Allcode,
+              as: "genderDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+            {
+              model: db.Allcode,
+              as: "roleDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+          ],
+        });
+        resolve({
+          code: 0,
+          data: users,
+        });
+      } else {
+        let users = await db.User.findAll({
+          where: { roleId: "R2" },
+          order: [["createdAt", "DESC"]],
+          attributes: {
+            exclude: ["password"],
           },
-        ],
-      });
-      resolve({
-        code: 0,
-        data: users,
-      });
+          // raw: true
+          include: [
+            {
+              model: db.Allcode,
+              as: "genderDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+            {
+              model: db.Allcode,
+              as: "roleDataToUser",
+              attributes: ["value", "keyMap", "type"],
+            },
+          ],
+        });
+        resolve({
+          code: 0,
+          data: users,
+        });
+      }
     } catch (e) {
       reject(e);
     }

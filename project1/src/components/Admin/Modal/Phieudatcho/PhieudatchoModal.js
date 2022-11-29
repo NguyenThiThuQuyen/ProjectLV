@@ -88,19 +88,15 @@ export default function PhieudatchoModal() {
   const dataGoiKham = useSelector(dataGetAllGoiKham);
   const dataFindSchedule = useSelector(dataGetFindSchedule);
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
-  const dataIdSchedule = useSelector(dataFindIdSchedule);
   const dataAllParent = useSelector(dataGetAllParent);
-  const dataAPatient = useSelector(dataGetPatient);
 
-  const dispatch = useDispatch();
+  const dataIdSchedule = useSelector(dataFindIdSchedule);
+  const dataAPatient = useSelector(dataGetPatient);
   const dataPatient = useSelector(dataGetAllPatient);
   const array1 = useSelector(ArrayPatient);
-  const [mang, setMang] = useState([]);
 
-  // const today = new Date();
-  // let dataDate =
-  //   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  // const test = new Date(dataDate).getTime();
+  const dispatch = useDispatch();
+  const [mang, setMang] = useState([]);
 
   useEffect(() => {
     dispatch(getAllPatientsAPI());
@@ -122,17 +118,6 @@ export default function PhieudatchoModal() {
       dispatch(getFindAllPatientAPI(parentId));
     }
   }, [parentId]);
-
-  // useEffect(() => {
-  //   dataFindSchedule?.schedule?.data &&
-  //     dataFindSchedule?.schedule?.data?.length > 0 &&
-  //     dataFindSchedule?.schedule?.data?.map((item, index) => {
-  //       const kt = XoaTrungTrongMang(item?.registerDate);
-  //       if (kt) {
-  //         mang.push(item?.registerDate);
-  //       }
-  //     });
-  // }, [dataFindSchedule]);
 
   const today = new Date();
 
@@ -202,16 +187,6 @@ export default function PhieudatchoModal() {
     dispatch(getFindTimeslotAPI(params));
     setRegisterDate(item);
   };
-
-  // const handleSearchIdSchedule = () => {
-  //   const params = {
-  //     userId: doctorId,
-  //     timeslotId: timeslotId,
-  //     registerDate: registerDate,
-  //   };
-
-  //   dispatch(getFindIdScheduleAPI(params));
-  // };
 
   const date =
     bookingDate.getDate() +

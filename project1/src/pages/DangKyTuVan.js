@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import bglogin from "../assets/upload/logo.png";
+import SearchImport from "../components/Search/SearchImport";
 
 const DangKyTuVan = () => {
   return (
     <div className="h-screen ">
       <Header />
+      <SearchImport />
       <div className="grid grid-cols-3">
         <div className="col-span-1 ">
-          <div className="w-full mt-48">
+          <div className="w-full mt-28">
             <div className="ml-10 border-2 border-green-600 py-5 px-5 rounded-md">
               <div className="">
                 <img
@@ -61,11 +63,11 @@ const DangKyTuVan = () => {
         <div className="col-span-2 ">
           <div className="w-full">
             <div className="w-5/6 mx-auto px-3">
-              <div className="text-center mb-10 mt-32 font-semibold text-sky-500 text-lg underline underline-offset-8">
+              <div className="text-center mb-10 mt-10 font-semibold text-sky-500 text-lg underline underline-offset-8">
                 ĐĂNG KÝ TƯ VẤN
               </div>
               <div className="border-l-2 border-l-slate-400">
-                <span className="absolute mt-10 left-[594px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
+                <span className="absolute mt-10 left-[598px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
                 <div className="ml-8 shadow-lg shadow-slate-300 border-slate-200 py-10">
                   <div className="text-sm font-semibold text-sky-700 ml-5">
                     NHẬP THÔNG TIN NGƯỜI ĐẠI DIỆN TRẺ:
@@ -125,7 +127,7 @@ const DangKyTuVan = () => {
               </div>
 
               <div className="border-l-2 border-l-slate-400 mt-10">
-                <span className="absolute mt-10 left-[594px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
+                <span className="absolute mt-10 left-[598px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
                 <div className="ml-8 shadow-lg shadow-slate-300 border-slate-200 py-5">
                   <div className="text-sm font-semibold text-sky-700 ml-5 mt-5">
                     NHẬP THÔNG TIN TRẺ:
@@ -187,7 +189,7 @@ const DangKyTuVan = () => {
               </div>
 
               <div className="border-l-2 border-l-slate-400 mt-10">
-                <span className="absolute mt-10 left-[594px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
+                <span className="absolute mt-10 left-[598px] w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
                 <div className="ml-8 shadow-lg shadow-slate-300 border-slate-200 py-5">
                   <div className="text-sm font-semibold text-sky-700 ml-5 mt-5">
                     NHẬP THÔNG TIN TƯ VẤN:

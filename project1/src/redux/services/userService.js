@@ -45,8 +45,10 @@ const getAllAllcodes = async (inputType) => {
   return res.data;
 };
 
-const getAllDoctorHome = async () => {
-  const res = await axios.get(`http://localhost:8081/api/all-doctor-home`);
+const getAllDoctorHome = async (limit) => {
+  const res = await axios.get(
+    `http://localhost:8081/api/all-doctor-home?limit=${limit}`
+  );
   return res.data;
 };
 

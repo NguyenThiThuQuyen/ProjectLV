@@ -65,8 +65,8 @@ export const data = {
   ],
 };
 
-console.log("dataaaaaaaa:", data);
+// console.log("dataaaaaaaa:", data);
 export default function ThongKeDoanhThu(props) {
-  console.log("props:", props);
+  // console.log("props:", props);
   return <Line options={options} data={props?.thongkedthu} />;
 }

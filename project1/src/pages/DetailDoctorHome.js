@@ -28,6 +28,7 @@ import {
   dataGetFindTimeslot,
 } from "../redux/scheduleRedux";
 import DetailServiceModal from "../components/Guest/DetailServiceModal";
+import SearchImport from "../components/Search/SearchImport";
 const DetailDoctorHome = (props) => {
   const [showThongTinNguoiDungModal, setShowThongTinNguoiDungModal] =
     useState(false);
@@ -162,10 +163,6 @@ const DetailDoctorHome = (props) => {
     setTestGiaGoiKham(testgia);
   };
 
-  // useEffect(() => {
-  //   setNewCreateParentId(parent?.parentDataToPatient[0].id);
-  // }, [parent?.parentDataToPatient]);
-
   useEffect(() => {
     parent?.parentDataToPatient &&
       parent?.parentDataToPatient?.length > 0 &&
@@ -227,7 +224,8 @@ const DetailDoctorHome = (props) => {
     <div className="h-screen bg-slate-50">
       <Header />
       <ToastContainer />
-      <div className="w-full pt-28">
+      <SearchImport />
+      <div className="w-full pt-10">
         <div className="w-4/5 mx-auto bg-white shadow-lg shadow-sky-200">
           <div className="grid grid-cols-2 p-5">
             <div className="col-span-1 border-y-[1px] border-l-[1px] p-5 relative">
@@ -248,21 +246,6 @@ const DetailDoctorHome = (props) => {
                     </div>
                   </div>
                   <div className="text-slate-400">Chuyên khoa Nhi</div>
-                  {/* <div className="text-slate-400">Id patient</div> */}
-                  {/* <select
-                    className="text-slate-400"
-                    onChange={(e) => handleCrete(e.target.value)}
-                  >
-                    {parent?.parentDataToPatient &&
-                      parent?.parentDataToPatient?.length > 0 &&
-                      parent?.parentDataToPatient?.map((item, index) => {
-                        return (
-                          <option key={index} value={item.id}>
-                            {item.id}
-                          </option>
-                        );
-                      })}
-                  </select> */}
                 </div>
               </div>
               <div className="mt-5">
