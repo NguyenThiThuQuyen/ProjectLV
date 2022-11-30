@@ -99,33 +99,33 @@ const Receipt = () => {
             <table className="border mx-auto border-slate-200">
               <thead>
                 <tr className="border border-slate-400">
-                  <th className="border border-slate-200 p-3 text-black font-medium">
+                  <th className="border border-slate-200 p-1 text-black font-medium">
                     Gói tư vấn
                   </th>
-                  <th className="border border-slate-200 p-3 text-black font-medium">
+                  <th className="border border-slate-200 p-1 text-black font-medium">
                     Giá
                   </th>
-                  <th className="border border-slate-200 p-3 text-black font-medium">
+                  <th className="border border-slate-200 p-1 text-black font-medium">
                     Số tiền
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="hover:bg-slate-200">
-                  <td className="border-y border-slate-300 py-3 px-7">
+                  <td className="border-y border-slate-300 p-1">
                     {
                       data?.receipt?.phieudatchoDataToReceipt
                         ?.goituvanDataToPhieudatcho?.packageName
                     }
                   </td>
-                  <td className="border-y border-slate-300 py-3 px-7">
+                  <td className="border-y border-slate-300 p-1">
                     {
                       data?.receipt?.phieudatchoDataToReceipt
                         ?.goituvanDataToPhieudatcho
                         ?.medicalPackageDataToPackagePrice[0]?.price
                     }
                   </td>
-                  <td className="border-y border-slate-300 py-3 px-7">
+                  <td className="border-y border-slate-300 p-1">
                     {
                       data?.receipt?.phieudatchoDataToReceipt
                         ?.goituvanDataToPhieudatcho
@@ -136,7 +136,7 @@ const Receipt = () => {
               </tbody>
             </table>
             <div className="w-full">
-              <div className="flex justify-end  mt-3">
+              <div className="flex justify-end mt-3">
                 <span className="text-lg font-medium mr-2">
                   Tổng tiền thanh toán:
                 </span>

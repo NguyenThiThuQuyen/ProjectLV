@@ -5,6 +5,7 @@ let getAllMedicals = () => {
     try {
       let medicals = {};
       medicals = await db.Medical.findAll({
+        order: [["createdAt", "DESC"]],
         // attributes: ["image"],
         include: [
           {

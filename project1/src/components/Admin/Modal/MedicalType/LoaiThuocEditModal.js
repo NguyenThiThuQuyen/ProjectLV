@@ -3,6 +3,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { editLoaiThuocAPI } from "../../../../redux/loaiThuocRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
+import logo from "../../../../assets/upload/logo.png";
 export default function LoaiThuocModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
@@ -41,14 +42,7 @@ export default function LoaiThuocModalEdit(props) {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM LOẠI THUỐC
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
@@ -102,7 +96,7 @@ export default function LoaiThuocModalEdit(props) {
                     type="button"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

@@ -219,7 +219,7 @@ export default function ThuocModalEdit(props) {
                     type="button"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

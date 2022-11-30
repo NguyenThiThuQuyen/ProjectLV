@@ -22,7 +22,6 @@ import {
   dataGetAllCaterogy,
   getAllCaterogyAPI,
 } from "../../redux/danhmucmonanRedux";
-import { circularProgressClasses } from "@mui/material";
 
 export default function MenuModal(props) {
   const [showModal, setShowModal] = useState(false);

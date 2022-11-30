@@ -4,6 +4,8 @@ import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { addUserAPI } from "../../../../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { getBase64 } from "../../../../utils/CommonUtils";
+import logo from "../../../../assets/upload/logo.png";
+
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -114,6 +116,7 @@ export default function UserModal() {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM NGƯỜI DÙNG
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="">
@@ -126,7 +129,7 @@ export default function UserModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setName(event.target.value)}
                           />
                         </div>
@@ -137,7 +140,7 @@ export default function UserModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setPhone(event.target.value)}
                           />
                         </div>
@@ -146,7 +149,7 @@ export default function UserModal() {
                             Giới tính
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) => setgender(event.target.value)}
                           >
@@ -168,7 +171,7 @@ export default function UserModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setEmail(event.target.value)}
                           />
                         </div>
@@ -182,7 +185,7 @@ export default function UserModal() {
                           <input
                             type="text"
                             placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setAddress(event.target.value)}
                           />
                         </div>
@@ -191,7 +194,7 @@ export default function UserModal() {
                             Quyền
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) => setRoleId(event.target.value)}
                           >
@@ -252,7 +255,7 @@ export default function UserModal() {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

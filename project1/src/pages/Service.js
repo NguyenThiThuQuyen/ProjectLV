@@ -19,7 +19,7 @@ import SearchImport from "../components/Search/SearchImport";
 
 const Service = () => {
   const [search, setSearch] = useState([]);
-  const dataSearch = useSelector(dataGetSearch);
+  // const dataSearch = useSelector(dataGetSearch);
   const dispatch = useDispatch();
   const dataPackage = useSelector(dataGetAllGoiKhamHomeAll);
   const navigate = useNavigate();
@@ -27,15 +27,15 @@ const Service = () => {
     dispatch(getAllMedicalPackageHomeAllAPI());
   }, []);
 
-  useEffect(() => {
-    dispatch(getSearchAPI());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSearchAPI());
+  // }, []);
 
-  useEffect(() => {
-    if (dataSearch.search) {
-      setSearch(dataSearch.search);
-    }
-  }, [dataSearch]);
+  // useEffect(() => {
+  //   if (dataSearch.search) {
+  //     setSearch(dataSearch.search);
+  //   }
+  // }, [dataSearch]);
 
   const handleDetailService = (medicalpackageId) => {
     navigate(`/detail-service/${medicalpackageId}`);
@@ -78,7 +78,7 @@ const Service = () => {
                                 className="h-[180px] w-[260px]"
                               />
                             </div>
-                            <div className="col-span-1 w-full mt-5">
+                            <div className="col-span-1 w-full mt-5 pr-3">
                               <div
                                 className="font-medium text-green-800 uppercase"
                                 onClick={() => handleDetailService(item.id)}

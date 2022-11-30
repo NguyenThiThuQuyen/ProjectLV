@@ -111,15 +111,16 @@ let getAllMedicalTypes = () => {
     try {
       let medicaltypes = {};
       medicaltypes = await db.MedicalType.findAll({
-        include: [
-          {
-            model: db.Medical,
-            as: "medicalTypeDataToMedical",
-            attributes: ["name", "id"],
-          },
-        ],
-        raw: true,
-        nest: true,
+        order: [["createdAt", "DESC"]],
+        // include: [
+        //   {
+        //     model: db.Medical,
+        //     as: "medicalTypeDataToMedical",
+        //     attributes: ["name", "id"],
+        //   },
+        // ],
+        // raw: true,
+        // nest: true,
       });
       resolve(medicaltypes);
     } catch (e) {

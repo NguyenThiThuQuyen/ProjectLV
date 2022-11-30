@@ -74,7 +74,7 @@ export const ThuocRedux = createSlice({
     });
     builder.addCase(addThuocAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
@@ -82,7 +82,7 @@ export const ThuocRedux = createSlice({
     });
     builder.addCase(editThuocAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
@@ -91,7 +91,7 @@ export const ThuocRedux = createSlice({
 
     builder.addCase(deleteThuocAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code === "0") {
+      if (action.payload.code == "0") {
         toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);

@@ -22,6 +22,7 @@ import EatTimeslotRedux from "./eatTimeslotRedux";
 import ThongkeRedux from "./ThongkeRedux";
 import ReceiptRedux from "./receiptRedux";
 import SearchRedux from "./searchRedux";
+import PrescriptionDetailRedux from "./prescriptionDetailRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -46,5 +47,6 @@ export const store = configureStore({
     thongke: ThongkeRedux,
     hoadon: ReceiptRedux,
     timkiem: SearchRedux,
+    chitiettoathuoc: PrescriptionDetailRedux,
   },
 });

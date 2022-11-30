@@ -63,7 +63,7 @@ const GoiKhamManager = () => {
                     Hình ảnh
                   </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Điều chỉnh
+                    Thao tác
                   </th>
                 </tr>
               </thead>

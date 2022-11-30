@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BsSearch } from "react-icons/bs";
 import {
   MdOutlineDarkMode,
@@ -6,16 +7,30 @@ import {
 } from "react-icons/md";
 import { RiFullscreenExitLine } from "react-icons/ri";
 import { AiOutlineUnorderedList } from "react-icons/ai";
-
+import { getSearchAdminAPI, dataGetSearchAdmin } from "../../redux/searchRedux";
+import SearchAdmin from "../Search/SearchAdmin";
 const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const [search, setSearch] = useState([]);
+  const dataSearch = useSelector(dataGetSearchAdmin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getSearchAdminAPI());
+  }, []);
+
+  useEffect(() => {
+    if (dataSearch.search) {
+      setSearch(dataSearch.search);
+    }
+  }, [dataSearch]);
 
   return (
     // navbar
     <div className="h-12 flex items-center text-base border-b-2 border-scale-700">
       {/* wrapper */}
       <div className="flex w-full p-5 items-center justify-end">
-        {/* search */}
         {/* <div className="flex items-center border border-scale-200 p-1">
           <input
             className="border-0 outline-0 bg-transparent"
@@ -24,7 +39,10 @@ const Navbar = () => {
           />
           <BsSearch />
         </div> */}
-        {/* items */}
+        <SearchAdmin
+          data={search}
+          placeholder={"Tìm kiếm bác sĩ, danh mục, dịch vụ ..."}
+        />
         <div className="flex items-center">
           {/* <div className="flex items-center mr-5 relative">
             <MdOutlineDarkMode className="text-xl" />

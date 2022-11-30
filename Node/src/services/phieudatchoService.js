@@ -107,6 +107,7 @@ let getAllPhieudatcho = () => {
     try {
       let phieudatcho = {};
       phieudatcho = await db.ReservationTicket.findAll({
+        order: [["createdAt", "DESC"]],
         include: [
           {
             model: db.MedicalPackage,
@@ -117,28 +118,33 @@ let getAllPhieudatcho = () => {
             model: db.Schedule,
             as: "scheduleDataToPhieudatcho",
             attributes: ["registerDate", "timeslotId", "userId", "id"],
-            include: [
-              {
-                model: db.TimeSlot,
-                as: "timeSlotDataToSchedule",
-                attributes: ["timeslot", "id"],
-              },
-            ],
+            // include: [
+            //   {
+            //     model: db.TimeSlot,
+            //     as: "timeSlotDataToSchedule",
+            //     attributes: ["timeslot", "id"],
+            //   },
+            // ],
           },
           {
             model: db.Patient,
             as: "patientDataToPhieudatcho",
-            attributes: ["childrentName", "birthday", "gender", "gender", "id"],
+            attributes: [
+              "childrentName",
+              // "birthday",
+              // "gender",
+              "id",
+            ],
           },
           {
             model: db.User,
             as: "doctorDataToPhieudatcho",
             attributes: [
-              "email",
+              // "email",
               "name",
-              "address",
-              "phone",
-              "gender",
+              // "address",
+              // "phone",
+              // "gender",
               "roleId",
               "id",
             ],

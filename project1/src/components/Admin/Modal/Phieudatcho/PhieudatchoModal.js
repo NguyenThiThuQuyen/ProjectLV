@@ -135,11 +135,13 @@ export default function PhieudatchoModal() {
           mang.push(item?.registerDate);
         }
       });
-    const params = {
-      registerDate: mang[0],
-      userId: doctorId,
-    };
-    dispatch(getFindTimeslotAPI(params));
+    if (dataFindSchedule?.schedule?.data?.length > 0) {
+      const params = {
+        registerDate: mang[0],
+        userId: doctorId,
+      };
+      dispatch(getFindTimeslotAPI(params));
+    }
   }, [dataFindSchedule]);
 
   const XoaTrungTrongMang = (date) => {
@@ -200,7 +202,9 @@ export default function PhieudatchoModal() {
   const handleFindPatient = async (id) => {
     let dataId = await dispatch(getFindAllPatientAPI(id));
     let findemail = dataId?.payload?.parent[0]?.parentDataToPatient?.email;
+    let findphone = dataId?.payload?.parent[0]?.parentDataToPatient?.phone;
     setEmail(findemail);
+    setPhone(findphone);
   };
 
   const handleFindInfor = async (id) => {
@@ -296,25 +300,40 @@ export default function PhieudatchoModal() {
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Email
                           </label>
-
-                          <select
+                          <input
                             className="w-full h-11 shadow-md border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onClick={(event) =>
                               handleFindPatient(event.target.value)
                             }
                             // onChange={(event) => setEmail()}
-                          >
+                            list="aaa"
+                          />
+
+                          <datalist id="aaa">
                             {dataAllParent.parents &&
                               dataAllParent.parents.length > 0 &&
                               dataAllParent.parents.map((item, index) => {
+                                console.log("item: ", item);
                                 return (
-                                  <option key={item?.email} value={item.id}>
-                                    {item?.email}
+                                  <option key={item?.phone} value={item.id}>
+                                    {item?.phone}
                                   </option>
                                 );
                               })}
-                          </select>
+                          </datalist>
+
+                          {/* <label htmlFor="">AAA</label>
+                          <input
+                            type="text"
+                            name="animal"
+                            className="border-2"
+                            list="animals"
+                          />
+                          <datalist id="animals">
+                            <option value="Cat"></option>
+                            <option value="Dog"></option>
+                          </datalist> */}
                         </div>
                         <div className="col-span-3 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { BsPlusLg } from "react-icons/bs";
-import { ImUpload3 } from "react-icons/im";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
+import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { getBase64 } from "../../../../utils/CommonUtils";
+import logo from "../../../../assets/upload/logo.png";
 import {
   addThuocAPI,
   dataGetAllDovitinh,
@@ -31,9 +32,11 @@ export default function ThuocModal() {
     nhacungcapId: nhacungcapId,
     medicalTypeId: medicalTypeId,
   };
+  console.log("param:", params);
 
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllLoaiThuoc);
+  console.log("data:", data);
   const dataDonViTinh = useSelector(dataGetAllDovitinh);
   const dataNhaCungCap = useSelector(dataGetAllNhacungcap);
   const check = useSelector(dataCheck);
@@ -48,6 +51,18 @@ export default function ThuocModal() {
     dispatch(getAllLoaiThuocAPI());
   }, [check]);
 
+  useEffect(() => {
+    if (dataDonViTinh.dvt) {
+      setDonvitinhId(dataDonViTinh.dvt[0].id);
+    }
+  }, [dataDonViTinh]);
+
+  useEffect(() => {
+    if (data.medicaltypes) {
+      setMedicalTypeId(data.medicaltypes[0].id);
+    }
+  }, [data]);
+
   const handleSave = () => {
     dispatch(addThuocAPI(params));
     setShowModal(false);
@@ -59,31 +74,40 @@ export default function ThuocModal() {
     setImage(base64);
   };
 
-  // const convertBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const fileReader = new FileReader();
-  //     fileReader.readAsDataURL(file);
-  //     fileReader.onload = () => {
-  //       resolve(fileReader.result);
-  //     };
-  //     fileReader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //   });
-  // };
-
   return (
     <>
-      <div className="mt-8 ml-10">
-        <button
-          className="flex bg-green-700 hover:bg-green-600 p-2 rounded-md text-white"
-          type="button"
-          onClick={() => setShowModal(true)}
-        >
-          <BsPlusLg className="mr-2 mt-1" />
-          Thêm thuốc
-        </button>
-        {/* </Link> */}
+      <div className="mt-4 ml-5">
+        <div className="ml-5 flex justify-start">
+          <div className="flex items-center border border-scale-200 p-1 rounded">
+            <input
+              className="border-0 outline-0 bg-transparent"
+              type="text"
+              placeholder="Tìm kiếm..."
+            />
+            <BsSearch />
+          </div>
+        </div>
+        <div className="flex">
+          <div className="ml-6 mt-8">
+            <button
+              className="flex text-teal-800 font-medium hover:text-slate-600"
+              type="button"
+              onClick={() => setShowModal(true)}
+            >
+              <BsPlusLg className="mr-2 mt-1 text-teal-700" />
+              Thêm thuốc hỗ trợ
+            </button>
+          </div>
+          <div className="ml-8 mt-8">
+            <button
+              className="flex text-teal-800 font-medium hover:text-slate-600"
+              type="button"
+            >
+              <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+              Xuất excel
+            </button>
+          </div>
+        </div>
       </div>
       {showModal ? (
         <>
@@ -96,86 +120,82 @@ export default function ThuocModal() {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM THUỐC
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative p-6 pb-20 flex-auto">
                   <form className="">
-                    <div className="grid grid-rows-2">
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Tên thuốc
-                          </label>
-                          <input
-                            type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            onChange={(event) => setName(event.target.value)}
-                          />
-                        </div>
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Đơn vị tính
-                          </label>
-                          <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            id=""
-                            onChange={(event) =>
-                              setDonvitinhId(event.target.value)
-                            }
-                            // value={medicalTypeId}
-                          >
-                            {dataDonViTinh.dvt &&
-                              dataDonViTinh.dvt.length > 0 &&
-                              dataDonViTinh.dvt.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.donvitinh}
-                                  </option>
-                                );
-                              })}
-                          </select>
-                        </div>
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Tên loại thuốc
-                          </label>
-                          <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            id=""
-                            onChange={(event) =>
-                              setMedicalTypeId(event.target.value)
-                            }
-                            // value={medicalTypeId}
-                          >
-                            {data.medicaltypes &&
-                              data.medicaltypes.length > 0 &&
-                              data.medicaltypes.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                );
-                              })}
-                          </select>
+                    <div className="grid row-auto">
+                      <div className="grid gird-row-1">
+                        <div className="grid grid-cols-2">
+                          <div className="col-span-1 mx-3 my-4">
+                            <label htmlFor="" className="text-slate-600 ml-2">
+                              Tên thuốc
+                            </label>
+                            <input
+                              type="text"
+                              placeholder="..."
+                              className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                              onChange={(event) => setName(event.target.value)}
+                            />
+                          </div>
+                          <div className="col-span-1 mx-3 my-4">
+                            <label htmlFor="" className="text-slate-600 ml-2">
+                              Đơn vị tính
+                            </label>
+                            <select
+                              className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                              id=""
+                              onChange={(event) =>
+                                setDonvitinhId(event.target.value)
+                              }
+                              // value={medicalTypeId}
+                            >
+                              {dataDonViTinh.dvt &&
+                                dataDonViTinh.dvt.length > 0 &&
+                                dataDonViTinh.dvt.map((item, index) => {
+                                  return (
+                                    <option key={index} value={item.id}>
+                                      {item.donvitinh}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
+                      <div className="grid gird-row-1">
+                        <div className="grid grid-cols-2">
+                          <div className="col-span-1 mx-3 my-4">
+                            <label htmlFor="" className="text-slate-600 ml-2">
+                              Tên loại thuốc
+                            </label>
+                            <select
+                              className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                              id=""
+                              onChange={(event) =>
+                                setMedicalTypeId(event.target.value)
+                              }
+                              // value={medicalTypeId}
+                            >
+                              {data.medicaltypes &&
+                                data.medicaltypes.length > 0 &&
+                                data.medicaltypes.map((item, index) => {
+                                  return (
+                                    <option key={index} value={item.id}>
+                                      {item.name}
+                                    </option>
+                                  );
+                                })}
+                            </select>
+                          </div>
+                          {/* <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Nhà cung cấp
                           </label>
                           <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) =>
                               setNhacungcapId(event.target.value)
@@ -192,23 +212,28 @@ export default function ThuocModal() {
                                 );
                               })}
                           </select>
-                        </div>
-                        <div className="col-span-1 mx-3 my-4 relative">
-                          <label
-                            htmlFor=""
-                            className="text-slate-600 ml-2 flex"
-                          >
-                            Tải ảnh
-                            <ImUpload3 className="mt-1 ml-2" />
-                          </label>
-                          <input
-                            type="file"
-                            placeholder="..."
-                            className="mt-2"
-                            onChange={(event) => uploadImage(event)}
-                          />
-                          <div className="absolute">
-                            <img src={image} />
+                        </div> */}
+                          <div className="col-span-1 mx-3 my-4 relative">
+                            <label
+                              htmlFor=""
+                              className="text-slate-600 ml-2 flex"
+                            >
+                              Tải ảnh
+                              <ImUpload3 className="mt-1 ml-2" />
+                            </label>
+                            <input
+                              type="file"
+                              placeholder="..."
+                              className="mt-2"
+                              onChange={(event) => uploadImage(event)}
+                            />
+                            <div className="absolute">
+                              <img
+                                src={image}
+                                width={"100px"}
+                                height={"100px"}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -229,7 +254,7 @@ export default function ThuocModal() {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

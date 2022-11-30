@@ -12,7 +12,7 @@ import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Search from "../components/Search/Search.js";
-import { getSearchAPI, dataGetSearch } from "../redux/searchRedux";
+// import { getSearchAPI, dataGetSearch } from "../redux/searchRedux";
 import {
   dataGetDoctorHome,
   getAllDoctorHomeAPI,
@@ -26,22 +26,22 @@ const AllDocTorHome = () => {
   const [search, setSearch] = useState([]);
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
-  const dataSearch = useSelector(dataGetSearch);
+  // const dataSearch = useSelector(dataGetSearch);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI("ALL"));
   }, [check]);
 
-  useEffect(() => {
-    dispatch(getSearchAPI());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getSearchAPI());
+  // }, []);
 
-  useEffect(() => {
-    if (dataSearch.search) {
-      setSearch(dataSearch.search);
-    }
-  }, [dataSearch]);
+  // useEffect(() => {
+  //   if (dataSearch.search) {
+  //     setSearch(dataSearch.search);
+  //   }
+  // }, [dataSearch]);
 
   const handleDetail = (userId) => {
     navigate(`/detail-doctor/${userId}`);

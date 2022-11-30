@@ -98,7 +98,7 @@ export default function TimeslotModal() {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

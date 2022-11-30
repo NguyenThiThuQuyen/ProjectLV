@@ -12,6 +12,7 @@ import {
   dataCheck,
   deleteLoaiThuocAPI,
 } from "../../redux/loaiThuocRedux";
+import NavbarThuoc from "../../components/Admin/NavbarThuoc";
 
 const LoaiThuocManager = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const LoaiThuocManager = () => {
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
+          <NavbarThuoc />
           <LoaiThuocModal />
           {/* <TableUser /> */}
           <div className="w-full px-10 py-3">
@@ -45,7 +47,7 @@ const LoaiThuocManager = () => {
                     Tên loại thuốc
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Điều chỉnh
+                    Thao tác
                   </th>
                 </tr>
               </thead>

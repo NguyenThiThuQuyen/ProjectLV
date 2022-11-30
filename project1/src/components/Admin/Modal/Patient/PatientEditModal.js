@@ -192,7 +192,7 @@ export default function PatientModalEdit(props) {
                     type="submit"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

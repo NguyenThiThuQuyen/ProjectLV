@@ -143,7 +143,7 @@ export default function ScheduleModalEdit(props) {
                     type="button"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

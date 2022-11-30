@@ -24,6 +24,7 @@ const eatTimeslotController = require("../controllers/eatTimeslotController");
 const thongkeController = require("../controllers/thongkeController");
 const receiptController = require("../controllers/receiptController");
 const searchController = require("../controllers/searchController");
+const prescriptionDetailController = require("../controllers/prescriptionDetailController");
 
 const { Router } = require("express");
 
@@ -33,7 +34,10 @@ let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
 
   // tìm kiếm
+  // người dùng
   router.get("/api/search", searchController.handleSearch);
+  // admin
+  router.get("/api/search-admin", searchController.handleSearchAdmin);
 
   // hóa đơn
   // router.get("/api/get-all-receipt", receiptController.handleGetAllReceipt);
@@ -372,6 +376,28 @@ let initWebRoutes = (app) => {
   router.delete(
     "/api/delete-prescription",
     prescriptionController.handleDeletePrescription
+  );
+
+  //chi tiet toa thuoc
+  router.get(
+    "/api/get-all-prescriptions-detail",
+    prescriptionDetailController.handleGetAllPrescriptionDetail
+  );
+  // router.get(
+  //   "/api/get-prescription",
+  //   prescriptionController.handleGetPrescription
+  // );
+  router.post(
+    "/api/create-new-prescription-detail",
+    prescriptionDetailController.handleCreatePrescriptionDetail
+  );
+  // router.put(
+  //   "/api/edit-prescription",
+  //   prescriptionController.handleEditPrescription
+  // );
+  router.delete(
+    "/api/delete-prescription-detail",
+    prescriptionDetailController.handleDeletePrescriptionDetail
   );
 
   // đơn vị tính

@@ -24,6 +24,7 @@ import NavbarPhieuDatCho from "../../components/Admin/NavbarPhieuDatCho";
 const PhieudatchoManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllPhieudatcho);
+  console.log("data:", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
@@ -80,7 +81,7 @@ const PhieudatchoManager = () => {
                     Bác sĩ tư vấn
                   </th>
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Điều chỉnh
+                    Thao tác
                   </th>
                 </tr>
               </thead>

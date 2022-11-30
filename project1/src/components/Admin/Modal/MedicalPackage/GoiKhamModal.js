@@ -197,7 +197,7 @@ export default function GoiKhamModal() {
                     type="button"
                     onClick={() => handleSave()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

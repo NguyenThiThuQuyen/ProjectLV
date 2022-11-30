@@ -12,7 +12,6 @@ import {
   dataCheck,
 } from "../../redux/phieudatchoRedux";
 import moment from "moment";
-// import { getPrescriptionAPI } from "../../redux/prescriptionRedux";
 
 const ConsultDoctor = () => {
   const [mang, setMang] = useState([]);
@@ -143,7 +142,7 @@ const ConsultDoctor = () => {
                               ).format("DD/MM/YYYY");
                               return (
                                 <div className="border-y border-y-slate-200 flex justify-between">
-                                  <div className="py-2 px-4">
+                                  <div className="py-2 w-2/3">
                                     <div className="">
                                       {
                                         item?.patientDataToPhieudatcho

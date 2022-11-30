@@ -258,7 +258,7 @@ export default function UserModalEdit(props) {
                       type="button"
                       onClick={() => handleSave()}
                     >
-                      Save Changes
+                      Lưu thông tin
                     </button>
                   </div>
                 </div>

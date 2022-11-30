@@ -5,4 +5,9 @@ const getSearch = async () => {
   return response.data;
 };
 
-export { getSearch };
+const getSearchAdmin = async () => {
+  const response = await axios.get(`http://localhost:8081/api/search-admin`);
+  return response.data;
+};
+
+export { getSearch, getSearchAdmin };

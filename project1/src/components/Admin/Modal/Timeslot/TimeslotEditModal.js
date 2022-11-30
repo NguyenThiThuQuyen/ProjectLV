@@ -104,7 +104,7 @@ export default function TimeslotModalEdit(props) {
                     type="button"
                     onClick={() => handleSaveEdit()}
                   >
-                    Save Changes
+                    Lưu thông tin
                   </button>
                 </div>
               </div>

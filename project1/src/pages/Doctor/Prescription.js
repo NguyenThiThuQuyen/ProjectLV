@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import { BsPlusLg } from "react-icons/bs";
+import { GiMedicalPackAlt } from "react-icons/gi";
 import NavbarConsult from "../../components/Doctor/NavbarConsult";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import MenuModal from "../../components/Doctor/MenuModal";
 import EatDetailModal from "../../components/Doctor/EatDetailModal";
 import MenuModalToDate from "../../components/Doctor/MenuModalToDate";
+import ThuocModal from "../../components/Doctor/ThuocModal";
 import { useLocation, useParams } from "react-router-dom";
 import moment from "moment";
+import hinh1 from "../../assets/upload/kisspng-pharmacy-medicine-vector-graphics-portable-network-5d0528b7a97598.5057332015606191916941.png";
 import { dataAllEatDates, getAllEatDatesAPI } from "../../redux/ngayanRedux";
 import {
   getFindCaterogyInMenuIdAPI,
@@ -35,13 +38,18 @@ import {
   getPhieudatchoAPI,
   dataGetAPhieudatcho,
 } from "../../redux/phieudatchoRedux";
+import {
+  getAllPrescriptionsDetailAPI,
+  dataGetAllPrescriptionsDetail,
+  dataCheck,
+} from "../../redux/prescriptionDetailRedux";
 import { ToastContainer } from "react-toastify";
-import { circularProgressClasses } from "@mui/material";
 
 const Prescription = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEatDetail, setShowModalEatDetail] = useState(false);
   const [showMenuModalToDate, setShowMenuModalToDate] = useState(false);
+  const [showModalThuoc, setShowModalThuoc] = useState(false);
   const [checkTuvan, setCheckTuvan] = useState(false);
 
   const [loidan, setLoidan] = useState();
@@ -66,6 +74,10 @@ const Prescription = () => {
   const dataTimphieu = useSelector(dataGetAPhieudatcho);
 
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
+  const dataGetAllChitiet = useSelector(dataGetAllPrescriptionsDetail);
+  console.log("dataGetAllChitiet:", dataGetAllChitiet);
+
+  console.log("showModalThuoc:", showModalThuoc);
 
   useEffect(() => {
     setReservationTicketId(paramsTuvan.id);
@@ -75,6 +87,10 @@ const Prescription = () => {
     dispatch(getAllEatDatesAPI());
 
     dispatch(getPhieudatchoAPI(paramsTuvan.id));
+  }, []);
+
+  useEffect(() => {
+    dispatch(getAllPrescriptionsDetailAPI(dataFindId.id));
   }, []);
 
   useEffect(() => {
@@ -100,6 +116,7 @@ const Prescription = () => {
   const data = useSelector(DataGetFindEatDetailToDate);
 
   const dataFindId = useSelector(datagetFindIdPhieuDatCho);
+  console.log("dataFindId:", dataFindId);
 
   const dataFindMenu = useSelector(dataGetFindMenuToPrescription);
 
@@ -130,15 +147,23 @@ const Prescription = () => {
   const handleMenu = () => {
     setShowModal(true);
   };
+
+  const handleThuoc = () => {
+    console.log("aaaaaaaaaaa");
+    setShowModalThuoc(true);
+  };
+
   const handleDong = (test) => {
     setShowModal(test);
     setShowModalEatDetail(test);
     setShowMenuModalToDate(test);
+    setShowModalThuoc(test);
   };
   const handleMoLai = (data) => {
     setShowModal(data);
     setShowModalEatDetail(data);
     setShowMenuModalToDate(data);
+    setShowModalThuoc(data);
   };
 
   const handleEatDetail = (id) => {
@@ -206,30 +231,33 @@ const Prescription = () => {
                     </div>
                     {dataFindId === null ? (
                       <>
-                        <div className="w-full mt-5">
-                          <button
-                            className="p-2 bg-yellow-500 text-white text-md font-medium rounded-md mx-auto"
-                            onClick={() => handleMenu()}
-                          >
-                            <div className="flex">
-                              <BsPlusLg className="mt-1 mr-2" />
-                              <span>Tạo thực đơn</span>
-                            </div>
-                          </button>
+                        <div className="w-full flex mt-5">
+                          {/* thuc don */}
                           <div className="">
-                            {showModal === true ? (
-                              <MenuModal
-                                openModal={showModal}
-                                handleClose={handleDong}
-                                getParams={getParams}
-                                handleMo={handleMoLai}
-                                params2={params}
-                              />
-                            ) : (
-                              <>
-                                <div className=""></div>
-                              </>
-                            )}
+                            <button
+                              className="p-2 bg-yellow-500 text-white text-md font-medium rounded-md mx-auto"
+                              onClick={() => handleMenu()}
+                            >
+                              <div className="flex">
+                                <BsPlusLg className="mt-1 mr-2" />
+                                <span>Tạo thực đơn</span>
+                              </div>
+                            </button>
+                            <div className="">
+                              {showModal === true ? (
+                                <MenuModal
+                                  openModal={showModal}
+                                  handleClose={handleDong}
+                                  getParams={getParams}
+                                  handleMo={handleMoLai}
+                                  params2={params}
+                                />
+                              ) : (
+                                <>
+                                  <div className=""></div>
+                                </>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </>
@@ -266,159 +294,228 @@ const Prescription = () => {
           </div>
 
           {dataFindId !== null ? (
-            <div className="">
-              <div className="mt-16 text-sky-700 font-semibold text-xl ml-5">
-                THỰC ĐƠN THEO NGÀY
+            <div className="grid grid-cols-3">
+              <div className="col-span-1 mt-24">
+                <div className="border-[1px] mt-10 mx-5 shadow-lg py-4 h-1/2">
+                  <div className="text-sky-700 font-semibold text-md ml-5 uppercase">
+                    Thuốc hỗ trợ
+                  </div>
+                  <div className="ml-5 mt-5">
+                    <button
+                      className="p-2 bg-orange-500 text-white text-md font-medium rounded-md mx-auto"
+                      onClick={() => handleThuoc()}
+                    >
+                      <div className="flex animate-pulse">
+                        <GiMedicalPackAlt className="mt-1 mr-2 animate-bounce" />
+                        <span>Thêm thuốc hỗ trợ</span>
+                      </div>
+                    </button>
+                    <div className="">
+                      {showModalThuoc === true ? (
+                        <ThuocModal
+                          openModal={showModalThuoc}
+                          handleClose={handleDong}
+                          getParams={getParams}
+                          handleMo={handleMoLai}
+                          params2={params}
+                        />
+                      ) : (
+                        <>
+                          <div className=""></div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  {dataGetAllChitiet.getall &&
+                  dataGetAllChitiet.getall.length > 0 ? (
+                    <>
+                      <div className="w-full">
+                        {dataGetAllChitiet.getall &&
+                          dataGetAllChitiet.getall.length > 0 &&
+                          dataGetAllChitiet.getall.map((item, index) => {
+                            return (
+                              <>
+                                <div className="">
+                                  {item?.medicalDataToPrescriptionDetail?.name}
+                                </div>
+                              </>
+                            );
+                          })}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="w-full">
+                      <img
+                        src={hinh1}
+                        alt=""
+                        className="h-[10rem] mx-auto mt-10"
+                      />
+                      <div className="text-green-600 italic text-center">
+                        Chưa có thuốc hỗ trợ nào
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="">
-                <div className="grid grid-cols-3 p-5" id="">
-                  {dataEatDates.eatdates &&
-                    dataEatDates.eatdates.length > 0 &&
-                    dataEatDates.eatdates.map((item, index) => {
-                      return (
-                        <div className="">
-                          {item.check === true ? (
-                            <div
-                              key={index}
-                              value={item.id}
-                              className="p-5 bg-green-400 mt-7 ml-5 col-span-1 shadow-lg hover:bg-green-300 border-slate-300 border"
-                            >
-                              <div className="uppercase font-semibold">
-                                <div className="">{item.eatdate}</div>
-                              </div>
-                              <div className="">
-                                {dataTimphieu?.phieudatcho?.status !==
-                                "Đã tư vấn" ? (
-                                  <>
-                                    {/* {checkTuvan === false ? (
+              <div className="col-span-2">
+                <div className="">
+                  <div className="mt-16 text-sky-700 font-semibold text-xl ml-10">
+                    THỰC ĐƠN THEO NGÀY
+                  </div>
+                  <div className="">
+                    <div className="grid grid-cols-2 p-5" id="">
+                      {dataEatDates.eatdates &&
+                        dataEatDates.eatdates.length > 0 &&
+                        dataEatDates.eatdates.map((item, index) => {
+                          return (
+                            <div className="">
+                              {item.check === true ? (
+                                <div
+                                  key={index}
+                                  value={item.id}
+                                  className="p-5 bg-green-400 mt-7 ml-5 col-span-1 shadow-lg hover:bg-green-300 border-slate-300 border"
+                                >
+                                  <div className="uppercase font-semibold">
+                                    <div className="">{item.eatdate}</div>
+                                  </div>
+                                  <div className="">
+                                    {dataTimphieu?.phieudatcho?.status !==
+                                    "Đã tư vấn" ? (
+                                      <>
+                                        {/* {checkTuvan === false ? (
                                   <> */}
-                                    <div className="flex mt-3">
-                                      <button
-                                        className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
-                                        onClick={() => handleEatDetail(item.id)}
-                                      >
-                                        <div className="flex">
-                                          <BsPlusLg className="mt-1 mr-2" />
-                                          <span>Thêm khẩu phần</span>
+                                        <div className="flex mt-3">
+                                          <button
+                                            className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
+                                            onClick={() =>
+                                              handleEatDetail(item.id)
+                                            }
+                                          >
+                                            <div className="flex">
+                                              <BsPlusLg className="mt-1 mr-2" />
+                                              <span>Thêm khẩu phần</span>
+                                            </div>
+                                          </button>
+                                          <div className="">
+                                            {showModalEatDetail === true ? (
+                                              <EatDetailModal
+                                                openModal={showModalEatDetail}
+                                                handleClose={handleDong}
+                                                getParams={getParams}
+                                                handleMo={handleMoLai}
+                                                params2={params}
+                                                item={item}
+                                              />
+                                            ) : (
+                                              <>
+                                                <div className=""></div>
+                                              </>
+                                            )}
+                                          </div>
                                         </div>
-                                      </button>
-                                      <div className="">
-                                        {showModalEatDetail === true ? (
-                                          <EatDetailModal
-                                            openModal={showModalEatDetail}
-                                            handleClose={handleDong}
-                                            getParams={getParams}
-                                            handleMo={handleMoLai}
-                                            params2={params}
-                                            item={item}
-                                          />
-                                        ) : (
-                                          <>
-                                            <div className=""></div>
-                                          </>
-                                        )}
-                                      </div>
-                                    </div>
-                                    <div className="flex mt-3">
-                                      <div
-                                        className="italic hover:underline hover:underline-offset-2"
-                                        onClick={() =>
-                                          handleXemMenu(
-                                            item.id,
-                                            dataFindId?.menuId
-                                          )
-                                        }
-                                      >
-                                        Xem chi tiết thực đơn đã tạo
-                                      </div>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    <div className="flex mt-3">
-                                      <div
-                                        className="italic hover:underline hover:underline-offset-2"
-                                        onClick={() =>
-                                          handleXemMenu(
-                                            item.id,
-                                            dataFindId?.menuId
-                                          )
-                                        }
-                                      >
-                                        Xem chi tiết thực đơn đã tạo
-                                      </div>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          ) : (
-                            <div
-                              key={index}
-                              value={item.id}
-                              className="p-5 bg-green-200 mt-7 ml-5 col-span-1 shadow-lg hover:bg-white border-slate-300 border"
-                            >
-                              <div className="uppercase font-semibold">
-                                <div className="">{item.eatdate}</div>
-                              </div>
-                              <div className="">
-                                {dataTimphieu?.phieudatcho?.status !==
-                                "Đã tư vấn" ? (
-                                  <>
-                                    {/* {checkTuvan === false ? (
+                                        <div className="flex mt-3">
+                                          <div
+                                            className="italic hover:underline hover:underline-offset-2"
+                                            onClick={() =>
+                                              handleXemMenu(
+                                                item.id,
+                                                dataFindId?.menuId
+                                              )
+                                            }
+                                          >
+                                            Xem chi tiết thực đơn đã tạo
+                                          </div>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <div className="flex mt-3">
+                                          <div
+                                            className="italic hover:underline hover:underline-offset-2"
+                                            onClick={() =>
+                                              handleXemMenu(
+                                                item.id,
+                                                dataFindId?.menuId
+                                              )
+                                            }
+                                          >
+                                            Xem chi tiết thực đơn đã tạo
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              ) : (
+                                <div
+                                  key={index}
+                                  value={item.id}
+                                  className="p-5 bg-green-200 mt-7 ml-5 col-span-1 shadow-lg hover:bg-white border-slate-300 border"
+                                >
+                                  <div className="uppercase font-semibold">
+                                    <div className="">{item.eatdate}</div>
+                                  </div>
+                                  <div className="">
+                                    {dataTimphieu?.phieudatcho?.status !==
+                                    "Đã tư vấn" ? (
+                                      <>
+                                        {/* {checkTuvan === false ? (
                                   <> */}
-                                    <div className="flex mt-3">
-                                      <button
-                                        className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"
-                                        onClick={() =>
-                                          handleCreateMenuToDate(item.id)
-                                        }
-                                      >
-                                        <div className="flex">
-                                          <BsPlusLg className="mt-1 mr-2" />
-                                          <span>Thêm thực đơn</span>
+                                        <div className="flex mt-3">
+                                          <button
+                                            className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"
+                                            onClick={() =>
+                                              handleCreateMenuToDate(item.id)
+                                            }
+                                          >
+                                            <div className="flex">
+                                              <BsPlusLg className="mt-1 mr-2" />
+                                              <span>Thêm thực đơn</span>
+                                            </div>
+                                          </button>
+                                          <div className="">
+                                            {showMenuModalToDate === true ? (
+                                              <MenuModalToDate
+                                                openModal={showMenuModalToDate}
+                                                handleClose={handleDong}
+                                                getParams={getParams}
+                                                handleMo={handleMoLai}
+                                                params2={params}
+                                                item={item}
+                                              />
+                                            ) : (
+                                              <>
+                                                <div className=""></div>
+                                              </>
+                                            )}
+                                          </div>
                                         </div>
-                                      </button>
-                                      <div className="">
-                                        {showMenuModalToDate === true ? (
-                                          <MenuModalToDate
-                                            openModal={showMenuModalToDate}
-                                            handleClose={handleDong}
-                                            getParams={getParams}
-                                            handleMo={handleMoLai}
-                                            params2={params}
-                                            item={item}
-                                          />
-                                        ) : (
-                                          <>
-                                            <div className=""></div>
-                                          </>
-                                        )}
-                                      </div>
-                                    </div>
-                                    <div className="flex mt-3">
-                                      <div className="italic text-red-600">
-                                        Chưa có thực đơn, vui lòng thêm thực
-                                        đơn!
-                                      </div>
-                                    </div>
-                                  </>
-                                ) : (
-                                  <>
-                                    <div className="flex mt-3">
-                                      <div className="italic text-red-600">
-                                        Chưa có thực đơn, vui lòng thêm thực đơn
-                                        !
-                                      </div>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
+                                        <div className="flex mt-3">
+                                          <div className="italic text-red-600">
+                                            Chưa có thực đơn, vui lòng thêm thực
+                                            đơn!
+                                          </div>
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <div className="flex mt-3">
+                                          <div className="italic text-red-600">
+                                            Chưa có thực đơn, vui lòng thêm thực
+                                            đơn !
+                                          </div>
+                                        </div>
+                                      </>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
                             </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

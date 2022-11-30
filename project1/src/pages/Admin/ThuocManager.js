@@ -12,6 +12,8 @@ import {
   dataCheckThuoc,
   deleteThuocAPI,
 } from "../../redux/thuocRedux";
+import NavbarThuoc from "../../components/Admin/NavbarThuoc";
+import { ToastContainer } from "react-toastify";
 const ThuocManager = () => {
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllThuoc);
@@ -26,19 +28,22 @@ const ThuocManager = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex w-full">
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
+          <NavbarThuoc />
           <ThuocModal />
+
           {/* <TableUser /> */}
           <div className="w-full px-10 py-3">
             <table className="border border-slate-200">
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     ID
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên thuốc
                   </th>
@@ -51,11 +56,11 @@ const ThuocManager = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Hình ảnh
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Nhà cung cấp
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Điều chỉnh
+                    Thao tác
                   </th>
                 </tr>
               </thead>
@@ -72,13 +77,13 @@ const ThuocManager = () => {
                     }
                     return (
                       <tr key={item.id} className="hover:bg-slate-200">
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.id}
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        <td className="border-y w-1/3 border-slate-300 py-3 px-7 text-slate-700">
                           {item.medicalTypeDataToMedical.name}
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -91,9 +96,9 @@ const ThuocManager = () => {
                             style={{ height: "54px", width: "100px" }}
                           />
                         </td>
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.nhacungcapDataToMedical.nhacungcap}
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="flex">
                             <div className="mr-3" title="Sửa">

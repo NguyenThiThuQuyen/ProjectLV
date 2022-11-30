@@ -14,11 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         as: "menuDataToPrescription",
       });
 
-      // Prescription.belongsTo(models.ReservationTicket, {
-      //   foreignKey: "reservationTicketId",
-      //   targetKey: "id",
-      //   as: "phieudatchoDataToPrescription",
-      // });
+      Prescription.hasMany(models.PrescriptionDetail, {
+        foreignKey: "prescriptionId",
+        as: "prescriptionDataToPrescriptionDetail",
+      });
     }
   }
   Prescription.init(

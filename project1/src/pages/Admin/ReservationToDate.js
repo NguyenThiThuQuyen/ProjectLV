@@ -36,6 +36,7 @@ const ReservationToDate = () => {
   //   const test = new Date(date).getTime();
 
   const dataDoctor = useSelector(dataGetDoctorHome);
+  console.log("dataDoctor", dataDoctor);
 
   const params = {
     doctorId: bacsiId,
@@ -62,7 +63,7 @@ const ReservationToDate = () => {
   }, [dateChon]);
 
   useEffect(() => {
-    dispatch(getAllDoctorHomeAPI());
+    dispatch(getAllDoctorHomeAPI("ALL"));
   }, []);
 
   const handleConsult = async (id) => {
@@ -150,7 +151,7 @@ const ReservationToDate = () => {
                   </th>
 
                   <th className="border border-slate-200 p-3 text-white font-medium">
-                    Điều chỉnh
+                    Thao tác
                   </th>
                 </tr>
               </thead>
