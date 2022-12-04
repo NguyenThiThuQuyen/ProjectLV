@@ -32,7 +32,7 @@ import {
   getAllCaterogyAPI,
 } from "../../redux/danhmucmonanRedux";
 export default function MenuModalToDate(props) {
-  console.log("props:", props);
+  console.log("props tttt:", props);
   const [showMenuModalToDate, setShowMenuModalToDate] = useState(false);
   const [dishId, setDishId] = useState();
   const [huongdanan, setHuongdanan] = useState();
@@ -55,7 +55,6 @@ export default function MenuModalToDate(props) {
   const dataSession = useSelector(dataGetAllSessions);
   const dataDetail = useSelector(DataGetFindEatDetailToDate);
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
-  console.log("dataFindDish:", dataFindDish);
 
   const dispatch = useDispatch();
 
@@ -71,7 +70,6 @@ export default function MenuModalToDate(props) {
     categoryName: categoryName,
     eatTimeslotId: eatTimeslotId,
   };
-  console.log("params:", params);
 
   useEffect(() => {
     setShowMenuModalToDate(true);
@@ -105,7 +103,6 @@ export default function MenuModalToDate(props) {
   }, []);
 
   useEffect(() => {
-    console.log("params?.dishCategory;", params?.dishCategory);
     if (params?.dishCategory != undefined) {
       dispatch(getFindDishToCateAPI(params?.dishCategory));
     }
@@ -128,6 +125,9 @@ export default function MenuModalToDate(props) {
   const handleSave = async () => {
     dispatch(getCreateEatDetailAPI(params));
     setShowMenuModalToDate(false);
+    setTimeout(function () {
+      window.location.reload(1);
+    }, 4000);
     props.handleMo(false);
   };
 
@@ -213,7 +213,6 @@ export default function MenuModalToDate(props) {
                                 {dataSession.session &&
                                   dataSession.session.length > 0 &&
                                   dataSession.session.map((item, index) => {
-                                    console.log("sessionId:", sessionId);
                                     return (
                                       <option
                                         key={index}

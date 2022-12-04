@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createReceipt, getReceipt } from "./services/receiptService";
+import {
+  createReceipt,
+  getReceipt,
+  getFindReservationReceipt,
+} from "./services/receiptService";
 import { toast } from "react-toastify";
 
 export const createReceiptAPI = createAsyncThunk(
@@ -15,16 +19,29 @@ export const getReceiptAPI = createAsyncThunk("hoadon/Geta", async (params) => {
   return getahoadon;
 });
 
+export const getFindReservationReceiptAPI = createAsyncThunk(
+  "hoadon/GetFind",
+  async (params) => {
+    const getfind = await getFindReservationReceipt(params);
+    return getfind;
+  }
+);
+
 export const ReceiptRedux = createSlice({
   name: "hoadon",
   initialState: {
     getAReceipt: {},
+    getFindInReceipt: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getReceiptAPI.fulfilled, (state, action) => {
       state.getAReceipt = action.payload;
+    });
+
+    builder.addCase(getFindReservationReceiptAPI.fulfilled, (state, action) => {
+      state.getFindInReceipt = action.payload;
     });
 
     builder.addCase(createReceiptAPI.fulfilled, (state, action) => {
@@ -39,5 +56,7 @@ export const ReceiptRedux = createSlice({
 });
 
 export const dataGetAReceipt = (state) => state.hoadon.getAReceipt;
+export const dataGetFindReservationReceipt = (state) =>
+  state.hoadon.getFindInReceipt;
 export const dataCheck = (state) => state.hoadon.check;
 export default ReceiptRedux.reducer;

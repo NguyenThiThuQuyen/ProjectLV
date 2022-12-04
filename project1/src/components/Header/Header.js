@@ -53,6 +53,10 @@ function Header() {
     navigate(`/infor-patient/${id}`);
   };
 
+  const handleHosoBenhNhan = () => {
+    navigate(`/consulting-history/${id}`);
+  };
+
   return (
     <>
       <div className="">
@@ -130,7 +134,10 @@ function Header() {
                                     </div>
                                   </div>
                                 </div>
-                                <div className="flex mt-6">
+                                <div
+                                  className="flex mt-6"
+                                  onClick={() => handleHosoBenhNhan()}
+                                >
                                   <BiBookmarkAltPlus
                                     size={18}
                                     className="mt-1 text-slate-700 cursor-pointer"

@@ -118,7 +118,22 @@ let getReceipt = (receiptId) => {
   });
 };
 
+let getFindReservationTicketInReceipt = (reservationTicketId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let phieudatcho = {};
+      phieudatcho = await db.Receipt.findAll({
+        where: { reservationTicketId: reservationTicketId },
+      });
+      resolve(phieudatcho);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createReceipt: createReceipt,
   getReceipt: getReceipt,
+  getFindReservationTicketInReceipt: getFindReservationTicketInReceipt,
 };

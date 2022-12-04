@@ -15,4 +15,11 @@ const getReceipt = async (receipt) => {
   return response.data;
 };
 
-export { createReceipt, getReceipt };
+const getFindReservationReceipt = async (reservationTicketId) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/find-all-phieudatcho-in-receipt?reservationTicketId=${reservationTicketId}`
+  );
+  return response.data;
+};
+
+export { createReceipt, getReceipt, getFindReservationReceipt };

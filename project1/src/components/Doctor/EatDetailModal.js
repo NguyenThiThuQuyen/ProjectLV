@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import logo from "../../assets/upload/logo.png";
 import { dataAllEatDates, getAllEatDatesAPI } from "../../redux/ngayanRedux";
 import {
   getAllDishesAPI,
@@ -98,23 +99,7 @@ export default function EatDetailModal(props) {
       })
     );
   }, [check]);
-
   console.log("sessionId:", sessionId);
-
-  // useEffect(() => {
-  //   if (dataSession.session) {
-  //     setSessionId(dataSession.session[0].id);
-  //     dispatch(getAllFindEatTimeslotsToSessionAPI({ sessionId: sessionId }));
-  //   }
-  // }, [dataSession]);
-
-  // useEffect(() => {
-  //   console.log("123AAAAAAA");
-  //   if (sessionId !== undefined) {
-  //     console.log("11111111111AAAA:", sessionId);
-  //     dispatch(getAllFindEatTimeslotsToSessionAPI(sessionId));
-  //   }
-  // }, [sessionId]);
 
   useEffect(() => {
     dispatch(getFindDishToCateAPI(props?.params2?.categoryId));
@@ -184,6 +169,7 @@ export default function EatDetailModal(props) {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM KHẨU PHẦN ĂN
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 <div className="relative p-6 flex-auto">
                   <div className="grid grid-cols-7">

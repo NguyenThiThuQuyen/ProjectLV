@@ -5,8 +5,15 @@ import "react-toastify/dist/ReactToastify.css";
 import ReactToPrint from "react-to-print";
 import { ComponentToPrint } from "./ComponentToPrint";
 import { useReactToPrint } from "react-to-print";
-import { getReceiptAPI, dataGetAReceipt } from "../../redux/receiptRedux";
+
+import {
+  getReceiptAPI,
+  dataGetAReceipt,
+  getFindReservationReceiptAPI,
+  dataGetFindReservationReceipt,
+} from "../../redux/receiptRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { ImDownload3 } from "react-icons/im";
 import moment from "moment/moment";
 const Receipt = () => {
   const dispatch = useDispatch();
@@ -19,16 +26,67 @@ const Receipt = () => {
   });
 
   const data = useSelector(dataGetAReceipt);
+  console.log("data:", data);
+  const dataFindInReceipt = useSelector(dataGetFindReservationReceipt);
+  console.log("dataFindInReceipt:", dataFindInReceipt);
+
+  console.log("phieu dat cho id:", data?.receipt?.phieudatchoDataToReceipt?.id);
 
   useEffect(() => {
     dispatch(getReceiptAPI(params.id));
   }, []);
 
+  useEffect(() => {
+    if (data?.receipt?.phieudatchoDataToReceipt) {
+      const testdata = data?.receipt?.phieudatchoDataToReceipt?.id;
+      dispatch(getFindReservationReceiptAPI(testdata));
+    }
+  }, [data]);
+
   return (
     <>
-      <div className="flex w-full" onClick={() => handlePrint()}>
-        In hóa đơn
-      </div>
+      {dataFindInReceipt?.phieuId && dataFindInReceipt?.phieuId?.length > 1 ? (
+        <>
+          <div className="flex justify-end w-2/3 mt-5">
+            <div className="text-medium mr-2">
+              Hóa đơn được in lần cuối vào:
+            </div>
+            <div className="">
+              {moment(
+                dataFindInReceipt?.phieuId[dataFindInReceipt.phieuId.length - 2]
+                  ?.createdAt
+              ).format("LLLL")}
+            </div>
+          </div>
+          <div
+            className="flex justify-end w-2/3 mt-2"
+            onClick={() => handlePrint()}
+          >
+            <button
+              className="flex mx-auto text-teal-800 font-medium hover:text-slate-600"
+              type="button"
+            >
+              <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+              In lại hóa đơn
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div
+            className="flex justify-center w-2/3"
+            onClick={() => handlePrint()}
+          >
+            <button
+              className="flex mx-auto text-teal-800 font-medium hover:text-slate-600"
+              type="button"
+            >
+              <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+              In hóa đơn
+            </button>
+          </div>
+        </>
+      )}
       <div ref={componentRef}>
         <div className="w-2/5 mx-auto border-2 border-slate-600 px-5 pb-5 mt-2">
           <div className="text-center uppercase font-medium text-lg mt-3">
@@ -102,9 +160,7 @@ const Receipt = () => {
                   <th className="border border-slate-200 p-1 text-black font-medium">
                     Gói tư vấn
                   </th>
-                  <th className="border border-slate-200 p-1 text-black font-medium">
-                    Giá
-                  </th>
+
                   <th className="border border-slate-200 p-1 text-black font-medium">
                     Số tiền
                   </th>
@@ -125,13 +181,6 @@ const Receipt = () => {
                         ?.medicalPackageDataToPackagePrice[0]?.price
                     }
                   </td>
-                  <td className="border-y border-slate-300 p-1">
-                    {
-                      data?.receipt?.phieudatchoDataToReceipt
-                        ?.goituvanDataToPhieudatcho
-                        ?.medicalPackageDataToPackagePrice?.price
-                    }
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -140,7 +189,13 @@ const Receipt = () => {
                 <span className="text-lg font-medium mr-2">
                   Tổng tiền thanh toán:
                 </span>
-                <div className="text-xl">250.000</div>
+                <div className="text-xl">
+                  {
+                    data?.receipt?.phieudatchoDataToReceipt
+                      ?.goituvanDataToPhieudatcho
+                      ?.medicalPackageDataToPackagePrice[0]?.price
+                  }
+                </div>
               </div>
             </div>
           </div>

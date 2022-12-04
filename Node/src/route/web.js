@@ -43,6 +43,10 @@ let initWebRoutes = (app) => {
   // router.get("/api/get-all-receipt", receiptController.handleGetAllReceipt);
   router.get("/api/get-a-receipt", receiptController.handleGetReceipt);
   router.post("/api/create-receipt", receiptController.handleCreateReceipt);
+  router.get(
+    "/api/find-all-phieudatcho-in-receipt",
+    receiptController.handleFindReservationTicketInReceipt
+  );
 
   // thongke
   router.get(
@@ -383,10 +387,10 @@ let initWebRoutes = (app) => {
     "/api/get-all-prescriptions-detail",
     prescriptionDetailController.handleGetAllPrescriptionDetail
   );
-  // router.get(
-  //   "/api/get-prescription",
-  //   prescriptionController.handleGetPrescription
-  // );
+  router.get(
+    "/api/get-prescription-detail",
+    prescriptionDetailController.handleGetPrescriptionDetail
+  );
   router.post(
     "/api/create-new-prescription-detail",
     prescriptionDetailController.handleCreatePrescriptionDetail

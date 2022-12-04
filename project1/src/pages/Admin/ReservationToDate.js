@@ -36,7 +36,6 @@ const ReservationToDate = () => {
   //   const test = new Date(date).getTime();
 
   const dataDoctor = useSelector(dataGetDoctorHome);
-  console.log("dataDoctor", dataDoctor);
 
   const params = {
     doctorId: bacsiId,
@@ -44,6 +43,8 @@ const ReservationToDate = () => {
   };
 
   const data = useSelector(dataGetTimPhieutheongay);
+  console.log("data", data);
+
   useEffect(() => {
     if (dataDoctor.data) {
       setBacsiId(dataDoctor.data[0].id);

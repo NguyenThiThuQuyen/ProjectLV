@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
+import { ImDownload3, ImUpload3 } from "react-icons/im";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
+
 import PhieudatchoModal from "../../components/Admin/Modal/Phieudatcho/PhieudatchoModal";
 import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +25,9 @@ import {
 import NavbarPhieuDatCho from "../../components/Admin/NavbarPhieuDatCho";
 
 const PhieudatchoManager = () => {
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllPhieudatcho);
-  console.log("data:", data);
   const navigate = useNavigate();
   const check = useSelector(dataCheck);
 
@@ -46,6 +49,18 @@ const PhieudatchoManager = () => {
     dispatch(getPhieudatchoAPI(id));
   };
 
+  const handlePhieuDatChoModal = () => {
+    setShowModal(true);
+  };
+
+  const handleDong = (test) => {
+    setShowModal(test);
+  };
+
+  const handleMoLai = (data) => {
+    setShowModal(data);
+  };
+
   return (
     <>
       <div className="flex w-full">
@@ -54,7 +69,53 @@ const PhieudatchoManager = () => {
           <Navbar />
           <ToastContainer />
           <NavbarPhieuDatCho />
-          <PhieudatchoModal />
+          {/* <PhieudatchoModal /> */}
+          <div className="mt-4 ml-5">
+            <div className="ml-5 flex justify-start">
+              <div className="flex items-center border border-scale-200 p-1 rounded">
+                <input
+                  className="border-0 outline-0 bg-transparent"
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                />
+                <BsSearch />
+              </div>
+            </div>
+            <div className="flex">
+              <div className="ml-6 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                  onClick={() => handlePhieuDatChoModal()}
+                >
+                  <BsPlusLg className="mr-2 mt-1 text-teal-700" />
+                  Đặt chỗ
+                </button>
+                <div className="">
+                  {showModal === true ? (
+                    <PhieudatchoModal
+                      openModal={showModal}
+                      handleClose={handleDong}
+                      handleMo={handleMoLai}
+                    />
+                  ) : (
+                    <>
+                      <div className=""></div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="ml-8 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                >
+                  <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+                  Xuất excel
+                </button>
+              </div>
+            </div>
+          </div>
           <div className="w-full px-10 py-4">
             <table className="border border-slate-200">
               <thead>

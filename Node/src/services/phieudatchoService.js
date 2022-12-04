@@ -107,7 +107,7 @@ let getAllPhieudatcho = () => {
     try {
       let phieudatcho = {};
       phieudatcho = await db.ReservationTicket.findAll({
-        order: [["createdAt", "DESC"]],
+        order: [["arrivalDate", "DESC"]],
         include: [
           {
             model: db.MedicalPackage,

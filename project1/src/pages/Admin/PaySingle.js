@@ -42,6 +42,12 @@ const PaySingle = () => {
     navigate(`/manager/receipt/${receipt}`);
   };
 
+  const handleInLaiHoaDon = async () => {
+    let test = await dispatch(createReceiptAPI(paramsHoaDon));
+    const receipt = test.payload.receipt.data;
+    navigate(`/manager/receipt/${receipt}`);
+  };
+
   return (
     <>
       <div className="flex w-full">
@@ -251,6 +257,7 @@ const PaySingle = () => {
                   <button
                     className="mt-10 bg-green-600 text-white active:bg-green-700 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 uppercase"
                     type="button"
+                    onClick={() => handleInLaiHoaDon()}
                   >
                     in lại hóa đơn
                   </button>

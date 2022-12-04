@@ -71,6 +71,28 @@ let getAllPrescriptionDetail = (prescriptionId) => {
   });
 };
 
+let getPrescriptionDetail = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let chitiet = {};
+      chitiet = await db.PrescriptionDetail.findOne({
+        where: { id: id },
+        include: [
+          {
+            model: db.Medical,
+            as: "medicalDataToPrescriptionDetail",
+            attributes: ["name", "id"],
+          },
+        ],
+      });
+
+      resolve(chitiet);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 let deletePrescriptionDetail = (id) => {
   return new Promise(async (resolve, reject) => {
     let found = await db.PrescriptionDetail.findOne({
@@ -96,4 +118,5 @@ module.exports = {
   createPrescriptionDetail: createPrescriptionDetail,
   getAllPrescriptionDetail: getAllPrescriptionDetail,
   deletePrescriptionDetail: deletePrescriptionDetail,
+  getPrescriptionDetail: getPrescriptionDetail,
 };

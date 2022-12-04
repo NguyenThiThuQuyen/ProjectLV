@@ -6,7 +6,6 @@ import ScheduleModalEdit from "../../components/Admin/Modal/Schedule/ScheduleEdi
 import "./ScheduleManager.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
-import { BsSearch } from "react-icons/bs";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
@@ -19,9 +18,13 @@ import {
   deleteScheduleAPI,
   getAScheduleAPI,
 } from "../../redux/scheduleRedux";
+import { ImDownload3, ImUpload3 } from "react-icons/im";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
 
 const ScheduleManager = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
 
@@ -45,6 +48,18 @@ const ScheduleManager = () => {
   const handleDetail = (scheduleId) => {
     navigate(`/manager/schedule-detail/${scheduleId}`);
     dispatch(getAScheduleAPI(scheduleId));
+  };
+
+  const handleScheduleModal = () => {
+    setShowModal(true);
+  };
+
+  const handleDong = (test) => {
+    setShowModal(test);
+  };
+
+  const handleMoLai = (data) => {
+    setShowModal(data);
   };
 
   const removeAccents = (str) => {
@@ -144,21 +159,57 @@ const ScheduleManager = () => {
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
+          {/* <ScheduleModal /> */}
+          <div className="ml-5">
+            <div className="mt-7 ml-5">
+              <div className="ml-5 flex justify-start">
+                <div className="flex items-center border border-scale-200 p-1 rounded">
+                  <input
+                    className="border-0 outline-0 bg-transparent"
+                    type="text"
+                    placeholder="Tìm kiếm..."
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                  <BsSearch />
+                </div>
+              </div>
+            </div>
+            <div className="flex">
+              <div className="ml-6 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                  onClick={() => handleScheduleModal()}
+                >
+                  <BsPlusLg className="mr-2 mt-1 text-teal-700" />
+                  Thêm lịch tư vấn
+                </button>
+                <div className="">
+                  {showModal === true ? (
+                    <ScheduleModal
+                      openModal={showModal}
+                      handleClose={handleDong}
+                      handleMo={handleMoLai}
+                    />
+                  ) : (
+                    <>
+                      <div className=""></div>
+                    </>
+                  )}
+                </div>
+              </div>
 
-          <div className="mt-7 ml-5">
-            <div className="ml-5 flex justify-start">
-              <div className="flex items-center border border-scale-200 p-1 rounded">
-                <input
-                  className="border-0 outline-0 bg-transparent"
-                  type="text"
-                  placeholder="Tìm kiếm..."
-                  onChange={(e) => setQuery(e.target.value)}
-                />
-                <BsSearch />
+              <div className="ml-8 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                >
+                  <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+                  Xuất excel
+                </button>
               </div>
             </div>
           </div>
-          <ScheduleModal />
 
           <table className="border ml-10 mt-3 border-slate-200">
             <thead>

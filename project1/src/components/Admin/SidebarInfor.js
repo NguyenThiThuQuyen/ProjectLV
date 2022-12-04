@@ -3,7 +3,7 @@ import logo from "../../assets/upload/logo.png";
 import { Link } from "react-router-dom";
 import { RiBillLine } from "react-icons/ri";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
-import { GiMedicalPackAlt } from "react-icons/gi";
+import { BiHistory } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegAddressBook } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -47,6 +47,7 @@ const SidebarInfor = () => {
               <FaRegAddressBook className="mt-1 mr-2" />
               Hồ sơ người dùng
             </li>
+
             <li
               className="text-slate-900 hover:text-slate-700 flex font-medium py-3 cursor-pointer hover:bg-sky-50 hover:rounded-r-full px-5"
               onClick={() => setCheck(false)}
@@ -66,6 +67,7 @@ const SidebarInfor = () => {
               <FaRegAddressBook className="mt-1 mr-2" />
               Hồ sơ người dùng
             </li>
+
             <li
               className="text-sky-600  flex font-medium py-3 cursor-pointer bg-slate-200 rounded-r-full px-5"
               onClick={() => setCheck(true)}

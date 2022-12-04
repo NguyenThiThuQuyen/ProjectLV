@@ -24,7 +24,7 @@ import {
 } from "../../../../redux/timeslotRedux";
 import { toast } from "react-toastify";
 
-export default function ScheduleModal() {
+export default function ScheduleModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [registerDate, setRegisterDate] = useState();
   const [createDate, setCreateDate] = useState();
@@ -33,7 +33,6 @@ export default function ScheduleModal() {
 
   const dataDoctor = useSelector(dataGetDoctor);
   const dataTimeslot = useSelector(datagetAllTimeslot);
-  const check = useSelector(dataCheck);
 
   const params = {
     registerDate: registerDate,
@@ -54,10 +53,6 @@ export default function ScheduleModal() {
       setUserId(dataDoctor?.doctor?.data[0]?.id);
     }
   }, [dataDoctor]);
-
-  const dateFormat = {
-    SEND_TO_SERVER: "DD/MM/YYYY",
-  };
 
   const getDate = () => {
     let arrDate = [];
@@ -130,31 +125,17 @@ export default function ScheduleModal() {
     setShowModal(false);
   };
 
+  useEffect(() => {
+    setShowModal(true);
+  }, [props?.openModal === true]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    props.handleClose(false);
+  };
+
   return (
     <>
-      <div className="ml-5">
-        <div className="flex">
-          <div className="ml-6 mt-8">
-            <button
-              className="flex text-teal-800 font-medium hover:text-slate-600"
-              type="button"
-              onClick={() => setShowModal(true)}
-            >
-              <BsPlusLg className="mr-2 mt-1 text-teal-700" />
-              Thêm lịch tư vấn
-            </button>
-          </div>
-          <div className="ml-8 mt-8">
-            <button
-              className="flex text-teal-800 font-medium hover:text-slate-600"
-              type="button"
-            >
-              <ImDownload3 className="mr-2 mt-1 text-teal-700" />
-              Xuất excel
-            </button>
-          </div>
-        </div>
-      </div>
       {showModal ? (
         <>
           <div className="items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -179,9 +160,9 @@ export default function ScheduleModal() {
                             id=""
                             onChange={(event) => setUserId(event.target.value)}
                           >
-                            {dataDoctor.doctor.data &&
-                              dataDoctor.doctor.data.length > 0 &&
-                              dataDoctor.doctor.data.map((item, index) => {
+                            {dataDoctor?.doctor?.data &&
+                              dataDoctor?.doctor?.data.length > 0 &&
+                              dataDoctor?.doctor?.data.map((item, index) => {
                                 return (
                                   <option key={index} value={item.id}>
                                     {item.name}
@@ -258,7 +239,7 @@ export default function ScheduleModal() {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => handleClose()}
                   >
                     ĐÓNG
                   </button>

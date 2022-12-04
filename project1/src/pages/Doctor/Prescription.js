@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import { BsPlusLg } from "react-icons/bs";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { GiMedicalPackAlt } from "react-icons/gi";
 import NavbarConsult from "../../components/Doctor/NavbarConsult";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +42,7 @@ import {
 import {
   getAllPrescriptionsDetailAPI,
   dataGetAllPrescriptionsDetail,
+  getPrescriptionsDetailAPI,
   dataCheck,
 } from "../../redux/prescriptionDetailRedux";
 import { ToastContainer } from "react-toastify";
@@ -60,6 +62,8 @@ const Prescription = () => {
   const [dateCreate, setDateCreate] = useState();
   const [reservationTicketId, setReservationTicketId] = useState();
   const [menuName, setMenuName] = useState();
+  const [thuoc, setThuoc] = useState();
+  const [thuocId, setThuocId] = useState();
 
   const paramsTuvan = useParams();
 
@@ -75,9 +79,6 @@ const Prescription = () => {
 
   const dataFindCate = useSelector(dataGetFindCaterogyInMenuId);
   const dataGetAllChitiet = useSelector(dataGetAllPrescriptionsDetail);
-  console.log("dataGetAllChitiet:", dataGetAllChitiet);
-
-  console.log("showModalThuoc:", showModalThuoc);
 
   useEffect(() => {
     setReservationTicketId(paramsTuvan.id);
@@ -90,17 +91,7 @@ const Prescription = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(getAllPrescriptionsDetailAPI(dataFindId.id));
-  }, []);
-
-  useEffect(() => {
     if (checkTuvan == true) {
-      // setReservationTicketId(paramsTuvan.id);
-      // dispatch(
-      //   findIdPhieuDatChoPrescriptionAPI({
-      //     reservationTicketId: paramsTuvan.id,
-      //   })
-      // );
       dispatch(getPhieudatchoAPI(paramsTuvan.id));
     }
   }, [checkTuvan]);
@@ -116,9 +107,12 @@ const Prescription = () => {
   const data = useSelector(DataGetFindEatDetailToDate);
 
   const dataFindId = useSelector(datagetFindIdPhieuDatCho);
-  console.log("dataFindId:", dataFindId);
 
-  const dataFindMenu = useSelector(dataGetFindMenuToPrescription);
+  useEffect(() => {
+    if (dataFindId) {
+      dispatch(getAllPrescriptionsDetailAPI(dataFindId.id));
+    }
+  }, [dataFindId]);
 
   useEffect(() => {
     dispatch(getAllEatDatesAPI(data));
@@ -144,12 +138,19 @@ const Prescription = () => {
     dispatch(getFindCaterogyInMenuIdAPI(dataFindId?.menuId));
   }, []);
 
+  // useEffect(() => {
+  //   dataGetAllChitiet.getall &&
+  //     dataGetAllChitiet.getall.length > 0 &&
+  //     dataGetAllChitiet.getall.map((item, index) => {
+  //       setThuoc(item?.medicalDataToPrescriptionDetail?.name);
+  //     });
+  // }, [dataGetAllChitiet]);
+
   const handleMenu = () => {
     setShowModal(true);
   };
 
   const handleThuoc = () => {
-    console.log("aaaaaaaaaaa");
     setShowModalThuoc(true);
   };
 
@@ -201,6 +202,11 @@ const Prescription = () => {
     }
   };
 
+  const handleDetail = (id) => {
+    navigator(`/manager/prescription-detail/${id}`);
+    dispatch(getPrescriptionsDetailAPI(id));
+  };
+
   const params = {
     dateCreate: dateCreate,
     loidan: loidan,
@@ -232,7 +238,6 @@ const Prescription = () => {
                     {dataFindId === null ? (
                       <>
                         <div className="w-full flex mt-5">
-                          {/* thuc don */}
                           <div className="">
                             <button
                               className="p-2 bg-yellow-500 text-white text-md font-medium rounded-md mx-auto"
@@ -300,44 +305,64 @@ const Prescription = () => {
                   <div className="text-sky-700 font-semibold text-md ml-5 uppercase">
                     Thuốc hỗ trợ
                   </div>
-                  <div className="ml-5 mt-5">
-                    <button
-                      className="p-2 bg-orange-500 text-white text-md font-medium rounded-md mx-auto"
-                      onClick={() => handleThuoc()}
-                    >
-                      <div className="flex animate-pulse">
-                        <GiMedicalPackAlt className="mt-1 mr-2 animate-bounce" />
-                        <span>Thêm thuốc hỗ trợ</span>
+                  {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? (
+                    <div className="ml-5 mt-5">
+                      <button
+                        className="p-2 bg-orange-500 text-white text-md font-medium rounded-md mx-auto"
+                        onClick={() => handleThuoc()}
+                      >
+                        <div className="flex animate-pulse">
+                          <GiMedicalPackAlt className="mt-1 mr-2 animate-bounce" />
+                          <span>Thêm thuốc hỗ trợ</span>
+                        </div>
+                      </button>
+                      <div className="">
+                        {showModalThuoc === true ? (
+                          <ThuocModal
+                            openModal={showModalThuoc}
+                            handleClose={handleDong}
+                            getParams={getParams}
+                            handleMo={handleMoLai}
+                            params2={params}
+                          />
+                        ) : (
+                          <>
+                            <div className=""></div>
+                          </>
+                        )}
                       </div>
-                    </button>
-                    <div className="">
-                      {showModalThuoc === true ? (
-                        <ThuocModal
-                          openModal={showModalThuoc}
-                          handleClose={handleDong}
-                          getParams={getParams}
-                          handleMo={handleMoLai}
-                          params2={params}
-                        />
-                      ) : (
-                        <>
-                          <div className=""></div>
-                        </>
-                      )}
                     </div>
-                  </div>
+                  ) : (
+                    <div className=""></div>
+                  )}
 
                   {dataGetAllChitiet.getall &&
                   dataGetAllChitiet.getall.length > 0 ? (
                     <>
-                      <div className="w-full">
+                      <div className="w-full mt-4">
                         {dataGetAllChitiet.getall &&
                           dataGetAllChitiet.getall.length > 0 &&
                           dataGetAllChitiet.getall.map((item, index) => {
+                            console.log(
+                              "dataGetAllChitiet.getall:",
+                              dataGetAllChitiet.getall
+                            );
+
                             return (
                               <>
-                                <div className="">
-                                  {item?.medicalDataToPrescriptionDetail?.name}
+                                <div className="flex border-y border-solid border-slate-200 mx-3">
+                                  <div className="my-2 ml-4 w-5/6">
+                                    {
+                                      item?.medicalDataToPrescriptionDetail
+                                        ?.name
+                                    }
+                                  </div>
+                                  <div
+                                    className="my-auto w-1/6"
+                                    onClick={() => handleDetail(item.id)}
+                                  >
+                                    <BiDotsHorizontalRounded size={20} />
+                                  </div>
                                 </div>
                               </>
                             );

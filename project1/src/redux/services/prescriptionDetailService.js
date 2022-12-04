@@ -22,8 +22,16 @@ const deletePrescriptionsDetail = async (id) => {
   return response.data;
 };
 
+const getPrescriptionsDetail = async (id) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/get-prescription-detail?id=${id}`
+  );
+  return response.data;
+};
+
 export {
   createPrescriptionDetail,
   getAllPrescriptionsDetail,
+  getPrescriptionsDetail,
   deletePrescriptionsDetail,
 };

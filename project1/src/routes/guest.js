@@ -9,6 +9,7 @@ import AllDocTorHome from "../pages/AllDocTorHome";
 import DetailDoctorHome from "../pages/DetailDoctorHome";
 import Confirm from "../pages/XacNhanDangKy";
 import InforPatient from "../pages/InforPatient";
+import ConsultingHistory from "../pages/ConsultingHistory";
 import LoginGuest from "../components/Auth/LoginGuest";
 
 function guest() {
@@ -27,8 +28,8 @@ function guest() {
           path="/detail-service/:medicalpackageId"
           element={<DetailService />}
         />
-
         <Route path="/infor-patient/:id" element={<InforPatient />} />
+        <Route path="/consulting-history/:id" element={<ConsultingHistory />} />
       </Routes>
     </div>
   );

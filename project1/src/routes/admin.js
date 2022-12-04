@@ -30,6 +30,7 @@ import ReservationSingle from "../pages/Admin/PhieudatchoSingle";
 import PaySingle from "../pages/Admin/PaySingle";
 import ReservationToDate from "../pages/Admin/ReservationToDate";
 import Receipt from "../pages/Admin/Receipt";
+import PrescriptionDetail from "../pages/Admin/PrescriptionDetail";
 
 function admin() {
   return (
@@ -84,6 +85,10 @@ function admin() {
           element={<ReservationToDate />}
         />
         <Route path="/receipt/:id" element={<Receipt />} />
+        <Route
+          path="/prescription-detail/:id"
+          element={<PrescriptionDetail />}
+        />
       </Routes>
     </div>
   );

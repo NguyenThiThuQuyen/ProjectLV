@@ -26,7 +26,27 @@ let handleGetReceipt = async (req, res) => {
   });
 };
 
+let handleFindReservationTicketInReceipt = async (req, res) => {
+  let phieudatchoId = req.query.reservationTicketId;
+  if (!phieudatchoId) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      phieudatcho: [],
+    });
+  }
+  let phieuId = await receiptService.getFindReservationTicketInReceipt(
+    phieudatchoId
+  );
+  return res.status(200).json({
+    code: 0,
+    message: "Ok",
+    phieuId,
+  });
+};
+
 module.exports = {
   handleCreateReceipt: handleCreateReceipt,
   handleGetReceipt: handleGetReceipt,
+  handleFindReservationTicketInReceipt: handleFindReservationTicketInReceipt,
 };

@@ -43,8 +43,22 @@ let handleDeletePrescriptionDetail = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleGetPrescriptionDetail = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Error",
+    });
+  }
+  let message = await prescriptionDetailService.getPrescriptionDetail(
+    req.query.id
+  );
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleCreatePrescriptionDetail: handleCreatePrescriptionDetail,
   handleGetAllPrescriptionDetail: handleGetAllPrescriptionDetail,
   handleDeletePrescriptionDetail: handleDeletePrescriptionDetail,
+  handleGetPrescriptionDetail: handleGetPrescriptionDetail,
 };
