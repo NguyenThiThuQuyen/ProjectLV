@@ -6,6 +6,8 @@ import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
+import { BsPlusLg, BsSearch } from "react-icons/bs";
+import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -20,6 +22,7 @@ import {
 import NavbarUser from "../../components/Admin/NavbarUser";
 
 const UserManager = () => {
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector(dataGetAllUser);
   const navigate = useNavigate();
@@ -38,6 +41,18 @@ const UserManager = () => {
     dispatch(getAUserAPI(userId));
   };
 
+  const handleUserModal = () => {
+    setShowModal(true);
+  };
+
+  const handleDong = (test) => {
+    setShowModal(test);
+  };
+
+  const handleMoLai = (data) => {
+    setShowModal(data);
+  };
+
   return (
     <>
       <div className="flex w-full">
@@ -46,7 +61,54 @@ const UserManager = () => {
           <Navbar />
           <NavbarUser />
           <ToastContainer />
-          <UserModal />
+          {/* <UserModal /> */}
+          <div className="mt-4 ml-5">
+            <div className="ml-5 flex justify-start">
+              <div className="flex items-center border border-scale-200 p-1 rounded">
+                <input
+                  className="border-0 outline-0 bg-transparent"
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                />
+                <BsSearch />
+              </div>
+            </div>
+            <div className="flex">
+              <div className="ml-6 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                  onClick={() => handleUserModal()}
+                >
+                  <BsPlusLg className="mr-2 mt-1 text-teal-700" />
+                  Thêm người dùng
+                </button>
+                <div className="">
+                  {showModal === true ? (
+                    <UserModal
+                      openModal={showModal}
+                      handleClose={handleDong}
+                      handleMo={handleMoLai}
+                    />
+                  ) : (
+                    <>
+                      <div className=""></div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="ml-8 mt-8">
+                <button
+                  className="flex text-teal-800 font-medium hover:text-slate-600"
+                  type="button"
+                >
+                  <ImDownload3 className="mr-2 mt-1 text-teal-700" />
+                  Xuất excel
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="w-full px-10 py-4">
             <table className="border border-slate-200">
               <thead>

@@ -12,6 +12,9 @@ import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Search from "../components/Search/Search.js";
+import ReactPaginate from "react-paginate";
+import "./Admin/Pagination.css";
+
 // import { getSearchAPI, dataGetSearch } from "../redux/searchRedux";
 import {
   dataGetDoctorHome,
@@ -23,6 +26,8 @@ import {
 import SearchImport from "../components/Search/SearchImport";
 const AllDocTorHome = () => {
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState(0);
+  const [paging, setPaging] = useState();
   const [search, setSearch] = useState([]);
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
@@ -33,19 +38,79 @@ const AllDocTorHome = () => {
     dispatch(getAllDoctorHomeAPI("ALL"));
   }, [check]);
 
-  // useEffect(() => {
-  //   dispatch(getSearchAPI());
-  // }, []);
-
-  // useEffect(() => {
-  //   if (dataSearch.search) {
-  //     setSearch(dataSearch.search);
-  //   }
-  // }, [dataSearch]);
-
   const handleDetail = (userId) => {
     navigate(`/detail-doctor/${userId}`);
     dispatch(getAUserAPI(userId));
+  };
+
+  useEffect(() => {
+    if (data?.data) {
+      setPaging(data?.data?.slice(0, 10));
+    }
+  }, [data]);
+
+  const perPage = 8;
+  const pagesVisited = pageNumber * perPage;
+
+  const displayAllDoctor =
+    paging &&
+    paging?.length > 0 &&
+    paging?.slice(pagesVisited, pagesVisited + perPage).map((item) => {
+      let imageBase64 = "";
+      if (item.image) {
+        imageBase64 = new Buffer(item.image, "base64").toString("binary");
+      }
+
+      return (
+        <>
+          <div className="col-span-1 mx-5 my-12" key={item.id}>
+            <div className="w-full hover:bg-slate-100 bg-white border h-[340px] border-green-300 shadow-2xl shadow-slate-300 relative">
+              <div
+                className="w-full mt-5"
+                onClick={() => handleDetail(item.id)}
+              >
+                <img
+                  src={imageBase64}
+                  alt=""
+                  className="h-52 w-52 pt-5 rounded-full mx-auto"
+                />
+              </div>
+              <div className="w-full absolute">
+                <div className="w-5/6 mx-auto mt-5 bg-sky-100 border shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200">
+                  <div
+                    onClick={() => handleDetail(item.id)}
+                    className="text-center mt-5 text-md font-medium uppercase"
+                  >
+                    {item.name}
+                  </div>
+                  <div
+                    onClick={() => handleDetail(item.id)}
+                    className="text-center px-4 text-sm text-slate-500"
+                  >
+                    Chuyên khoa Nhi
+                  </div>
+                  <div
+                    className="hover:bg-green-800 mt-5 grid justify-items-center bg-green-700"
+                    onClick={() => handleDetail(item.id)}
+                  >
+                    <button className="hover:bg-green-800 mx-5 py-3 px-5 box-border border-1 bg-green-700 text-white">
+                      <div className="flex hover:animate-bounce">
+                        <BsPersonCheck className="mr-1" size={25} />
+                        ĐẶT LỊCH NGAY
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    });
+
+  const pageCount = Math.ceil(data?.data?.length / perPage);
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
   };
 
   return (
@@ -129,61 +194,20 @@ const AllDocTorHome = () => {
             Chọn bác sĩ
           </div>
           <div className="grid grid-cols-4">
-            {data.data &&
-              data.data.length > 0 &&
-              data.data.map((item, index) => {
-                let imageBase64 = "";
-                if (item.image) {
-                  imageBase64 = new Buffer(item.image, "base64").toString(
-                    "binary"
-                  );
-                }
-                return (
-                  <>
-                    <div className="col-span-1 mx-5 mt-16" key={item.id}>
-                      <div className="w-full hover:bg-slate-100 bg-white border h-[340px] border-green-700 shadow-2xl shadow-slate-300 relative">
-                        <div
-                          className="w-full mt-5"
-                          onClick={() => handleDetail(item.id)}
-                        >
-                          <img
-                            src={imageBase64}
-                            alt=""
-                            className="h-52 w-52 pt-5 rounded-full mx-auto"
-                          />
-                        </div>
-                        <div className="w-full absolute">
-                          <div className="w-5/6 mx-auto mt-5 bg-sky-100 border shadow-xl transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200">
-                            <div
-                              onClick={() => handleDetail(item.id)}
-                              className="text-center mt-5 text-md font-medium uppercase"
-                            >
-                              {item.name}
-                            </div>
-                            <div
-                              onClick={() => handleDetail(item.id)}
-                              className="text-center px-4 text-sm text-slate-500"
-                            >
-                              Chuyên khoa Nhi
-                            </div>
-                            <div
-                              className="hover:bg-green-800 mt-5 grid justify-items-center bg-green-700"
-                              onClick={() => handleDetail(item.id)}
-                            >
-                              <button className="hover:bg-green-800 mx-5 py-3 px-5 box-border border-1 bg-green-700 text-white">
-                                <div className="flex hover:animate-bounce">
-                                  <BsPersonCheck className="mr-1" size={25} />
-                                  ĐẶT LỊCH NGAY
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
+            {displayAllDoctor}
+            <div className="w-full px-10 py-3">
+              <ReactPaginate
+                previousLabel={"Trước"}
+                nextLabel={"Sau"}
+                pageCount={pageCount}
+                onPageChange={changePage}
+                containerClassName={"paginationBttns"}
+                previousLinkClassName={"previousBttn"}
+                nextLinkClassName={"nextBttn"}
+                disabledClassName={"paginationDisabled"}
+                activeClassName={"paginationActive"}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ let getAllPatient = () => {
     try {
       let patients = {};
       patients = await db.Patient.findAll({
+        order: [["createdAt", "DESC"]],
         include: [
           {
             model: db.Parent,

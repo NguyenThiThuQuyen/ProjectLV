@@ -13,7 +13,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import XemChiTietLichModal from "../components/Guest/XemChiTietLichModal";
-
+import Select from "react-select";
 import {
   getAllGoiKhamAPI,
   dataGetAllGoiKham,
@@ -41,7 +41,7 @@ const DetailDoctorHome = (props) => {
   const [scheduleId, setScheduleId] = useState();
   const [patientId, setPatientId] = useState();
   const [mang, setMang] = useState([]);
-
+  const [mangGoiKham, setMangGoiKham] = useState([]);
   //
   const [testTimeslot, setTestTimeslot] = useState();
   const [testGoiKham, setTestGoiKham] = useState();
@@ -84,10 +84,11 @@ const DetailDoctorHome = (props) => {
     email: parent?.email,
     name: parent?.name,
     phone: parent?.phone,
+    address: parent?.address,
+
     childrentName: patientId1?.childrentName,
     birthday: patientId1?.birthday,
     gender: patientId1?.gender,
-    address: patientId1?.address,
     testGoiKham: testGoiKham,
     testTimeslot: testTimeslot,
     testGiaGoiKham: testGiaGoiKham,
@@ -128,6 +129,17 @@ const DetailDoctorHome = (props) => {
 
   const checkTest = useSelector(dataCheck);
 
+  useEffect(() => {
+    let arr = [];
+    dataAllGoiKham.goikham &&
+      dataAllGoiKham.goikham.length > 0 &&
+      dataAllGoiKham.goikham.map((item, index) => {
+        const options = { value: item.id, label: item.packageName };
+        arr.push(options);
+      });
+    setMangGoiKham(arr);
+  }, [dataAllGoiKham]);
+
   const XoaTrungTrongMang = (date) => {
     for (var i = 0; i < mang.length; i++) {
       if (mang[i].toString() == date.toString()) {
@@ -153,12 +165,12 @@ const DetailDoctorHome = (props) => {
     setTimeslotId(timeslotId);
   };
 
-  const handleFindDetailGoiKham = async (id) => {
-    let testchitiet = await dispatch(getGoiKhamAPI(id));
+  const handleFindDetailGoiKham = async (item) => {
+    let testchitiet = await dispatch(getGoiKhamAPI(item?.value));
     let test1 = testchitiet.payload.goikham.packageName;
     const testgia =
       testchitiet.payload.goikham.medicalPackageDataToPackagePrice.price;
-    setMedicalpackageId(id);
+    setMedicalpackageId(item?.value);
     setTestGoiKham(test1);
     setTestGiaGoiKham(testgia);
   };
@@ -355,10 +367,10 @@ const DetailDoctorHome = (props) => {
               </div>
 
               <div className="my-4">
-                <label htmlFor="" className="text-slate-700">
+                <label htmlFor="mt-1" className="text-slate-700">
                   Chọn gói tư vấn
                 </label>
-                <select
+                {/* <select
                   className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-50 outline-slate-300"
                   id=""
                   onClick={(event) =>
@@ -374,7 +386,12 @@ const DetailDoctorHome = (props) => {
                         </option>
                       );
                     })}
-                </select>
+                </select> */}
+                <Select
+                  className="w-full mt-1"
+                  options={mangGoiKham}
+                  onChange={handleFindDetailGoiKham}
+                />
                 <div className="">
                   <DetailServiceModal />
                 </div>

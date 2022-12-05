@@ -111,7 +111,7 @@ export default function ParentModal() {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    THÊM NGƯỜI NGƯỜI DÙNG
+                    THÊM NGƯỜI DÙNG
                   </h3>
                   <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>

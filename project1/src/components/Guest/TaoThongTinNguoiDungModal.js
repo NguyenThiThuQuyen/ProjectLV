@@ -110,20 +110,8 @@ export default function TaoThongTinNguoiDungModal(props) {
 
   return (
     <>
-      {/* <div className="mt-10 w-full text-right">
-        <button
-          onClick={() => setShowModal(true)}
-          className="rounded px-6 py-3 font-semibold text-white hover:text-black
-                                                         bg-green-600 hover:bg-white hover:border-2
-                                                         hover:border-green-600 mr-auto "
-        >
-          ĐẶT LỊCH
-        </button>
-      </div> */}
       {showModal ? (
         <>
-          {/* <ToastContainer /> */}
-
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-5xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -181,30 +169,10 @@ export default function TaoThongTinNguoiDungModal(props) {
                         alt=""
                         className="mx-auto w-[40px] h-[40px] object-cover opacity-80"
                       />
-                      <div className="font-HindMadurai text-3xl mt-5 font-bold text-center text-sky-700">
-                        SIGN IN
+                      <div className="text-2xl mt-5 font-medium text-center text-sky-700 uppercase">
+                        Đăng nhập
                       </div>
-                      <div className="flex w-full my-3">
-                        <div className="flex mx-auto">
-                          <div className="mx-1">
-                            <FaFacebookF
-                              className="border-2 border-slate-500 rounded-full bg-white"
-                              size={22}
-                              color={"black"}
-                            />
-                          </div>
-                          <div className="mx-1">
-                            <AiOutlineGooglePlus
-                              className="border-2 border-slate-500 rounded-full bg-white"
-                              size={22}
-                              color={"black"}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-slate-500 text-center">
-                        or use your account
-                      </div>
+
                       <form
                         className="xl:mx-24 md:mx-8 xs:mx-6"
                         onSubmit={handleSubmit}
@@ -243,7 +211,7 @@ export default function TaoThongTinNguoiDungModal(props) {
                                                                   hover:text-black"
                               type="submit"
                             >
-                              SIGN IN
+                              ĐĂNG NHẬP
                             </button>
                           </div>
                         </div>
@@ -334,7 +302,7 @@ export default function TaoThongTinNguoiDungModal(props) {
                                 </label>
                                 <input
                                   type="text"
-                                  placeholder="Ví dụ: abc@gmail.com"
+                                  placeholder="..."
                                   className="w-full h-10 border rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
                                   onChange={(event) =>
                                     setPassword(event.target.value)
@@ -347,7 +315,7 @@ export default function TaoThongTinNguoiDungModal(props) {
                                 </label>
                                 <input
                                   type="text"
-                                  placeholder="Nhập địa chỉ thường trú"
+                                  placeholder="07772343456"
                                   className="w-full h-10 border rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
                                   onChange={(event) =>
                                     setPhone(event.target.value)
@@ -376,8 +344,8 @@ export default function TaoThongTinNguoiDungModal(props) {
                                 </label>
                                 <input
                                   type="text"
-                                  placeholder="Ví dụ: Nguyễn Văn A"
-                                  className="w-full h-10 border border-2 rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
+                                  placeholder="Ví dụ: Nguyễn Văn B"
+                                  className="w-full h-10 border-2 rounded-md p-2 mt-1 outline-slate-300 bg-slate-100"
                                   onChange={(event) =>
                                     setChildrentName(event.target.value)
                                   }

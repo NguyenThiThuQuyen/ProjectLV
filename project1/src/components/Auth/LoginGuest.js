@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
 import { AiOutlineGooglePlus } from "react-icons/ai";
 import bglogin from "../../assets/upload/bglogin.jpg";
+import logo from "../../assets/upload/logo.png";
 import { getLoginGuestAPI, dataCheck } from "../../redux/Auth/guestRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -49,10 +50,13 @@ const LoginGuest = () => {
           <div className="border-2 border-slate-200 shadow-lg shadow-indigo-400 mx-auto w-11/12 bg-white">
             <div className="grid grid-cols-2">
               <div className="col-span-1">
-                <div className="font-HindMadurai text-3xl mt-14 font-bold text-center text-sky-700">
-                  SIGN IN
+                <div className="w-full mt-8">
+                  <img src={logo} alt="" className="h-[2.5rem] mx-auto" />
                 </div>
-                <div className="flex w-full my-3">
+                <div className="text-3xl mt-4 font-medium text-center text-sky-700">
+                  ĐĂNG NHẬP
+                </div>
+                {/* <div className="flex w-full my-3">
                   <div className="flex mx-auto">
                     <div className="mx-1">
                       <FaFacebookF
@@ -69,12 +73,12 @@ const LoginGuest = () => {
                       />
                     </div>
                   </div>
-                </div>
-                <div className="text-slate-500 text-center">
-                  or use your account
-                </div>
+                </div> */}
+                {/* <div className="text-slate-500 text-center">
+                  or use your account                 
+                </div> */}
                 <form
-                  className="xl:mx-24 md:mx-8 xs:mx-6"
+                  className="xl:mx-24 md:mx-8 xs:mx-6 mt-5"
                   onSubmit={handleSubmit}
                 >
                   <div className="grid grid-cols-1">
@@ -109,7 +113,7 @@ const LoginGuest = () => {
                                                                   hover:text-black"
                         type="submit"
                       >
-                        SIGN IN
+                        ĐĂNG NHẬP
                       </button>
                     </div>
                     <Link to="/login">
@@ -124,10 +128,10 @@ const LoginGuest = () => {
               <div className="col-span-1 bg-indigo-600">
                 <div className="px-8 text-center mt-20">
                   <div className="text-white text-4xl font-medium">
-                    Hello, Friend!
+                    Chào bạn!
                   </div>
                   <div className="text-white text-lg my-6">
-                    Enter your personal details and start journey with us
+                    Đăng ký tài khoản để có trải nghiệm thú vị cùng chúng tôi!
                   </div>
                   <div className="w-full">
                     <button
@@ -137,7 +141,7 @@ const LoginGuest = () => {
                                                                   hover:border-white
                                                                   hover:text-black"
                     >
-                      <Link to="/register">SIGN UP</Link>
+                      <Link to="/register">ĐĂNG KÝ</Link>
                     </button>
                   </div>
                 </div>

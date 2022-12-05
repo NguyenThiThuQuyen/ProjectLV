@@ -39,7 +39,6 @@ export default function ScheduleModal(props) {
     timeslotId: timeslotId,
     userId: userId,
   };
-  console.log("params: ", params);
 
   useEffect(() => {
     dispatch(getAllTimeslotAPI());
@@ -78,13 +77,15 @@ export default function ScheduleModal(props) {
     if (data && data.length > 0) {
       data = data.map((item) => ({ ...item, isSelected: false }));
       setTimeslotId(data);
+      // console.log("data:", data);
     }
   };
 
   const handleClickBtnTime = (time) => {
     if (timeslotId && timeslotId.length > 0) {
       let times = timeslotId.map((item) => {
-        if (item.id === time.id) item.isSelected = !item.isSelected;
+        if (item?.id === time?.id) item.isSelected = !item.isSelected;
+        console.log("item handle:", item);
         return item;
       });
       setTimeslotId(times);

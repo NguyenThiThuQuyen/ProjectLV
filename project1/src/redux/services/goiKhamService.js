@@ -37,19 +37,19 @@ const deleteGoiKham = async (id) => {
   return userDelete.data;
 };
 
-const getAllMedicalPackaheHome = async () => {
+const getAllMedicalPackaheHome = async (limit) => {
   const res = await axios.get(
-    `http://localhost:8081/api/all-medicalpackage-home`
+    `http://localhost:8081/api/all-medicalpackage-home?limit=${limit}`
   );
   return res.data;
 };
 
-const getAllMedicalPackaheHomeAll = async () => {
-  const res = await axios.get(
-    `http://localhost:8081/api/all-medicalpackage-home-all`
-  );
-  return res.data;
-};
+// const getAllMedicalPackaheHomeAll = async () => {
+//   const res = await axios.get(
+//     `http://localhost:8081/api/all-medicalpackage-home-all`
+//   );
+//   return res.data;
+// };
 
 export {
   getAllGoiKham,
@@ -58,5 +58,5 @@ export {
   deleteGoiKham,
   getAllMedicalPackaheHome,
   getGoiKham,
-  getAllMedicalPackaheHomeAll,
+  // getAllMedicalPackaheHomeAll,
 };

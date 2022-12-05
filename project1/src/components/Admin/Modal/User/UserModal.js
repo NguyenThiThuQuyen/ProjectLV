@@ -5,7 +5,6 @@ import { addUserAPI } from "../../../../redux/userRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import logo from "../../../../assets/upload/logo.png";
-
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -17,7 +16,7 @@ import {
   dataGetAllRole,
   dataCheck,
 } from "../../../../redux/userRedux";
-export default function UserModal() {
+export default function UserModal(props) {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("A");
   const [email, setEmail] = useState("f@gmail.com");
@@ -72,41 +71,17 @@ export default function UserModal() {
     setContentMarkdown(text);
   }
 
+  useEffect(() => {
+    setShowModal(true);
+  }, [props?.openModal === true]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    props.handleClose(false);
+  };
+
   return (
     <>
-      <div className="mt-4 ml-5">
-        <div className="ml-5 flex justify-start">
-          <div className="flex items-center border border-scale-200 p-1 rounded">
-            <input
-              className="border-0 outline-0 bg-transparent"
-              type="text"
-              placeholder="Tìm kiếm..."
-            />
-            <BsSearch />
-          </div>
-        </div>
-        <div className="flex">
-          <div className="ml-6 mt-8">
-            <button
-              className="flex text-teal-800 font-medium hover:text-slate-600"
-              type="button"
-              onClick={() => setShowModal(true)}
-            >
-              <BsPlusLg className="mr-2 mt-1 text-teal-700" />
-              Thêm người dùng
-            </button>
-          </div>
-          <div className="ml-8 mt-8">
-            <button
-              className="flex text-teal-800 font-medium hover:text-slate-600"
-              type="button"
-            >
-              <ImDownload3 className="mr-2 mt-1 text-teal-700" />
-              Xuất excel
-            </button>
-          </div>
-        </div>
-      </div>
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">

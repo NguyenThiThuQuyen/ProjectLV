@@ -36,7 +36,7 @@ const Content = () => {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI(3));
-    dispatch(getAllMedicalPackaheHomeAPI());
+    dispatch(getAllMedicalPackaheHomeAPI(4));
   }, [check]);
   const settings = {
     dots: true,

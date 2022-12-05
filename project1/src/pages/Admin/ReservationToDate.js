@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Admin/Navbar";
 import Sidebar from "../../components/Admin/Sidebar";
 import NavbarConsult from "../../components/Doctor/NavbarConsult";
+import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { HiDotsHorizontal } from "react-icons/hi";
 import DatePicker from "react-datepicker";
@@ -22,6 +23,8 @@ import { useNavigate } from "react-router-dom";
 import NavbarPhieuDatCho from "../../components/Admin/NavbarPhieuDatCho";
 const ReservationToDate = () => {
   const [mang, setMang] = useState([]);
+  const [mangBacSi, setMangBacSi] = useState([]);
+
   const [dateChon, setDateChon] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [bacsiId, setBacsiId] = useState();
@@ -66,6 +69,21 @@ const ReservationToDate = () => {
   useEffect(() => {
     dispatch(getAllDoctorHomeAPI("ALL"));
   }, []);
+
+  useEffect(() => {
+    let arr = [];
+    dataDoctor?.data &&
+      dataDoctor?.data.length > 0 &&
+      dataDoctor?.data.map((item, index) => {
+        const options = { value: item.id, label: item.name };
+        arr.push(options);
+      });
+    setMangBacSi(arr);
+  }, [dataDoctor]);
+
+  const handleSetBacSi = async (item) => {
+    setBacsiId(item.value);
+  };
 
   const handleConsult = async (id) => {
     navigate(`/manager/prescription/${id}`);
@@ -115,7 +133,7 @@ const ReservationToDate = () => {
                 <label htmlFor="" className="text-slate-600 ml-2">
                   Chọn bác sĩ:
                 </label>
-                <select
+                {/* <select
                   className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
                   id=""
                   onChange={(event) => setBacsiId(event.target.value)}
@@ -129,7 +147,12 @@ const ReservationToDate = () => {
                         </option>
                       );
                     })}
-                </select>
+                </select> */}
+                <Select
+                  className="min-w-[290px]"
+                  options={mangBacSi}
+                  onChange={handleSetBacSi}
+                />
               </div>
             </div>
             <table className="border border-slate-200 mt-10">

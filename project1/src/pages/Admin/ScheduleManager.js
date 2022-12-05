@@ -3,7 +3,7 @@ import Sidebar from "../../components/Admin/Sidebar";
 import Navbar from "../../components/Admin/Navbar";
 import ScheduleModal from "../../components/Admin/Modal/Schedule/ScheduleModal";
 import ScheduleModalEdit from "../../components/Admin/Modal/Schedule/ScheduleEditModal";
-import "./ScheduleManager.css";
+import "./Pagination.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
@@ -18,16 +18,14 @@ import {
   deleteScheduleAPI,
   getAScheduleAPI,
 } from "../../redux/scheduleRedux";
-import { ImDownload3, ImUpload3 } from "react-icons/im";
+import { ImDownload3 } from "react-icons/im";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
 
 const ScheduleManager = () => {
   const [showModal, setShowModal] = useState(false);
-
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const data = useSelector(dataGetAllSchedule);
@@ -87,6 +85,7 @@ const ScheduleManager = () => {
     }
     return str;
   };
+
   const schedulePerPage = 10;
   const pagesVisited = pageNumber * schedulePerPage;
 

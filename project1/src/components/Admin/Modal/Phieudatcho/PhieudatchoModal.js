@@ -94,11 +94,6 @@ export default function PhieudatchoModal(props) {
   const dataFindTimeslot = useSelector(dataGetFindTimeslot);
   const dataAllParent = useSelector(dataGetAllParent);
 
-  // const dataIdSchedule = useSelector(dataFindIdSchedule);
-  // const dataAPatient = useSelector(dataGetPatient);
-  // const dataPatient = useSelector(dataGetAllPatient);
-  // const array1 = useSelector(ArrayPatient);
-
   const dispatch = useDispatch();
   const [mang, setMang] = useState([]);
 

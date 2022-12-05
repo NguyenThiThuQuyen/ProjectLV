@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPhieudatchoAPI } from "../../redux/phieudatchoRedux";
 import { useNavigate } from "react-router-dom";
+import logo from "../../assets/upload/logo.png";
+
 import moment from "moment";
 export default function XemChiTietLichModal(props) {
+  console.log("props:", props);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,21 +51,22 @@ export default function XemChiTietLichModal(props) {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-5xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200">
+                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200">
                   <h3 className="text-base font-bold text-slate-500">
                     XEM THÔNG TIN VỪA NHẬP
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
 
                 <div className="relative p-6 flex-auto">
                   <form className="">
-                    <div className="border-2 border-slate-100 shadow-lg mt-5">
+                    <div className="border-2 border-slate-100 shadow-lg">
                       <div className="text-green-700 uppercase text-md font-medium mt-3 mx-3">
                         Thông tin phụ huynh
                       </div>
-                      <div className="grid grid-rows-1">
+                      <div className="grid grid-rows-2">
                         <div className="grid row-span-1 grid-cols-3">
-                          <div className="col-span-1 mx-3 my-3">
+                          <div className="col-span-1 mx-3 my-1">
                             <label
                               htmlFor=""
                               className="text-sky-800 font-medium ml-2"
@@ -81,7 +84,7 @@ export default function XemChiTietLichModal(props) {
                             </div>
                           </div>
 
-                          <div className="col-span-1 mx-3 my-3">
+                          <div className="col-span-1 mx-3 my-1">
                             <label
                               htmlFor=""
                               className="text-sky-800 font-medium ml-2"
@@ -99,7 +102,7 @@ export default function XemChiTietLichModal(props) {
                             </div>
                           </div>
 
-                          <div className="col-span-1 mx-3 my-3">
+                          <div className="col-span-1 mx-3 my-1">
                             <label
                               htmlFor=""
                               className="text-sky-800 font-medium ml-2"
@@ -117,6 +120,24 @@ export default function XemChiTietLichModal(props) {
                             </div>
                           </div>
                         </div>
+                        <div className="grid row-span-1 grid-cols-3">
+                          <div className="col-span-2 mx-3 my-2">
+                            <label
+                              htmlFor=""
+                              className="text-sky-800 font-medium ml-2"
+                            >
+                              Địa chỉ
+                            </label>
+                            <div
+                              type="text"
+                              placeholder="..."
+                              disabled
+                              className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
+                            >
+                              {props?.params?.address}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -126,7 +147,7 @@ export default function XemChiTietLichModal(props) {
                       </div>
                       <div className="grid grid-rows-1">
                         <div className="grid row-span-1 grid-cols-3">
-                          <div className="col-span-1 mx-3 my-3">
+                          <div className="col-span-1 mx-3 my-1">
                             <label
                               htmlFor=""
                               className="text-sky-800 font-medium ml-2"
@@ -144,7 +165,7 @@ export default function XemChiTietLichModal(props) {
                             </div>
                           </div>
 
-                          <div className="col-span-1 mx-3 my-3">
+                          <div className="col-span-1 mx-3 my-1">
                             <label
                               htmlFor=""
                               className="text-sky-800 font-medium ml-2"
@@ -159,23 +180,6 @@ export default function XemChiTietLichModal(props) {
                               // onChange={(event) => setName(event.target.value)}
                             >
                               {ngaysinh}
-                            </div>
-                          </div>
-
-                          <div className="col-span-1 mx-3 my-3">
-                            <label
-                              htmlFor=""
-                              className="text-sky-800 font-medium ml-2"
-                            >
-                              Địa chỉ
-                            </label>
-                            <div
-                              type="text"
-                              placeholder="..."
-                              disabled
-                              className="border-b ml-2 border-solid border-slate-400 w-auto outline-none mt-1"
-                            >
-                              {props?.params?.address}
                             </div>
                           </div>
                         </div>

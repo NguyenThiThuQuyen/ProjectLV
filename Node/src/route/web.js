@@ -109,10 +109,10 @@ let initWebRoutes = (app) => {
     medicalpackageController.handleGetAllMedicalPackageHome
   );
 
-  router.get(
-    "/api/all-medicalpackage-home-all",
-    medicalpackageController.handleGetAllMedicalPackageHomeAll
-  );
+  // router.get(
+  //   "/api/all-medicalpackage-home-all",
+  //   medicalpackageController.handleGetAllMedicalPackageHomeAll
+  // );
 
   router.post("/api/save-infor-doctor", doctorController.postInforDoctor);
   router.post("/api/bulk-create-schedule", doctorController.bulkCreateSchedule);

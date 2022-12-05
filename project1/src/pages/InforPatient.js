@@ -50,7 +50,7 @@ const InforPatient = () => {
             </div>
             {/* ho so ba me */}
             <div className="border-l-2 border-l-slate-400">
-              <span className="absolute right-[1006px] mt-5 w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
+              <span className="absolute right-[1015px] mt-5 w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
               <div className="px-10">
                 <div className="flex mb-3 mt-5">
                   <div className="font-medium text-md text-slate-700 ml-2">
@@ -106,7 +106,7 @@ const InforPatient = () => {
 
             {/* Hồ sơ bệnh nhân */}
             <div className="border-l-2 border-l-slate-400 mt-16">
-              <span className="absolute right-[1006px] mt-5 w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
+              <span className="absolute right-[1015px] mt-5 w-[20px] h-[20px] bg-sky-600 rounded-full"></span>
               <div className="px-10">
                 <div className="flex mb-3 mt-5">
                   <div className="font-medium text-md text-slate-700 ml-2">
@@ -130,7 +130,7 @@ const InforPatient = () => {
                             ).toString("binary");
                           }
                           return (
-                            <div className="border-[1px] shadow-lg shadow-sky-200 rounded-md mt-5 mx-2">
+                            <div className="border-[1px] shadow-lg shadow-sky-200 rounded-md mt-5 mx-2 pb-8">
                               <div className="w-full text-xl text-sky-700 cursor-pointer rounded-[3px]">
                                 <BiEdit className="ml-auto" title="Chỉnh sửa" />
                               </div>
@@ -167,14 +167,6 @@ const InforPatient = () => {
                                     </span>
                                     <span className="font-normal ml-2">
                                       {ngaysinh}
-                                    </span>
-                                  </div>
-                                  <div className="mb-2 text-md">
-                                    <span className="font-medium text-slate-500">
-                                      Địa chỉ:
-                                    </span>
-                                    <span className="font-normal ml-2">
-                                      {item?.address}
                                     </span>
                                   </div>
                                 </div>

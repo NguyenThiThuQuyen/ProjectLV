@@ -167,34 +167,45 @@ let deleteGoiKham = (goiKhamId) => {
 let getAllMedicalPackageHome = (limitInput) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let goikham = await db.MedicalPackage.findAll({
-        limit: limitInput,
-      });
-      resolve({
-        code: 0,
-        data: goikham,
-      });
+      if (limitInput !== "ALL") {
+        let goikham = await db.MedicalPackage.findAll({
+          limit: +limitInput,
+          order: [["createdAt", "DESC"]],
+        });
+        resolve({
+          code: 0,
+          data: goikham,
+        });
+      } else {
+        let goikham = await db.MedicalPackage.findAll({
+          order: [["createdAt", "DESC"]],
+        });
+        resolve({
+          code: 0,
+          data: goikham,
+        });
+      }
     } catch (e) {
       reject(e);
     }
   });
 };
 
-let getAllMedicalPackageHomeAll = (limitInput) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let goikham = await db.MedicalPackage.findAll({
-        limit: limitInput,
-      });
-      resolve({
-        code: 0,
-        data: goikham,
-      });
-    } catch (e) {
-      reject(e);
-    }
-  });
-};
+// let getAllMedicalPackageHomeAll = (limitInput) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let goikham = await db.MedicalPackage.findAll({
+//         limit: limitInput,
+//       });
+//       resolve({
+//         code: 0,
+//         data: goikham,
+//       });
+//     } catch (e) {
+//       reject(e);
+//     }
+//   });
+// };
 
 module.exports = {
   createNewMedicalpackage: createNewMedicalpackage,
@@ -203,5 +214,5 @@ module.exports = {
   getAllGoiKham: getAllGoiKham,
   getAllMedicalPackageHome: getAllMedicalPackageHome,
   getMedicalPackage: getMedicalPackage,
-  getAllMedicalPackageHomeAll: getAllMedicalPackageHomeAll,
+  // getAllMedicalPackageHomeAll: getAllMedicalPackageHomeAll,
 };

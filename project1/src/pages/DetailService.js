@@ -79,7 +79,7 @@ const DetailService = () => {
               </div>
             </div>
             <div
-              className="mt-10"
+              className="my-10 "
               dangerouslySetInnerHTML={{ __html: data?.goikham?.contentHTML }}
             ></div>
           </div>
