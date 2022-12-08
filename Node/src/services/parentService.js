@@ -51,11 +51,10 @@ let loginParent = (email, password) => {
           // raw: true,
         });
         if (parent) {
-          //compare password
-          // let check = true;
           if (password == parent.password) {
             parentData.code = 0;
-            (parentData.message = "Ok"), delete parent.password;
+            (parentData.message = "Đăng nhập thành công"),
+              delete parent.password;
             parentData.parent = parent;
           } else {
             parentData.code = 3;

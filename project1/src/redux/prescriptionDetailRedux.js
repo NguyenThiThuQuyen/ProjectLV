@@ -4,8 +4,17 @@ import {
   getAllPrescriptionsDetail,
   deletePrescriptionsDetail,
   getPrescriptionsDetail,
+  getFindPrescriptionsDetail,
 } from "./services/prescriptionDetailService";
 import { toast } from "react-toastify";
+
+export const getFindPrescriptionsDetailAPI = createAsyncThunk(
+  "chitiettoathuoc/FindPres",
+  async (params) => {
+    const find = await getFindPrescriptionsDetail(params);
+    return find;
+  }
+);
 
 export const createPrescriptionDetailAPI = createAsyncThunk(
   "chitiettoathuoc/Add",
@@ -45,10 +54,19 @@ export const PrescriptionDetailRedux = createSlice({
   initialState: {
     allPrescriptionsDetail: [],
     aPrescriptionsDetail: [],
+    timPrescriptionsDetail: [],
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(
+      getFindPrescriptionsDetailAPI.fulfilled,
+      (state, action) => {
+        state.timPrescriptionsDetail = action.payload;
+        state.check = false;
+      }
+    );
+
     builder.addCase(getAllPrescriptionsDetailAPI.fulfilled, (state, action) => {
       state.allPrescriptionsDetail = action.payload;
       state.check = false;
@@ -84,6 +102,8 @@ export const dataGetAllPrescriptionsDetail = (state) =>
   state.chitiettoathuoc.allPrescriptionsDetail;
 export const dataGetPrescriptionsDetail = (state) =>
   state.chitiettoathuoc.aPrescriptionsDetail;
+export const dataGetFindPrescriptionsDetail = (state) =>
+  state.chitiettoathuoc.timPrescriptionsDetail;
 export const dataCheck = (state) => state.chitiettoathuoc.check;
 
 export default PrescriptionDetailRedux.reducer;

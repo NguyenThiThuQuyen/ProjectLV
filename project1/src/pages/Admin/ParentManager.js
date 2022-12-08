@@ -28,7 +28,12 @@ const ParentManager = () => {
   const navigate = useNavigate();
   const data = useSelector(dataGetAllParent);
   const check = useSelector(dataCheck);
+  console.log("check:", check);
+  const [parentId, setParentId] = useState();
 
+  const paramsphuhynh = {
+    parentId: parentId,
+  };
   useEffect(() => {
     dispatch(getAllParentsAPI());
   }, [check]);
@@ -40,6 +45,19 @@ const ParentManager = () => {
   const handleDetail = (parentId) => {
     navigate(`/manager/parent-detail/${parentId}`);
     dispatch(getAParentAPI(parentId));
+  };
+
+  const handleDong = (test) => {
+    setShowModal(test);
+  };
+
+  const handleMoLai = (data) => {
+    setShowModal(data);
+  };
+
+  const handleShowModal = (id) => {
+    setParentId(id);
+    setShowModal(true);
   };
 
   return (
@@ -86,7 +104,30 @@ const ParentManager = () => {
                       <tr key={item?.id} className="hover:bg-slate-200">
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           <div className="" title="Thêm con">
-                            <PatientModal2 item={item} />
+                            {/* <PatientModal2 item={item} /> */}
+                            <div className="ml-5">
+                              <button
+                                type="button"
+                                onClick={() => handleShowModal(item.id)}
+                              >
+                                <BsPlusLg className="cursor-pointer text-lg text-blue-600" />
+                              </button>
+                            </div>
+                            <div className="">
+                              {showModal === true ? (
+                                <PatientModal2
+                                  openModal={showModal}
+                                  handleClose={handleDong}
+                                  handleMo={handleMoLai}
+                                  paramsphuhynh={paramsphuhynh}
+                                  item={item}
+                                />
+                              ) : (
+                                <>
+                                  <div className=""></div>
+                                </>
+                              )}
+                            </div>
                           </div>
                         </td>
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -112,6 +153,7 @@ const ParentManager = () => {
                             >
                               <BsThreeDots className="mt-1" />
                             </div>
+
                             {/* <div className="" title="Thêm con">
                               <PatientModal2 item={item} />
                             </div> */}

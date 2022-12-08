@@ -45,6 +45,13 @@ const timPhieuTheoNgay = async (body) => {
   return timphieu.data;
 };
 
+const historyPhieudatcho = async (patientId) => {
+  const phieudatcho = await axios.get(
+    `http://localhost:8081/api/consult-history?patientId=${patientId}`
+  );
+  return phieudatcho.data;
+};
+
 export {
   getAllPhieudatcho,
   createPhieudatcho,
@@ -52,4 +59,5 @@ export {
   deletePhieudatcho,
   getPhieudatcho,
   timPhieuTheoNgay,
+  historyPhieudatcho,
 };

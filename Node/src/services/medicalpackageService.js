@@ -66,6 +66,7 @@ let checkNamePackage = (goikham) => {
 };
 
 let createNewMedicalpackage = (data) => {
+  console.log("data:", data);
   return new Promise(async (resolve, reject) => {
     try {
       let check = await checkNamePackage(data.packageName);

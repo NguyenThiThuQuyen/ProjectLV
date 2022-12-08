@@ -7,6 +7,7 @@ import DishModal from "../../components/Admin/Modal/Dish/DishModal";
 import DishModalEdit from "../../components/Admin/Modal/Dish/DishEditModal";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
+import { BsThreeDots } from "react-icons/bs";
 import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -77,7 +78,7 @@ const DishManager = () => {
                               className=""
                               onClick={() => handleDetail(item.id)}
                             >
-                              <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
+                              <BsThreeDots className="cursor-pointer text-lg text-green-700" />
                             </div>
                             <div className="mr-3" title="Sửa">
                               <DishModalEdit item={item} />

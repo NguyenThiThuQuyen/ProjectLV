@@ -6,6 +6,7 @@ import {
   deletePhieudatcho,
   getPhieudatcho,
   timPhieuTheoNgay,
+  historyPhieudatcho,
 } from "./services/phieudatchoService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +23,14 @@ export const timPhieuTheoNgayAPI = createAsyncThunk(
   "phieudatcho/Timphieu",
   async (params) => {
     const timngay = await timPhieuTheoNgay(params);
+    return timngay;
+  }
+);
+
+export const historyPhieudatchoAPI = createAsyncThunk(
+  "phieudatcho/TimLichSu",
+  async (params) => {
+    const timngay = await historyPhieudatcho(params);
     return timngay;
   }
 );
@@ -64,10 +73,16 @@ export const phieudatchoRedux = createSlice({
     getAllPhieudatcho: {},
     getAPhieudatcho: {},
     getTimthieutheongay: {},
+    getHistory: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(historyPhieudatchoAPI.fulfilled, (state, action) => {
+      state.getHistory = action.payload;
+      state.check = false;
+    });
+
     builder.addCase(timPhieuTheoNgayAPI.fulfilled, (state, action) => {
       state.getTimthieutheongay = action.payload;
       state.check = false;
@@ -114,6 +129,7 @@ export const dataGetAllPhieudatcho = (state) =>
 export const dataGetAPhieudatcho = (state) => state.phieudatcho.getAPhieudatcho;
 export const dataGetTimPhieutheongay = (state) =>
   state.phieudatcho.getTimthieutheongay;
+export const dataHistoryPhieudatcho = (state) => state.phieudatcho.getHistory;
 export const dataCheck = (state) => state.phieudatcho.check;
 
 export default phieudatchoRedux.reducer;

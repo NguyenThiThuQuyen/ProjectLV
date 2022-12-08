@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-import { AiFillEdit } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
-import hinh1 from "../assets/upload/bacsi2.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Buffer } from "buffer";
-import { Link } from "react-router-dom";
 import { useNavigate, useParams } from "react-router-dom";
 import SidebarInforPatient from "../components/Guest/SidebarInforPatient";
 import ParentEdit from "../components/Admin/Modal/Parent/ParentEditModal";
@@ -17,7 +14,7 @@ import {
   dataCheck,
 } from "../redux/userRedux";
 import { getAParentAPI, dataGetAParent } from "../redux/parentRedux";
-import { getFindScheduleToDoctorAPI } from "../redux/scheduleRedux";
+import { historyPhieudatchoAPI } from "../redux/phieudatchoRedux";
 import moment from "moment/moment";
 import { ToastContainer } from "react-toastify";
 const InforPatient = () => {
@@ -36,6 +33,11 @@ const InforPatient = () => {
     dispatch(getAllDoctorHomeAPI());
     // dispatch(getFindScheduleToDoctorAPI());
   }, [check]);
+
+  const handleHistory = (patientId) => {
+    navigate(`/consulting-history/${patientId}`);
+    dispatch(historyPhieudatchoAPI(patientId));
+  };
 
   return (
     <div className="h-screen w-full">
@@ -168,6 +170,15 @@ const InforPatient = () => {
                                     <span className="font-normal ml-2">
                                       {ngaysinh}
                                     </span>
+                                  </div>
+
+                                  <div className="mb-2 text-md mt-5">
+                                    <button
+                                      className="p-2 hover:bg-yellow-500 text-sm uppercase rounded-md bg-yellow-600 text-white"
+                                      onClick={() => handleHistory(item.id)}
+                                    >
+                                      Xem lịch sử tư vấn
+                                    </button>
                                   </div>
                                 </div>
                               </div>

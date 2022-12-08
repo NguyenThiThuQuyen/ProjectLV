@@ -6,6 +6,7 @@ import Guest from "./routes/guest";
 import Admin from "./routes/admin";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 // import {  } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/*" element={<Guest />} index />
         {/* {user !== null ? (

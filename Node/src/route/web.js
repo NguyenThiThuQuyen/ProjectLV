@@ -33,6 +33,9 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
 
+  // lịch sử tư vấn
+  router.get("/api/consult-history", phieudatchoController.handleFindHistory);
+
   // tìm kiếm
   // người dùng
   router.get("/api/search", searchController.handleSearch);
@@ -125,6 +128,15 @@ let initWebRoutes = (app) => {
   router.get(
     "/api/get-all-categories",
     categoryController.handleGetAllCategories
+  );
+  router.post(
+    "/api/create-new-category",
+    categoryController.handleCreateNewCategory
+  );
+  router.put("/api/edit-category", categoryController.handleEditCategory);
+  router.delete(
+    "/api/delete-category",
+    categoryController.handleDeleteCategory
   );
 
   // menu
@@ -402,6 +414,11 @@ let initWebRoutes = (app) => {
   router.delete(
     "/api/delete-prescription-detail",
     prescriptionDetailController.handleDeletePrescriptionDetail
+  );
+
+  router.get(
+    "/api/find-prescription-detail",
+    prescriptionDetailController.handleGetFindPrescriptionDetail
   );
 
   // đơn vị tính

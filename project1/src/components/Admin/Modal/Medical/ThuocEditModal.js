@@ -3,7 +3,9 @@ import { BsPlusLg } from "react-icons/bs";
 import { ImUpload3 } from "react-icons/im";
 import { editThuocAPI } from "../../../../redux/thuocRedux";
 import { useDispatch, useSelector } from "react-redux";
+import { getBase64 } from "../../../../utils/CommonUtils";
 import { BiEdit } from "react-icons/bi";
+import { Buffer } from "buffer";
 import {
   getAllThuocAPI,
   dataGetAllDovitinh,
@@ -17,6 +19,7 @@ import {
 } from "../../../../redux/loaiThuocRedux";
 
 export default function ThuocModalEdit(props) {
+  const [preImg, setPreImg] = useState();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
   const [donvitinhId, setDonvitinhId] = useState("1");
@@ -54,6 +57,15 @@ export default function ThuocModalEdit(props) {
   }, [check]);
 
   useEffect(() => {
+    let imageBase64 = "";
+    if (props?.item?.image) {
+      imageBase64 = new Buffer(props?.item?.image, "base64").toString("binary");
+    }
+    setImage(imageBase64);
+    setPreImg(imageBase64);
+  }, [showModalEdit]);
+
+  useEffect(() => {
     dispatch(getAllThuocAPI());
   }, [checkThuoc]);
 
@@ -61,6 +73,14 @@ export default function ThuocModalEdit(props) {
     dispatch(editThuocAPI(params));
     setShowModalEdit(false);
   };
+
+  const uploadImage = async (event) => {
+    const file = event.target.files[0];
+    const base64 = await getBase64(file);
+    setImage(base64);
+    setPreImg(base64);
+  };
+
   return (
     <>
       <div className="ml-5">
@@ -79,20 +99,12 @@ export default function ThuocModalEdit(props) {
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM THUỐC
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                <div className="relative px-6 pb-16 flex-auto">
                   <form className="">
                     <div className="grid grid-rows-2">
-                      <div className="grid row-span-1 grid-cols-3">
+                      <div className="grid row-span-1 grid-cols-2">
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên thuốc
@@ -105,30 +117,6 @@ export default function ThuocModalEdit(props) {
                             value={name}
                             onChange={(event) => setName(event.target.value)}
                           />
-                        </div>
-                        <div className="col-span-1 mx-3 my-4">
-                          <label htmlFor="" className="text-slate-600 ml-2">
-                            Đơn vị tính
-                          </label>
-                          <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            id=""
-                            required
-                            value={donvitinhId}
-                            onChange={(event) =>
-                              setDonvitinhId(event.target.value)
-                            }
-                          >
-                            {dataDonViTinh.dvt &&
-                              dataDonViTinh.dvt.length > 0 &&
-                              dataDonViTinh.dvt.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.donvitinh}
-                                  </option>
-                                );
-                              })}
-                          </select>
                         </div>
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
@@ -156,8 +144,8 @@ export default function ThuocModalEdit(props) {
                         </div>
                       </div>
 
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3 my-4">
+                      <div className="grid row-span-1 grid-cols-2">
+                        {/* <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Nhà cung cấp
                           </label>
@@ -180,6 +168,30 @@ export default function ThuocModalEdit(props) {
                                 );
                               })}
                           </select>
+                        </div> */}
+                        <div className="col-span-1 mx-3 my-4">
+                          <label htmlFor="" className="text-slate-600 ml-2">
+                            Đơn vị tính
+                          </label>
+                          <select
+                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                            id=""
+                            required
+                            value={donvitinhId}
+                            onChange={(event) =>
+                              setDonvitinhId(event.target.value)
+                            }
+                          >
+                            {dataDonViTinh.dvt &&
+                              dataDonViTinh.dvt.length > 0 &&
+                              dataDonViTinh.dvt.map((item, index) => {
+                                return (
+                                  <option key={index} value={item.id}>
+                                    {item.donvitinh}
+                                  </option>
+                                );
+                              })}
+                          </select>
                         </div>
                         <div className="col-span-1 mx-3 my-4 relative">
                           <label
@@ -193,12 +205,14 @@ export default function ThuocModalEdit(props) {
                             type="file"
                             placeholder="..."
                             className="mt-2"
-                            required
-                            value={image}
-                            // onChange={(event) => uploadImage(event)}
+                            onChange={(event) => uploadImage(event)}
                           />
                           <div className="absolute">
-                            <img src={image} />
+                            <img
+                              src={preImg}
+                              width={"100px"}
+                              height={"100px"}
+                            />
                           </div>
                         </div>
                       </div>

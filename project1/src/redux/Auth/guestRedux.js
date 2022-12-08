@@ -26,13 +26,16 @@ export const GuestRedux = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getLoginGuestAPI.fulfilled, (state, action) => {
-      if (action.payload.code === 0) {
+      console.log("action:", action);
+      if (action.payload.code == 0) {
+        console.log("action.payload.message:", action.payload.message);
         localStorage.setItem(
           "parent",
           JSON.stringify(action.payload.parent ? action.payload.parent : false)
         );
         state.check = !state.check;
         state.isLoginedGuest = true;
+        toast.success(action.payload.message);
       } else {
         toast.error(action.payload.message);
       }

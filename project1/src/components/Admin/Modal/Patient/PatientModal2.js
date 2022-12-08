@@ -17,7 +17,10 @@ import {
   dataGetAllGender,
   dataCheck,
 } from "../../../../redux/userRedux";
+import { getAParentAPI, dataGetAParent } from "../../../../redux/parentRedux";
+import { toast } from "react-toastify";
 export default function PatientModal2(props) {
+  console.log("props:", props);
   const [showModal, setShowModal] = useState(false);
   const [childrentName, setChildrentName] = useState();
   const [gender, setgender] = useState("M");
@@ -25,7 +28,6 @@ export default function PatientModal2(props) {
   const [image, setImage] = useState();
   const [name, setName] = useState();
   const [phone, setPhone] = useState();
-  // const [id, setId] = useState();
   const dataGender = useSelector(dataGetAllGender);
   const check = useSelector(dataCheck);
   const [parentId, setParentId] = useState();
@@ -40,14 +42,15 @@ export default function PatientModal2(props) {
 
   const dispatch = useDispatch();
 
+  const data = useSelector(dataGetAParent);
+
   useEffect(() => {
-    setParentId(props?.item?.id);
-    setName(props?.item?.name);
-    setPhone(props?.item?.phone);
-  }, [props.item]);
+    setParentId(props?.paramsphuhynh?.parentId);
+  }, [props.paramsphuhynh]);
 
   useEffect(() => {
     dispatch(getAllGenderAPI());
+    dispatch(getAParentAPI(props?.paramsphuhynh?.parentId));
   }, [check]);
 
   const handleSave = () => {
@@ -60,13 +63,18 @@ export default function PatientModal2(props) {
     const base64 = await getBase64(file);
     setImage(base64);
   };
+
+  useEffect(() => {
+    setShowModal(true);
+  }, [props?.openModal === true]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    props.handleClose(false);
+  };
+
   return (
     <>
-      <div className="ml-5">
-        <button type="button" onClick={() => setShowModal(true)}>
-          <BsPlusLg className="cursor-pointer text-lg text-blue-600" />
-        </button>
-      </div>
       {showModal === true ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -78,7 +86,6 @@ export default function PatientModal2(props) {
                   </h3>
                   <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
-                {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <form className="">
                     <div className="grid row-auto">
@@ -87,30 +94,20 @@ export default function PatientModal2(props) {
                           <label htmlFor="" className="text-slate-800 ml-2">
                             Tên người đại diện
                           </label>
-                          <input
-                            type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-sky-300 outline-slate-300"
-                            disabled
-                            required
-                            value={name}
-                            onChange={(event) => setName(event.target.value)}
-                          />
+
+                          <div className="w-full text-sky-700 h-10 border rounded-md p-2 mt-1 bg-white outline-slate-300 cursor-not-allowed">
+                            {data?.parent?.name}
+                          </div>
                         </div>
 
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-800 ml-2">
                             Điện thoại
                           </label>
-                          <input
-                            type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-sky-300 outline-slate-300"
-                            disabled
-                            required
-                            value={phone}
-                            onChange={(event) => setPhone(event.target.value)}
-                          />
+
+                          <div className="w-full text-sky-700 h-10 border rounded-md p-2 mt-1 bg-white outline-slate-300 cursor-not-allowed">
+                            {data?.parent?.phone}
+                          </div>
                         </div>
                       </div>
                       <div className="grid row-span-1 grid-cols-2">
@@ -120,7 +117,7 @@ export default function PatientModal2(props) {
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
+                            placeholder="VD: Nguyễn Văn A"
                             className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) =>
                               setChildrentName(event.target.value)
@@ -187,28 +184,22 @@ export default function PatientModal2(props) {
                     </div>
                   </form>
                 </div>
-                {/*footer*/}
                 <div className="flex mt-14 items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
                   <button
                     className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => handleClose()}
                   >
                     ĐÓNG
                   </button>
-                  <Link
-                    to="/manager/patient-manager"
-                    className="flex"
-                    // onClick={() => setShowModal(true)}
+
+                  <button
+                    className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => handleSave()}
                   >
-                    <button
-                      className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => handleSave()}
-                    >
-                      SAVE
-                    </button>
-                  </Link>
+                    LƯU THÔNG TIN
+                  </button>
                 </div>
               </div>
             </div>

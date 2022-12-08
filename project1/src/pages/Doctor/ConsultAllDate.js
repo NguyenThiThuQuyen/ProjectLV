@@ -89,9 +89,9 @@ const ConsultAllDate = () => {
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Giờ tư vấn
                   </th>
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     Trạng thái
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               <tbody>
@@ -119,7 +119,7 @@ const ConsultAllDate = () => {
                           }
                         </td>
 
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.status == "Đã tư vấn" ? (
                             <>
                               <div
@@ -139,7 +139,7 @@ const ConsultAllDate = () => {
                               </div>
                             </>
                           )}
-                        </td>
+                        </td> */}
                       </tr>
                     );
                   })}

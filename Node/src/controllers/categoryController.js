@@ -26,7 +26,32 @@ let handleGetFindCateInMenuId = async (req, res) => {
   });
 };
 
+let handleCreateNewCategory = async (req, res) => {
+  let message = await categoryService.createNewCategory(req.body);
+  return res.status(200).json(message);
+};
+
+let handleEditCategory = async (req, res) => {
+  let data = req.body;
+  let message = await categoryService.updateCategory(data);
+  return res.status(200).json(message);
+};
+
+let handleDeleteCategory = async (req, res) => {
+  if (!req.query.id) {
+    return res.status(200).json({
+      code: 1,
+      message: "Error deleting",
+    });
+  }
+  let message = await categoryService.deleteCategory(req.query.id);
+  return res.status(200).json(message);
+};
+
 module.exports = {
   handleGetAllCategories: handleGetAllCategories,
   handleGetFindCateInMenuId: handleGetFindCateInMenuId,
+  handleCreateNewCategory: handleCreateNewCategory,
+  handleEditCategory: handleEditCategory,
+  handleDeleteCategory: handleDeleteCategory,
 };

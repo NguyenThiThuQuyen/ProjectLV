@@ -5,13 +5,7 @@ import {
   getThongkeDoanhthuAPI,
   dataGetThongkeDoanhThu,
 } from "../../../redux/ThongkeRedux";
-import {
-  CircularProgressbar,
-  CircularProgressbarWithChildren,
-  buildStyles,
-} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Link } from "react-router-dom";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import ThongKe from "./DangKyTuVan/ThongKe";
 import ThongKeDoanhThu from "./DoanhThu/ThongKeDoanhThu";
@@ -165,20 +159,6 @@ const Chart = () => {
 
   return (
     <div className="mt-4 overflow-x-hidden overflow-y-auto">
-      {/* thong ke dang ky theo ngay */}
-      <div className="w-full mt-10">
-        <div className="ml-48">
-          <select name="" id="" onChange={(e) => handleChon(e.target.value)}>
-            <option value={1}>7 ngày trước</option>
-            <option value={2}>14 ngày trước</option>
-          </select>
-        </div>
-        <div className="mx-auto w-2/3 ">
-          {data.datasets ? <ThongKe thongke={data} /> : null}
-        </div>
-      </div>
-
-      {/* thong ke doanh thu */}
       <div className="w-full mt-10">
         <div className="ml-48">
           <select name="" id="" onChange={(e) => handleChonNam(e.target.value)}>
@@ -194,7 +174,22 @@ const Chart = () => {
         </div>
       </div>
 
-      <div className="w-full flex mx-10 mt-10">
+      {/* thong ke dang ky theo ngay */}
+      <div className="w-full mt-10">
+        <div className="ml-48">
+          <select name="" id="" onChange={(e) => handleChon(e.target.value)}>
+            <option value={1}>7 ngày trước</option>
+            <option value={2}>14 ngày trước</option>
+          </select>
+        </div>
+        <div className="mx-auto w-2/3 ">
+          {data.datasets ? <ThongKe thongke={data} /> : null}
+        </div>
+      </div>
+
+      {/* thong ke doanh thu */}
+
+      {/* <div className="w-full flex mx-10 mt-10">
         <div className="mr-auto w-1/3 border-2 shadow-lg p-5">
           <div className="">
             <div className="flex text-md p-3 text-slate-600 font-medium cursor-pointer hover:bg-slate-300 hover:text-green-900 uppercase">
@@ -225,7 +220,7 @@ const Chart = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
 import { IoIosLogOut } from "react-icons/io";
@@ -9,6 +9,7 @@ import "./Header.css";
 import logo from "../../assets/upload/logo.png";
 import { UserMenuClasses } from "react-admin";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [showInfor, setShowInfor] = useState(false);
@@ -57,8 +58,17 @@ function Header() {
     navigate(`/consulting-history/${id}`);
   };
 
+  // const { pathname } = useLocation();
+
+  // const MatchLink = () => {
+  //   let match = useRouteMatch({
+
+  //   })
+  // }
+
   return (
     <>
+      <ToastContainer />
       <div className="">
         <div className={navbar ? "navbar active" : "navbar"}>
           <div className="flex py-5 ml-20 font-Caveat text-4xl">

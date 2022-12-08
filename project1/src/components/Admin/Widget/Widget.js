@@ -16,7 +16,7 @@ const Widget = () => {
               </div>
             </div>
           </div>
-          <div className="text-2xl font-medium px-5">12345</div>
+          <div className="text-2xl font-medium px-5">125</div>
           <div className="flex px-5 py-3">
             <div className="mr-auto italic text-slate-700 underline underline-offset-2 hover:text-green-700 cursor-pointer">
               Xem tất cả
@@ -30,7 +30,7 @@ const Widget = () => {
         <div className="col-span-1 mx-auto border-2 w-4/5 shadow-lg rounded-md h-34 bg-slate-50">
           <div className="flex px-5 py-3">
             <div className="mr-auto text-sm uppercase font-medium text-slate-600">
-              Người dùng
+              Lược tư vấn
             </div>
             <div className="ml-auto">
               <div className="flex text-green-700 font-medium">
@@ -39,7 +39,7 @@ const Widget = () => {
               </div>
             </div>
           </div>
-          <div className="text-2xl font-medium px-5">12345</div>
+          <div className="text-2xl font-medium px-5">15</div>
           <div className="flex px-5 py-3">
             <div className="mr-auto italic text-slate-700 underline underline-offset-2 hover:text-green-700 cursor-pointer">
               Xem tất cả

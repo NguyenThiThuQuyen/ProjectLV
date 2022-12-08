@@ -6,7 +6,6 @@ import { BiEdit } from "react-icons/bi";
 import { dataGetAllGender } from "../../../../redux/userRedux";
 import logo from "../../../../assets/upload/logo.png";
 export default function ParentModalEdit(props) {
-  console.log("props:", props);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
@@ -15,7 +14,6 @@ export default function ParentModalEdit(props) {
   const [gender, setgender] = useState("M");
   const [id, setId] = useState();
   const dataGender = useSelector(dataGetAllGender);
-  console.log("dataGender:", dataGender);
 
   const params = {
     name: name,

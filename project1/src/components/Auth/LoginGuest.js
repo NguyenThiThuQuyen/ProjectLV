@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FaFacebookF } from "react-icons/fa";
-import { AiOutlineGooglePlus } from "react-icons/ai";
+
 import bglogin from "../../assets/upload/bglogin.jpg";
 import logo from "../../assets/upload/logo.png";
 import { getLoginGuestAPI, dataCheck } from "../../redux/Auth/guestRedux";
@@ -28,7 +27,15 @@ const LoginGuest = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getLoginGuestAPI(params));
+    if (!email && password) {
+      toast.error("Vui lòng nhập email!");
+    } else if (!password && email) {
+      toast.error("Vui lòng nhập mật khẩu!");
+    } else if (!email && !password) {
+      toast.error("Vui lòng nhập email và mật khẩu!");
+    } else if (email && password) {
+      dispatch(getLoginGuestAPI(params));
+    }
   };
 
   useEffect(() => {
@@ -56,27 +63,6 @@ const LoginGuest = () => {
                 <div className="text-3xl mt-4 font-medium text-center text-sky-700">
                   ĐĂNG NHẬP
                 </div>
-                {/* <div className="flex w-full my-3">
-                  <div className="flex mx-auto">
-                    <div className="mx-1">
-                      <FaFacebookF
-                        className="border-2 border-slate-500 rounded-full bg-white"
-                        size={22}
-                        color={"black"}
-                      />
-                    </div>
-                    <div className="mx-1">
-                      <AiOutlineGooglePlus
-                        className="border-2 border-slate-500 rounded-full bg-white"
-                        size={22}
-                        color={"black"}
-                      />
-                    </div>
-                  </div>
-                </div> */}
-                {/* <div className="text-slate-500 text-center">
-                  or use your account                 
-                </div> */}
                 <form
                   className="xl:mx-24 md:mx-8 xs:mx-6 mt-5"
                   onSubmit={handleSubmit}

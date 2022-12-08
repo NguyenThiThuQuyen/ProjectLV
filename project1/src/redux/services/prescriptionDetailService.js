@@ -29,9 +29,17 @@ const getPrescriptionsDetail = async (id) => {
   return response.data;
 };
 
+const getFindPrescriptionsDetail = async (prescriptionId) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/find-prescription-detail?prescriptionId=${prescriptionId}`
+  );
+  return response.data;
+};
+
 export {
   createPrescriptionDetail,
   getAllPrescriptionsDetail,
   getPrescriptionsDetail,
   deletePrescriptionsDetail,
+  getFindPrescriptionsDetail,
 };

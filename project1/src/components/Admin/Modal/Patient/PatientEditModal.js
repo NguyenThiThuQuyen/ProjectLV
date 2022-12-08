@@ -8,6 +8,8 @@ import { dataGetAllGender } from "../../../../redux/userRedux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import { ImUpload3 } from "react-icons/im";
 import { Buffer } from "buffer";
+import logo from "../../../../assets/upload/logo.png";
+
 export default function PatientModalEdit(props) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [childrentName, setChildrentName] = useState();
@@ -76,6 +78,7 @@ export default function PatientModalEdit(props) {
                   <h3 className="text-base font-bold text-slate-500">
                     CẬP NHẬT THÔNG TIN BỆNH NHÂN
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
 
                 <div className="relative px-6 pt-6 pb-24 flex-auto">
@@ -125,7 +128,7 @@ export default function PatientModalEdit(props) {
                           Ngày sinh
                         </label>
                         <DatePicker
-                          className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                          className="w-full border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
                           selected={birthday}
                           required
                           value={birthday}

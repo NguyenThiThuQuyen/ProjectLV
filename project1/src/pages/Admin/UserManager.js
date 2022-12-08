@@ -6,7 +6,7 @@ import UserModalEdit from "../../components/Admin/Modal/User/UserEditModal";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
-import { BsPlusLg, BsSearch } from "react-icons/bs";
+import { BsPlusLg, BsSearch, BsThreeDots } from "react-icons/bs";
 import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { Buffer } from "buffer";
 import { useDispatch, useSelector } from "react-redux";
@@ -181,7 +181,7 @@ const UserManager = () => {
                               className=""
                               onClick={() => handleDetail(item.id)}
                             >
-                              <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
+                              <BsThreeDots className="cursor-pointer text-lg text-green-700" />
                             </div>
                             <div className="mr-5" title="Sửa">
                               <UserModalEdit item={item} />

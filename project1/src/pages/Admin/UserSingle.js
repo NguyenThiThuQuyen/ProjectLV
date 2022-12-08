@@ -45,13 +45,13 @@ const Single = () => {
                 <h1 className="mb-2	text-slate-800 font-medium">
                   {user?.user?.name}
                 </h1>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
                     {user?.user?.genderDataToUser.value}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">
                     Phân quyền hệ thống:
                   </span>
@@ -59,21 +59,21 @@ const Single = () => {
                     {user?.user?.roleDataToUser.value}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Email:</span>
                   <span className="font-normal ml-2">{user?.user?.email}</span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Điện thoại:</span>
                   <span className="font-normal ml-2">{user?.user?.phone}</span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Địa chỉ:</span>
                   <span className="font-normal ml-2">
                     {user?.user?.address}
                   </span>
                 </div>
-                <div className="mb-2 text-sm">
+                <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Quốc gia:</span>
                   <span className="font-normal ml-2">Việt Nam</span>
                 </div>

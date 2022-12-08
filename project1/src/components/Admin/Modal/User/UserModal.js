@@ -16,15 +16,16 @@ import {
   dataGetAllRole,
   dataCheck,
 } from "../../../../redux/userRedux";
+import { toast } from "react-toastify";
 export default function UserModal(props) {
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState("A");
-  const [email, setEmail] = useState("f@gmail.com");
-  const [phone, setPhone] = useState("0123456");
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
   const [image, setImage] = useState();
-  const [address, setAddress] = useState("asdfghj");
-  const [gender, setgender] = useState("M");
-  const [roleId, setRoleId] = useState("R1");
+  const [address, setAddress] = useState();
+  const [gender, setgender] = useState();
+  const [roleId, setRoleId] = useState();
 
   const [contentMarkdown, setContentMarkdown] = useState();
   const [contentHTML, setContentHTML] = useState();
@@ -55,8 +56,12 @@ export default function UserModal(props) {
   }, [check]);
 
   const handleSave = () => {
-    dispatch(addUserAPI(params));
-    setShowModal(false);
+    if (!name) {
+      toast.error("Vui lòng nhập đầy đủ thông tin!");
+    } else {
+      dispatch(addUserAPI(params));
+      setShowModal(false);
+    }
   };
 
   const uploadImage = async (event) => {
@@ -103,8 +108,8 @@ export default function UserModal(props) {
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="Nguyễn Văn A"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             onChange={(event) => setName(event.target.value)}
                           />
                         </div>
@@ -114,8 +119,8 @@ export default function UserModal(props) {
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="0771231234"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             onChange={(event) => setPhone(event.target.value)}
                           />
                         </div>
@@ -124,7 +129,7 @@ export default function UserModal(props) {
                             Giới tính
                           </label>
                           <select
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             id=""
                             onChange={(event) => setgender(event.target.value)}
                           >
@@ -145,8 +150,8 @@ export default function UserModal(props) {
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="abc@gmail.com"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             onChange={(event) => setEmail(event.target.value)}
                           />
                         </div>
@@ -159,8 +164,8 @@ export default function UserModal(props) {
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="Nhập địa chỉ thường trú"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             onChange={(event) => setAddress(event.target.value)}
                           />
                         </div>
@@ -169,7 +174,7 @@ export default function UserModal(props) {
                             Quyền
                           </label>
                           <select
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-10 border rounded-sm p-2 mt-1 bg-slate-50 border-slate-300 outline-slate-300"
                             id=""
                             onChange={(event) => setRoleId(event.target.value)}
                           >
@@ -221,7 +226,7 @@ export default function UserModal(props) {
                   <button
                     className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => handleClose()}
                   >
                     ĐÓNG
                   </button>

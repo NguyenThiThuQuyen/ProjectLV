@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const moment = require("moment");
-
+const Op = require("Sequelize").Op;
 let getThongketheotuan = (week) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -88,7 +88,7 @@ let getThongkeDoanhthu = (year) => {
               "status",
               "id",
             ],
-            where: { status: "Đã thanh toán" },
+            where: { status: { [Op.or]: ["Đã tư vấn", "Đã thanh toán"] } },
             include: [
               {
                 model: db.MedicalPackage,
@@ -378,6 +378,7 @@ let getThongkeDoanhthu = (year) => {
           total11,
           total12,
         ],
+        datatest: getMoney,
       });
     } catch (e) {
       reject(e);

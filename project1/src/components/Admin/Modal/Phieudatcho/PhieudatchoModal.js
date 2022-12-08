@@ -2,23 +2,19 @@ import { useState, useEffect } from "react";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
 import Select from "react-select";
 import moment from "moment";
+import logo from "../../../../assets/upload/logo.png";
 import { createPhieudatchoAPI } from "../../../../redux/phieudatchoRedux";
 import { getATimeslotAPI } from "../../../../redux/timeslotRedux";
 import {
   getAllPatientsAPI,
-  dataGetAllPatient,
-  ArrayPatient,
-  dataGetPatient,
   getPatientAPI,
 } from "../../../../redux/patientRedux";
-
 import {
   getAllParentsAPI,
   dataGetAllParent,
   getFindAllPatientAPI,
   dataGetFindPatient,
 } from "../../../../redux/parentRedux";
-
 import {
   getAllDoctorAPI,
   dataGetDoctor,
@@ -26,7 +22,6 @@ import {
 import {
   getAllGoiKhamAPI,
   dataGetAllGoiKham,
-  dataGetGoiKham,
   getGoiKhamAPI,
 } from "../../../../redux/goiKhamRedux";
 import {
@@ -36,11 +31,9 @@ import {
   // dataGetAllSchedule,
   getFindTimeslotAPI,
   dataGetFindTimeslot,
-  dataFindIdSchedule,
   getFindIdScheduleAPI,
 } from "../../../../redux/scheduleRedux";
 import { useDispatch, useSelector } from "react-redux";
-import { ImDownload3, ImUpload3 } from "react-icons/im";
 import { data } from "autoprefixer";
 export default function PhieudatchoModal(props) {
   const [showModal, setShowModal] = useState(false);
@@ -239,13 +232,6 @@ export default function PhieudatchoModal(props) {
     setRegisterDate(item);
   };
 
-  // const date =
-  //   bookingDate.getDate() +
-  //   "-" +
-  //   (bookingDate.getMonth() + 1) +
-  //   "-" +
-  //   bookingDate.getFullYear();
-
   const dateformat = moment(data).format("DD/MM/YYYY");
 
   const handleFindPatient = async (item) => {
@@ -292,10 +278,11 @@ export default function PhieudatchoModal(props) {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative my-6 mx-auto max-w-4xl w-full">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
                     PHIẾU ĐẶT CHỖ
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="">
@@ -319,7 +306,7 @@ export default function PhieudatchoModal(props) {
                         <div className="grid grid-cols-6">
                           <div className="col-span-3 mx-3 my-4">
                             <label htmlFor="" className="text-slate-600 ml-2">
-                              Email
+                              Số điện thoại
                             </label>
                             <Select
                               className="w-full"

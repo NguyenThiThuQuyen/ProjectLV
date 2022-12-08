@@ -15,7 +15,9 @@ import {
   dataGetAllGender,
   dataCheck,
 } from "../../../../redux/userRedux";
+import { toast } from "react-toastify";
 export default function PatientModal(props) {
+  console.log("props111:", props);
   const [showModal, setShowModal] = useState(true);
   const [childrentName, setChildrentName] = useState();
   const [gender, setgender] = useState("M");
@@ -25,26 +27,33 @@ export default function PatientModal(props) {
   const dataGender = useSelector(dataGetAllGender);
   const check = useSelector(dataCheck);
   const id = useLocation();
-  const [parentId, setParentId] = useState(id.search.split("=")[1]);
+  const [parentId, setParentId] = useState();
   const params = {
     childrentName: childrentName,
     birthday: birthday,
-    address: address,
     image: image,
     parentId: parentId,
     gender: gender,
-    // idParent: idParent,
   };
+  console.log("params:", params);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setParentId(props?.item?.id);
+  }, [props.item]);
 
   useEffect(() => {
     dispatch(getAllGenderAPI());
   }, [check]);
 
   const handleSave = () => {
-    dispatch(addPatientAPI(params));
-    setShowModal(false);
+    if (!childrentName) {
+      toast.error("Vui lòng nhập đầy đủ thông tin !");
+    } else {
+      dispatch(addPatientAPI(params));
+      setShowModal(false);
+    }
   };
 
   const uploadImage = async (event) => {
@@ -52,13 +61,20 @@ export default function PatientModal(props) {
     const base64 = await getBase64(file);
     setImage(base64);
   };
+
+  useEffect(() => {
+    setShowModal(true);
+  }, [props?.openModal === true]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    props.handleClose(false);
+  };
+
   return (
     <>
       <div className="flex w-full">
-        <Sidebar />
         <div className="flex-initial w-5/6">
-          <Navbar />
-          <NavbarUser />
           {showModal === true ? (
             <>
               <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -80,43 +96,48 @@ export default function PatientModal(props) {
                     {/*body*/}
                     <div className="relative p-6 flex-auto">
                       <form className="">
-                        <div className="grid grid-rows-2">
+                        <div className="grid row-auto">
                           <div className="grid row-span-1 grid-cols-3">
                             <div className="col-span-1 mx-3 my-4">
-                              <label htmlFor="" className="text-slate-600 ml-2">
-                                Id parent
+                              <label htmlFor="" className="text-slate-800 ml-2">
+                                Tên người đại diện
                               </label>
-                              <input
-                                type="text"
-                                placeholder="..."
-                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                                disabled
-                                required
-                                value={parentId}
-                                onChange={(event) =>
-                                  setParentId(event.target.value)
-                                }
-                              />
+
+                              <div className="w-full text-sky-700 h-10 border rounded-md p-2 mt-1 bg-white outline-slate-300 cursor-not-allowed">
+                                {props?.item?.name}
+                              </div>
                             </div>
+
                             <div className="col-span-1 mx-3 my-4">
-                              <label htmlFor="" className="text-slate-600 ml-2">
+                              <label htmlFor="" className="text-slate-800 ml-2">
+                                Điện thoại
+                              </label>
+
+                              <div className="w-full text-sky-700 h-10 border rounded-md p-2 mt-1 bg-white outline-slate-300 cursor-not-allowed">
+                                {props?.item?.phone}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="grid row-span-1 grid-cols-2">
+                            <div className="col-span-1 mx-3 my-4">
+                              <label htmlFor="" className="text-slate-800 ml-2">
                                 Họ tên trẻ
                               </label>
                               <input
                                 type="text"
-                                placeholder="..."
-                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                                placeholder="VD: Nguyễn Văn A"
+                                className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                                 onChange={(event) =>
                                   setChildrentName(event.target.value)
                                 }
                               />
                             </div>
                             <div className="col-span-1 mx-3 my-4">
-                              <label htmlFor="" className="text-slate-600 ml-2">
+                              <label htmlFor="" className="text-slate-800 ml-2">
                                 Giới tính
                               </label>
                               <select
-                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
+                                className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                                 id=""
                                 onChange={(event) =>
                                   setgender(event.target.value)
@@ -135,13 +156,13 @@ export default function PatientModal(props) {
                             </div>
                           </div>
 
-                          <div className="grid row-span-1 grid-cols-3">
+                          <div className="grid row-span-1 grid-cols-2">
                             <div className="col-span-1 mx-3 my-4">
-                              <label htmlFor="" className="text-slate-600 ml-2">
+                              <label htmlFor="" className="text-slate-800 ml-2">
                                 Ngày sinh
                               </label>
                               <DatePicker
-                                className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                                className="w-full border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
                                 selected={birthday}
                                 onChange={(date) => setBirthday(date)}
                                 dateFormat="yyyy/MM/dd"
@@ -151,23 +172,10 @@ export default function PatientModal(props) {
                                 scrollableMonthYearDropdown
                               />
                             </div>
-                            <div className="col-span-1 mx-3 my-4">
-                              <label htmlFor="" className="text-slate-600 ml-2">
-                                Địa chỉ
-                              </label>
-                              <input
-                                type="text"
-                                placeholder="..."
-                                className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                                onChange={(event) =>
-                                  setAddress(event.target.value)
-                                }
-                              />
-                            </div>
                             <div className="col-span-1 mx-3 my-4 relative">
                               <label
                                 htmlFor=""
-                                className="text-slate-600 ml-2 flex"
+                                className="text-slate-800 ml-2 flex"
                               >
                                 Tải ảnh
                                 <ImUpload3 className="mt-1 ml-2" />
@@ -195,23 +203,23 @@ export default function PatientModal(props) {
                       <button
                         className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
-                        onClick={() => setShowModal(false)}
+                        onClick={() => handleClose()}
                       >
-                        Close
+                        ĐÓNG
                       </button>
-                      <Link
+                      {/* <Link
                         to="/manager/patient-manager"
                         className="flex"
-                        // onClick={() => setShowModal(true)}
+                        onClick={() => setShowModal(true)}
+                      > */}
+                      <button
+                        className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => handleSave()}
                       >
-                        <button
-                          className="bg-green-600 text-white active:bg-green-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => handleSave()}
-                        >
-                          SAVE
-                        </button>
-                      </Link>
+                        LƯU THÔNG TIN
+                      </button>
+                      {/* </Link> */}
                     </div>
                   </div>
                 </div>

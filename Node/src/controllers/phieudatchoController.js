@@ -61,6 +61,23 @@ let handleFindLichTheoNgay = async (req, res) => {
   return res.status(200).json(message);
 };
 
+let handleFindHistory = async (req, res) => {
+  let patientId = req.query.patientId; //all, id
+  if (!patientId) {
+    return res.status(200).json({
+      code: 1,
+      message: "Missing required parmeters",
+      finds: [],
+    });
+  }
+  let chitiet = await phieudatchoService.getHistory(patientId);
+  return res.status(200).json({
+    code: 0,
+    message: "success",
+    chitiet,
+  });
+};
+
 module.exports = {
   handleCreatePhieudatcho: handleCreatePhieudatcho,
   handleEditPhieudatcho: handleEditPhieudatcho,
@@ -69,4 +86,5 @@ module.exports = {
   handleDeletePhieudatcho: handleDeletePhieudatcho,
   handleEmail: handleEmail,
   handleFindLichTheoNgay: handleFindLichTheoNgay,
+  handleFindHistory: handleFindHistory,
 };

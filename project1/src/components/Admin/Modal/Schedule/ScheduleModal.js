@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
+import logo from "../../../../assets/upload/logo.png";
 import _ from "lodash";
 import { saveBulkScheduleDoctor } from "../../../../redux/services/userService";
-
+import Select from "react-select";
 import localization from "moment/locale/vi";
 import "react-datepicker/dist/react-datepicker.css";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
@@ -25,12 +26,14 @@ import {
 import { toast } from "react-toastify";
 
 export default function ScheduleModal(props) {
+  console.log("props:", props);
   const [showModal, setShowModal] = useState(false);
   const [registerDate, setRegisterDate] = useState();
   const [createDate, setCreateDate] = useState();
   const [timeslotId, setTimeslotId] = useState();
   const [userId, setUserId] = useState();
-
+  const [mangBacSi, setMangBacSi] = useState([]);
+  const [mangNgay, setMangNgay] = useState([]);
   const dataDoctor = useSelector(dataGetDoctor);
   const dataTimeslot = useSelector(datagetAllTimeslot);
 
@@ -77,15 +80,20 @@ export default function ScheduleModal(props) {
     if (data && data.length > 0) {
       data = data.map((item) => ({ ...item, isSelected: false }));
       setTimeslotId(data);
-      // console.log("data:", data);
+      console.log("data:", data);
     }
   };
+
+  useEffect(() => {
+    if (dataTimeslot.timeslot) {
+      choiceTimes();
+    }
+  }, [dataTimeslot]);
 
   const handleClickBtnTime = (time) => {
     if (timeslotId && timeslotId.length > 0) {
       let times = timeslotId.map((item) => {
         if (item?.id === time?.id) item.isSelected = !item.isSelected;
-        console.log("item handle:", item);
         return item;
       });
       setTimeslotId(times);
@@ -95,11 +103,8 @@ export default function ScheduleModal(props) {
   const dispatch = useDispatch();
 
   const handleSave = async () => {
-    // dispatch(createScheduleAPI(params));
     let result = [];
-
     let data = params.timeslotId;
-    // let formatDate = new Date(params.registerDate).getTime();
     if (data && data.length > 0) {
       let selectTime = data.filter((item) => item.isSelected === true);
       if (selectTime && selectTime.length > 0) {
@@ -121,14 +126,45 @@ export default function ScheduleModal(props) {
     if (res.code == 0) {
       toast.success(res.message);
       dispatch(createScheduleAPI());
+      props.handleMo(false);
+      setShowModal(false);
     }
-
-    setShowModal(false);
   };
+
+  useEffect(() => {
+    let arr = [];
+    dataDoctor?.doctor?.data &&
+      dataDoctor?.doctor?.data.length > 0 &&
+      dataDoctor?.doctor?.data.map((item, index) => {
+        const options = { value: item.id, label: item.name };
+        arr.push(options);
+      });
+    setMangBacSi(arr);
+  }, [dataDoctor]);
+
+  useEffect(() => {
+    let arr = [];
+    createDate &&
+      createDate.length > 0 &&
+      createDate.map((item, index) => {
+        const options = { value: item.value, label: item.lable };
+        arr.push(options);
+      });
+    setMangNgay(arr);
+  }, [createDate]);
 
   useEffect(() => {
     setShowModal(true);
   }, [props?.openModal === true]);
+
+  const handleBacSi = (item) => {
+    setUserId(item.value);
+  };
+
+  const handleNgay = (item) => {
+    // console.log("item:", item);
+    setRegisterDate(item.value);
+  };
 
   const handleClose = () => {
     setShowModal(false);
@@ -141,11 +177,12 @@ export default function ScheduleModal(props) {
         <>
           <div className="items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="w-auto my-6 mx-auto">
-              <div className="border-0 rounded-lg shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+              <div className="border-0 rounded-md shadow-lg flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
                   <div className="text-base font-bold text-slate-500">
                     THÊM LỊCH TƯ VẤN
                   </div>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 <div className="p-6 pb-5">
                   <form className="">
@@ -156,28 +193,19 @@ export default function ScheduleModal(props) {
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên bác sĩ
                           </label>
-                          <select
-                            className="w-full h-10 border rounded-lg p-2 mt-1 bg-slate-100 outline-slate-300"
-                            id=""
-                            onChange={(event) => setUserId(event.target.value)}
-                          >
-                            {dataDoctor?.doctor?.data &&
-                              dataDoctor?.doctor?.data.length > 0 &&
-                              dataDoctor?.doctor?.data.map((item, index) => {
-                                return (
-                                  <option key={index} value={item.id}>
-                                    {item.name}
-                                  </option>
-                                );
-                              })}
-                          </select>
+
+                          <Select
+                            className="w-full"
+                            options={mangBacSi}
+                            onChange={handleBacSi}
+                          />
                         </div>
                         <div className="col-span-1 mx-3 my-4">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Chọn ngày
                           </label>
-                          <select
-                            className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                          {/* <select
+                            className="w-full border-2 p-2 rounded-md mt-1 bg-slate-100 outline-slate-300"
                             id=""
                             onChange={(event) =>
                               setRegisterDate(event.target.value)
@@ -192,7 +220,12 @@ export default function ScheduleModal(props) {
                                   </option>
                                 );
                               })}
-                          </select>
+                          </select> */}
+                          <Select
+                            className="w-full"
+                            options={mangNgay}
+                            onChange={handleNgay}
+                          />
                         </div>
                       </div>
                       {/* </div> */}
@@ -217,8 +250,8 @@ export default function ScheduleModal(props) {
                                       <div
                                         className={
                                           item.isSelected === true
-                                            ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-green-300 outline-slate-300"
-                                            : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-lg p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
+                                            ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-green-300 outline-slate-300"
+                                            : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
                                         }
                                         key={index}
                                         value={item.id}

@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "reservationTicketId",
         as: "phieudatchoDataToReceipt",
       });
+
+      ReservationTicket.hasMany(models.Prescription, {
+        foreignKey: "reservationTicketId",
+        as: "reservationTicketDataToPrescription",
+      });
     }
   }
   ReservationTicket.init(

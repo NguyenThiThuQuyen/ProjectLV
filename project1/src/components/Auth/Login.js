@@ -7,6 +7,8 @@ import { getLoginAPI, dataCheck } from "../../redux/Auth/adminRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import logo from "../../assets/upload/logo.png";
+
 import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState();
@@ -34,7 +36,7 @@ const Login = () => {
       navigator("/manager");
     }
     if (USER && USER.roleId == "R2") {
-      navigator("/manager/users-manager");
+      navigator("/manager/consult");
     }
   }, [check]);
 
@@ -51,32 +53,14 @@ const Login = () => {
           <div className="border-2 border-slate-200 shadow-lg shadow-indigo-400 mx-auto w-11/12 bg-white">
             <div className="grid grid-cols-2">
               <div className="col-span-1">
-                <div className="font-HindMadurai text-3xl mt-14 font-bold text-center text-sky-700">
+                <div className="w-full mt-8">
+                  <img src={logo} alt="" className="h-[2.5rem] mx-auto" />
+                </div>
+                <div className="text-2xl mt-5 font-medium text-center text-sky-700">
                   ĐĂNG NHẬP ADMIN
                 </div>
-                <div className="flex w-full my-3">
-                  <div className="flex mx-auto">
-                    <div className="mx-1">
-                      <FaFacebookF
-                        className="border-2 border-slate-500 rounded-full bg-white"
-                        size={22}
-                        color={"black"}
-                      />
-                    </div>
-                    <div className="mx-1">
-                      <AiOutlineGooglePlus
-                        className="border-2 border-slate-500 rounded-full bg-white"
-                        size={22}
-                        color={"black"}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="text-slate-500 text-center">
-                  or use your account
-                </div>
                 <form
-                  className="xl:mx-24 md:mx-8 xs:mx-6"
+                  className="xl:mx-24 md:mx-8 xs:mx-6 mt-3"
                   onSubmit={handleSubmit}
                 >
                   <div className="grid grid-cols-1">
@@ -104,14 +88,14 @@ const Login = () => {
                   <div className="grid grid-cols-1 my-5 w-full">
                     <div className="col-span-1 my-2 mx-auto">
                       <button
-                        className="border-2 rounded-3xl px-7 py-2 bg-sky-500 text-white font-medium
+                        className="uppercase border-2 rounded-3xl px-7 py-2 bg-sky-500 text-white font-medium
                                                                   hover:bg-transparent 
                                                                   hover:border-2
                                                                   hover:border-sky-500
                                                                   hover:text-black"
                         type="submit"
                       >
-                        SIGN IN
+                        Đăng nhập
                       </button>
                     </div>
                     <Link to="/login-guest">
@@ -126,10 +110,10 @@ const Login = () => {
               <div className="col-span-1 bg-indigo-600">
                 <div className="px-8 text-center mt-20">
                   <div className="text-white text-4xl font-medium">
-                    Hello, Friend!
+                    Chào bạn!
                   </div>
                   <div className="text-white text-lg my-6">
-                    Enter your personal details and start journey with us
+                    Đăng ký tài khoản để có trải nghiệm thú vị cùng chúng tôi!
                   </div>
                   <div className="w-full">
                     <button
@@ -139,7 +123,7 @@ const Login = () => {
                                                                   hover:border-white
                                                                   hover:text-black"
                     >
-                      <Link to="/register">SIGN UP</Link>
+                      <Link to="/register">ĐĂNG KÝ</Link>
                     </button>
                   </div>
                 </div>

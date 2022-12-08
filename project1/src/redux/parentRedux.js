@@ -72,7 +72,7 @@ export const ParentRedux = createSlice({
 
     builder.addCase(addParentAPI.fulfilled, (state, action) => {
       state.check = true;
-      // state.idParent = action.payload.parent.id.id;
+      console.log("action:", action);
       localStorage.setItem(
         "id",
         JSON.stringify(

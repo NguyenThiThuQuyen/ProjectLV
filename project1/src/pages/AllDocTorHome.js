@@ -31,7 +31,6 @@ const AllDocTorHome = () => {
   const [search, setSearch] = useState([]);
   const check = useSelector(dataCheck);
   const data = useSelector(dataGetDoctorHome);
-  // const dataSearch = useSelector(dataGetSearch);
   const navigate = useNavigate();
 
   useEffect(() => {

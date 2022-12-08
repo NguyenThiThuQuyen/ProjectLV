@@ -72,7 +72,7 @@ const PatientSingle = () => {
                 <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Giới tính:</span>
                   <span className="font-normal ml-2">
-                    {patient?.patient?.genderDataToPatient.value}
+                    {patient?.patient?.genderDataToPatient?.value}
                   </span>
                 </div>
                 <div className="mb-2 text-md">

@@ -32,7 +32,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: "Chart.js Line Chart",
+      text: "THỐNG KÊ DOANH THU THEO THÁNG",
     },
   },
 };

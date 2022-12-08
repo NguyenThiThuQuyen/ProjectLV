@@ -10,7 +10,7 @@ const HomeAdmin = () => {
       <Sidebar />
       <div className="flex-initial w-5/6">
         <Navbar />
-        <Widget />
+        {/* <Widget /> */}
         <Chart />
       </div>
     </div>

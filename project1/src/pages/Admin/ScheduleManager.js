@@ -9,6 +9,7 @@ import { AiOutlineEye } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import { BsThreeDots } from "react-icons/bs";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -57,6 +58,7 @@ const ScheduleManager = () => {
   };
 
   const handleMoLai = (data) => {
+    console.log("dddd:", data);
     setShowModal(data);
   };
 
@@ -116,6 +118,9 @@ const ScheduleManager = () => {
           <tbody>
             <tr key={item?.id}>
               <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                {item?.id}
+              </td>
+              <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                 {item?.userDataToSchedule?.name}
               </td>
               <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
@@ -127,7 +132,7 @@ const ScheduleManager = () => {
               <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                 <div className="flex">
                   <div className="" onClick={() => handleDetail(item.id)}>
-                    <AiOutlineEye className="cursor-pointer text-lg text-green-700" />
+                    <BsThreeDots className="cursor-pointer text-lg text-green-700" />
                   </div>
                   <div className="mr-3" title="Sửa">
                     <ScheduleModalEdit item={item} />
@@ -213,6 +218,9 @@ const ScheduleManager = () => {
           <table className="border ml-10 mt-3 border-slate-200">
             <thead>
               <tr className="border border-slate-200 bg-green-600">
+                <th className="border border-slate-200 p-3 text-white font-medium">
+                  Id
+                </th>
                 <th className="border border-slate-200 p-3 text-white font-medium">
                   Tên bác sĩ
                 </th>

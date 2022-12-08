@@ -68,10 +68,10 @@ export const PatientRedux = createSlice({
 
     builder.addCase(addPatientAPI.fulfilled, (state, action) => {
       state.check = true;
-      if (action.payload.code == "0") {
-        toast.success(action.payload.message);
+      if (action.payload.patient.code == "0") {
+        toast.success(action.payload.patient.message);
       } else {
-        toast.error(action.payload.message);
+        toast.error(action.payload.patient.message);
       }
     });
 

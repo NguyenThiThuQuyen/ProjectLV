@@ -14,4 +14,33 @@ const getFindCaterogy = async (menuId) => {
   return response.data;
 };
 
-export { getAllCaterogy, getFindCaterogy };
+const createCategory = async (body) => {
+  const response = await axios.post(
+    `http://localhost:8081/api/create-new-category`,
+    body
+  );
+  return response.data;
+};
+
+const editCategory = async (body) => {
+  const response = await axios.put(
+    `http://localhost:8081/api/edit-category`,
+    body
+  );
+  return response.data;
+};
+
+const deleteCategory = async (id) => {
+  const response = await axios.delete(
+    `http://localhost:8081/api/delete-category?id=${id}`
+  );
+  return response.data;
+};
+
+export {
+  getAllCaterogy,
+  getFindCaterogy,
+  createCategory,
+  editCategory,
+  deleteCategory,
+};

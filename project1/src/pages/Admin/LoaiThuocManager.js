@@ -37,12 +37,12 @@ const LoaiThuocManager = () => {
           <LoaiThuocModal />
           {/* <TableUser /> */}
           <div className="w-full px-10 py-3">
-            <table className="border border-slate-200">
+            <table className="border w-1/2 border-slate-200">
               <thead>
                 <tr className="border border-slate-200 bg-green-600">
-                  <th className="border border-slate-200 p-3 text-white font-medium">
+                  {/* <th className="border border-slate-200 p-3 text-white font-medium">
                     ID
-                  </th>
+                  </th> */}
                   <th className="border border-slate-200 p-3 text-white font-medium">
                     Tên loại thuốc
                   </th>
@@ -57,9 +57,9 @@ const LoaiThuocManager = () => {
                   data.medicaltypes.map((item, index) => {
                     return (
                       <tr key={item.id} className="hover:bg-slate-200">
-                        <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
+                        {/* <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.id}
-                        </td>
+                        </td> */}
                         <td className="border-y border-slate-300 py-3 px-7 text-slate-700">
                           {item.name}
                         </td>

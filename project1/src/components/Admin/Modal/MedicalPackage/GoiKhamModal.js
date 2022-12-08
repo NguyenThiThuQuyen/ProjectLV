@@ -10,6 +10,7 @@ import logo from "../../../../assets/upload/logo.png";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
+import { toast, ToastContainer } from "react-toastify";
 export default function GoiKhamModal() {
   const [showModal, setShowModal] = useState(false);
   const [packageName, setPackageName] = useState();
@@ -90,38 +91,39 @@ export default function GoiKhamModal() {
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-5xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
                     THÊM GÓI TƯ VẤN
                   </h3>
                   <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
-                {/*body*/}
                 <div className="relative p-6 flex-auto">
                   <form className="w-full">
-                    <div className="grid grid-rows-2 w-[80%] mx-auto">
-                      <div className="grid row-span-1 grid-cols-3">
-                        <div className="col-span-1 mx-3">
+                    <div className="grid row-auto w-[80%] mx-auto">
+                      <div className="grid row-span-1 grid-cols-2">
+                        <div className="col-span-2 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Tên gói tư vấn
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="Nhập thông tin tên gói tư vấn"
+                            className="w-full h-11 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) =>
                               setPackageName(event.target.value)
                             }
                           />
                         </div>
+                      </div>
+                      <div className="grid row-span-1 grid-cols-2 mt-3">
                         <div className="col-span-1 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Giá tiền (VND)
                           </label>
                           <input
                             type="text"
-                            placeholder="..."
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            placeholder="Nhập số tiền"
+                            className="w-full h-11 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) => setPrice(event.target.value)}
                           />
                         </div>
@@ -130,7 +132,7 @@ export default function GoiKhamModal() {
                             Ngày áp dụng
                           </label>
                           <DatePicker
-                            className="w-full h-10 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full h-11 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             selected={applydateId}
                             onChange={(date) => setApplydateId(date)}
                             dateFormat="yyyy/MM/dd"
@@ -142,14 +144,14 @@ export default function GoiKhamModal() {
                         </div>
                       </div>
 
-                      <div className="grid row-span-1 grid-cols-3">
+                      <div className="grid row-span-1 grid-cols-3 mt-3">
                         <div className="col-span-2 mx-3">
                           <label htmlFor="" className="text-slate-600 ml-2">
                             Mô tả ngắn
                           </label>
                           <textarea
                             type="text"
-                            placeholder="..."
+                            placeholder="Nhập thông tin mô tả ngắn"
                             className="w-full h-16 border rounded-md p-2 mt-1 bg-slate-100 outline-slate-300"
                             onChange={(event) =>
                               setPackageDecs(event.target.value)

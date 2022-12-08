@@ -395,6 +395,50 @@ let findLichTheoNgay = (data) => {
   });
 };
 
+let getHistory = (patientId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let chitiet = {};
+      chitiet = await db.ReservationTicket.findAll({
+        where: { patientId: patientId },
+        order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: db.Patient,
+            as: "patientDataToPhieudatcho",
+            attributes: ["childrentName", "gender", "birthday", "id"],
+          },
+          {
+            model: db.User,
+            as: "doctorDataToPhieudatcho",
+            attributes: ["name", "id"],
+          },
+          {
+            model: db.Schedule,
+            as: "scheduleDataToPhieudatcho",
+            attributes: ["timeslotId", "registerDate", "id"],
+            include: [
+              {
+                model: db.TimeSlot,
+                as: "timeSlotDataToSchedule",
+                attributes: ["timeslot", "id"],
+              },
+            ],
+          },
+          {
+            model: db.MedicalPackage,
+            as: "goituvanDataToPhieudatcho",
+            attributes: ["packageName", "id"],
+          },
+        ],
+      });
+      resolve(chitiet);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createPhieudatcho: createPhieudatcho,
   updatePhieudatcho: updatePhieudatcho,
@@ -402,4 +446,5 @@ module.exports = {
   getPhieudatcho: getPhieudatcho,
   deletePhieudatcho: deletePhieudatcho,
   findLichTheoNgay: findLichTheoNgay,
+  getHistory: getHistory,
 };

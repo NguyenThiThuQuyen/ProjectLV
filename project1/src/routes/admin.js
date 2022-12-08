@@ -31,6 +31,7 @@ import PaySingle from "../pages/Admin/PaySingle";
 import ReservationToDate from "../pages/Admin/ReservationToDate";
 import Receipt from "../pages/Admin/Receipt";
 import PrescriptionDetail from "../pages/Admin/PrescriptionDetail";
+import Statistical from "../pages/Admin/Statistical";
 
 function admin() {
   return (
@@ -89,6 +90,7 @@ function admin() {
           path="/prescription-detail/:id"
           element={<PrescriptionDetail />}
         />
+        <Route path="/consult-statistical" element={<Statistical />} />
       </Routes>
     </div>
   );

@@ -29,7 +29,10 @@ function guest() {
           element={<DetailService />}
         />
         <Route path="/infor-patient/:id" element={<InforPatient />} />
-        <Route path="/consulting-history/:id" element={<ConsultingHistory />} />
+        <Route
+          path="/consulting-history/:patientId"
+          element={<ConsultingHistory />}
+        />
       </Routes>
     </div>
   );
