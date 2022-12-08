@@ -3,6 +3,7 @@ import { BsPlusLg } from "react-icons/bs";
 import { ImUpload3 } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { BiEdit } from "react-icons/bi";
+import logo from "../../../../assets/upload/logo.png";
 import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
@@ -44,16 +45,9 @@ export default function CategoryEditModal(props) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    THÊM THUỐC
+                    SỬA THÔNG TIN DANH MỤC
                   </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModalEdit(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 <div className="relative p-6 flex-auto">
                   <div className="grid row-span-1 grid-cols-1">

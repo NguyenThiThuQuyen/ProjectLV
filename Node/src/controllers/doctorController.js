@@ -58,9 +58,22 @@ let bulkCreateSchedule = async (req, res) => {
   }
 };
 
+let checklichbacsi = async (req, res) => {
+  try {
+    let infor = await doctorService.checklichbacsi(req.query.id);
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      code: -1,
+      message: "Error ne",
+    });
+  }
+};
 module.exports = {
   handleGetAllDoctorHome: handleGetAllDoctorHome,
   postInforDoctor: postInforDoctor,
   getScheduleByDate: getScheduleByDate,
   bulkCreateSchedule: bulkCreateSchedule,
+  checklichbacsi: checklichbacsi,
 };

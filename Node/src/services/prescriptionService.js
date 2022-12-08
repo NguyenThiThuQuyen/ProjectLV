@@ -173,10 +173,98 @@ let findPhieuDatChoInPrescription = (data) => {
   });
 };
 
+let findPrescription = (reservationTicketId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let chitiet = {};
+      chitiet = await db.Prescription.findOne({
+        where: { reservationTicketId: reservationTicketId },
+        include: [
+          {
+            model: db.ReservationTicket,
+            as: "reservationTicketDataToPrescription",
+            include: [
+              {
+                model: db.Patient,
+                as: "patientDataToPhieudatcho",
+                attributes: ["childrentName", "gender", "birthday", "id"],
+              },
+              {
+                model: db.User,
+                as: "doctorDataToPhieudatcho",
+                attributes: ["name", "id"],
+              },
+              {
+                model: db.Schedule,
+                as: "scheduleDataToPhieudatcho",
+                attributes: ["timeslotId", "registerDate", "id"],
+                include: [
+                  {
+                    model: db.TimeSlot,
+                    as: "timeSlotDataToSchedule",
+                    attributes: ["timeslot", "id"],
+                  },
+                ],
+              },
+              {
+                model: db.MedicalPackage,
+                as: "goituvanDataToPhieudatcho",
+                attributes: ["packageName", "id"],
+              },
+            ],
+          },
+          {
+            model: db.PrescriptionDetail,
+            as: "prescriptionDataToPrescriptionDetail",
+            include: [
+              {
+                model: db.Medical,
+                as: "medicalDataToPrescriptionDetail",
+                attributes: ["name", "id"],
+              },
+            ],
+          },
+          {
+            model: db.Menu,
+            as: "menuDataToPrescription",
+            attributes: ["name", "id"],
+            order: [["id", "DESC"]],
+            include: [
+              {
+                model: db.EatDetail,
+                as: "menuDataToEatDetail",
+                include: [
+                  {
+                    model: db.Dish,
+                    as: "dishDataToEatDetail",
+                  },
+                  {
+                    model: db.EatTimeslot,
+                    as: "eatTimeslotDataToEatDetail",
+                  },
+                  {
+                    model: db.EatDate,
+                    as: "eatDateDataToEatDetail",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
+
+      resolve(chitiet);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewPrescription: createNewPrescription,
   updatePrescriptionData: updatePrescriptionData,
   deletePrescription: deletePrescription,
   getPrescription: getPrescription,
   findPhieuDatChoInPrescription: findPhieuDatChoInPrescription,
+  findPrescription: findPrescription,
 };

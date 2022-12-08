@@ -4,6 +4,7 @@ import {
   createPrescription,
   findIdPhieuDatChoPrescription,
   editPrescription,
+  getFindPrescription,
 } from "./services/prescriptionService";
 import { toast } from "react-toastify";
 
@@ -11,6 +12,14 @@ export const getPrescriptionAPI = createAsyncThunk(
   "toathuoc/GetLTV",
   async (params) => {
     const getltv = await getPrescription(params);
+    return getltv;
+  }
+);
+
+export const getFindPrescriptionAPI = createAsyncThunk(
+  "toathuoc/GetFindPh",
+  async (params) => {
+    const getltv = await getFindPrescription(params);
     return getltv;
   }
 );
@@ -44,12 +53,18 @@ export const PrescriptionRedux = createSlice({
   initialState: {
     getAPrescription: {},
     getFindIdPhieu: {},
+    getFindAllInforToathuoc: {},
     check: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getPrescriptionAPI.fulfilled, (state, action) => {
       state.getAPrescription = action.payload;
+      state.check = false;
+    });
+
+    builder.addCase(getFindPrescriptionAPI.fulfilled, (state, action) => {
+      state.getFindAllInforToathuoc = action.payload;
       state.check = false;
     });
 
@@ -84,4 +99,6 @@ export const PrescriptionRedux = createSlice({
 export const dataGetPrescription = (state) => state.toathuoc.getAPrescription;
 export const datagetFindIdPhieuDatCho = (state) =>
   state.toathuoc.getFindIdPhieu;
+export const dataGetFindPrescription = (state) =>
+  state.toathuoc.getFindAllInforToathuoc;
 export default PrescriptionRedux.reducer;

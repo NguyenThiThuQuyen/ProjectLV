@@ -153,10 +153,70 @@ let findPrescriptionDetail = (prescriptionId) => {
   });
 };
 
+// let findPrescriptionDetailInToaThuoc = (reservationTicketId) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       let chitiet = {};
+//       chitiet = await db.PrescriptionDetail.findAll({
+//         where: { reservationTicketId: reservationTicketId },
+//         include: [
+//           {
+//             model: db.Prescription,
+//             as: "prescriptionDataToPrescriptionDetail",
+//             attributes: [
+//               "dateCreate",
+//               "loidan",
+//               "menuId",
+//               "reservationTicketId",
+//               "id",
+//             ],
+//             include: [
+//               {
+//                 model: db.Menu,
+//                 as: "menuDataToPrescription",
+//                 attributes: ["name", "id"],
+//                 include: [
+//                   {
+//                     model: db.EatDetail,
+//                     as: "menuDataToEatDetail",
+//                     include: [
+//                       {
+//                         model: db.Dish,
+//                         as: "dishDataToEatDetail",
+//                       },
+//                       {
+//                         model: db.EatTimeslot,
+//                         as: "eatTimeslotDataToEatDetail",
+//                       },
+//                       {
+//                         model: db.EatDate,
+//                         as: "eatDateDataToEatDetail",
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//               {
+//                 model: db.ReservationTicket,
+//                 as: "reservationTicketDataToPrescription",
+//               },
+//             ],
+//           },
+//         ],
+//       });
+
+//       resolve(chitiet);
+//     } catch (e) {
+//       reject(e);
+//     }
+//   });
+// };
+
 module.exports = {
   createPrescriptionDetail: createPrescriptionDetail,
   getAllPrescriptionDetail: getAllPrescriptionDetail,
   deletePrescriptionDetail: deletePrescriptionDetail,
   getPrescriptionDetail: getPrescriptionDetail,
   findPrescriptionDetail: findPrescriptionDetail,
+  // findPrescriptionDetailInToaThuoc: findPrescriptionDetailInToaThuoc,
 };

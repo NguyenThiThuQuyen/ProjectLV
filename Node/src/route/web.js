@@ -33,6 +33,12 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
 
+  //
+  router.get(
+    "/api/find-prescription",
+    prescriptionController.handleFindPrescription
+  );
+
   // lịch sử tư vấn
   router.get("/api/consult-history", phieudatchoController.handleFindHistory);
 
@@ -118,6 +124,7 @@ let initWebRoutes = (app) => {
   // );
 
   router.post("/api/save-infor-doctor", doctorController.postInforDoctor);
+  router.get("/api/check-dat-lich", doctorController.checklichbacsi);
   router.post("/api/bulk-create-schedule", doctorController.bulkCreateSchedule);
   router.post(
     "/api/get-schedule-doctor-by-date",

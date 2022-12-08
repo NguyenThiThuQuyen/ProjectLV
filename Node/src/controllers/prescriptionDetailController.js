@@ -75,10 +75,32 @@ let handleGetFindPrescriptionDetail = async (req, res) => {
   });
 };
 
+// let handleFindPrescriptionDetailInToaThuoc = async (req, res) => {
+//   let reservationTicketId = req.query.reservationTicketId; //all, id
+//   if (!reservationTicketId) {
+//     return res.status(200).json({
+//       code: 1,
+//       message: "Missing required parmeters",
+//       finds: [],
+//     });
+//   }
+//   let chitiet =
+//     await prescriptionDetailService.findPrescriptionDetailInToaThuoc(
+//       reservationTicketId
+//     );
+//   return res.status(200).json({
+//     code: 0,
+//     message: "success",
+//     chitiet,
+//   });
+// };
+
 module.exports = {
   handleCreatePrescriptionDetail: handleCreatePrescriptionDetail,
   handleGetAllPrescriptionDetail: handleGetAllPrescriptionDetail,
   handleDeletePrescriptionDetail: handleDeletePrescriptionDetail,
   handleGetPrescriptionDetail: handleGetPrescriptionDetail,
   handleGetFindPrescriptionDetail: handleGetFindPrescriptionDetail,
+  // handleFindPrescriptionDetailInToaThuoc:
+  //   handleFindPrescriptionDetailInToaThuoc,
 };

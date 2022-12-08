@@ -11,6 +11,8 @@ import Confirm from "../pages/XacNhanDangKy";
 import InforPatient from "../pages/InforPatient";
 import ConsultingHistory from "../pages/ConsultingHistory";
 import LoginGuest from "../components/Auth/LoginGuest";
+import ConsultingHistoryDetail from "../pages/ConsultingHistoryDetail";
+import { FaKissBeam } from "react-icons/fa";
 
 function guest() {
   return (
@@ -32,6 +34,10 @@ function guest() {
         <Route
           path="/consulting-history/:patientId"
           element={<ConsultingHistory />}
+        />
+        <Route
+          path="/consulting-history-detail/:reservationTicketId"
+          element={<ConsultingHistoryDetail />}
         />
       </Routes>
     </div>

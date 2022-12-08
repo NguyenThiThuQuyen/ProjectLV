@@ -31,9 +31,17 @@ const editPrescription = async (body) => {
   return edit.data;
 };
 
+const getFindPrescription = async (reservationTicketId) => {
+  const geta = await axios.get(
+    `http://localhost:8081/api/find-prescription?reservationTicketId=${reservationTicketId}`
+  );
+  return geta.data;
+};
+
 export {
   getPrescription,
   createPrescription,
   findIdPhieuDatChoPrescription,
   editPrescription,
+  getFindPrescription,
 };

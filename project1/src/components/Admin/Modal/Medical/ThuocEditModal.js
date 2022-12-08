@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBase64 } from "../../../../utils/CommonUtils";
 import { BiEdit } from "react-icons/bi";
 import { Buffer } from "buffer";
+import logo from "../../../../assets/upload/logo.png";
 import {
   getAllThuocAPI,
   dataGetAllDovitinh,
@@ -95,10 +96,11 @@ export default function ThuocModalEdit(props) {
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                <div className="flex items-start justify-between px-5 py-3 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-base font-bold text-slate-500">
-                    THÊM THUỐC
+                    SỬA THÔNG TIN THUỐC
                   </h3>
+                  <img src={logo} alt="" className="h-[1.8rem] " />
                 </div>
                 {/*body*/}
                 <div className="relative px-6 pb-16 flex-auto">

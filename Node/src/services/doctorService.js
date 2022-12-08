@@ -162,21 +162,41 @@ let bulkCreateSchedule = (data) => {
 
         if (toCreate && toCreate.length > 0) {
           await db.Schedule.bulkCreate(toCreate);
+          resolve({
+            code: 0,
+            message: "Tạo lịch thành công!",
+          });
+        } else if (toCreate && toCreate.length == 0) {
+          resolve({
+            code: 0,
+            message: "Tạo lịch thất bại!",
+          });
         }
       }
-      resolve({
-        code: 0,
-        message: "Tạo lịch thành công!",
-      });
     } catch (e) {
       reject(e);
     }
   });
 };
 
+let checklichbacsi = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (id) {
+        let check = await db.ReservationTicket.count({
+          where: { scheduleId: id },
+        });
+        resolve(check);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 module.exports = {
   getAllDoctorHome: getAllDoctorHome,
   saveDetailInforDoctor: saveDetailInforDoctor,
   scheduleByDate: scheduleByDate,
   bulkCreateSchedule: bulkCreateSchedule,
+  checklichbacsi: checklichbacsi,
 };
