@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutguest, dataCheckLogoutGuest } from "../../redux/Auth/guestRedux";
 import { IoIosLogOut } from "react-icons/io";
@@ -58,42 +58,77 @@ function Header() {
     navigate(`/consulting-history/${id}`);
   };
 
-  // const { pathname } = useLocation();
-
-  // const MatchLink = () => {
-  //   let match = useRouteMatch({
-
-  //   })
-  // }
-
   return (
     <>
       <ToastContainer />
       <div className="">
         <div className={navbar ? "navbar active" : "navbar"}>
-          <div className="flex py-5 ml-20 font-Caveat text-4xl">
+          <div className="flex py-5 text-white ml-20 font-Caveat text-4xl">
             <img src={logo} alt="" className="h-[3rem] " />
             Children's Care
           </div>
           <div className="mx-auto my-auto">
             <ul className="flex">
-              <li className="flex mx-8">
-                <Link to="/" className="">
+              <li className="mx-8">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-8 text-rose-600 font-medium shadow-sm"
+                      : "text-white uppercase font-medium shadow-sm hover:text-rose-700"
+                  }
+                >
                   <span className="">TRANG CHỦ</span>
-                </Link>
+                </NavLink>
               </li>
-              <li className="flex mx-8">
-                <Link to="/service" className="">
+              <li className="mx-8">
+                <NavLink
+                  to="/service"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-8 text-rose-600 font-medium shadow-sm"
+                      : "text-white uppercase font-medium shadow-sm hover:text-rose-700"
+                  }
+                >
                   <span className="">DỊCH VỤ</span>
-                </Link>
+                </NavLink>
               </li>
-              <li className="flex mx-8">
-                <Link to="/all-doctor" className="">
+              <li className="mx-8">
+                <NavLink
+                  to="/all-doctor"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-8 text-rose-600 font-medium shadow-sm"
+                      : "text-white uppercase font-medium shadow-sm hover:text-rose-700"
+                  }
+                >
                   <span className="uppercase">Bác sĩ</span>
-                </Link>
+                </NavLink>
               </li>
-              <li className="flex mx-8">LIÊN HỆ</li>
-              <li className="flex mx-8">TIN TỨC</li>
+              <li className="mx-8">
+                <NavLink
+                  to="/contact"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-8 text-rose-600 font-medium shadow-sm"
+                      : "text-white uppercase font-medium shadow-sm hover:text-rose-700"
+                  }
+                >
+                  <span className="">LIÊN HỆ</span>
+                </NavLink>
+              </li>
+              <li className="mx-8">
+                <NavLink
+                  to="/news"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "underline underline-offset-8 text-rose-600 font-medium shadow-sm"
+                      : "text-white uppercase font-medium shadow-sm hover:text-rose-700"
+                  }
+                >
+                  <span className="">TIN TỨC</span>
+                </NavLink>
+              </li>
               <li className="flex ml-20 ">
                 {parent != null ? (
                   <div className="flex">
@@ -107,7 +142,7 @@ function Header() {
                         />
                       </div>
                       <div
-                        className="mx-2 link_style"
+                        className="mx-2 text-rose-600 font-medium shadow-sm"
                         // onClick={() => setShowModal(true)}
                       >
                         {parent?.name}
@@ -197,21 +232,21 @@ function Header() {
                   </div>
                 ) : (
                   <>
-                    <div className="link_style">
-                      <Link
+                    <div className="Navlink_style">
+                      <NavLink
                         to="/login-guest"
-                        className="underline underline-offset-8"
+                        className="text-rose-600 font-medium"
                       >
                         ĐĂNG NHẬP
-                      </Link>
+                      </NavLink>
                     </div>
-                    <div className="mx-5 link_style">
-                      <Link
+                    <div className="mx-5 Navlink_style">
+                      <NavLink
                         to="/register"
-                        className="underline underline-offset-8"
+                        className="text-rose-600 font-medium"
                       >
                         ĐĂNG KÝ
-                      </Link>
+                      </NavLink>
                     </div>
                   </>
                 )}

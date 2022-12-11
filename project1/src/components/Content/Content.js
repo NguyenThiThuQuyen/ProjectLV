@@ -344,69 +344,24 @@ const Content = () => {
           </div>
         </Slider>
       </div>
-
-      <div className="mt-20">
-        <div className="">
-          <img src={bacsi4} alt="" />
-        </div>
-        <div className="mt-[-500px] absolute w-full">
-          <div className="w-full">
-            <div
-              data-aos="fade-up"
-              data-aos-easing="linear"
-              data-aos-duration="500"
-              className="h-[450px] w-8/12 p-4 border-4 border-slate-200 shadow-lg shadow-slate-300 bg-white mx-auto"
-            >
-              <div className="text-sky-600 text-center font-medium text-3xl my-5">
-                Contact Us
+      <div className="mt-20 border-2">
+        <div className="w-full">
+          <div className="w-4/5 mx-auto flex justify-center">
+            <div className="my-10">
+              <div class="mapouter">
+                <div class="gmap_canvas">
+                  <iframe
+                    width="1200"
+                    height="565"
+                    id="gmap_canvas"
+                    src="https://maps.google.com/maps?q=h%E1%BA%BBm%20391,%20%C4%91%C6%B0%E1%BB%9Dng%2030/4%20Ninh%20Ki%E1%BB%81u,%20C%E1%BA%A7n%20Th%C6%A1&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0"
+                  ></iframe>
+                </div>
               </div>
-              <div className="text-center">
-                Sample text. Click to select the text box. Click again or double
-                click to start editing the text.
-              </div>
-              <form className="xl:mx-24 md:mx-8 xs:mx-6">
-                <div className="grid grid-cols-3 ">
-                  <div className="col-span-1 mx-5 my-7">
-                    <input
-                      type="text"
-                      placeholder="Enter your name..."
-                      className="w-full h-10 border rounded-lg p-2 mt-1"
-                    />
-                  </div>
-                  <div className="col-span-1 mx-5 my-7">
-                    <input
-                      type="text"
-                      placeholder="Enter your email address..."
-                      className="w-full h-10 border rounded-lg p-2 mt-1"
-                    />
-                  </div>
-                  <div className="col-span-1 mx-5 my-7">
-                    <input
-                      type="text"
-                      placeholder="Telephone number..."
-                      className="w-full h-10 border rounded-lg p-2 mt-1"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-3">
-                  <div className="col-span-3 mx-5">
-                    <input
-                      type="text"
-                      placeholder="Enter your message"
-                      className="w-full h-20 border rounded-lg p-2 mt-1"
-                    />
-                  </div>
-                </div>
-                <div className="mt-10 w-full pr-5 text-right">
-                  <button
-                    className="rounded px-6 py-4 text-white hover:text-black
-                                                         bg-sky-500 hover:bg-white hover:border-2
-                                                         hover:border-sky-500 mr-auto "
-                  >
-                    SEND MESSAGE
-                  </button>
-                </div>
-              </form>
             </div>
           </div>
         </div>

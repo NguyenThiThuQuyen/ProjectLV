@@ -4,6 +4,7 @@ import { Link, NavLink, useParams, useLocation } from "react-router-dom";
 import { RiBillLine } from "react-icons/ri";
 import { TbReportMedical } from "react-icons/tb";
 import { BsFillJournalBookmarkFill } from "react-icons/bs";
+import { BiNews } from "react-icons/bi";
 import { GiMedicalPackAlt } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import "./Sidebar.css";
@@ -59,7 +60,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="w-1/6 h-screen border-r-2 border-scale-700 bg-sky-100">
+    <div className="w-1/6 h-screen border-r-2 border-scale-700 bg-sky-100 sticky top-0">
       <div className="sticky top-0 ">
         <div className="h-12 flex items-center justify-center font-bold">
           <span className="text-slate-800">
@@ -140,6 +141,22 @@ const Sidebar = () => {
                   <div className="flex">
                     <TbReportMedical className="mx-2 mt-1 text-xl text-teal-700" />
                     <span className="text-slate-800">Thuốc hỗ trợ</span>
+                  </div>
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/manager/news-manager"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "flex p-3 items-center cursor-pointer bg-green-400"
+                      : "flex p-3 items-center cursor-pointer hover:bg-slate-300"
+                  }
+                >
+                  <div className="flex">
+                    <BiNews className="mx-2 mt-1 text-xl text-teal-700" />
+                    <span className="text-slate-800">Tin tức</span>
                   </div>
                 </NavLink>
               </li>

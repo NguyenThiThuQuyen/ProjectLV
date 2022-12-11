@@ -12,7 +12,9 @@ import InforPatient from "../pages/InforPatient";
 import ConsultingHistory from "../pages/ConsultingHistory";
 import LoginGuest from "../components/Auth/LoginGuest";
 import ConsultingHistoryDetail from "../pages/ConsultingHistoryDetail";
-import { FaKissBeam } from "react-icons/fa";
+import Contact from "../pages/Contact";
+import News from "../pages/News";
+import NewsDetail from "../pages/NewsDetail";
 
 function guest() {
   return (
@@ -25,6 +27,9 @@ function guest() {
         <Route path="/service" element={<Service />} />
         <Route path="/dang-ky-tu-van" element={<DangKyTuVan />} />
         <Route path="/all-doctor" element={<AllDocTorHome />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/news" element={<News />} />
+        <Route path="/detail-news/:newsId" element={<NewsDetail />} />
         <Route path="/detail-doctor/:userId" element={<DetailDoctorHome />} />
         <Route
           path="/detail-service/:medicalpackageId"

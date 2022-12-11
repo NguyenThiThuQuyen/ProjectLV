@@ -55,12 +55,23 @@ export default function UserModal(props) {
     dispatch(getAllRoleAPI());
   }, [check]);
 
+  // const handleXemMenu = (id, menuId) => {
+  //   dispatch(
+  //     getFindEatDetailToDateAPI({
+  //       menuId: dataFindId?.menuId,
+  //       eatdateId: dataFindId?.eatdateId,
+  //     })
+  //   );
+  //   navigator(`/manager/detail-menu/${menuId}/${id}`);
+  // };
+
   const handleSave = () => {
     if (!name) {
       toast.error("Vui lòng nhập đầy đủ thông tin!");
     } else {
       dispatch(addUserAPI(params));
       setShowModal(false);
+      props.handleMo(false);
     }
   };
 

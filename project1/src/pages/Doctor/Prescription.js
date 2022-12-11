@@ -62,7 +62,7 @@ const Prescription = () => {
   const [dateCreate, setDateCreate] = useState();
   const [reservationTicketId, setReservationTicketId] = useState();
   const [menuName, setMenuName] = useState();
-  const [thuoc, setThuoc] = useState();
+  const [checkToaThuoc, setCheckToaThuoc] = useState();
   const [thuocId, setThuocId] = useState();
 
   const paramsTuvan = useParams();
@@ -95,6 +95,12 @@ const Prescription = () => {
       dispatch(getPhieudatchoAPI(paramsTuvan.id));
     }
   }, [checkTuvan]);
+
+  useEffect(() => {
+    if (checkToaThuoc == 0) {
+      dispatch(getPhieudatchoAPI(paramsTuvan.id));
+    }
+  }, [checkToaThuoc]);
 
   const handleFind = async (menuId) => {
     let datafind = await dispatch(
@@ -196,9 +202,22 @@ const Prescription = () => {
   };
 
   const handleSave = async () => {
-    let testdata = await dispatch(editPrescriptionAPI(params));
-    if (testdata.payload.code == 0) {
-      setCheckTuvan(true);
+    if (params.menuId == undefined) {
+      let result = window.confirm("Bạn có muốn tạo thực đơn không?");
+      if (result == false) {
+        let checkdata = await dispatch(createPrescriptionAPI(params));
+        let checkdata2 = checkdata?.payload.code;
+        setCheckToaThuoc(checkdata2);
+        console.log("checkThuoc: ", checkToaThuoc);
+        console.log("checkdata:", checkdata);
+      } else {
+        setShowModal(true);
+      }
+    } else {
+      let testdata = await dispatch(editPrescriptionAPI(params));
+      if (testdata.payload.code == 0) {
+        setCheckTuvan(true);
+      }
     }
   };
 
@@ -219,6 +238,12 @@ const Prescription = () => {
     id: dataFindId?.id,
   };
 
+  // const params2 = {
+  //   dateCreate: dateCreate,
+  //   loidan: loidan,
+  //   reservationTicketId: reservationTicketId,
+  // };
+
   return (
     <>
       <ToastContainer />
@@ -226,6 +251,7 @@ const Prescription = () => {
         <Sidebar />
         <div className="flex-initial w-5/6">
           <Navbar />
+
           <div className="w-full mt-10">
             <div className="w-2/3 ml-5 mr-auto">
               {dataTimphieu?.phieudatcho?.status !== "Đã tư vấn" ? (
@@ -248,6 +274,7 @@ const Prescription = () => {
                                 <span>Tạo thực đơn</span>
                               </div>
                             </button>
+
                             <div className="">
                               {showModal === true ? (
                                 <MenuModal
@@ -272,13 +299,13 @@ const Prescription = () => {
 
                     <div className="mt-5">
                       <label htmlFor="" className="font-medium">
-                        Lời dặn:
+                        Kết luận tình trạng tư vấn cho trẻ
                       </label>
                       <textarea
                         type="text"
-                        placeholder="..."
+                        placeholder="Nhập thông tin kết luận"
                         value={loidan}
-                        className=" w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
+                        className="w-full h-16 border rounded-lg p-2 mt-1  outline-slate-300"
                         onChange={(event) => setLoidan(event.target.value)}
                       />
                     </div>
@@ -393,6 +420,7 @@ const Prescription = () => {
                       {dataEatDates.eatdates &&
                         dataEatDates.eatdates.length > 0 &&
                         dataEatDates.eatdates.map((item, index) => {
+                          console.log("item check:", item);
                           return (
                             <div className="">
                               {item.check === true ? (
@@ -408,8 +436,6 @@ const Prescription = () => {
                                     {dataTimphieu?.phieudatcho?.status !==
                                     "Đã tư vấn" ? (
                                       <>
-                                        {/* {checkTuvan === false ? (
-                                  <> */}
                                         <div className="flex mt-3">
                                           <button
                                             className="p-2 hover:bg-yellow-700 text-white text-md font-medium rounded-md bg-yellow-600 shadow-lg"
@@ -485,8 +511,6 @@ const Prescription = () => {
                                     {dataTimphieu?.phieudatcho?.status !==
                                     "Đã tư vấn" ? (
                                       <>
-                                        {/* {checkTuvan === false ? (
-                                  <> */}
                                         <div className="flex mt-3">
                                           <button
                                             className="p-2 bg-sky-500 text-white text-md font-medium rounded-md hover:bg-green-600 shadow-lg"

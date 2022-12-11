@@ -28,7 +28,6 @@ import {
   getAllSchedulesAPI,
   getFindScheduleToDoctorAPI,
   dataGetFindSchedule,
-  // dataGetAllSchedule,
   getFindTimeslotAPI,
   dataGetFindTimeslot,
   getFindIdScheduleAPI,
@@ -100,7 +99,6 @@ export default function PhieudatchoModal(props) {
   }, [showModal]);
 
   useEffect(() => {
-    console.log("phieu dat cho");
     if (dataAllParent.parents) {
       setParentId(dataAllParent.parents[0].id);
     }
@@ -201,19 +199,13 @@ export default function PhieudatchoModal(props) {
   };
 
   const handleSave = () => {
-    if (
-      !email ||
-      !patientId ||
-      !medicalpackageId ||
-      !doctorId ||
-      // !arrivalDate ||
-      !timeslotId
-    ) {
+    if (!email || !patientId || !medicalpackageId || !doctorId || !timeslotId) {
       setShowModal(true);
       alert("Vui lòng nhập đầy đủ thông tin !");
     } else {
       dispatch(createPhieudatchoAPI(params));
       setShowModal(false);
+      props.handleMo(false);
     }
   };
 

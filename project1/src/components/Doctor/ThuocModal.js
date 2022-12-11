@@ -70,7 +70,6 @@ export default function ThuocModal(props) {
       setSolandung("");
       setGhichu("");
     }
-
     setShowModalThuoc(true);
   };
 

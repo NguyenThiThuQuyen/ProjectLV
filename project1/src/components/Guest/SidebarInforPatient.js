@@ -6,10 +6,8 @@ import { GrHistory } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegAddressBook } from "react-icons/fa";
 import { RiLockPasswordLine } from "react-icons/ri";
-// import PatientModal2 from "../../components/Admin/Modal/Patient/PatientModal2";
 import PatientModal from "../../components/Admin/Modal/Patient/PatientModal";
 import { useNavigate, useParams } from "react-router-dom";
-import { logout } from "../../redux/Auth/adminRedux";
 const SidebarInfor = () => {
   const [showModalInforPatient, setShowModalInforPatient] = useState(false);
 

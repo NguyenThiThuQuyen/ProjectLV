@@ -25,6 +25,7 @@ const thongkeController = require("../controllers/thongkeController");
 const receiptController = require("../controllers/receiptController");
 const searchController = require("../controllers/searchController");
 const prescriptionDetailController = require("../controllers/prescriptionDetailController");
+const newsController = require("../controllers/newsController");
 
 const { Router } = require("express");
 
@@ -32,6 +33,13 @@ let router = express.Router();
 
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
+
+  // tin tức
+  router.get("/api/get-news", newsController.handleGetNews);
+  router.get("/api/get-all-news", newsController.handleGetAllNews);
+  router.post("/api/create-news", newsController.handleCreateNews);
+  router.put("/api/edit-news", newsController.handleEditNews);
+  router.delete("/api/delete-news", newsController.handleDeleteNews);
 
   //
   router.get(

@@ -148,17 +148,13 @@ let bulkCreateSchedule = (data) => {
             return item;
           });
         }
-        console.log("existing", existing);
 
         let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-          console.log("registerDate 111111111", typeof a.registerDate);
-          console.log("registerDate 222222222", typeof b.registerDate);
           return (
             a.timeslotId.toString() === b.timeslotId &&
             a.registerDate === b.registerDate
           );
         });
-        console.log("toCreate", toCreate);
 
         if (toCreate && toCreate.length > 0) {
           await db.Schedule.bulkCreate(toCreate);

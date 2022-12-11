@@ -58,6 +58,7 @@ const PhieudatchoManager = () => {
   };
 
   const handleMoLai = (data) => {
+    console.log("data1212:", data);
     setShowModal(data);
   };
 

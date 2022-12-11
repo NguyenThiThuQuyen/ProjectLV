@@ -32,6 +32,8 @@ import ReservationToDate from "../pages/Admin/ReservationToDate";
 import Receipt from "../pages/Admin/Receipt";
 import PrescriptionDetail from "../pages/Admin/PrescriptionDetail";
 import Statistical from "../pages/Admin/Statistical";
+import NewsManager from "../pages/Admin/NewsManager";
+import NewsSingle from "../pages/Admin/NewsSingle";
 
 function admin() {
   return (
@@ -57,6 +59,8 @@ function admin() {
         <Route path="/patient-modal-manager" element={<PatientModal />} />
         <Route path="/timeslot-manager" element={<TimeslotManager />} />
         <Route path="/schedule-manager" element={<ScheduleManager />} />
+        <Route path="/news-manager" element={<NewsManager />} />
+        <Route path="/news-detail-manager/:newsId" element={<NewsSingle />} />
         <Route
           path="/schedule-detail/:scheduleId"
           element={<ScheduleSingle />}

@@ -7,21 +7,21 @@
     z-index: 1;
     background: transparent;
     background-color:black;
-    color: white;
-    text-shadow: 0.5px 0.5px rgb(255, 250, 210);
+    /* color: white; */
+    /* text-shadow: 0.5px 0.5px rgb(255, 250, 210); */
     font-weight: 380;
     /* font-size:small; */
 }
 
 .navbar:hover{
     background-color: rgba(0, 0, 0, 0.7);
-    color: #ffff;
+    /* color: #ffff; */
     font-weight: 400;
 }
 
 .navbar.active {
     background-color:rgba(0, 0, 0, 0.9);
-    color: white;
+    /* color: white; */
 }
 
 .link_style {

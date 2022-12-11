@@ -7,7 +7,6 @@ import ParentRedux from "./parentRedux";
 import PatientRedux from "./patientRedux";
 import TimeslotRedux from "./timeslotRedux";
 import ScheduleRedux from "./scheduleRedux";
-// import GiaGoiKhamRedux from "./giaGoiKhamRedux";
 import AdminRedux from "./Auth/adminRedux";
 import GuestRedux from "./Auth/guestRedux";
 import PhieudatchoRedux from "./phieudatchoRedux";
@@ -23,6 +22,7 @@ import ThongkeRedux from "./ThongkeRedux";
 import ReceiptRedux from "./receiptRedux";
 import SearchRedux from "./searchRedux";
 import PrescriptionDetailRedux from "./prescriptionDetailRedux";
+import NewsRedux from "./newsRedux";
 export const store = configureStore({
   reducer: {
     datten: UserRedux,
@@ -48,5 +48,6 @@ export const store = configureStore({
     hoadon: ReceiptRedux,
     timkiem: SearchRedux,
     chitiettoathuoc: PrescriptionDetailRedux,
+    tintuc: NewsRedux,
   },
 });
