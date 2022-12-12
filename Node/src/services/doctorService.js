@@ -175,24 +175,49 @@ let bulkCreateSchedule = (data) => {
   });
 };
 
-let checklichbacsi = (id) => {
+let checksualichbacsi = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (id) {
         let check = await db.ReservationTicket.count({
           where: { scheduleId: id },
         });
-        resolve(check);
+        if (check > 0) {
+          resolve(false);
+        } else if (check == 0) {
+          resolve(true);
+        }
       }
     } catch (e) {
       reject(e);
     }
   });
 };
+
+let checkthemlichbacsi = (id, ngay) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (id) {
+        let check = await db.Schedule.findAll({
+          where: { userId: id, registerDate: ngay * 1 },
+          attributes: ["timeslotId"],
+        });
+
+        resolve({
+          check,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getAllDoctorHome: getAllDoctorHome,
   saveDetailInforDoctor: saveDetailInforDoctor,
   scheduleByDate: scheduleByDate,
   bulkCreateSchedule: bulkCreateSchedule,
-  checklichbacsi: checklichbacsi,
+  checksualichbacsi: checksualichbacsi,
+  checkthemlichbacsi: checkthemlichbacsi,
 };

@@ -24,6 +24,8 @@ let getAllPrices = () => {
     try {
       let prices = {};
       prices = await db.PackagePrice.findAll({
+        order: [["updatedAt", "DESC"]],
+
         include: [
           {
             model: db.MedicalPackage,

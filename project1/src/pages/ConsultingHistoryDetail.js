@@ -190,7 +190,7 @@ const ConsultingHistoryDetail = () => {
                 </div>
               </div>
 
-              <div className="col-span-1">
+              {/* <div className="col-span-1">
                 <div className="mt-5 text-green-500 font-medium text-sm uppercase">
                   Thuốc hỗ trợ
                 </div>
@@ -214,7 +214,7 @@ const ConsultingHistoryDetail = () => {
                       );
                     })}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="">

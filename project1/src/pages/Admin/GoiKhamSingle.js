@@ -5,12 +5,12 @@ import GoiKhamModalEdit from "../../components/Admin/Modal/MedicalPackage/GoiKha
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import { Buffer } from "buffer";
-
 import {
   getGoiKhamAPI,
   dataGetGoiKham,
   dataCheck,
 } from "../../redux/goiKhamRedux";
+import moment from "moment";
 const GoiKhamSingle = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -21,8 +21,11 @@ const GoiKhamSingle = () => {
     dispatch(getGoiKhamAPI(params.medicalpackageId));
   }, [check]);
   let imageBase64 = "";
-  if (data?.goikham?.image) {
-    imageBase64 = new Buffer(data?.goikham?.image, "base64").toString("binary");
+  if (data?.goikham[0]?.medicalPackageDataToPackagePrice?.image) {
+    imageBase64 = new Buffer(
+      data?.goikham[0]?.medicalPackageDataToPackagePrice?.image,
+      "base64"
+    ).toString("binary");
   }
   return (
     <div className="flex w-full">
@@ -52,7 +55,10 @@ const GoiKhamSingle = () => {
                 <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Gói tư vấn:</span>
                   <span className="font-normal ml-2">
-                    {data?.goikham?.packageName}
+                    {
+                      data?.goikham[0]?.medicalPackageDataToPackagePrice
+                        ?.packageName
+                    }
                   </span>
                 </div>
                 <div className="mb-2 text-md">
@@ -60,7 +66,7 @@ const GoiKhamSingle = () => {
                     Giá niêm yết:
                   </span>
                   <span className="font-normal ml-2">
-                    {data?.goikham?.medicalPackageDataToPackagePrice?.price}
+                    {data?.goikham[0]?.price}
                   </span>
                 </div>
                 <div className="mb-2 text-md">
@@ -68,16 +74,20 @@ const GoiKhamSingle = () => {
                     Ngày áp dụng:
                   </span>
                   <span className="font-normal ml-2">
-                    {data?.goikham?.medicalPackageDataToPackagePrice?.applydateId?.slice(
+                    {moment(data?.goikham[0]?.applydateId).format("DD/MM/YYYY")}
+                    {/* {data?.goikham?.applydateId?.slice(
                       0,
                       10
-                    )}
+                    )} */}
                   </span>
                 </div>
                 <div className="mb-2 text-md">
                   <span className="font-bold text-slate-500">Mô tả ngắn:</span>
                   <span className="font-normal ml-2">
-                    {data?.goikham?.packageDecs}
+                    {
+                      data?.goikham[0]?.medicalPackageDataToPackagePrice
+                        ?.packageDecs
+                    }
                   </span>
                 </div>
                 <div className="mb-2 text-md">
@@ -87,7 +97,9 @@ const GoiKhamSingle = () => {
                   <div
                     className="mt-3 my-5 "
                     dangerouslySetInnerHTML={{
-                      __html: data?.goikham?.contentHTML,
+                      __html:
+                        data?.goikham[0]?.medicalPackageDataToPackagePrice
+                          ?.contentHTML,
                     }}
                   ></div>
                 </div>

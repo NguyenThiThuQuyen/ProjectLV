@@ -4,6 +4,7 @@ import moment from "moment";
 import logo from "../../../../assets/upload/logo.png";
 import _ from "lodash";
 import { saveBulkScheduleDoctor } from "../../../../redux/services/userService";
+import { checkthemlichbacsi } from "../../../../redux/services/scheduleService";
 import Select from "react-select";
 import localization from "moment/locale/vi";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,17 +27,16 @@ import {
 import { toast } from "react-toastify";
 
 export default function ScheduleModal(props) {
-  console.log("props:", props);
   const [showModal, setShowModal] = useState(false);
-  const [registerDate, setRegisterDate] = useState();
+  const [registerDate, setRegisterDate] = useState("");
   const [createDate, setCreateDate] = useState();
-  const [timeslotId, setTimeslotId] = useState();
-  const [userId, setUserId] = useState();
+  const [timeslotId, setTimeslotId] = useState([]);
+  const [userId, setUserId] = useState("");
   const [mangBacSi, setMangBacSi] = useState([]);
   const [mangNgay, setMangNgay] = useState([]);
+  const [arrCheck, setArrayCheck] = useState([]);
   const dataDoctor = useSelector(dataGetDoctor);
   const dataTimeslot = useSelector(datagetAllTimeslot);
-
   const params = {
     registerDate: registerDate,
     timeslotId: timeslotId,
@@ -47,9 +47,9 @@ export default function ScheduleModal(props) {
     dispatch(getAllTimeslotAPI());
     dispatch(getAllDoctorAPI());
     getDate();
-    choiceTimes();
-  }, [showModal]);
-
+    // choiceTimes();
+  }, [props?.openModal]);
+  console.log("=============> props?.openModal", props?.openModal);
   useEffect(() => {
     if (dataDoctor?.doctor?.data) {
       setUserId(dataDoctor?.doctor?.data[0]?.id);
@@ -70,17 +70,55 @@ export default function ScheduleModal(props) {
   };
 
   useEffect(() => {
+    if (registerDate && userId) {
+      choiceTimes();
+    }
+  }, [registerDate]);
+  useEffect(() => {
+    // console.log("update userId");
+    if (registerDate && userId) {
+      // check();
+      choiceTimes();
+    }
+  }, [userId]);
+  useEffect(() => {
+    // check();
+    choiceTimes();
+  }, []);
+  const check = async () => {
+    let res = await checkthemlichbacsi(userId, registerDate);
+    // console.log("res api", res);
+  };
+  useEffect(() => {
     if (createDate) {
       setRegisterDate(createDate[0].value);
     }
   }, [createDate]);
 
-  const choiceTimes = () => {
+  const choiceTimes = async () => {
     let data = dataTimeslot.timeslot;
     if (data && data.length > 0) {
-      data = data.map((item) => ({ ...item, isSelected: false }));
-      setTimeslotId(data);
-      console.log("data:", data);
+      data = data.map((item) => ({
+        ...item,
+        isSelected: false,
+        datontai: false,
+      }));
+      // setTimeslotId(data);
+      // chạy 2 dòng map để push kt
+      let res = await checkthemlichbacsi(userId, registerDate);
+      if (data.length > 0) {
+        let arr = [];
+        data.map((item1, index1) => {
+          res?.check?.map((item2, index2) => {
+            if (item1.id === item2.timeslotId * 1) {
+              let obj = {};
+              item1.datontai = true;
+              // data.push(obj);
+            }
+          });
+        });
+        setTimeslotId(data);
+      }
     }
   };
 
@@ -103,8 +141,10 @@ export default function ScheduleModal(props) {
   const dispatch = useDispatch();
 
   const handleSave = async () => {
+    console.log("click ");
     let result = [];
     let data = params.timeslotId;
+    console.log("data", data);
     if (data && data.length > 0) {
       let selectTime = data.filter((item) => item.isSelected === true);
       if (selectTime && selectTime.length > 0) {
@@ -117,17 +157,21 @@ export default function ScheduleModal(props) {
         });
       }
     }
-
+    console.log("result", result);
     let res = await saveBulkScheduleDoctor({
       arrSchedule: result,
       userId: params.userId,
       registerDate: params.registerDate * 1,
     });
+    console.log("res", res);
     if (res.code == 0) {
       toast.success(res.message);
       dispatch(createScheduleAPI());
       props.handleMo(false);
       setShowModal(false);
+      setTimeout(function () {
+        window.location.reload(1);
+      }, 4000);
     }
   };
 
@@ -162,7 +206,6 @@ export default function ScheduleModal(props) {
   };
 
   const handleNgay = (item) => {
-    // console.log("item:", item);
     setRegisterDate(item.value);
   };
 
@@ -247,18 +290,32 @@ export default function ScheduleModal(props) {
                                 timeslotId.map((item, index) => {
                                   return (
                                     <div className="col-span-1">
-                                      <div
-                                        className={
-                                          item.isSelected === true
-                                            ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-green-300 outline-slate-300"
-                                            : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
-                                        }
-                                        key={index}
-                                        value={item.id}
-                                        onClick={() => handleClickBtnTime(item)}
-                                      >
-                                        {item.timeslot}
-                                      </div>
+                                      {item.datontai === false ? (
+                                        <div
+                                          className={
+                                            item.isSelected === true
+                                              ? "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-green-300 outline-slate-300"
+                                              : "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-slate-200 hover:bg-slate-300 outline-slate-300"
+                                          }
+                                          key={index}
+                                          value={item.id}
+                                          onClick={() =>
+                                            handleClickBtnTime(item)
+                                          }
+                                        >
+                                          {item.timeslot}
+                                        </div>
+                                      ) : (
+                                        <div
+                                          className={
+                                            "cursor-pointer inline-flex m-2 w-fit h-10 border rounded-md p-2 mt-1 bg-red-500 outline-slate-300"
+                                          }
+                                          key={index}
+                                          value={item.id}
+                                        >
+                                          {item.timeslot}
+                                        </div>
+                                      )}
                                     </div>
                                   );
                                 })}

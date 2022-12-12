@@ -34,6 +34,9 @@ let router = express.Router();
 let initWebRoutes = (app) => {
   router.get("/", homeController.getHomePage);
 
+  router.get("/api/check-sua-lich", doctorController.checksualichbacsi); //// api này true là cho sửa false là ko cho sửa
+  router.get("/api/check-them-lich", doctorController.checkthemlichbacsi);
+
   // tin tức
   router.get("/api/get-news", newsController.handleGetNews);
   router.get("/api/get-all-news", newsController.handleGetAllNews);

@@ -106,6 +106,7 @@ export default function TaoThongTinNguoiDungModal(props) {
     e.preventDefault();
     dispatch(getLoginGuestAPI(paramsparent));
     setShowModal(false);
+    props.hanldeParent(false);
   };
 
   return (

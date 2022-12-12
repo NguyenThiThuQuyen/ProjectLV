@@ -4,16 +4,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import { BsPlusLg } from "react-icons/bs";
 import {
   editScheduleAPI,
+  getAllDoctorAPI,
   dataGetDoctor,
 } from "../../../../redux/scheduleRedux";
-import { datagetAllTimeslot } from "../../../../redux/timeslotRedux";
+import { checksualichbacsi } from "../../../../redux/services/scheduleService";
+import {
+  getAllTimeslotAPI,
+  datagetAllTimeslot,
+} from "../../../../redux/timeslotRedux";
 import { useDispatch, useSelector } from "react-redux";
-import { BiEdit } from "react-icons/bi";
 export default function ScheduleModalEdit(props) {
-  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [registerDate, setRegisterDate] = useState();
   const [timeslotId, setTimeslotId] = useState();
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState("");
   const [id, setId] = useState();
   const dataDoctor = useSelector(dataGetDoctor);
 
@@ -34,20 +38,37 @@ export default function ScheduleModalEdit(props) {
     setUserId(props?.item?.userDataToSchedule?.id);
     setId(props?.item?.id);
   }, [props?.item]);
+  useEffect(() => {
+    dispatch(getAllTimeslotAPI());
+    dispatch(getAllDoctorAPI());
+  }, [showModal]);
 
+  useEffect(() => {
+    checksua();
+  }, [showModal]);
+
+  const checksua = async () => {
+    let res = await checksualichbacsi(props?.item?.id);
+    console.log("res", res);
+  };
   const handleSaveEdit = () => {
     dispatch(editScheduleAPI(params));
-    setShowModalEdit(false);
+    setShowModal(false);
+    props.handleClose(false);
+  };
+
+  useEffect(() => {
+    setShowModal(true);
+  }, [props?.openModal === true]);
+
+  const handleClose = () => {
+    setShowModal(false);
+    props.handleClose(false);
   };
 
   return (
     <>
-      <div className="ml-5">
-        <button type="button" onClick={() => setShowModalEdit(true)}>
-          <BiEdit className="cursor-pointer text-lg text-blue-600" />
-        </button>
-      </div>
-      {showModalEdit ? (
+      {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -114,7 +135,7 @@ export default function ScheduleModalEdit(props) {
                             Ngày sinh
                           </label>
                           <DatePicker
-                            className="w-full border border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
+                            className="w-full border-2 p-2 rounded-lg mt-1 bg-slate-100 outline-slate-300"
                             selected={registerDate}
                             value={registerDate}
                             required
@@ -134,7 +155,7 @@ export default function ScheduleModalEdit(props) {
                   <button
                     className="bg-white-600 text-red-600 hover:text-white hover:bg-red-500 hover font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModalEdit(false)}
+                    onClick={() => handleClose()}
                   >
                     ĐÓNG
                   </button>

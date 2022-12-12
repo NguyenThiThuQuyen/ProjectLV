@@ -4,6 +4,7 @@ import Navbar from "../../components/Admin/Navbar";
 import ScheduleModal from "../../components/Admin/Modal/Schedule/ScheduleModal";
 import ScheduleModalEdit from "../../components/Admin/Modal/Schedule/ScheduleEditModal";
 import "./Pagination.css";
+import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { AiOutlineEye } from "react-icons/ai";
 import { ToastContainer } from "react-toastify";
@@ -22,9 +23,13 @@ import {
 import { ImDownload3 } from "react-icons/im";
 import { BsPlusLg, BsSearch } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
+import { set } from "lodash";
+import { MdSettingsRemote } from "react-icons/md";
 
 const ScheduleManager = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [getId, setGetId] = useState();
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
   const dispatch = useDispatch();
@@ -32,6 +37,7 @@ const ScheduleManager = () => {
   const data = useSelector(dataGetAllSchedule);
   const check = useSelector(dataCheck);
   const [paging, setPaging] = useState();
+  const [truyen, setTruyen] = useState();
   useEffect(() => {
     dispatch(getAllSchedulesAPI());
   }, [check]);
@@ -53,13 +59,19 @@ const ScheduleManager = () => {
     setShowModal(true);
   };
 
+  const handleModalEdit = (item) => {
+    setShowModalEdit(true);
+    setTruyen(item);
+  };
+
   const handleDong = (test) => {
     setShowModal(test);
+    setShowModalEdit(test);
   };
 
   const handleMoLai = (data) => {
-    console.log("dddd:", data);
     setShowModal(data);
+    setShowModalEdit(data);
   };
 
   const removeAccents = (str) => {
@@ -87,6 +99,8 @@ const ScheduleManager = () => {
     }
     return str;
   };
+
+  const handleGetId = (id) => {};
 
   const schedulePerPage = 10;
   const pagesVisited = pageNumber * schedulePerPage;
@@ -135,7 +149,15 @@ const ScheduleManager = () => {
                     <BsThreeDots className="cursor-pointer text-lg text-green-700" />
                   </div>
                   <div className="mr-3" title="Sửa">
-                    <ScheduleModalEdit item={item} />
+                    {/* <ScheduleModalEdit item={item} /> */}
+                    <div className="ml-5">
+                      <button
+                        type="button"
+                        onClick={() => handleModalEdit(item)}
+                      >
+                        <BiEdit className="cursor-pointer text-lg text-blue-600" />
+                      </button>
+                    </div>
                   </div>
                   <div
                     className=""
@@ -161,6 +183,16 @@ const ScheduleManager = () => {
       <ToastContainer />
       <div className="flex w-full">
         <Sidebar />
+        <div className="">
+          {showModalEdit === true ? (
+            <ScheduleModalEdit
+              openModal={showModalEdit}
+              handleClose={handleDong}
+              handleMo={handleMoLai}
+              item={truyen}
+            />
+          ) : null}
+        </div>
         <div className="flex-initial w-5/6">
           <Navbar />
           {/* <ScheduleModal /> */}

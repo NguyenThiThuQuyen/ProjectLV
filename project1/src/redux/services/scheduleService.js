@@ -72,6 +72,20 @@ const getFindScheduleToDoctor = async (id) => {
   return response.data;
 };
 
+const checkthemlichbacsi = async (id, ngay) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/check-them-lich?id=${id}&ngay=${ngay}`
+  );
+  return response.data;
+};
+
+const checksualichbacsi = async (id) => {
+  const response = await axios.get(
+    `http://localhost:8081/api/check-sua-lich?id=${id}`
+  );
+  return response.data;
+};
+
 export {
   getAllSchedule,
   createSchedule,
@@ -83,4 +97,6 @@ export {
   getFindTimeslot,
   getFindIdSchedule,
   getCountSchedule,
+  checkthemlichbacsi,
+  checksualichbacsi,
 };

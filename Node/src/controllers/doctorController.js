@@ -70,10 +70,42 @@ let checklichbacsi = async (req, res) => {
     });
   }
 };
+
+let checksualichbacsi = async (req, res) => {
+  try {
+    let infor = await doctorService.checksualichbacsi(req.query.id);
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      code: -1,
+      message: "Error ne",
+    });
+  }
+};
+
+let checkthemlichbacsi = async (req, res) => {
+  try {
+    let infor = await doctorService.checkthemlichbacsi(
+      req.query.id,
+      req.query.ngay
+    );
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      code: -1,
+      message: "Error ne",
+    });
+  }
+};
+
 module.exports = {
   handleGetAllDoctorHome: handleGetAllDoctorHome,
   postInforDoctor: postInforDoctor,
   getScheduleByDate: getScheduleByDate,
   bulkCreateSchedule: bulkCreateSchedule,
   checklichbacsi: checklichbacsi,
+  checksualichbacsi: checksualichbacsi,
+  checkthemlichbacsi: checkthemlichbacsi,
 };
